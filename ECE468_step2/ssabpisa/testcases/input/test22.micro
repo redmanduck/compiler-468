@@ -15,12 +15,12 @@ BEGIN
 		WHILE (i < 100)
 		     i := i + 1;
 		     IF (i > 69)
-		          CONTINUE;
+		     --    CONTINUE;
 		     ENDIF
 		     iprime := iprime + 1;
 		     WHILE (j < 100)
 		          IF (j > 49)
-		               BREAK;
+		--               BREAK;
 		          ENDIF
 		          j := j + 1;
 	               result := result + 1;

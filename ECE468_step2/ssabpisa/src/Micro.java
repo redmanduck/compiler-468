@@ -1,4 +1,6 @@
 import org.antlr.v4.runtime.*;
+//import java.util.Arrays;
+
 //import java.io.InputStream;
 //import java.io.FileInputStream;
 import org.antlr.v4.runtime.tree.*;
@@ -6,9 +8,6 @@ public class Micro{
   public static void main(String[] args) throws Exception
   {  
      System.setErr(null);
-     //PrintStream pstr = new PrintStream();
-     //System.setErr(pstr)
-     
      CharStream in = new ANTLRFileStream(args[0]);
      MicroLexer lexer = new MicroLexer(in);
      CommonTokenStream tks = new CommonTokenStream(lexer);
@@ -17,7 +16,8 @@ public class Micro{
      try{
        ParseTree t = psr.program();
      } catch (Exception fpe) {
-	System.out.println("Not Accepted");
+//	System.out.println(Arrays.toString(fpe.getStackTrace()));
+	System.out.println("Not accepted");
         return;
      }
     

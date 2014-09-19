@@ -5,6 +5,7 @@ program : ( PROG id BEGIN pgm_body END);
 id : ( IDENTIFIER );
 pgm_body : ( decl func_declarations);
 decl : ( string_decl decl | var_decl decl | /*empty*/ );
+comment: COMMENT | /*empty*/;
 
 /* Global String Declaration */
 string_decl : ( STRING id ) COLEQ str SEMI ;
@@ -62,12 +63,13 @@ compop : ( '<' | '>' | '=' | '!=' | '<=' | '>=' );
 
 /* ECE 468 students use this version of while_stmt */
 while_stmt : ( WHILE BROPEN cond BRCLOSE decl stmt_list ENDWHILE);
-
+aug_break         : BREAK;
+aug_continue      : CONTINUE;
 PROG: 'PROGRAM';
 STRING : 'STRING';
 RETURN: 'RETURN';
-SEMI: ';';
 COLEQ : ':=';
+SEMI: ';';
 STRINGLITERAL: ('"' ~(["])* '"');
 FLOATLITERAL: ([0-9]? '.' [0-9]+);
 INTLITERAL: [0-9]+;
@@ -98,11 +100,12 @@ ELSE: 'ELSE';
 ENDIF: 'ENDIF';
 WHILE: 'WHILE';
 ENDWHILE: 'ENDWHILE';
-CONTINUE: 'CONTINUE';
-BREAK: 'BREAK';
 IDENTIFIER: ([a-zA-Z][a-zA-Z0-9]* | [a-zA-Z]);
-COMMENT: ('--' ~['\n']* '\n'+); 
+COMMENT: ( '--' ~[\r\n]* '\r'? '\n') -> skip; 
+CONTINUE: 'CONTINUE';
 
 OPERATOR: SEMI | BROPEN | BRCLOSE | PLUS | MINUS | COLEQ | ASKT | NOTEQUAL | EQUAL | FORESLASH | LESSTHAN | MORETHAN | SEMI | COMMA | LESSTHAN_EQ | MORETHAN_EQ;
-KEYWORD: PROG | BEGIN | END | FUNCTION | READ | WRITE | IF | ELSE | ENDIF | WHILE | ENDWHILE | CONTINUE | BREAK | RETURN | INT | VOID| STRING | FLOAT;
+
+KEYWORD: PROG | BEGIN | END | FUNCTION | READ | WRITE | IF | ELSE | ENDIF | WHILE | CONTINUE | ENDWHILE | BREAK | RETURN | INT | VOID| STRING | FLOAT;
 WS: [ \t\n\r] -> skip;
+BREAK: 'BREAK';
