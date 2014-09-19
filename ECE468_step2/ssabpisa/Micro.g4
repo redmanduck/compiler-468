@@ -1,7 +1,7 @@
 grammar Micro;
 
 /* Program */
-program : ( PROGRAM id BEGIN pgm_body END);
+program : ( PROG id BEGIN pgm_body END);
 id : ( IDENTIFIER );
 pgm_body : ( decl func_declarations);
 decl : ( string_decl decl | var_decl decl | /*empty*/ );
@@ -63,8 +63,7 @@ compop : ( '<' | '>' | '=' | '!=' | '<=' | '>=' );
 /* ECE 468 students use this version of while_stmt */
 while_stmt : ( WHILE BROPEN cond BRCLOSE decl stmt_list ENDWHILE);
 
-OPERATOR: SEMI | BROPEN | BRCLOSE | PLUS | MINUS | COLEQ | ASKT | NOTEQUAL | EQUAL | FORESLASH | LESSTHAN | MORETHAN | SEMI | COMMA | LESSTHAN_EQ | MORETHAN_EQ;
-KEYWORD: PROGRAM | BEGIN | END | FUNCTION | READ | WRITE | IF | ELSE | ENDIF | WHILE | ENDWHILE | CONTINUE | BREAK | RETURN | INT | VOID| STRING | FLOAT;
+PROG: 'PROGRAM';
 STRING : 'STRING';
 RETURN: 'RETURN';
 SEMI: ';';
@@ -85,7 +84,6 @@ COMMA : ',';
 MORETHAN_EQ: '>=';
 LESSTHAN_EQ: '<=';
 
-PROGRAM: 'PROGRAM';
 END: 'END';
 BEGIN: 'BEGIN';
 MINUS: '-';
@@ -104,3 +102,7 @@ CONTINUE: 'CONTINUE';
 BREAK: 'BREAK';
 IDENTIFIER: ([a-zA-Z][a-zA-Z0-9]* | [a-zA-Z]);
 COMMENT: ('--' ~['\n']* '\n'+); 
+
+OPERATOR: SEMI | BROPEN | BRCLOSE | PLUS | MINUS | COLEQ | ASKT | NOTEQUAL | EQUAL | FORESLASH | LESSTHAN | MORETHAN | SEMI | COMMA | LESSTHAN_EQ | MORETHAN_EQ;
+KEYWORD: PROG | BEGIN | END | FUNCTION | READ | WRITE | IF | ELSE | ENDIF | WHILE | ENDWHILE | CONTINUE | BREAK | RETURN | INT | VOID| STRING | FLOAT;
+WS: [ \t\n\r] -> skip;
