@@ -10,5 +10,5 @@ do
 	echo
   #sdiff output/468/$mod.out
   $dpath$i > temp_result
-  sdiff output/468/$mod.out temp_result
+  sdiff -bB output/468/$mod.out temp_result
 done

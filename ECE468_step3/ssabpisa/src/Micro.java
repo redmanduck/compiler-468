@@ -22,6 +22,7 @@ public class Micro{
      }
 
      walker.walk(extractor, t);
+     
   }
 }
 

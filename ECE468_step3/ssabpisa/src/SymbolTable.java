@@ -1,25 +1,27 @@
 import java.util.*;
 
 public class SymbolTable{
-  private Hashtable<String, Id> table;
+  private LinkedHashMap<String, Id> table;
   protected SymbolTable parent;
-  protected Set<SymbolTable> children;
+  protected ArrayList<SymbolTable> children;
   public String scopename;
+  public boolean error;
 
   public SymbolTable(SymbolTable par, String scopename){
-	 System.out.println("\nSymbol table " + scopename);
+	// System.out.println("\nSymbol table " + scopename);
      this.parent = par;
      this.scopename  = scopename;
-     this.children = new HashSet<SymbolTable>();
-     this.table = new Hashtable<String, Id>();
+     this.children = new ArrayList<SymbolTable>();
+     this.table = new LinkedHashMap<String, Id>();
+     this.error =false;
   }
 
   public boolean AddSymbolToTable(String type, String token){
 	  if(this.table.containsKey(token)){
 		  return false;
 	  }
-	  System.out.format("name %s type %s\n", token, type);
-      this.table.put(token, new Id(type, token));
+	  //System.out.format("name %s type %s\n", token, type);
+      this.table.put(token, new Id(token, type));
       return true;
   }
 
@@ -27,8 +29,8 @@ public class SymbolTable{
 	  if(this.table.containsKey(token)){
 		  return false;
 	  }
-	  System.out.format("name %s type %s value %s\n", token, type, value);
-	  this.table.put(token, new Id(type, token, value));
+	 // System.out.format("name %s type %s value %s\n", token, type, value);
+	  this.table.put(token, new Id(token, type, value));
 	  return true;
   }
   
@@ -38,6 +40,14 @@ public class SymbolTable{
 
   public void RemoveChild(SymbolTable s){
     this.children.remove(s);
+  }
+  
+  public Id get(String token){
+	  return this.table.get(token);
+  }
+  
+  public Set<String> getKeys(){
+	  return this.table.keySet();
   }
 
 }
