@@ -1,10 +1,13 @@
-public class Id{
-   private String name;
-   private String type;
-   private String value;
+public class Id extends SemanticRecord{
+   public String name;
+   public String type;
+   public String value;
 
    public Id(String name, String type){
-     this.name = name;
-     this.type = type;
+	   super(name, type);
+   }
+   
+   public Id(String name, String type, String value){
+	   super(name, type, value);
    }
 }
