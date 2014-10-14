@@ -1,5 +1,3 @@
-import java.util.List;
-
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -32,6 +30,7 @@ public class ExtractionListener extends MicroBaseListener{
     SymbolTable newscope = new SymbolTable(current_scope, scopename);
     current_scope.AddChild(newscope);
     current_scope = newscope;
+    irlist.LABEL(scopename);
   }
 
   private void leaveScope(){

@@ -7,7 +7,6 @@ import org.antlr.v4.runtime.tree.*;
 public class Micro{
   public static void main(String[] args) throws Exception
   {
-	 ArrayList<IRNode> irlist = new ArrayList<IRNode>();
 	  
      CharStream in = new ANTLRFileStream(args[0]);
      MicroLexer lexer = new MicroLexer(in);
@@ -26,7 +25,6 @@ public class Micro{
      }
 
      walker.walk(extractor, t);
-     extractor.getIRList().RET();
      
    	 //Utils.printSymbolTable(extractor.getRootSymbolTable());
    	 Utils.printIR(extractor.getIRList());

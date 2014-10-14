@@ -9,6 +9,11 @@ public class IRNode {
      private Id id_dest, id_src1, id_src2;
      private float f_src;
      private Id id_readwrite;
+     private String label;
+     
+     public IRNode(String label){
+    	 this.label = label;
+     }
      
 	public IRNode(Instruction OPCODE, int src1, Register dest){
 		this.OPCODE = OPCODE;
@@ -54,6 +59,8 @@ public class IRNode {
 	
 	@Override 
 	public String toString(){
+		if(this.label != null)
+			return String.format(";LABEL " + this.label);
 		if(OPCODE == ISA.ADDI && r_src != null && r_src2 != null && r_dest != null)
 			return String.format(";%s %s %s %s", OPCODE.getName(), r_src.toString() ,r_src2.toString(), r_dest.toString()); 
 		if(OPCODE == ISA.STOREI && r_dest != null)
@@ -62,7 +69,7 @@ public class IRNode {
 			return  String.format(";%s %s %s", OPCODE.getName(), r_src.toString(), id_dest.name);
 		if(OPCODE == ISA.READI || OPCODE == ISA.READF)
 			return String.format(";%s %s", OPCODE.getName(), id_readwrite.name);
-		if(this.OPCODE == ISA.MULTI)
+		if(this.OPCODE == ISA.MULTI || this.OPCODE == ISA.DIVI)
 			return String.format(";%s %s %s %s", OPCODE.getName(), id_src1.name, id_src2.name, r_dest.toString());
 		if(this.OPCODE == ISA.WRITEI || this.OPCODE == ISA.WRITES || this.OPCODE == ISA.WRITES)
 			return String.format(";%s %s", OPCODE.getName(), id_readwrite.name);

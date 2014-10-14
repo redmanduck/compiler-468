@@ -1,13 +1,18 @@
 import java.util.LinkedList;
 
 import ssabpisa.ece468.isa.ISA;
+import ssabpisa.ece468.isa.Instruction;
 
 public class IRList {
 	private LinkedList<IRNode> _List;
 
 	public IRList(){
 		_List = new LinkedList<IRNode>();
-		_List.add(new IRNode(ISA.LINK));
+	}
+	
+	public void LABEL(String L){
+		_List.add(new IRNode(L)); //TODO: what is this 
+		_List.add(new IRNode(ISA.LINK)); //TODO: what is this 
 	}
 	
 	public void RET(){
@@ -36,14 +41,16 @@ public class IRList {
 		Id dest_token = scope.search(ctx.id().getText());
 				
 		if(dest_token == null) {
-			System.out.println("Symbol not found: " + ctx.id().getText());
+			System.err.println("Symbol not found: " + ctx.id().getText());
 			System.exit(1);
 		}
 		
 		IRNode nodeA = null;
-		IROperand v = attach_Expressions(scope, ctx.expr());
+		IRDest v = attach_Expressions(scope, ctx.expr());
 		Register i_dest = null;
-		if(ctx.expr().expr_prefix().factor() == null){
+		
+		
+		/*if(){ //no addition 
 			//Direct assignment
 			i_dest = TempRegisterFactory.create();
 			if(dest_token.type.equals("INT")){
@@ -57,11 +64,17 @@ public class IRList {
 			if(v == null) return null; //TODO: and exit?
 			i_dest = v._reg;
 		}
-
+		*/
+		
+		if(v == null){
+			System.err.print("Expression returned null\n");//TODO: and exit?
+			return null;
+		}
+		i_dest = v._reg;
 		IRNode nodeB = new IRNode(ISA.STOREI, i_dest, dest_token);
 		_List.add(nodeB);
 		
-		return nodeB;
+		return null;
 	}
 
 	/*
@@ -70,55 +83,104 @@ public class IRList {
 	 *  @param ctx: the expression parse subtree context
 	 *  @return last node in the list
 	 */
-	public IROperand attach_Expressions(SymbolTable scope, MicroParser.ExprContext expr){
+	public IRDest attach_Expressions(SymbolTable scope, MicroParser.ExprContext expr){
 		
-		//System.out.format("Processing %s\n", expr.expr_prefix().getText());
-		IROperand dleft = attach_ExprPrefix(scope, expr.expr_prefix());
-		IROperand dright = attach_Factor(scope, expr.factor());
+		System.out.format("Processing %s\n", expr.expr_prefix().getText());
+		IRDest dleft = attach_ExprPrefix(scope, expr.expr_prefix());
+		IRDest dright = attach_Factor(scope, expr.factor());
 		
-		if(dleft == null || dright == null){
+		if(dleft == null && dright == null){
 			return null;
+		}
+		if(dleft == null){
+			//no expr_prefix,  like a*b or 1
+			return dright;
+		}
+		
+		if(dright == null){
+			return dleft;
 		}
 		
 		Register dest = TempRegisterFactory.create();
 		IRNode N = new IRNode(ISA.ADDI, dleft._reg, dright._reg, dest);
 		_List.add(N);
-		return new IROperand(dest);
+		return new IRDest(dest);
 	}
+	
+	/*
+	 * 
+	 * returns whatever the destination register becomes for the post-fix subtree (Right child of factor)
+	 * @return IROperand
+	 */
+	private IRDest attach_PostfixExpr(SymbolTable scope, MicroParser.Postfix_exprContext postfix){
+		 if(postfix.primary().expr() != null){
+				//Not implemented
+				System.out.println(postfix.primary().expr().getText());
 
-	private IROperand attach_Factor(SymbolTable scope, MicroParser.FactorContext factor) {
+		} if(postfix.primary().FLOATLITERAL() != null){
+			//we detect a float literal, must be loaded to Temp Register
+			Register temp = TempRegisterFactory.create();
+			_List.add(new IRNode(ISA.STOREF, Integer.parseInt(postfix.primary().FLOATLITERAL().getText()) , temp));
+			return new IRDest(temp);
+		}else if(postfix.primary().INTLITERAL() != null){
+			//we detect an int literal, must be loaded to Temp Register
+			Register temp = TempRegisterFactory.create();
+			_List.add(new IRNode(ISA.STOREI, Integer.parseInt(postfix.primary().INTLITERAL().getText()) , temp));
+			return new IRDest(temp);
+		}else if(postfix.primary().id() != null){
+			//we detect an id, DO NOT LOAD to register
+			return new IRDest(scope.search(postfix.primary().id().getText()));
+		}
+		return null;
+	}
+	
+	private IRDest attach_Factor(SymbolTable scope, MicroParser.FactorContext factor) {
+	
 		if(factor == null) return null;
-		//check left subtree (this will also populate LL)
-		//System.out.println("Processing " + factor.getText());
-		if(factor.factor_prefix().getText().length() == 0) return null;  //TODO : ugly
-		IROperand left = FactorPrefix(scope, factor.factor_prefix()); 
-		Id right = scope.search(factor.postfix_expr().primary().getText());
+		//if left subtree is empty
+
+		if(factor.factor_prefix().getText().length() == 0){
+			//search right subtree
+			return attach_PostfixExpr(scope, factor.postfix_expr());
+		}
+		//left subtree isn't empty, search it for
+		IRDest fp = FactorPrefix(scope, factor.factor_prefix()); 
+		//do the same for the right subtree
+		IRDest postfix = attach_PostfixExpr(scope, factor.postfix_expr());
+		Id right = postfix._id;//scope.search(factor.postfix_expr().primary().getText());
 		//join two subtrees into one IR node
 		IRNode K = null;
 		Register dest = TempRegisterFactory.create();
-		if(left._id != null){
-			K = new IRNode(ISA.MULTI, left._id, right, dest);
+
+		if(fp._id != null){
+			//take the left subtree and factor it to the right subtree
+			Instruction op = ISA.MULTI;
+			if(factor.factor_prefix().mulop().getText().equals("/")){
+				op = ISA.DIVI;
+			}
+			K = new IRNode(op, fp._id, right, dest);
+			
 		}else{
-			System.out.println("Error: not implemented yet");
+			
 		}
 		
-		//final add to LL
 		_List.add(K);
-		return new IROperand(dest);
+		return new IRDest(dest);
 	}
 		
 	private void attach_CallExpr(SymbolTable scope, MicroParser.Call_exprContext call_expr) {
+		//Not implemented yet
 		if(call_expr == null) return;	
 	}
 
 
-	private IROperand FactorPrefix(SymbolTable scope, MicroParser.Factor_prefixContext factor_prefix) {
+	private IRDest FactorPrefix(SymbolTable scope, MicroParser.Factor_prefixContext factor_prefix) {
 		if(factor_prefix.getText().length() == 0) return null;
 		
 		if(factor_prefix.factor_prefix().getText().length() == 0){
 			//has no more left recursion
 			String token_str = factor_prefix.postfix_expr().getText();
-			return new IROperand(scope.search(token_str));
+			return new IRDest(scope.search(token_str));
 		}
 
 		//generate IRNode
@@ -129,26 +191,26 @@ public class IRList {
 		IRNode irn = new IRNode(ISA.MULTI, fact, postfix, dest);
 		_List.add(irn);
 		
-		return new IROperand(dest);
+		return new IRDest(dest);
 	}
 
 	/*
 	 * Left hand side of ADD 
 	 */
-	public IROperand attach_ExprPrefix(SymbolTable scope, MicroParser.Expr_prefixContext expr_prefix){
+	public IRDest attach_ExprPrefix(SymbolTable scope, MicroParser.Expr_prefixContext expr_prefix){
 		if(expr_prefix.getText().length() == 0) return null;
 		if(expr_prefix.expr_prefix().getText().length() == 0){
 			//has no more left recursion, so we go right
 			return attach_Factor(scope, expr_prefix.factor());
 		}
 		
-		IROperand left = attach_ExprPrefix(scope, expr_prefix.expr_prefix());
-		IROperand right = attach_Factor(scope, expr_prefix.factor());
+		IRDest left = attach_ExprPrefix(scope, expr_prefix.expr_prefix());
+		IRDest right = attach_Factor(scope, expr_prefix.factor());
 		Register dest = TempRegisterFactory.create();
 		//TODO: handle case where right of expression is lambda
 		IRNode irn = new IRNode(ISA.ADDI, left._id, right._id, dest);
 		_List.add(irn);
-		return new IROperand(dest);
+		return new IRDest(dest);
 	}
 	
 	/* 
@@ -182,13 +244,13 @@ public class IRList {
 		
 	}
 	
-	class IROperand{
+	class IRDest{
 		public Register _reg;
 		public Id _id;
-		public IROperand(Register r){
+		public IRDest(Register r){
 			_reg = r;
 		}
-		public IROperand(Id id){
+		public IRDest(Id id){
 			_id = id;
 		}
 	}
