@@ -10,6 +10,7 @@ public class ISA{
 	public static Instruction DIVI = new Instruction("DIVI");
 	public static Instruction DIVF = new Instruction("DIVF");
 	public static Instruction STOREI = new Instruction("STOREI");
+	public static Instruction STOREF = new Instruction("STOREF");
 	public static Instruction GT = new Instruction("GT");
 	public static Instruction GE = new Instruction("GE");
 	public static Instruction LT = new Instruction("LT");
@@ -21,9 +22,6 @@ public class ISA{
 	public static Instruction READF = new Instruction("READF");
 	public static Instruction WRITEI = new Instruction("WRITEI");
 	public static Instruction WRITEF = new Instruction("WRITEF");
-
-	public static Datatype FLOAT = new Datatype("FLOAT");
-	public static Datatype INT = new Datatype("INT");
 	
 	public ISA(){}
 }

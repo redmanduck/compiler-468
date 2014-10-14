@@ -15,6 +15,16 @@ public class SymbolTable{
      this.table = new LinkedHashMap<String, Id>();
      this.error =false;
   }
+  
+  public Id search(String symbol_name){
+	  Id t = null;
+	  SymbolTable scope = this;
+	  while(t == null && scope != null){
+		  t = scope.get(symbol_name);
+		  scope = scope.parent;
+	  }
+	  return t;
+  }
 
   public boolean AddSymbolToTable(String type, String token){
 	  if(this.table.containsKey(token)){
