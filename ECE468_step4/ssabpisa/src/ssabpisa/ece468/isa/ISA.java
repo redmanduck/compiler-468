@@ -22,7 +22,10 @@ public class ISA{
 	public static Instruction READF = new Instruction("READF");
 	public static Instruction WRITEI = new Instruction("WRITEI");
 	public static Instruction WRITEF = new Instruction("WRITEF");
-	
+	public static Instruction WRITES = new Instruction("WRITES");
+	public static Instruction RET = new Instruction("RET");
+	public static Instruction LINK = new Instruction("LINK");
+
 	public ISA(){}
 }
 

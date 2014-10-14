@@ -22,6 +22,8 @@ public class Utils {
 	}
 	
 	public static void printIR(IRList irl){
-		
+		for(int i = 0; i < irl.size(); i++){
+			System.out.println(irl.get(i).toString());
+		}
 	}
 }

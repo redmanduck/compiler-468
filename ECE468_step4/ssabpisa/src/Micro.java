@@ -26,9 +26,10 @@ public class Micro{
      }
 
      walker.walk(extractor, t);
+     extractor.getIRList().RET();
      
    	 //Utils.printSymbolTable(extractor.getRootSymbolTable());
-   	// Utils.printIR(extractor.getIRList());
+   	 Utils.printIR(extractor.getIRList());
   }
 }
 

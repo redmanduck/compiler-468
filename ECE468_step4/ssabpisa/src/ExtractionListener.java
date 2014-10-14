@@ -122,6 +122,9 @@ public class ExtractionListener extends MicroBaseListener{
 	leaveScope();  
   }
 
+  @Override public void exitWrite_stmt(@NotNull MicroParser.Write_stmtContext ctx) {
+	  irlist.attach_Write(current_scope, ctx);
+  }
   
   @Override public void exitAssign_expr(MicroParser.Assign_exprContext ctx) { 
 	  irlist.attach_Assignment(current_scope, ctx);

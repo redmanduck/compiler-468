@@ -7,6 +7,23 @@ public class IRList {
 
 	public IRList(){
 		_List = new LinkedList<IRNode>();
+		_List.add(new IRNode(ISA.LINK));
+	}
+	
+	public void RET(){
+		_List.add(new IRNode(ISA.RET));
+	}
+	
+	public IRNode head(){
+		return _List.getFirst();
+	}
+	
+	public IRNode get(int i){
+		return _List.get(i);
+	}
+	
+	public int size(){
+		return _List.size();
 	}
 	
 	/*
@@ -35,7 +52,6 @@ public class IRList {
 				nodeA =  new IRNode(ISA.STOREF, Float.parseFloat(ctx.expr().getText()), i_dest);
 			}
 			_List.add(nodeA);
-			System.out.println(nodeA.toString());
 		}else{
 			//Expression assignment
 			if(v == null) return null; //TODO: and exit?
@@ -45,8 +61,6 @@ public class IRList {
 		IRNode nodeB = new IRNode(ISA.STOREI, i_dest, dest_token);
 		_List.add(nodeB);
 		
-		System.out.println(nodeB.toString());
-
 		return nodeB;
 	}
 
@@ -68,7 +82,6 @@ public class IRList {
 		
 		Register dest = TempRegisterFactory.create();
 		IRNode N = new IRNode(ISA.ADDI, dleft._reg, dright._reg, dest);
-		System.out.println(N.toString());
 		_List.add(N);
 		return new IROperand(dest);
 	}
@@ -90,7 +103,6 @@ public class IRList {
 		}
 		
 		//final add to LL
-		System.out.println(K.toString());
 		_List.add(K);
 		return new IROperand(dest);
 	}
@@ -115,7 +127,6 @@ public class IRList {
 		Id postfix = scope.search(factor_prefix.postfix_expr().getText());
 		Register dest = TempRegisterFactory.create();
 		IRNode irn = new IRNode(ISA.MULTI, fact, postfix, dest);
-		System.out.println(irn.toString());
 		_List.add(irn);
 		
 		return new IROperand(dest);
@@ -136,7 +147,7 @@ public class IRList {
 		Register dest = TempRegisterFactory.create();
 		//TODO: handle case where right of expression is lambda
 		IRNode irn = new IRNode(ISA.ADDI, left._id, right._id, dest);
-		System.out.println(irn.toString());	
+		_List.add(irn);
 		return new IROperand(dest);
 	}
 	
@@ -144,18 +155,30 @@ public class IRList {
 	 * Grammar : ( READ BROPEN id_list BRCLOSE SEMI );
 	 */
 	public void attach_Read(SymbolTable scope, MicroParser.Read_stmtContext rstmt){
-		String [] ids = rstmt.id_list().getText().split(",");
+		String [] ids = rstmt.id_list().getText().split(","); //TODO: ugly
 		for(int i = 0;i < ids.length; i++){
 			String token_name = ids[i];
 			IRNode n = new IRNode(ISA.READI, scope.search(token_name));
 			_List.add(n);
-			System.out.println(n.toString());
 		}
 		
 	}
 	
-	public IRNode attach_Write(SymbolTable scope, MicroParser.Assign_exprContext ctx){
-		return null;
+	public void attach_Write(SymbolTable scope, MicroParser.Write_stmtContext wstmt){
+		String [] ids = wstmt.id_list().getText().split(",");
+		for(int i = 0;i < ids.length; i++){
+			String token_name = ids[i];
+			Id token = scope.search(token_name);
+			IRNode n = null;
+			if(token.type.equals("FLOAT")){
+				n = new IRNode(ISA.WRITEF, token);
+			}else if(token.type.equals("INT")){
+				n = new IRNode(ISA.WRITEI, token);
+			}else if(token.type.equals("STRING")){
+				n = new IRNode(ISA.WRITES, token);
+			}
+			_List.add(n);
+		}
 		
 	}
 	

@@ -8,12 +8,16 @@ public class IRNode {
      private Register r_src, r_src2;
      private Id id_dest, id_src1, id_src2;
      private float f_src;
-     private Id id_read;
+     private Id id_readwrite;
      
 	public IRNode(Instruction OPCODE, int src1, Register dest){
 		this.OPCODE = OPCODE;
 		this.i_src = src1;
 		this.r_dest = dest;
+	}
+	
+	public IRNode(Instruction OPCODE){
+		this.OPCODE = OPCODE;
 	}
 	
 	public IRNode(Instruction OPCODE, float s, Register dest){
@@ -43,9 +47,9 @@ public class IRNode {
 		this.r_dest = dest;
 	}
 	
-	public IRNode(Instruction OPCODE, Id id_read){
+	public IRNode(Instruction OPCODE, Id id_readwrite){
 		this.OPCODE = OPCODE;
-		this.id_read = id_read;
+		this.id_readwrite = id_readwrite;
 	}
 	
 	@Override 
@@ -57,11 +61,12 @@ public class IRNode {
 		if(OPCODE == ISA.STOREI && r_src != null)
 			return  String.format(";%s %s %s", OPCODE.getName(), r_src.toString(), id_dest.name);
 		if(OPCODE == ISA.READI || OPCODE == ISA.READF)
-			return String.format(";%s %s", OPCODE.getName(), id_read.name);
+			return String.format(";%s %s", OPCODE.getName(), id_readwrite.name);
 		if(this.OPCODE == ISA.MULTI)
 			return String.format(";%s %s %s %s", OPCODE.getName(), id_src1.name, id_src2.name, r_dest.toString());
-		
-		return "Invalid IRNode";
+		if(this.OPCODE == ISA.WRITEI || this.OPCODE == ISA.WRITES || this.OPCODE == ISA.WRITES)
+			return String.format(";%s %s", OPCODE.getName(), id_readwrite.name);
+		return ";" + this.OPCODE.getName();
 	}
 
 }
