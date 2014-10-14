@@ -11,8 +11,12 @@ public class IRList {
 	}
 	
 	public void LABEL(String L){
-		_List.add(new IRNode(L)); //TODO: what is this 
+		_List.add(new IRNode(L));
 		_List.add(new IRNode(ISA.LINK)); //TODO: what is this 
+	}
+	
+	public void Trace(String L){
+		_List.add(new IRNode(L));
 	}
 	
 	public void RET(){
@@ -138,7 +142,7 @@ public class IRList {
 	
 		if(factor == null) return null;
 		//if left subtree is empty
-
+		
 		if(factor.factor_prefix().getText().length() == 0){
 			//search right subtree
 			return attach_PostfixExpr(scope, factor.postfix_expr());
@@ -159,7 +163,6 @@ public class IRList {
 				op = ISA.DIVI;
 			}
 			K = new IRNode(op, fp._id, right, dest);
-			
 		}else{
 			
 		}
@@ -208,7 +211,17 @@ public class IRList {
 		IRDest right = attach_Factor(scope, expr_prefix.factor());
 		Register dest = TempRegisterFactory.create();
 		//TODO: handle case where right of expression is lambda
-		IRNode irn = new IRNode(ISA.ADDI, left._id, right._id, dest);
+		IRNode irn = null;
+		if(left._id != null && right._id != null)
+			 irn = new IRNode(ISA.ADDI, left._id, right._id, dest);
+		if(left._reg != null && right._reg != null)
+			irn = new IRNode(ISA.ADDI, left._reg, right._reg, dest);
+		
+		/*if(left._id != null && right._reg != null)
+			irn = new IRNode(ISA.ADDI, left._id, right._reg, dest);
+		if(left._reg != null && right._id != null)
+			irn = new IRNode(ISA.ADDI, left._reg, right._id, dest);*/
+
 		_List.add(irn);
 		return new IRDest(dest);
 	}
