@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+import org.antlr.runtime.tree.CommonTree;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
@@ -25,8 +26,8 @@ public class Micro{
      }
 
      walker.walk(extractor, t);
-    
-   	 Utils.printSymbolTable(extractor.getRootSymbolTable());
+     
+   	 //Utils.printSymbolTable(extractor.getRootSymbolTable());
    	// Utils.printIR(extractor.getIRList());
   }
 }
