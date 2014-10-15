@@ -89,7 +89,7 @@ public class IRList {
 	 */
 	public IRDest attach_Expressions(SymbolTable scope, MicroParser.ExprContext expr){
 		
-		System.out.format("Processing %s\n", expr.expr_prefix().getText());
+		//System.out.format("Processing %s\n", expr.expr_prefix().getText());
 		IRDest dleft = attach_ExprPrefix(scope, expr.expr_prefix());
 		IRDest dright = attach_Factor(scope, expr.factor());
 		
@@ -106,8 +106,14 @@ public class IRList {
 		}
 		
 		Register dest = TempRegisterFactory.create();
-		IRNode N = new IRNode(ISA.ADDI, dleft._reg, dright._reg, dest);
-		_List.add(N);
+		IRNode N;
+		try {
+			N = new IRNode(ISA.ADDI, dleft._reg, dright._id, dest);
+			_List.add(N);
+		} catch (Exception e) {
+			System.out.println("Bad Arguments");
+		}
+		
 		return new IRDest(dest);
 	}
 	
@@ -212,10 +218,14 @@ public class IRList {
 		Register dest = TempRegisterFactory.create();
 		//TODO: handle case where right of expression is lambda
 		IRNode irn = null;
-		if(left._id != null && right._id != null)
-			 irn = new IRNode(ISA.ADDI, left._id, right._id, dest);
-		if(left._reg != null && right._reg != null)
-			irn = new IRNode(ISA.ADDI, left._reg, right._reg, dest);
+		try{
+			if(left._id != null && right._id != null)
+				 irn = new IRNode(ISA.ADDI, left._id, right._id, dest);
+			if(left._reg != null && right._reg != null)
+				irn = new IRNode(ISA.ADDI, left._reg, right._reg, dest);
+		}catch(Exception e){
+			System.err.println(e.toString());
+		}
 		
 		/*if(left._id != null && right._reg != null)
 			irn = new IRNode(ISA.ADDI, left._id, right._reg, dest);

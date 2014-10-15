@@ -45,7 +45,20 @@ public class IRNode {
 		this.r_dest = dest;
 	}
 	
-	public IRNode(Instruction OPCODE, Register r_src1, Register r_src2, Register dest){
+	public IRNode(Instruction OPCODE, Register r_src1, Id id_src2, Register dest) throws Exception{
+		if(id_src2 == null || r_src1 == null){
+			throw new Exception("Invalid args");
+		}
+		this.OPCODE = OPCODE;
+		this.id_src2 = id_src2;
+		this.r_src = r_src1;
+		this.r_dest = dest;
+	}
+	
+	public IRNode(Instruction OPCODE, Register r_src1, Register r_src2, Register dest) throws Exception{
+		if(r_src2 == null || r_src1 == null){
+			throw new Exception("Invalid args");
+		}
 		this.OPCODE = OPCODE;
 		this.r_src = r_src1;
 		this.r_src2 = r_src2;
@@ -63,6 +76,8 @@ public class IRNode {
 			return String.format(";LABEL " + this.label);
 		if(OPCODE == ISA.ADDI && r_src != null && r_src2 != null && r_dest != null)
 			return String.format(";%s %s %s %s", OPCODE.getName(), r_src.toString() ,r_src2.toString(), r_dest.toString()); 
+		if(OPCODE == ISA.ADDI && r_src != null && id_src2 != null)
+			return String.format(";%s %s %s %s", OPCODE.getName(), r_src.toString() ,id_src2.name, r_dest.toString()); 
 		if(OPCODE == ISA.STOREI && r_dest != null)
 			return  String.format(";%s %d %s", OPCODE.getName(), i_src ,r_dest.toString()); 
 		if(OPCODE == ISA.STOREI && r_src != null)
