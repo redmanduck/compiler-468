@@ -69,13 +69,13 @@ public class IRBase {
 	 *  @return last node in the list
 	 */
 	public IRDest attach_Expressions(SymbolTable scope, MicroParser.ExprContext expr){
-		System.out.format("Processing expression: %s\n", expr.getText());
-		System.out.format("Processing prefix %s\n", expr.expr_prefix().getText());
+		//System.out.format("Processing expression: %s\n", expr.getText());
+		//System.out.format("Processing prefix %s\n", expr.expr_prefix().getText());
 		IRDest dleft = attach_ExprPrefix(scope, expr.expr_prefix());
-		System.out.format("Processing factor %s\n", expr.factor().getText());
+		//System.out.format("Processing factor %s\n", expr.factor().getText());
 		IRDest dright = attach_Factor(scope, expr.factor());
-		System.out.print("dright Returned: ");
-		System.out.println(dright);
+		//System.out.print("dright Returned: ");
+		//System.out.println(dright);
 		
 		if(dleft == null && dright == null){
 			return null;
@@ -116,9 +116,10 @@ public class IRBase {
 	 * @return IROperand
 	 */
 	private IRDest attach_PostfixExpr(SymbolTable scope, MicroParser.Postfix_exprContext postfix){
-		 if(postfix.primary().expr() != null){
+		 
+		if(postfix.primary().expr() != null){
 			 return attach_Expressions(scope, postfix.primary().expr()); 
-		} if(postfix.primary().FLOATLITERAL() != null){
+		}else if(postfix.primary().FLOATLITERAL() != null){
 			//we detect a float literal, must be loaded to Temp Register
 			Register temp = TempRegisterFactory.create();
 			_List.add(new IRNode(ISA.STOREF, Float.parseFloat(postfix.primary().FLOATLITERAL().getText()) , temp));
@@ -142,11 +143,11 @@ public class IRBase {
 		
 		if(factor.factor_prefix().getText().length() == 0){
 			//search right subtree
-			System.out.println("Searching postfix_expr");
+			//System.out.println("Searching postfix_expr");
 			IRDest d =  attach_PostfixExpr(scope, factor.postfix_expr());
-			System.out.print("PostfixExpr returned: ");
-			System.out.print(d);
-			System.out.println();
+			///System.out.print("PostfixExpr returned: ");
+			///System.out.print(d);
+			///System.out.println();
 			return d;
 		}
 		
