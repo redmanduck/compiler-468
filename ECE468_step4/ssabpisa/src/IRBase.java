@@ -92,17 +92,17 @@ public class IRBase {
 		
 		IRNode N = null;
 		Register dest = TempRegisterFactory.create();
-
-
-		//TODO: ISA.ADDI maybe SUBI
+		Instruction op = ISA.ADDI;
+		if(expr.expr_prefix().addop().getText().equals("-")) op = ISA.SUBI;
+		
 		if(dleft._reg != null && dright._reg != null){
-			N = new IRNode(ISA.ADDI, dleft._reg, dright._reg, dest);
+			N = new IRNode(op, dleft._reg, dright._reg, dest);
 		}else if(dleft._id != null && dright._id != null){
-			N = new IRNode(ISA.ADDI, dleft._id, dright._id, dest);
+			N = new IRNode(op, dleft._id, dright._id, dest);
 		}else if(dleft._id != null && dright._reg != null){
-			N = new IRNode(ISA.ADDI, dleft._id, dright._reg, dest);
+			N = new IRNode(op, dleft._id, dright._reg, dest);
 		}else if(dleft._reg != null && dright._id != null){
-			N = new IRNode(ISA.ADDI, dleft._reg, dright._id, dest);
+			N = new IRNode(op, dleft._reg, dright._id, dest);
 		}
 
 		_List.add(N);
@@ -155,7 +155,6 @@ public class IRBase {
 		//do the same for the right subtree
 		IRDest postfix = attach_PostfixExpr(scope, factor.postfix_expr());
 		
-		Id right = postfix._id; //scope.search(factor.postfix_expr().primary().getText());
 		
 		//join two subtrees into one IR node
 		IRNode K = null;
@@ -166,13 +165,16 @@ public class IRBase {
 			op = ISA.DIVI;
 		}
 		
-		if(fp._id != null){
-			//MULT id, id, dest
-			//take the left subtree and factor it to the right subtree
-			K = new IRNode(op, fp._id, right, dest);
-		}else if(fp._reg != null){
-			//MULT reg, id, dest
-			K = new IRNode(op, fp._reg, right, dest);
+		if(fp._id != null && postfix._id != null){
+			K = new IRNode(op, fp._id, postfix._id, dest);
+		}else if(fp._reg != null && postfix._reg != null){
+			K = new IRNode(op, fp._reg, postfix._reg, dest);
+		}else if(fp._id != null && postfix._reg != null){
+			K = new IRNode(op, fp._id, postfix._reg, dest);
+		}else if(fp._reg != null && postfix._id != null){
+			K = new IRNode(op, fp._reg, postfix._id, dest);
+		}else{
+			System.err.println("Something gone wrong");
 		}
 		
 		_List.add(K);
@@ -234,17 +236,21 @@ public class IRBase {
 		Register dest = TempRegisterFactory.create();
 		//TODO: handle case where right of expression is lambda
 		IRNode irn = null;
+		Instruction op = ISA.ADDI;
+		if(expr_prefix.expr_prefix().addop().getText().equals("-")) op = ISA.SUBI;
 		
-		if(left._id != null && right._id != null)
-			irn = new IRNode(ISA.ADDI, left._id, right._id, dest);
-		if(left._reg != null && right._reg != null)
-			irn = new IRNode(ISA.ADDI, left._reg, right._reg, dest);
+		if(left._id != null && right._id != null){
+			irn = new IRNode(op, left._id, right._id, dest);
+		}else if(left._reg != null && right._reg != null){
+			irn = new IRNode(op, left._reg, right._reg, dest);
+		}else if(left._id != null && right._reg != null){
+			irn = new IRNode(op, left._id, right._reg, dest);
+		}else if(left._reg != null && right._id != null){
+			irn = new IRNode(op, left._reg, right._id, dest);
+		}else{
+			System.err.println("Something went wrong");
+		}
 		
-		/*if(left._id != null && right._reg != null)
-			irn = new IRNode(ISA.ADDI, left._id, right._reg, dest);
-		if(left._reg != null && right._id != null)
-			irn = new IRNode(ISA.ADDI, left._reg, right._id, dest);*/
-
 		_List.add(irn);
 		return new IRDest(dest);
 	}
