@@ -33,21 +33,5 @@ BEGIN
 		WRITE (b, newline);
 		c := 0 - 10;
 		WRITE (c, newline);
-		x := 1.0;
-		y := 2.0;
-		z := 3.14159;
-		WRITE (x, newline);
-		WRITE (z, newline);
-		WRITE (y, newline);
-		x := z/2.0;
-		y := z/y;
-		WRITE (x, newline);
-		WRITE (y, newline);
-		t := (x+y+z)/z;
-		WRITE (t, newline);
-		t := t*t;
-		WRITE (t, newline);
-		t := (t+z+t+t/2.0+z/4.0+z/5.0+z/6.0+z/7.0);
-		WRITE (t, newline);
 	END	
 END

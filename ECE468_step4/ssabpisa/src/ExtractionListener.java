@@ -6,14 +6,12 @@ public class ExtractionListener extends MicroBaseListener{
   private SymbolTable current_scope;
   private int blockcount;
   private SymbolTable root;
-  private IRList irlist;
-  private IRGraph irgraph;
+  private IRBase irlist;
  
   public ExtractionListener(MicroParser psr) {
       this.parser = psr;
       current_scope =  new SymbolTable(null, "GLOBAL");
-      irlist = new IRList();
-      irgraph = new IRGraph();
+      irlist = new IRBase();
       root = current_scope;
       this.blockcount = 0;
   }
@@ -22,7 +20,7 @@ public class ExtractionListener extends MicroBaseListener{
 	  return root;
   }
   
-  public IRList getIRList(){
+  public IRBase getIRList(){
 	  return irlist;
   }
 
