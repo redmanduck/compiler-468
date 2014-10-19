@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class IRNode {
      private Instruction OPCODE;
      private Register r_dest, r_src1, r_src2;
@@ -21,8 +19,12 @@ public class IRNode {
      private final int FORMAT_S = 8; 
      private final int FORMAT_O = 9; 
 
+     public Instruction getInstruction(){
+    	 return OPCODE;
+     }
      
      public IRNode(String label){
+    	 this.OPCODE = ISA.LABEL;
     	 this.label = label;
     	 format = FORMAT_S;
      }

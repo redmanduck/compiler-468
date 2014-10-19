@@ -16,6 +16,7 @@ public class Micro{
      ExtractionListener extractor = new ExtractionListener(psr);
      psr.setErrorHandler(new BailErrorStrategy());
      ParseTree t;
+     
 
      try{
         t = psr.program();
@@ -25,9 +26,12 @@ public class Micro{
      }
 
      walker.walk(extractor, t);
+     TinyGenerator asmgen = new TinyGenerator(extractor.getIRList());
      
    	 //Utils.printSymbolTable(extractor.getRootSymbolTable());
+     
    	 Utils.printIR(extractor.getIRList());
+   	 asmgen.printAll();
   }
 }
 

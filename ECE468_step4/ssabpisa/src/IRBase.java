@@ -1,11 +1,13 @@
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 
-public class IRBase {
-	private LinkedList<IRNode> _List;
+public class IRBase implements Iterable<IRNode>{
+	private ArrayList<IRNode> _List;
 
 	public IRBase(){
-		_List = new LinkedList<IRNode>();
+		_List = new ArrayList<IRNode>();
 	}
 	
 	public void LABEL(String L){
@@ -22,7 +24,7 @@ public class IRBase {
 	}
 	
 	public IRNode head(){
-		return _List.getFirst();
+		return _List.get(0);
 	}
 	
 	public IRNode get(int i){
@@ -292,12 +294,12 @@ public class IRBase {
 		public Id _id;
 		public IRDest(Register r){
 			if(r == null)
-				System.err.println("NULLIFIED");
+				System.err.println("Something gone wrong");
 			_reg = r;
 		}
 		public IRDest(Id id){
 			if(id == null) 
-				System.err.println("NULLIFIED");
+				System.err.println("Something gone wrong");
 			_id = id;
 		}
 		
@@ -309,5 +311,12 @@ public class IRBase {
 			}
 			return "<Empty IRDest>";
 		}
+	}
+
+	@Override
+	public Iterator<IRNode> iterator() {
+		Iterator<IRNode> inode = _List.iterator();
+        return inode; 
+
 	}
 }
