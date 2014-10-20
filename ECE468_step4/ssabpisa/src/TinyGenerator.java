@@ -14,13 +14,19 @@ public class TinyGenerator {
 		mapping.put(ISA.SUBI, ISA.subi);
 		mapping.put(ISA.SUBF, ISA.subr);
 		mapping.put(ISA.WRITEI, ISA.sys_writei);
-		mapping.put(ISA.READI, ISA.sys_readi);
 		mapping.put(ISA.WRITEF, ISA.sys_writer);
+		mapping.put(ISA.WRITES, ISA.sys_writer);
+
+		mapping.put(ISA.READI, ISA.sys_readi);
 		mapping.put(ISA.READF, ISA.sys_readr);
+
 		mapping.put(ISA.STOREI, ISA.move);
 		mapping.put(ISA.STOREF, ISA.move);
 		mapping.put(ISA.MULTI, ISA.muli);
 		mapping.put(ISA.MULTF, ISA.mulr);
+		mapping.put(ISA.DIVI, ISA.divi);
+		mapping.put(ISA.DIVF, ISA.divr);
+
 		mapping.put(ISA.LINK, ISA.link);
 		mapping.put(ISA.LABEL, ISA.label);
 
@@ -44,7 +50,7 @@ public class TinyGenerator {
 		String ircode = irn.toString();
 		
 		if(tiny == null){
-			return "<what the duck>";
+			return "<what the duck>" + ircode;
 		}		
 		
 		if(irn.getFormat() == IRNode.FORMAT_D){
@@ -67,8 +73,12 @@ public class TinyGenerator {
 			String move_op = ISA.move.getName();
 			Register reg = TempRegisterFactory.createTiny();
 			irdest_tinydest.put(getField(ircode, 3), reg);
-			String asms = move_op + " " + getField(ircode, 1) + " " + reg.toTiny() + "\n";
-			asms += tiny.getName() + " " + getField(ircode, 2) + " " + reg.toTiny();
+			
+			String d2 = irn.getIdOperand(2).name;
+			String d1 = irn.getIdOperand(1).name;
+
+			String asms = move_op + " " + d1 + " " + reg.toTiny() + "\n";
+			asms += tiny.getName() + " " +  d2 + " " + reg.toTiny();
 			
 			return asms;
 			
@@ -82,6 +92,26 @@ public class TinyGenerator {
 			asms += tiny.getName() + " " +  irdest_tinydest.get(getField(ircode, 2)).toTiny() + " " + reg.toTiny();
 			
 			return asms;
+		}else if(irn.getFormat() == IRNode.FORMAT_RDR){
+			
+			String move_op = ISA.move.getName();
+			Register reg = TempRegisterFactory.createTiny();
+			irdest_tinydest.put(getField(ircode, 3), reg);
+			
+			String d = irn.getIdOperand(2).name;
+			String asms = move_op + " " + irdest_tinydest.get(getField(ircode, 1)).toTiny() + " " + reg.toTiny() + "\n";
+			asms += tiny.getName() + " " + d  + " " + reg.toTiny();
+			
+			return asms;
+		}else if(irn.getFormat() == IRNode.FORMAT_DRR){
+			
+			String move_op = ISA.move.getName();
+			Register reg = TempRegisterFactory.createTiny();
+			irdest_tinydest.put(getField(ircode, 3), reg);
+	
+			String asms = move_op + " " + irn.getIdOperand(1).name + " " + reg.toTiny() + "\n";
+			asms += tiny.getName() + " " + irdest_tinydest.get(getField(ircode, 2)).toTiny() + " " + reg.toTiny();
+			return asms;
 			
 		}else if(irn.getFormat() == IRNode.FORMAT_O){
 			
@@ -94,56 +124,6 @@ public class TinyGenerator {
 		}else{
 			return "<unknown format>" + irn.getFormat();
 		}
-
-		// if(x.equals(ISA.ADDI)){
-		// 	return ISA.addi.getName() + opmrl(nd.toString()) + " reg";
-		// }else if(x.equals(ISA.ADDF)){
-		// 	return ISA.addr.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.SUBI)){
-		// 	return ISA.subi.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.SUBF)){
-		// 	return ISA.subr.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.MULTI)){
-		// 	return ISA.muli.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.MULTF)){
-		// 	return ISA.mulr.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.DIVI)){
-		// 	return ISA.divi.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.DIVF)){
-		// 	return ISA.divr.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.STOREI)){
-		// 	return ISA.move.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.STOREF)){
-		// 	return ISA.move.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.GT)){
-		// 	return ISA.addr.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.GE)){
-		// 	return ISA.addr.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.NE)){
-		// 	return ISA.addr.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.EQ)){
-		// 	return ISA.addr.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.LT)){
-		// 	return ISA.addr.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.JUMP)){
-		// 	return ISA.addr.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.LABEL)){
-		// 	return ISA.addr.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.READI)){
-		// 	return ISA.addr.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.READF)){
-		// 	return ISA.addr.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.WRITEI)){
-		// 	return ISA.addr.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.WRITEF)){
-		// 	return ISA.addr.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.WRITES)){
-		// 	return ISA.addr.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.RET)){
-		// 	return ISA.addr.getName() + " opmrl reg";
-		// }else if(x.equals(ISA.LINK)){
-		// 	return ISA.addr.getName() + " opmrl reg";
-		// }
 	}
 	
 	

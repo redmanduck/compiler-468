@@ -18,7 +18,19 @@ public class IRNode {
      public static final int FORMAT_DRR = 7; 
      public static final int FORMAT_S = 8; 
      public static final int FORMAT_O = 9; 
-
+     
+     public Id getIdOperand(int which){
+    	 switch(which){
+    	 case 1:
+    		 return id_src1;
+    	 case 2:
+    		 return id_src2;
+    	 case 3:
+    		 return id_dest;
+    	 default:
+    		 return null;
+    	 }
+     }
      public Instruction getInstruction(){
     	 return OPCODE;
      }
