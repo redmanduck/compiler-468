@@ -27,6 +27,8 @@ public class IRNode {
     		 return id_src2;
     	 case 3:
     		 return id_dest;
+    	 case 4:
+    		 return this.id_readwrite;
     	 default:
     		 return null;
     	 }

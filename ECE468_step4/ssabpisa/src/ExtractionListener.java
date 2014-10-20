@@ -74,6 +74,7 @@ public class ExtractionListener extends MicroBaseListener{
   }
   
   public void exitPgm_body(MicroParser.Pgm_bodyContext ctx) {
+	irlist.RET();
     leaveScope();
   }
 
