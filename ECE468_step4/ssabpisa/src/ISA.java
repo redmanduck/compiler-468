@@ -1,27 +1,27 @@
 public class ISA{
 	
-	public static Instruction ADDI = new Instruction("ADDI");
-	public static Instruction ADDF = new Instruction("ADDF");
-	public static Instruction SUBI = new Instruction("SUBI");
-	public static Instruction SUBF = new Instruction("SUBF");
-	public static Instruction MULTI = new Instruction("MULTI");
-	public static Instruction MULTF = new Instruction("MULTF");
-	public static Instruction DIVI = new Instruction("DIVI");
-	public static Instruction DIVF = new Instruction("DIVF");
-	public static Instruction STOREI = new Instruction("STOREI");
-	public static Instruction STOREF = new Instruction("STOREF");
-	public static Instruction GT = new Instruction("GT");
-	public static Instruction GE = new Instruction("GE");
-	public static Instruction LT = new Instruction("LT");
-	public static Instruction NE = new Instruction("NE");
-	public static Instruction EQ = new Instruction("EQ");
-	public static Instruction JUMP = new Instruction("JUMP");
-	public static Instruction LABEL = new Instruction("LABEL");
-	public static Instruction READI = new Instruction("READI");
-	public static Instruction READF = new Instruction("READF");
-	public static Instruction WRITEI = new Instruction("WRITEI");
-	public static Instruction WRITEF = new Instruction("WRITEF");
-	public static Instruction WRITES = new Instruction("WRITES");
+	public static Instruction ADDI = new Instruction("ADDI", 3);
+	public static Instruction ADDF = new Instruction("ADDF", 3);
+	public static Instruction SUBI = new Instruction("SUBI", 3);
+	public static Instruction SUBF = new Instruction("SUBF", 3);
+	public static Instruction MULTI = new Instruction("MULTI", 3);
+	public static Instruction MULTF = new Instruction("MULTF", 3);
+	public static Instruction DIVI = new Instruction("DIVI", 3);
+	public static Instruction DIVF = new Instruction("DIVF", 3);
+	public static Instruction STOREI = new Instruction("STOREI", 2);
+	public static Instruction STOREF = new Instruction("STOREF", 2);
+	public static Instruction GT = new Instruction("GT", 3);
+	public static Instruction GE = new Instruction("GE", 3);
+	public static Instruction LT = new Instruction("LT", 3);
+	public static Instruction NE = new Instruction("NE",3 );
+	public static Instruction EQ = new Instruction("EQ", 3);
+	public static Instruction JUMP = new Instruction("JUMP", 1);
+	public static Instruction LABEL = new Instruction("LABEL", 1);
+	public static Instruction READI = new Instruction("READI", 1);
+	public static Instruction READF = new Instruction("READF", 1);
+	public static Instruction WRITEI = new Instruction("WRITEI", 1);
+	public static Instruction WRITEF = new Instruction("WRITEF", 1);
+	public static Instruction WRITES = new Instruction("WRITES",1 );
 	public static Instruction RET = new Instruction("RET");
 	public static Instruction LINK = new Instruction("LINK");
 	
@@ -51,11 +51,11 @@ public class ISA{
 	public static Instruction jlt = new Instruction("jlt", 1);
 	public static Instruction jge = new Instruction("jge", 1);
 	public static Instruction jle = new Instruction("jle", 1);
-	public static Instruction sys_readi = new Instruction("sys readi", 0);
-	public static Instruction sys_readr = new Instruction("sys readr", 0);
-	public static Instruction sys_writei = new Instruction("sys writei", 0);
-	public static Instruction sys_writer = new Instruction("sys writer", 0);
-	public static Instruction sys_writes = new Instruction("sys writes", 0);
+	public static Instruction sys_readi = new Instruction("sys readi", 1);
+	public static Instruction sys_readr = new Instruction("sys readr", 1);
+	public static Instruction sys_writei = new Instruction("sys writei", 1);
+	public static Instruction sys_writer = new Instruction("sys writer", 1);
+	public static Instruction sys_writes = new Instruction("sys writes", 1);
 	public static Instruction sys_halt = new Instruction("sys halt");
 	public static Instruction end = new Instruction("end");
 	

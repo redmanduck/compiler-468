@@ -8,4 +8,8 @@ public class Register {
 	public String toString(){
 		return "$" + type + number;
 	}
+
+	public String toTiny(){
+		return "r" + number;
+	}
 }

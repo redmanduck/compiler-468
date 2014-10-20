@@ -8,19 +8,23 @@ public class IRNode {
      private String label;
      
      private int format;
-     private final int FORMAT_IR = 0; // int reg
-     private final int FORMAT_FR = 1; // float reg
-     private final int FORMAT_RD = 2; // reg identifier
-     private final int FORMAT_DDR = 3; //id id reg
-     private final int FORMAT_RDR = 4; 
-     private final int FORMAT_RRR = 5; 
-     private final int FORMAT_D = 6; 
-     private final int FORMAT_DRR = 7; 
-     private final int FORMAT_S = 8; 
-     private final int FORMAT_O = 9; 
+     public static final int FORMAT_IR = 0; // int reg
+     public static final int FORMAT_FR = 1; // float reg
+     public static final int FORMAT_RD = 2; // reg identifier
+     public static final int FORMAT_DDR = 3; //id id reg
+     public static final int FORMAT_RDR = 4; 
+     public static final int FORMAT_RRR = 5; 
+     public static final int FORMAT_D = 6; 
+     public static final int FORMAT_DRR = 7; 
+     public static final int FORMAT_S = 8; 
+     public static final int FORMAT_O = 9; 
 
      public Instruction getInstruction(){
     	 return OPCODE;
+     }
+     
+     public int getFormat(){
+    	 return format;
      }
      
      public IRNode(String label){
