@@ -5,7 +5,7 @@ public class TinyGenerator {
 	IRBase IR;
 	Hashtable<Instruction, Instruction> map_ISA;
 	Hashtable<String, Register> relations_TinyIRDests;
-	LinkedHashSet<Id> usedSymbols;
+	LinkedHashSet<Id> usedSymbols; //contains all LVALUES
 	
 	public TinyGenerator(IRBase _irb) {
 		IR = _irb;
@@ -74,10 +74,15 @@ public class TinyGenerator {
 			return null;
 		}		
 		
+		
 		if(irn.getFormat() == IRNode.FORMAT_D){
 			
 			usedSymbols.add(irn.getIdOperand(4));
 			return tiny.getName() + " " + irn.getIdOperand(4).name;
+		}else if(irn.getFormat() == IRNode.FORMAT_DD){
+			
+			usedSymbols.add(irn.getIdOperand(3));
+			return tiny.getName() + " " + irn.getIdOperand(1).name + " " + irn.getIdOperand(3).name;
 			
 		}else if(irn.getFormat() == IRNode.FORMAT_IR || irn.getFormat() == IRNode.FORMAT_FR){
 			

@@ -5,9 +5,9 @@ public class TempRegisterFactory {
 	private static int tiny_tempcount = 0;
 	private static Hashtable<Integer, Register> regs = new Hashtable<Integer, Register>();
 	private static Register previous;
-	public static Register create(){
+	public static Register create(String type){
 		int v = tempcount++;
-		Register r = new Register('T', v);
+		Register r = new Register('T', v, type);
 		regs.put(v, r);
 		previous = r;
 		return r;

@@ -21,7 +21,8 @@ public class Micro{
      try{
         t = psr.program();
      } catch (Exception fpe) {
-	      System.out.println("Not accepted");
+    	 fpe.printStackTrace();
+	     System.out.println("Not accepted");
         return;
      }
 

@@ -18,6 +18,7 @@ public class IRNode {
      public static final int FORMAT_DRR = 7; 
      public static final int FORMAT_S = 8; 
      public static final int FORMAT_O = 9; 
+     public static final int FORMAT_DD = 10;
      
      public Id getIdOperand(int which){
     	 switch(which){
@@ -111,6 +112,13 @@ public class IRNode {
 		this.r_dest = dest;
 		format = FORMAT_DRR;
 	}
+	
+	public IRNode(Instruction OPCODE, Id _id1, Id _id2) {
+		this.OPCODE = OPCODE;
+		this.id_src1 = _id1;
+		this.id_dest = _id2;
+		format = FORMAT_DD;
+	}
 
 	@Override 
 	public String toString(){
@@ -119,6 +127,8 @@ public class IRNode {
 		
 		String prefix = ";" + this.OPCODE.getName();
 		switch(format){
+		case FORMAT_DD:
+			return prefix + " " + String.format("%s %s", this.id_src1.name, this.id_dest.name);
 		case FORMAT_IR:
 			return prefix + " " + String.format("%s %s", this.i_src1, this.r_dest.toString());
 		case FORMAT_FR: 

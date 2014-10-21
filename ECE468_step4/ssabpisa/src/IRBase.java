@@ -50,15 +50,29 @@ public class IRBase implements Iterable<IRNode>{
 		}
 		
 		IRNode nodeA = null;
+		
 		IRDest v = attach_Expressions(scope, ctx.expr());
 		Register i_dest = null;
-			
+
 		if(v == null){
 			System.err.print("Expression returned null\n");//TODO: and exit?
 			return null;
 		}
 		i_dest = v._reg;
-		IRNode nodeB = new IRNode(ISA.STOREI, i_dest, dest_token);
+		
+		Instruction op  = ISA.STOREI;
+		if(dest_token.type.equals("FLOAT")){
+			op = ISA.STOREF;
+		}
+		IRNode nodeB = null;
+		
+		if(i_dest != null){
+			 nodeB = new IRNode(op, i_dest, dest_token);
+		}else{
+			nodeB = new IRNode(op, v._id, dest_token);
+		}
+		
+
 		_List.add(nodeB);
 		
 		return null;
@@ -71,20 +85,14 @@ public class IRBase implements Iterable<IRNode>{
 	 *  @return last node in the list
 	 */
 	public IRDest attach_Expressions(SymbolTable scope, MicroParser.ExprContext expr){
-		//System.out.format("Processing expression: %s\n", expr.getText());
-		//System.out.format("Processing prefix %s\n", expr.expr_prefix().getText());
 		IRDest dleft = attach_ExprPrefix(scope, expr.expr_prefix());
-		//System.out.format("Processing factor %s\n", expr.factor().getText());
 		IRDest dright = attach_Factor(scope, expr.factor());
-		//System.out.print("dright Returned: ");
-		//System.out.println(dright);
-		
+				
 		if(dleft == null && dright == null){
 			return null;
 		}
 		
 		if(dleft == null){
-			//no expr_prefix,  like a*b or 1
 			return dright;
 		}
 		
@@ -93,9 +101,15 @@ public class IRBase implements Iterable<IRNode>{
 		}
 		
 		IRNode N = null;
-		Register dest = TempRegisterFactory.create();
-		Instruction op = ISA.ADDI;
-		if(expr.expr_prefix().addop().getText().equals("-")) op = ISA.SUBI;
+		
+		
+		
+		Instruction op = ISA.transform_type(ISA.ADDI, dleft.getDataTypePrecedence(), dright.getDataTypePrecedence());
+		
+		if(expr.expr_prefix().addop().getText().equals("-")) 
+			op = ISA.transform_type(ISA.SUBI, dleft.getDataTypePrecedence(), dright.getDataTypePrecedence());
+		
+		Register dest = TempRegisterFactory.create(op.supported_type);
 		
 		if(dleft._reg != null && dright._reg != null){
 			N = new IRNode(op, dleft._reg, dright._reg, dest);
@@ -123,18 +137,19 @@ public class IRBase implements Iterable<IRNode>{
 			 return attach_Expressions(scope, postfix.primary().expr()); 
 		}else if(postfix.primary().FLOATLITERAL() != null){
 			//we detect a float literal, must be loaded to Temp Register
-			Register temp = TempRegisterFactory.create();
+			Register temp = TempRegisterFactory.create("FLOAT");
 			_List.add(new IRNode(ISA.STOREF, Float.parseFloat(postfix.primary().FLOATLITERAL().getText()) , temp));
 			return new IRDest(temp);
 		}else if(postfix.primary().INTLITERAL() != null){
 			//we detect an int literal, must be loaded to Temp Register
-			Register temp = TempRegisterFactory.create();
+			Register temp = TempRegisterFactory.create("INT");
 			_List.add(new IRNode(ISA.STOREI, Integer.parseInt(postfix.primary().INTLITERAL().getText()) , temp));
 			return new IRDest(temp);
 		}else if(postfix.primary().id() != null){
 			//we detect an id, DO NOT LOAD to register
 			return new IRDest(scope.search(postfix.primary().id().getText()));
 		}
+		
 		return null;
 	}
 	
@@ -143,7 +158,7 @@ public class IRBase implements Iterable<IRNode>{
 		if(factor == null) return null;
 		//if left subtree is empty
 		
-		if(factor.factor_prefix().getText().length() == 0){
+		if(factor.factor_prefix().children == null){
 			//search right subtree
 			//System.out.println("Searching postfix_expr");
 			IRDest d =  attach_PostfixExpr(scope, factor.postfix_expr());
@@ -161,20 +176,26 @@ public class IRBase implements Iterable<IRNode>{
 		
 		//join two subtrees into one IR node
 		IRNode K = null;
-		Register dest = TempRegisterFactory.create();
 		
-		Instruction op = ISA.MULTI;
+		
+		Instruction op = ISA.transform_type(ISA.MULTI, fp.getDataTypePrecedence(), postfix.getDataTypePrecedence());
+		
 		if(factor.factor_prefix().mulop().getText().equals("/")){
-			op = ISA.DIVI;
+			op = ISA.transform_type(ISA.DIVI, fp.getDataTypePrecedence(), postfix.getDataTypePrecedence());
 		}
+		
+		Register dest = TempRegisterFactory.create(op.supported_type);
 		
 		if(fp._id != null && postfix._id != null){
 			K = new IRNode(op, fp._id, postfix._id, dest);
 		}else if(fp._reg != null && postfix._reg != null){
+			
 			K = new IRNode(op, fp._reg, postfix._reg, dest);
 		}else if(fp._id != null && postfix._reg != null){
+			
 			K = new IRNode(op, fp._id, postfix._reg, dest);
 		}else if(fp._reg != null && postfix._id != null){
+			
 			K = new IRNode(op, fp._reg, postfix._id, dest);
 		}else{
 			System.err.println("Something gone wrong");
@@ -192,9 +213,9 @@ public class IRBase implements Iterable<IRNode>{
 
 
 	private IRDest attach_FactorPrefix(SymbolTable scope, MicroParser.Factor_prefixContext self) {
-		if(self.getText().length() == 0) return null;
+		if(self.children == null) return null;
 		
-		if(self.factor_prefix().getText().length() == 0){
+		if(self.factor_prefix().children == null){
 			return attach_PostfixExpr(scope, self.postfix_expr());
 		}
 
@@ -203,7 +224,8 @@ public class IRBase implements Iterable<IRNode>{
 		
 		IRDest fact = attach_FactorPrefix(scope, self.factor_prefix());
 		IRDest postfix = attach_PostfixExpr(scope, self.postfix_expr());
-		Register dest = TempRegisterFactory.create();
+		
+		Register dest = TempRegisterFactory.create("INT");
 		
 		IRNode irn = null;
 		if(fact._reg != null && postfix._reg != null){
@@ -228,18 +250,21 @@ public class IRBase implements Iterable<IRNode>{
 	 * Left hand side of ADD 
 	 */
 	public IRDest attach_ExprPrefix(SymbolTable scope, MicroParser.Expr_prefixContext expr_prefix){
-		if(expr_prefix.getText().length() == 0) return null;
-		if(expr_prefix.expr_prefix().getText().length() == 0){
+		if(expr_prefix.children == null) return null;
+		
+		if(expr_prefix.expr_prefix().children == null){
 			//has no more left recursion, so we go right
 			return attach_Factor(scope, expr_prefix.factor());
 		}
 		
 		IRDest left = attach_ExprPrefix(scope, expr_prefix.expr_prefix());
 		IRDest right = attach_Factor(scope, expr_prefix.factor());
-		Register dest = TempRegisterFactory.create();
 		//TODO: handle case where right of expression is lambda
+		
 		IRNode irn = null;
-		Instruction op = ISA.ADDI;
+		Instruction op = ISA.transform_type(ISA.ADDI, left.getDataTypePrecedence(), right.getDataTypePrecedence());
+		Register dest = TempRegisterFactory.create(op.supported_type);
+	
 		if(expr_prefix.expr_prefix().addop().getText().equals("-")) op = ISA.SUBI;
 		
 		if(left._id != null && right._id != null){
@@ -289,29 +314,7 @@ public class IRBase implements Iterable<IRNode>{
 		
 	}
 	
-	class IRDest{
-		public Register _reg;
-		public Id _id;
-		public IRDest(Register r){
-			if(r == null)
-				System.err.println("Something gone wrong");
-			_reg = r;
-		}
-		public IRDest(Id id){
-			if(id == null) 
-				System.err.println("Something gone wrong");
-			_id = id;
-		}
-		
-		public String toString(){
-			if(_id != null){
-				return "<Id>" + _id.name;
-			}else if(_reg != null){
-				return "<Reg>" + _reg.toString();
-			}
-			return "<Empty IRDest>";
-		}
-	}
+	
 
 	@Override
 	public Iterator<IRNode> iterator() {
