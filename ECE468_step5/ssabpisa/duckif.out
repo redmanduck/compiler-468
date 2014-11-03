@@ -1,0 +1,28 @@
+;IR code
+;LABEL main
+;LINK
+;STOREI 2 $T1
+;STOREI $T1 i
+;STOREI 42 $T2
+;STOREI $T2 a
+;LABEL BLOCK 1
+;LINK
+;STOREI 2 $T3
+;STOREI $T3 a
+;LABEL BLOCK 2
+;LINK
+;STOREI 1 $T4
+;STOREI $T4 a
+;RET
+;tiny code
+var i
+var a
+move 2 r0
+move r0 i
+move 42 r1
+move r1 a
+move 2 r2
+move r2 a
+move 1 r3
+move r3 a
+sys halt
