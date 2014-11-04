@@ -314,12 +314,15 @@ public class IRBase implements Iterable<IRNode>{
 		
 	}
 	
+	public void attach_If(SymbolTable current_scope, MicroParser.Func_bodyContext ctx) {
+		_List.add(new IRNode(AutoLabelFactory.create()));
+	}
 	
-
 	@Override
 	public Iterator<IRNode> iterator() {
 		Iterator<IRNode> inode = _List.iterator();
         return inode; 
 
 	}
+
 }

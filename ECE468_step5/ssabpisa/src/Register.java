@@ -2,6 +2,7 @@ public class Register {
 	public char type;
 	public int number;
 	public String dtype;
+	
 	public Register(char type, int number, String datatype){
 		this.type = type;
 		this.number = number;

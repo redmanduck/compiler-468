@@ -99,6 +99,7 @@ public class ExtractionListener extends MicroBaseListener{
   
   public void exitIf_stmt(MicroParser.Func_bodyContext ctx){
 	leaveScope();
+	irlist.attach_If(current_scope, ctx);
   }
   
   public void enterFunc_declarations(@NotNull MicroParser.Func_declarationsContext ctx) { 
@@ -132,7 +133,7 @@ public class ExtractionListener extends MicroBaseListener{
   @Override public void exitRead_stmt(@NotNull MicroParser.Read_stmtContext ctx) {
 	  irlist.attach_Read(current_scope, ctx);
   }
-
-
   
+  
+
 }

@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-
-import org.antlr.runtime.tree.CommonTree;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
@@ -16,7 +13,6 @@ public class Micro{
      ExtractionListener extractor = new ExtractionListener(psr);
      psr.setErrorHandler(new BailErrorStrategy());
      ParseTree t;
-     
 
      try{
         t = psr.program();
