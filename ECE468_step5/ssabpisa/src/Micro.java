@@ -13,7 +13,6 @@ public class Micro{
      ExtractionListener extractor = new ExtractionListener(psr);
      psr.setErrorHandler(new BailErrorStrategy());
      ParseTree t;
-     
 
      try{
         t = psr.program();

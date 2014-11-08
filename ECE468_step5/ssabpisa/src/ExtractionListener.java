@@ -154,5 +154,4 @@ public class ExtractionListener extends MicroBaseListener {
 	public void exitRead_stmt(@NotNull MicroParser.Read_stmtContext ctx) {
 		irlist.attach_Read(current_scope, ctx);
 	}
-
 }
