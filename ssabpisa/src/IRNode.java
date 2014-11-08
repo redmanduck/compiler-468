@@ -5,7 +5,7 @@ public class IRNode {
      private Id id_dest, id_src1, id_src2;
      private float f_src1;
      private Id id_readwrite;
-     private String label;
+     private String label,jtarget;
      
      private int format;
      public static final int FORMAT_IR = 0; // int reg
@@ -19,7 +19,11 @@ public class IRNode {
      public static final int FORMAT_S = 8; 
      public static final int FORMAT_O = 9; 
      public static final int FORMAT_DD = 10;
-     
+     public static final int FORMAT_RRT = 11;
+     public static final int FORMAT_RDT = 12;
+     public static final int FORMAT_DRT = 13; 
+     public static final int FORMAT_DDT = 14;
+
      public Id getIdOperand(int which){
     	 switch(which){
     	 case 1:
@@ -120,6 +124,38 @@ public class IRNode {
 		format = FORMAT_DD;
 	}
 
+	public IRNode(Instruction conditional_control, Register left, Register right, String target) {
+		this.OPCODE = conditional_control;
+		this.r_src1 = left;
+		this.r_src2 = right;
+		this.jtarget = target;
+		format = FORMAT_RRT;
+	}
+	
+	public IRNode(Instruction conditional_control, Register left, Id right, String string) {
+		format = FORMAT_RDT;
+		this.OPCODE = conditional_control;
+		this.r_src1 = left;
+		this.id_src2 = right;
+		this.jtarget = string;
+	}
+
+	public IRNode(Instruction conditional_control, Id left, Register right, String string) {
+		format = FORMAT_DRT;
+		this.OPCODE = conditional_control;
+		this.id_src1 = left;
+		this.r_src2 = right;
+		this.jtarget = string;
+	}
+	
+	public IRNode(Instruction conditional_control, Id left, Id right, String string) {
+		format = FORMAT_DDT;
+		this.OPCODE = conditional_control;
+		this.id_src1 = left;
+		this.id_src2 = right;
+		this.jtarget = string;
+	}
+	
 	@Override 
 	public String toString(){
 		if(this.label != null)
@@ -141,6 +177,14 @@ public class IRNode {
 			return prefix + " " + String.format("%s %s %s", this.r_src1.toString(), this.id_src2.name, this.r_dest.toString());
 		case FORMAT_RRR:
 			return prefix + " " + String.format("%s %s %s", this.r_src1.toString(), this.r_src2.toString(), this.r_dest.toString());
+		case FORMAT_RRT:
+			return prefix + " " + String.format("%s %s %s", this.r_src1.toString(), this.r_src2.toString(), this.jtarget.toString());
+		case FORMAT_RDT:
+			return prefix + " " + String.format("%s %s %s", this.r_src1.toString(), this.id_src2.toString(), this.jtarget.toString());
+		case FORMAT_DRT:
+			return prefix + " " + String.format("%s %s %s", this.id_src1.toString(), this.r_src2.toString(), this.jtarget.toString());
+		case FORMAT_DDT:
+			return prefix + " " + String.format("%s %s %s", this.id_src1.toString(), this.id_src2.toString(), this.jtarget.toString());
 		case FORMAT_D:
 			return prefix + " " + this.id_readwrite.name;
 		case FORMAT_DRR:
@@ -148,43 +192,7 @@ public class IRNode {
 		case FORMAT_O:
 			return ";" + this.OPCODE.getName();
 		}
-		/*
-		
-		//old stuff
-		if(this.label != null)
-			return String.format(";LABEL " + this.label);
-		
-		if(OPCODE == ISA.ADDI && r_src1 != null && r_src2 != null && r_dest != null)
-			return String.format(";%s %s %s %s", OPCODE.getName(), r_src1.toString() ,r_src2.toString(), r_dest.toString()); 
-		
-		if(OPCODE == ISA.ADDI && r_src1 != null && id_src2 != null)
-			return String.format(";%s %s %s %s", OPCODE.getName(), r_src1.toString() ,id_src2.name, r_dest.toString()); 
-		
-		
-		if(OPCODE == ISA.STOREI && r_dest != null)
-			return  String.format(";%s %d %s", OPCODE.getName(), i_src1 ,r_dest.toString()); 
-		
-		if(OPCODE == ISA.STOREI && r_src1 != null)
-			return  String.format(";%s %s %s", OPCODE.getName(), r_src1.toString(), id_dest.name);
-		
-		if(OPCODE == ISA.READI || OPCODE == ISA.READF)
-			return String.format(";%s %s", OPCODE.getName(), id_readwrite.name);
-		
-		if(this.OPCODE == ISA.MULTI || this.OPCODE == ISA.DIVI)
-			if(this.id_src1 != null && this.id_src2 != null){
-				return String.format(";%s %s %s %s", OPCODE.getName(), id_src1.name, id_src2.name, r_dest.toString());
-			}else if(this.r_src1 != null && this.id_src2 != null){
-				return String.format(";%s %s %s %s", OPCODE.getName(), r_src1.toString(), id_src2.name, r_dest.toString());
-			}else if(this.id_src1 != null && this.r_src2 != null){
-				return String.format(";%s %s %s %s", OPCODE.getName(), id_src1.name, r_src2.toString(), r_dest.toString());
-			}else if(this.r_src1 != null && this.r_src2 != null){
-				return String.format(";%s %s %s %s", OPCODE.getName(), r_src1.toString(), r_src2.toString(), r_dest.toString());
-			}else{
-				return "MULT <toString>";
-			}
-		if(this.OPCODE == ISA.WRITEI || this.OPCODE == ISA.WRITES || this.OPCODE == ISA.WRITES)
-			return String.format(";%s %s", OPCODE.getName(), id_readwrite.name);
-		*/
+
 		return ";" + this.OPCODE.getName();
 	}
 

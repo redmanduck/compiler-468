@@ -21,6 +21,13 @@ public class ISA{
 	public static Instruction LT = new Instruction("LT", 3, "INT");
 	public static Instruction NE = new Instruction("NE",3, "INT");
 	public static Instruction EQ = new Instruction("EQ", 3, "INT");
+	
+	public static Instruction GTI = new Instruction("GTI", 3, "INT"); //?
+	public static Instruction GEI = new Instruction("GEI", 3, "INT"); //? the example is inconsistent with the manual
+	public static Instruction LTI = new Instruction("LTI", 3, "INT"); //
+	public static Instruction NEI = new Instruction("NEI",3, "INT"); //
+	public static Instruction EQI = new Instruction("EQI", 3, "INT"); //
+
 	public static Instruction JUMP = new Instruction("JUMP", 1, "ADDR");
 	public static Instruction LABEL = new Instruction("LABEL", 1, "ADDR");
 	

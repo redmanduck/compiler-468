@@ -7,4 +7,8 @@ public class Id extends SemanticRecord{
    public Id(String name, String type, String value){
 	   super(name, type, value);
    }
+   
+   public String toString(){
+	   return name;
+   }
 }

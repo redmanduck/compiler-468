@@ -51,9 +51,7 @@ public class IRCollection implements Iterable<IRNode>{
 			System.err.println("Symbol not found: " + ctx.id().getText());
 			System.exit(1);
 		}
-		
-		IRNode nodeA = null;
-		
+				
 		IRDest v = attach_Expressions(scope, ctx.expr());
 		Register i_dest = null;
 
@@ -325,5 +323,22 @@ public class IRCollection implements Iterable<IRNode>{
 		Iterator<IRNode> inode = _List.iterator();
         return inode; 
 
+	}
+
+	public void attach_GEI(IRDest left, IRDest right, String string) {
+		IRNode n = null;
+		if(left._reg != null && right._reg != null){
+			n = new IRNode(ISA.GEI, left._reg, right._reg, string);
+		}else if(left._reg != null && right._id != null){
+			
+			n = new IRNode(ISA.GEI, left._reg, right._id, string);
+		}else if(left._id != null && right._reg != null){
+			
+			n = new IRNode(ISA.GEI, left._id, right._reg, string);
+		}else if(left._id != null && right._id != null){
+			
+			n = new IRNode(ISA.GEI, left._id, right._id, string);
+		}
+		_List.add(n);
 	}
 }

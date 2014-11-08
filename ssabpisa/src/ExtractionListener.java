@@ -30,7 +30,6 @@ public class ExtractionListener extends MicroBaseListener {
 
 		//System.out.println("ENTERING SCOPE: " + current_scope.scopename);
 
-		irlist.LABEL(scopename);
 	}
 
 	private void leaveScope() {
@@ -91,14 +90,17 @@ public class ExtractionListener extends MicroBaseListener {
 	}
 
 	public void enterIf_stmt(MicroParser.If_stmtContext ctx) {
+		IRDest right = irlist.attach_Expressions(current_scope, ctx.cond().expr(1));
+		IRDest left = irlist.attach_Expressions(current_scope, ctx.cond().expr(0));
+		irlist.attach_GEI(left, right, "else_label");
 		enterScope("BLOCK " + ++blockcount);
 	}
 
 	public void enterElse_part(@NotNull MicroParser.Else_partContext ctx) {
 		if (ctx.decl() == null) {
+			//there is no else part
 			return;
 		}
-		//System.out.println("Entering Else");
 		leaveScope(); // leave the if scope
 		enterScope("BLOCK " + ++blockcount);
 	}
@@ -107,38 +109,27 @@ public class ExtractionListener extends MicroBaseListener {
 		if (ctx.func_decl() == null) {
 			return;
 		}
+		
 		enterScope(ctx.func_decl().id().getText());
+		irlist.LABEL(current_scope.scopename);
 		irlist.LINK();
 	}
 
 	public void enterWhile_stmt(@NotNull MicroParser.While_stmtContext ctx) {
 		enterScope("BLOCK " + ++blockcount);
 	}
-//
-//	@Override
-//	public void exitElse_part(@NotNull MicroParser.Else_partContext ctx) {
-//		//ok
-//		System.out.println("Exiting Else Part");
-//		leaveScope();
-//	}
 
 	@Override
 	public void exitIf_stmt(@NotNull MicroParser.If_stmtContext ctx) {
-		//System.out.println("Exiting If       `" + ctx.else_part().getText() + "`");
+		irlist.LABEL("LEAV_" + current_scope.hashCode());
 		leaveScope();
 	}
 
 	@Override
 	public void exitWhile_stmt(@NotNull MicroParser.While_stmtContext ctx) {
-		//ok
 		leaveScope();
 	}
 
-//	@Override
-//	public void exitFunc_decl(@NotNull MicroParser.Func_declContext ctx) {
-//		//ok
-//		leaveScope();
-//	}
 
 	@Override
 	public void exitWrite_stmt(@NotNull MicroParser.Write_stmtContext ctx) {
