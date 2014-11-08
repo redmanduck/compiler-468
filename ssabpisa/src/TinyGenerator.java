@@ -13,7 +13,7 @@ public class TinyGenerator {
 		//generate IR -> asm map
 		map_ISA = new HashMap<Instruction, Instruction[]>(); 
 		reg_map_ir_tiny = new Hashtable<String, Register>();
-		usedSymbols = new LinkedHashSet<Id>();
+		usedSymbols = new LinkedHashSet<Id>(); //these are bunch of used stuff 
 		loadIRMapping();
 	}
 	
@@ -97,8 +97,16 @@ public class TinyGenerator {
 			return tiny.getName() + " " + irn.getIdOperand(4).name;
 		}else if(irn.getFormat() == IRNode.FORMAT_DD){
 			
+			//Note we cannot do move id1, id2 , we have to do
+			//move id1, r1
+			//move r1, id2
+
 			usedSymbols.add(irn.getIdOperand(3));
-			return tiny.getName() + " " + irn.getIdOperand(1).name + " " + irn.getIdOperand(3).name;
+			Register dest = TempRegisterFactory.createTiny();
+
+			String asms = ISA.move.getName() + " " + irn.getIdOperand(1).name +  " " + dest.toTiny() + "\n";
+			asms += tiny.getName() + " " + dest.toTiny() + " " + irn.getIdOperand(3).name;
+			return asms;
 			
 		}else if(irn.getFormat() == IRNode.FORMAT_IR || irn.getFormat() == IRNode.FORMAT_FR){
 			
@@ -113,7 +121,7 @@ public class TinyGenerator {
 			return tiny.getName() + " " + TempRegisterFactory.previous().toTiny() + " " + irn.getIdOperand(3).name;
 			
 		}else if(irn.getFormat() == IRNode.FORMAT_DDR){
-			
+
 			String move_op = ISA.move.getName();
 			Register reg = TempRegisterFactory.createTiny();
 			reg_map_ir_tiny.put(getField(ircode, 3), reg);

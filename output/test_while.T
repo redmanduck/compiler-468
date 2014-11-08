@@ -8,15 +8,20 @@
 ;STOREI 1 $T3
 ;STOREI $T3 j
 ;STOREF num approx
-;STOREF 0.5 $T4
-;DIVF num approx $T5
-;ADDF approx $T5 $T6
-;MULTF $T4 $T6 $T7
-;STOREF $T7 newapprox
+;LABEL w_enter416670315
+;STOREI 0 $T4
+;EQI i $T4 w_exit416670315
+;STOREF 0.5 $T5
+;DIVF num approx $T6
+;ADDF approx $T6 $T7
+;MULTF $T5 $T7 $T8
+;STOREF $T8 newapprox
 ;STOREF newapprox approx
-;STOREI 1 $T8
-;SUBI i $T8 $T9
-;STOREI $T9 i
+;STOREI 1 $T9
+;SUBI i $T9 $T10
+;STOREI $T10 i
+;JUMP w_enter416670315
+;LABEL w_exit416670315
 ;WRITEF approx
 ;RET
 ;tiny code
@@ -32,19 +37,27 @@ move 100 r1
 move r1 i
 move 1 r2
 move r2 j
-move num approx
-move 0.5 r3
-move num r4
-divr approx r4
-move approx r5
-addr r4 r5
-move r3 r6
-mulr r5 r6
-move r6 newapprox
-move newapprox approx
-move 1 r7
-move i r8
-subi r7 r8
-move r8 i
+move num r3
+move r3 approx
+label w_enter416670315
+move 0 r4
+cmpi i r4
+jeq w_exit416670315
+move 0.5 r5
+move num r6
+divr approx r6
+move approx r7
+addr r6 r7
+move r5 r8
+mulr r7 r8
+move r8 newapprox
+move newapprox r9
+move r9 approx
+move 1 r10
+move i r11
+subi r10 r11
+move r11 i
+jmp w_enter416670315
+label w_exit416670315
 sys writer approx
 sys halt
