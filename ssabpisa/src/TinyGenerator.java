@@ -1,39 +1,52 @@
+import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Hashtable;
 public class TinyGenerator {
 	IRCollection IR;
-	Hashtable<Instruction, Instruction> map_ISA;
-	Hashtable<String, Register> relations_TinyIRDests;
+	HashMap<Instruction, Instruction[]> map_ISA;
+	Hashtable<String, Register> reg_map_ir_tiny;
 	LinkedHashSet<Id> usedSymbols; //contains all LVALUES
 	
 	public TinyGenerator(IRCollection _irb) {
 		IR = _irb;
 		//generate IR -> asm map
-		map_ISA = new Hashtable<Instruction, Instruction>(); 
-		relations_TinyIRDests = new Hashtable<String, Register>();
+		map_ISA = new HashMap<Instruction, Instruction[]>(); 
+		reg_map_ir_tiny = new Hashtable<String, Register>();
 		usedSymbols = new LinkedHashSet<Id>();
+		loadIRMapping();
+	}
+	
+	private void loadIRMapping(){
+		map_ISA.put(ISA.ADDI, new Instruction []{ISA.addi});
+		map_ISA.put(ISA.ADDF, new Instruction []{ISA.addr});
+		map_ISA.put(ISA.SUBI, new Instruction []{ISA.subi});
+		map_ISA.put(ISA.SUBF, new Instruction []{ISA.subr});
+		map_ISA.put(ISA.WRITEI, new Instruction []{ISA.sys_writei});
+		map_ISA.put(ISA.WRITEF, new Instruction []{ISA.sys_writer});
+		map_ISA.put(ISA.WRITES, new Instruction []{ISA.sys_writes});
+
+		map_ISA.put(ISA.READI, new Instruction []{ISA.sys_readi});
+		map_ISA.put(ISA.READF, new Instruction []{ISA.sys_readr});
+
+		map_ISA.put(ISA.STOREI, new Instruction []{ISA.move});
+		map_ISA.put(ISA.STOREF, new Instruction []{ISA.move});
+		map_ISA.put(ISA.MULTI, new Instruction []{ISA.muli});
+		map_ISA.put(ISA.MULTF, new Instruction []{ISA.mulr});
+		map_ISA.put(ISA.DIVI, new Instruction []{ISA.divi});
+		map_ISA.put(ISA.DIVF, new Instruction []{ISA.divr});
 		
-		map_ISA.put(ISA.ADDI, ISA.addi);
-		map_ISA.put(ISA.ADDF, ISA.addr);
-		map_ISA.put(ISA.SUBI, ISA.subi);
-		map_ISA.put(ISA.SUBF, ISA.subr);
-		map_ISA.put(ISA.WRITEI, ISA.sys_writei);
-		map_ISA.put(ISA.WRITEF, ISA.sys_writer);
-		map_ISA.put(ISA.WRITES, ISA.sys_writes);
+		map_ISA.put(ISA.GEI, new Instruction [] {ISA.cmpi, ISA.jge});
+		map_ISA.put(ISA.LTI, new Instruction [] {ISA.cmpi, ISA.jlt}); //what about LEI?
+		map_ISA.put(ISA.GTI, new Instruction [] {ISA.cmpi, ISA.jgt});
 
-		map_ISA.put(ISA.READI, ISA.sys_readi);
-		map_ISA.put(ISA.READF, ISA.sys_readr);
+		map_ISA.put(ISA.EQI, new Instruction [] {ISA.cmpi, ISA.jeq});
 
-		map_ISA.put(ISA.STOREI, ISA.move);
-		map_ISA.put(ISA.STOREF, ISA.move);
-		map_ISA.put(ISA.MULTI, ISA.muli);
-		map_ISA.put(ISA.MULTF, ISA.mulr);
-		map_ISA.put(ISA.DIVI, ISA.divi);
-		map_ISA.put(ISA.DIVF, ISA.divr);
-
-		//mapping.put(ISA.LINK, ISA.link);
-		//mapping.put(ISA.LABEL, ISA.label);
-
+		
+		map_ISA.put(ISA.JUMP, new Instruction [] {ISA.jmp}); //uncodntional jump
+		map_ISA.put(ISA.RET, new Instruction[]{ISA.__skip});
+		map_ISA.put(ISA.LINK, new Instruction[]{ISA.__skip});
+		map_ISA.put(ISA.LABEL, new Instruction []{ISA.label});
 	}
 
 	public void printAll() {
@@ -66,13 +79,17 @@ public class TinyGenerator {
 
 	private String generate_asm(IRNode irn){	
 		Instruction irx = irn.getInstruction();
-		Instruction tiny = map_ISA.get(irx);
+		Instruction [] possible_instructions = map_ISA.get(irx);
+		
 		String ircode = irn.toString();
 		
-		if(tiny == null){
+		if(possible_instructions == null){
+			System.err.println("No Instruction Mapping is defined for " + irx.getName());
 			return null;
 		}		
 		
+		Instruction tiny = possible_instructions[0]; //first 
+		if(tiny == ISA.__skip) return null;
 		
 		if(irn.getFormat() == IRNode.FORMAT_D){
 			
@@ -86,7 +103,7 @@ public class TinyGenerator {
 		}else if(irn.getFormat() == IRNode.FORMAT_IR || irn.getFormat() == IRNode.FORMAT_FR){
 			
 			Register dest = TempRegisterFactory.createTiny();
-			relations_TinyIRDests.put(getField(ircode,2), dest);
+			reg_map_ir_tiny.put(getField(ircode,2), dest);
 			
 			return tiny.getName() + " " + getField(ircode, 1) + " " + dest.toTiny();
 			
@@ -99,7 +116,7 @@ public class TinyGenerator {
 			
 			String move_op = ISA.move.getName();
 			Register reg = TempRegisterFactory.createTiny();
-			relations_TinyIRDests.put(getField(ircode, 3), reg);
+			reg_map_ir_tiny.put(getField(ircode, 3), reg);
 			
 			Id d2 = irn.getIdOperand(2);
 			Id d1 = irn.getIdOperand(1);
@@ -116,21 +133,21 @@ public class TinyGenerator {
 			
 			String move_op = ISA.move.getName();
 			Register reg = TempRegisterFactory.createTiny();
-			relations_TinyIRDests.put(getField(ircode, 3), reg);
+			reg_map_ir_tiny.put(getField(ircode, 3), reg);
 			
-			String asms = move_op + " " + relations_TinyIRDests.get(getField(ircode, 1)).toTiny() + " " + reg.toTiny() + "\n";
-			asms += tiny.getName() + " " +  relations_TinyIRDests.get(getField(ircode, 2)).toTiny() + " " + reg.toTiny();
+			String asms = move_op + " " + reg_map_ir_tiny.get(getField(ircode, 1)).toTiny() + " " + reg.toTiny() + "\n";
+			asms += tiny.getName() + " " +  reg_map_ir_tiny.get(getField(ircode, 2)).toTiny() + " " + reg.toTiny();
 			
 			return asms;
 		}else if(irn.getFormat() == IRNode.FORMAT_RDR){
 			
 			String move_op = ISA.move.getName();
 			Register reg = TempRegisterFactory.createTiny();
-			relations_TinyIRDests.put(getField(ircode, 3), reg);
+			reg_map_ir_tiny.put(getField(ircode, 3), reg);
 			
 			Id d = irn.getIdOperand(2);
 			usedSymbols.add(d);
-			String asms = move_op + " " + relations_TinyIRDests.get(getField(ircode, 1)).toTiny() + " " + reg.toTiny() + "\n";
+			String asms = move_op + " " + reg_map_ir_tiny.get(getField(ircode, 1)).toTiny() + " " + reg.toTiny() + "\n";
 			asms += tiny.getName() + " " + d.name  + " " + reg.toTiny();
 			
 			return asms;
@@ -138,10 +155,10 @@ public class TinyGenerator {
 			
 			String move_op = ISA.move.getName();
 			Register reg = TempRegisterFactory.createTiny();
-			relations_TinyIRDests.put(getField(ircode, 3), reg);
+			reg_map_ir_tiny.put(getField(ircode, 3), reg);
 			usedSymbols.add(irn.getIdOperand(1));
 			String asms = move_op + " " + irn.getIdOperand(1).name + " " + reg.toTiny() + "\n";
-			asms += tiny.getName() + " " + relations_TinyIRDests.get(getField(ircode, 2)).toTiny() + " " + reg.toTiny();
+			asms += tiny.getName() + " " + reg_map_ir_tiny.get(getField(ircode, 2)).toTiny() + " " + reg.toTiny();
 			return asms;
 			
 		}else if(irn.getFormat() == IRNode.FORMAT_O){
@@ -151,7 +168,19 @@ public class TinyGenerator {
 		}else if(irn.getFormat() == IRNode.FORMAT_S){
 			
 			return tiny.getName() + " " + getField(ircode, 1);
+		}else if(irn.getFormat() == IRNode.FORMAT_DRT){
 			
+			String asms =  possible_instructions[0].getName() + " " + getField(ircode,1) + " " + reg_map_ir_tiny.get(getField(ircode,2)).toTiny() + "\n";
+			asms += possible_instructions[1].getName() + " " + getField(ircode, 3);
+			return asms;	
+		}else if(irn.getFormat() == IRNode.FORMAT_DDT){
+			
+			String asms =  possible_instructions[0].getName() + " " + getField(ircode,1) + " " + getField(ircode,2) + "\n";
+			asms += possible_instructions[1].getName() + " " + getField(ircode, 3);
+			return asms;
+			
+		}else if(irn.getFormat() == IRNode.FORMAT_T){
+			return tiny.getName() +  " " + getField(ircode, 1);
 		}else{
 			return "<unknown format>" + irn.getFormat();
 		}

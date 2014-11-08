@@ -12,15 +12,9 @@ compiler:
 	rm -rf classes
 	mkdir classes
 	javac -cp $(LIB_ANTLR) -d classes src/*.java build/*.java
-comb:
-	javac -cp $(LIB_ANTLR) src/*.java build/*.java
-	java -cp lib/antlr.jar:classes/ Micro input/test_combination.micro | tail -n +2
 tmult:
 	javac -cp $(LIB_ANTLR) src/*.java build/*.java
 	java -cp lib/antlr.jar:classes/ Micro input/test_mult.micro
-expr:
-	javac -cp $(LIB_ANTLR) src/*.java build/*.java
-	java -cp lib/antlr.jar:classes/ Micro input/test_expr.micro | tail -n +2
 clean:
 	rm -rf classes build
 

@@ -1,3 +1,7 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -6,12 +10,16 @@ public class ExtractionListener extends MicroBaseListener {
 	private int blockcount;
 	private SymbolTable root;
 	private IRCollection irlist;
+	
+	private Queue<String> if_else_label_stk, while_label_stk;
 
 	public ExtractionListener(MicroParser psr) {
 		current_scope = new SymbolTable(null, "GLOBAL");
 		irlist = new IRCollection();
 		root = current_scope;
 		this.blockcount = 0;
+		this.if_else_label_stk = new LinkedList<String>();
+		this.while_label_stk = new LinkedList<String>();
 	}
 
 	public SymbolTable getRootSymbolTable() {
@@ -92,7 +100,13 @@ public class ExtractionListener extends MicroBaseListener {
 	public void enterIf_stmt(MicroParser.If_stmtContext ctx) {
 		IRDest right = irlist.attach_Expressions(current_scope, ctx.cond().expr(1));
 		IRDest left = irlist.attach_Expressions(current_scope, ctx.cond().expr(0));
-		irlist.attach_GEI(left, right, "else_label");
+		
+		String generated_label = "gelse_" + ctx.hashCode();
+		//TODO: gotta handle other comparator 
+		irlist.attach_GEI(left, right, generated_label);  //generate condition to jump to else part
+		
+		if_else_label_stk.offer(generated_label);
+		
 		enterScope("BLOCK " + ++blockcount);
 	}
 
@@ -102,6 +116,13 @@ public class ExtractionListener extends MicroBaseListener {
 			return;
 		}
 		leaveScope(); // leave the if scope
+
+		String generated_label = "g_leave" + ctx.hashCode();
+		String gelse_part = if_else_label_stk.remove();
+		if_else_label_stk.offer(generated_label);
+		
+		irlist.attach_Jump(generated_label);
+		irlist.LABEL(gelse_part);
 		enterScope("BLOCK " + ++blockcount);
 	}
 
@@ -116,17 +137,32 @@ public class ExtractionListener extends MicroBaseListener {
 	}
 
 	public void enterWhile_stmt(@NotNull MicroParser.While_stmtContext ctx) {
-		enterScope("BLOCK " + ++blockcount);
+		
+		String recompare = "w_enter" + ctx.hashCode(); 
+		this.while_label_stk.offer(recompare);
+		irlist.LABEL(recompare);
+		
+		IRDest left = irlist.attach_Expressions(current_scope, ctx.cond().expr(0));
+		IRDest right = irlist.attach_Expressions(current_scope, ctx.cond().expr(1));
+		
+		String newlabel = "w_exit" + ctx.hashCode();
+		irlist.attach_EQI(left, right, newlabel); //TODO: handle other comparator
+		while_label_stk.offer(newlabel);
+		
+		enterScope("WHILE_BLOCK " + ++blockcount);
 	}
+	
 
 	@Override
 	public void exitIf_stmt(@NotNull MicroParser.If_stmtContext ctx) {
-		irlist.LABEL("LEAV_" + current_scope.hashCode());
+		irlist.LABEL(this.if_else_label_stk.remove());
 		leaveScope();
 	}
 
 	@Override
 	public void exitWhile_stmt(@NotNull MicroParser.While_stmtContext ctx) {
+		irlist.attach_Jump(this.while_label_stk.remove());
+		irlist.LABEL(this.while_label_stk.remove());
 		leaveScope();
 	}
 

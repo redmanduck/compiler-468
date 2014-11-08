@@ -1,6 +1,6 @@
 public class ISA{
 	
-	
+	public static Instruction __skip = new Instruction("__skip", 0);
 	public static Instruction ADDI = new Instruction("ADDI", 3, "INT");
 	public static Instruction ADDF = new Instruction("ADDF", 3, "FLOAT");
 	
@@ -78,6 +78,7 @@ public class ISA{
 	public static Instruction jgt = new Instruction("jgt", 1);
 	public static Instruction jlt = new Instruction("jlt", 1);
 	public static Instruction jge = new Instruction("jge", 1);
+	public static Instruction jeq = new Instruction("jeq", 1);
 	public static Instruction jle = new Instruction("jle", 1);
 	public static Instruction sys_readi = new Instruction("sys readi", 1);
 	public static Instruction sys_readr = new Instruction("sys readr", 1);

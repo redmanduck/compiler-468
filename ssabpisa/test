@@ -1,8 +1,0 @@
-#!/bin/bash
-#
-java -cp lib/antlr.jar:classes/ Micro input/test_mult.micro > mult.out
-java -cp lib/antlr.jar:classes/ Micro input/test_bird.micro > bird.out
-java -cp lib/antlr.jar:classes/ Micro input/test_combination.micro > comb.out
-java -cp lib/antlr.jar:classes/ Micro input/test_expr.micro > expr.out
-java -cp lib/antlr.jar:classes/ Micro input/test_duck.micro > duck.out
-

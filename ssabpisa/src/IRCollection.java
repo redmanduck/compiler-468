@@ -341,4 +341,25 @@ public class IRCollection implements Iterable<IRNode>{
 		}
 		_List.add(n);
 	}
+
+	public void attach_Jump(String targ) {
+		_List.add(new IRNode(ISA.JUMP, targ));
+	}
+
+	public void attach_EQI(IRDest left, IRDest right, String string) {
+		IRNode n = null;
+		if(left._reg != null && right._reg != null){
+			n = new IRNode(ISA.EQI, left._reg, right._reg, string);
+		}else if(left._reg != null && right._id != null){
+			
+			n = new IRNode(ISA.EQI, left._reg, right._id, string);
+		}else if(left._id != null && right._reg != null){
+			
+			n = new IRNode(ISA.EQI, left._id, right._reg, string);
+		}else if(left._id != null && right._id != null){
+			
+			n = new IRNode(ISA.EQI, left._id, right._id, string);
+		}
+		_List.add(n);
+	}
 }

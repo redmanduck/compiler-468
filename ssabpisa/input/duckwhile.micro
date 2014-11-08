@@ -1,0 +1,15 @@
+PROGRAM duckwhile
+BEGIN
+
+	INT i, j;
+
+	FUNCTION VOID main()
+	BEGIN
+	i := 10;	
+        WHILE (i != 0)
+		i := i - 1;
+	ENDWHILE
+
+	WRITE(i);
+	END
+END

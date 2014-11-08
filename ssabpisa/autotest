@@ -1,0 +1,4 @@
+make clean
+make
+java -cp lib/antlr.jar:classes/ Micro input/$1.micro > ../output/$1.T
+cd ../ && bash yaml_test.sh

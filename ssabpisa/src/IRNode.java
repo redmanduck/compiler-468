@@ -23,6 +23,7 @@ public class IRNode {
      public static final int FORMAT_RDT = 12;
      public static final int FORMAT_DRT = 13; 
      public static final int FORMAT_DDT = 14;
+     public static final int FORMAT_T = 15;
 
      public Id getIdOperand(int which){
     	 switch(which){
@@ -156,6 +157,11 @@ public class IRNode {
 		this.jtarget = string;
 	}
 	
+	public IRNode(Instruction j, String jtarget) {
+		format = FORMAT_T;
+		this.OPCODE = j;
+		this.jtarget = jtarget;
+	}
 	@Override 
 	public String toString(){
 		if(this.label != null)
@@ -191,6 +197,8 @@ public class IRNode {
 			return prefix + " " +  String.format("%s %s %s", this.id_src1.name, this.r_src2.toString(), this.r_dest.toString());
 		case FORMAT_O:
 			return ";" + this.OPCODE.getName();
+		case FORMAT_T:
+			return ";" + this.OPCODE.getName() + " " + this.jtarget;
 		}
 
 		return ";" + this.OPCODE.getName();
