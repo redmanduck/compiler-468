@@ -1,0 +1,14 @@
+PROGRAM duckif
+BEGIN
+
+	INT i,a;
+
+	FUNCTION VOID main()
+	BEGIN
+		INT x;
+		
+        a := 2;
+   		WRITE(a);
+		--a := 2;
+	END
+END
