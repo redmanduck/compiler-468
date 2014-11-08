@@ -1,13 +1,12 @@
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Hashtable;
 public class TinyGenerator {
-	IRBase IR;
+	IRCollection IR;
 	Hashtable<Instruction, Instruction> map_ISA;
 	Hashtable<String, Register> relations_TinyIRDests;
 	LinkedHashSet<Id> usedSymbols; //contains all LVALUES
 	
-	public TinyGenerator(IRBase _irb) {
+	public TinyGenerator(IRCollection _irb) {
 		IR = _irb;
 		//generate IR -> asm map
 		map_ISA = new Hashtable<Instruction, Instruction>(); 

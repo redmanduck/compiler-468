@@ -21,7 +21,7 @@ public class Utils {
 		}
 	}
 	
-	public static void printIR(IRBase irl){
+	public static void printIR(IRCollection irl){
 		System.out.println(";IR code");
 		for(IRNode a : irl){
 			System.out.println(a.toString());
