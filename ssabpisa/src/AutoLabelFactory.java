@@ -4,7 +4,7 @@ public class AutoLabelFactory {
 	
 	public static String create(){
 		int v = tempcount++;
-		return "label" + 1;
+		return "label" + v;
 	}
 	
 }

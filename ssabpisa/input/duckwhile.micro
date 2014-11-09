@@ -6,10 +6,10 @@ BEGIN
 	FUNCTION VOID main()
 	BEGIN
 	i := 10;	
-        WHILE (i != 0)
+    WHILE (i != 0)
 		i := i - 1;
+		WRITE(i);
 	ENDWHILE
-
 	WRITE(i);
 	END
 END

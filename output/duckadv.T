@@ -23,8 +23,10 @@
 ;ADDF approx $T10 $T11
 ;MULTF $T9 $T11 $T12
 ;STOREF $T12 newapprox
+;WRITEF newapprox
 ;SUBF approx newapprox $T13
 ;STOREF $T13 diff
+;WRITEF diff
 ;STOREF 0.0 $T14
 ;LEF diff $T14 label3
 ;GEF diff tolerance label4
@@ -43,8 +45,6 @@
 ;STOREF newapprox approx
 ;JUMP label1
 ;LABEL label2
-;WRITEF approx
-;WRITEI count
 ;RET
 ;tiny code
 var tolerance
@@ -83,9 +83,11 @@ addr r10 r11
 move r9 r12
 mulr r11 r12
 move r12 newapprox
+sys writer newapprox
 move approx r13
 subr newapprox r13
 move r13 diff
+sys writer diff
 move 0.0 r14
 cmpr diff r14
 jle label3
@@ -110,6 +112,4 @@ move newapprox r20
 move r20 approx
 jmp label1
 label label2
-sys writer approx
-sys writei count
 sys halt

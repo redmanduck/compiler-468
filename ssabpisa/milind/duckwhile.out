@@ -9,6 +9,7 @@
 ;STOREI 1 $T3
 ;SUBI i $T3 $T4
 ;STOREI $T4 i
+;WRITEI i
 ;JUMP label1
 ;LABEL label2
 ;WRITEI i
@@ -27,6 +28,7 @@ move 1 r2
 move i r3
 subi r2 r3
 move r3 i
+sys writei i 
 jmp label1 
 label label2 
 sys writei i 

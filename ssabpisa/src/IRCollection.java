@@ -325,19 +325,49 @@ public class IRCollection implements Iterable<IRNode>{
 
 	}
 
-	public void attach_GEI(IRDest left, IRDest right, String string) {
+	public void attach_LE(IRDest left, IRDest right, String string) {
+		Instruction le;
+
+		if(left.isFloat() || right.isFloat()){
+			le = ISA.LEF;
+		}else{
+			le = ISA.LEI;
+		}
 		IRNode n = null;
 		if(left._reg != null && right._reg != null){
-			n = new IRNode(ISA.GEI, left._reg, right._reg, string);
+			n = new IRNode(le, left._reg, right._reg, string);
 		}else if(left._reg != null && right._id != null){
 			
-			n = new IRNode(ISA.GEI, left._reg, right._id, string);
+			n = new IRNode(le, left._reg, right._id, string);
 		}else if(left._id != null && right._reg != null){
 			
-			n = new IRNode(ISA.GEI, left._id, right._reg, string);
+			n = new IRNode(le, left._id, right._reg, string);
 		}else if(left._id != null && right._id != null){
 			
-			n = new IRNode(ISA.GEI, left._id, right._id, string);
+			n = new IRNode(le, left._id, right._id, string);
+		}
+		_List.add(n);
+	}
+	
+	public void attach_GE(IRDest left, IRDest right, String string) {
+		Instruction ge;
+		if(left.isFloat() || right.isFloat()){
+			ge = ISA.GEF;
+		}else{
+			ge = ISA.GEI;
+		}
+		IRNode n = null;
+		if(left._reg != null && right._reg != null){
+			n = new IRNode(ge, left._reg, right._reg, string);
+		}else if(left._reg != null && right._id != null){
+			
+			n = new IRNode(ge, left._reg, right._id, string);
+		}else if(left._id != null && right._reg != null){
+			
+			n = new IRNode(ge, left._id, right._reg, string);
+		}else if(left._id != null && right._id != null){
+			
+			n = new IRNode(ge, left._id, right._id, string);
 		}
 		_List.add(n);
 	}

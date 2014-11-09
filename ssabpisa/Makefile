@@ -13,8 +13,8 @@ compiler:
 	mkdir classes
 	javac -cp $(LIB_ANTLR) -d classes src/*.java build/*.java
 tmult:
-	javac -cp $(LIB_ANTLR) src/*.java build/*.java
-	java -cp lib/antlr.jar:classes/ Micro input/test_mult.micro
+#	javac -cp $(LIB_ANTLR) src/*.java build/*.java
+	java -cp lib/antlr.jar:classes/ Micro input/duckadv.micro
 clean:
 	rm -rf classes build
 

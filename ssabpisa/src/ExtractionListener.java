@@ -11,14 +11,15 @@ public class ExtractionListener extends MicroBaseListener {
 	private SymbolTable root;
 	private IRCollection irlist;
 	
-	private Queue<String> if_else_label_stk, while_label_stk;
-
+	private Stack<String> if_else_label_stk;
+	private Queue<String> while_label_stk;
+	
 	public ExtractionListener(MicroParser psr) {
 		current_scope = new SymbolTable(null, "GLOBAL");
 		irlist = new IRCollection();
 		root = current_scope;
 		this.blockcount = 0;
-		this.if_else_label_stk = new LinkedList<String>();
+		this.if_else_label_stk = new Stack<String>();
 		this.while_label_stk = new LinkedList<String>();
 	}
 
@@ -101,11 +102,18 @@ public class ExtractionListener extends MicroBaseListener {
 		IRDest right = irlist.attach_Expressions(current_scope, ctx.cond().expr(1));
 		IRDest left = irlist.attach_Expressions(current_scope, ctx.cond().expr(0));
 		
-		String generated_label = "gelse_" + ctx.hashCode();
+		String generated_label = AutoLabelFactory.create();
 		//TODO: gotta handle other comparator 
-		irlist.attach_GEI(left, right, generated_label);  //generate condition to jump to else part
+		String compop = ctx.cond().compop().getText();
+
+		//generate condition to jump to else part
+		if(compop.equals("<")){
+			irlist.attach_GE(left, right, generated_label);  
+		}else if(compop.equals(">")){
+			irlist.attach_LE(left, right, generated_label);  
+		}
 		
-		if_else_label_stk.offer(generated_label);
+		if_else_label_stk.push(generated_label);
 		
 		enterScope("BLOCK " + ++blockcount);
 	}
@@ -117,9 +125,9 @@ public class ExtractionListener extends MicroBaseListener {
 		}
 		leaveScope(); // leave the if scope
 
-		String generated_label = "g_leave" + ctx.hashCode();
-		String gelse_part = if_else_label_stk.remove();
-		if_else_label_stk.offer(generated_label);
+		String generated_label = AutoLabelFactory.create();
+		String gelse_part = if_else_label_stk.pop();
+		if_else_label_stk.push(generated_label);
 		
 		irlist.attach_Jump(generated_label);
 		irlist.LABEL(gelse_part);
@@ -138,14 +146,14 @@ public class ExtractionListener extends MicroBaseListener {
 
 	public void enterWhile_stmt(@NotNull MicroParser.While_stmtContext ctx) {
 		
-		String recompare = "w_enter" + ctx.hashCode(); 
+		String recompare = AutoLabelFactory.create(); 
 		this.while_label_stk.offer(recompare);
 		irlist.LABEL(recompare);
 		
 		IRDest left = irlist.attach_Expressions(current_scope, ctx.cond().expr(0));
 		IRDest right = irlist.attach_Expressions(current_scope, ctx.cond().expr(1));
 		
-		String newlabel = "w_exit" + ctx.hashCode();
+		String newlabel = AutoLabelFactory.create(); 
 		irlist.attach_EQI(left, right, newlabel); //TODO: handle other comparator
 		while_label_stk.offer(newlabel);
 		
@@ -155,7 +163,7 @@ public class ExtractionListener extends MicroBaseListener {
 
 	@Override
 	public void exitIf_stmt(@NotNull MicroParser.If_stmtContext ctx) {
-		irlist.LABEL(this.if_else_label_stk.remove());
+		irlist.LABEL(this.if_else_label_stk.pop());
 		leaveScope();
 	}
 

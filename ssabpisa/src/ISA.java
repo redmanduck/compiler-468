@@ -27,6 +27,15 @@ public class ISA{
 	public static Instruction LTI = new Instruction("LTI", 3, "INT"); //
 	public static Instruction NEI = new Instruction("NEI",3, "INT"); //
 	public static Instruction EQI = new Instruction("EQI", 3, "INT"); //
+	
+	public static Instruction LEF = new Instruction("LEF", 3, "FLOAT"); //
+	public static Instruction LEI = new Instruction("LEI", 3, "INT"); //
+
+	public static Instruction GTF = new Instruction("GTF", 3, "FLOAT"); //?
+	public static Instruction GEF = new Instruction("GEF", 3, "FLOAT"); //? the example is inconsistent with the manual
+	public static Instruction LTF = new Instruction("LTF", 3, "FLOAT"); //
+	public static Instruction NEF = new Instruction("NEF",3, "FLOAT"); //
+	public static Instruction EQF = new Instruction("EQF", 3, "FLOAT"); //
 
 	public static Instruction JUMP = new Instruction("JUMP", 1, "ADDR");
 	public static Instruction LABEL = new Instruction("LABEL", 1, "ADDR");

@@ -37,6 +37,10 @@ public class TinyGenerator {
 		map_ISA.put(ISA.DIVF, new Instruction []{ISA.divr});
 		
 		map_ISA.put(ISA.GEI, new Instruction [] {ISA.cmpi, ISA.jge});
+		map_ISA.put(ISA.GEF, new Instruction [] {ISA.cmpr, ISA.jge});
+		map_ISA.put(ISA.LEI, new Instruction [] {ISA.cmpi, ISA.jle});
+		map_ISA.put(ISA.LEF, new Instruction [] {ISA.cmpr, ISA.jle});
+
 		map_ISA.put(ISA.LTI, new Instruction [] {ISA.cmpi, ISA.jlt}); //what about LEI?
 		map_ISA.put(ISA.GTI, new Instruction [] {ISA.cmpi, ISA.jgt});
 
@@ -183,7 +187,11 @@ public class TinyGenerator {
 			return asms;	
 		}else if(irn.getFormat() == IRNode.FORMAT_DDT){
 			
-			String asms =  possible_instructions[0].getName() + " " + getField(ircode,1) + " " + getField(ircode,2) + "\n";
+			Register dest = TempRegisterFactory.createTiny();
+			
+			String asms = ISA.move.getName() + " " + getField(ircode,2) + " " + dest.toTiny()  + "\n";
+			
+		    asms += possible_instructions[0].getName() + " " +  getField(ircode,1) + " " + dest.toTiny() + "\n";
 			asms += possible_instructions[1].getName() + " " + getField(ircode, 3);
 			return asms;
 			
