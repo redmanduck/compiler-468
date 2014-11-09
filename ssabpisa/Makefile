@@ -14,7 +14,7 @@ compiler:
 	javac -cp $(LIB_ANTLR) -d classes src/*.java build/*.java
 tmult:
 #	javac -cp $(LIB_ANTLR) src/*.java build/*.java
-	java -cp lib/antlr.jar:classes/ Micro input/duckadv.micro
+	java -cp lib/antlr.jar:classes/ Micro input/step4_testcase2.micro
 clean:
 	rm -rf classes build
 

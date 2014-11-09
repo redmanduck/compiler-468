@@ -82,6 +82,7 @@ public class ISA{
 	public static Instruction unlnk = new Instruction("unlnk", 0);
 	public static Instruction label = new Instruction("label", 1);
 
+	public static Instruction jne = new Instruction("jne", 1);
 	public static Instruction cmpr = new Instruction("cmpr", 2);
 	public static Instruction jmp = new Instruction("jmp", 1);
 	public static Instruction jgt = new Instruction("jgt", 1);

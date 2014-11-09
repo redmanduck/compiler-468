@@ -8,19 +8,19 @@
 ;STOREI 42 $T3
 ;STOREI $T3 a
 ;STOREI 5 $T4
-;GEI i $T4 gelse_2026228835
+;GEI i $T4 label1
 ;ADDI num a $T5
 ;STOREI $T5 num
 ;STOREI 3 $T6
-;GEI i $T6 gelse_32355719
+;GEI i $T6 label2
 ;ADDI num a $T7
 ;STOREI $T7 num
-;LABEL gelse_2026228835
-;JUMP g_leave489206542
-;LABEL gelse_32355719
+;LABEL label2
+;JUMP label3
+;LABEL label1
 ;SUBI num a $T8
 ;STOREI $T8 num
-;LABEL g_leave489206542
+;LABEL label3
 ;WRITEI num
 ;RET
 ;tiny code
@@ -36,22 +36,22 @@ move 42 r2
 move r2 a
 move 5 r3
 cmpi i r3
-jge gelse_2026228835
+jge label1
 move num r4
 addi a r4
 move r4 num
 move 3 r5
 cmpi i r5
-jge gelse_32355719
+jge label2
 move num r6
 addi a r6
 move r6 num
-label gelse_2026228835
-jmp g_leave489206542
-label gelse_32355719
+label label2
+jmp label3
+label label1
 move num r7
 subi a r7
 move r7 num
-label g_leave489206542
+label label3
 sys writei num
 sys halt

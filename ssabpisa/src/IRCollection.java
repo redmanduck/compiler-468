@@ -371,25 +371,107 @@ public class IRCollection implements Iterable<IRNode>{
 		}
 		_List.add(n);
 	}
+	
+	public void attach_NE(IRDest left, IRDest right, String generated_label) {
+		Instruction ge;
+		if(left.isFloat() || right.isFloat()){
+			ge = ISA.NEF;
+		}else{
+			ge = ISA.NEI;
+		}
+		IRNode n = null;
+		if(left._reg != null && right._reg != null){
+			n = new IRNode(ge, left._reg, right._reg, generated_label);
+		}else if(left._reg != null && right._id != null){
+			
+			n = new IRNode(ge, left._reg, right._id, generated_label);
+		}else if(left._id != null && right._reg != null){
+			
+			n = new IRNode(ge, left._id, right._reg, generated_label);
+		}else if(left._id != null && right._id != null){
+			
+			n = new IRNode(ge, left._id, right._id, generated_label);
+		}
+		_List.add(n);
+		
+	}
+	
+	public void attach_GT(IRDest left, IRDest right, String generated_label) {
+		Instruction ge;
+		if(left.isFloat() || right.isFloat()){
+			ge = ISA.GTF;
+		}else{
+			ge = ISA.GTI;
+		}
+		IRNode n = null;
+		if(left._reg != null && right._reg != null){
+			n = new IRNode(ge, left._reg, right._reg, generated_label);
+		}else if(left._reg != null && right._id != null){
+			
+			n = new IRNode(ge, left._reg, right._id, generated_label);
+		}else if(left._id != null && right._reg != null){
+			
+			n = new IRNode(ge, left._id, right._reg, generated_label);
+		}else if(left._id != null && right._id != null){
+			
+			n = new IRNode(ge, left._id, right._id, generated_label);
+		}
+		_List.add(n);
+		
+	}
+	
+	public void attach_LT(IRDest left, IRDest right, String generated_label) {
+		Instruction ge;
+		if(left.isFloat() || right.isFloat()){
+			ge = ISA.LTF;
+		}else{
+			ge = ISA.LTI;
+		}
+		IRNode n = null;
+		if(left._reg != null && right._reg != null){
+			n = new IRNode(ge, left._reg, right._reg, generated_label);
+		}else if(left._reg != null && right._id != null){
+			
+			n = new IRNode(ge, left._reg, right._id, generated_label);
+		}else if(left._id != null && right._reg != null){
+			
+			n = new IRNode(ge, left._id, right._reg, generated_label);
+		}else if(left._id != null && right._id != null){
+			
+			n = new IRNode(ge, left._id, right._id, generated_label);
+		}
+		_List.add(n);
+		
+	}
 
 	public void attach_Jump(String targ) {
 		_List.add(new IRNode(ISA.JUMP, targ));
 	}
 
-	public void attach_EQI(IRDest left, IRDest right, String string) {
-		IRNode n = null;
+	public void attach_EQ(IRDest left, IRDest right, String string) {
+		IRNode n = null; 
+		Instruction ge;
+		if(left.isFloat() || right.isFloat()){
+			ge = ISA.EQF;
+		}else{
+			ge = ISA.EQI;
+		}
+		
 		if(left._reg != null && right._reg != null){
-			n = new IRNode(ISA.EQI, left._reg, right._reg, string);
+			n = new IRNode(ge, left._reg, right._reg, string);
 		}else if(left._reg != null && right._id != null){
 			
-			n = new IRNode(ISA.EQI, left._reg, right._id, string);
+			n = new IRNode(ge, left._reg, right._id, string);
 		}else if(left._id != null && right._reg != null){
 			
-			n = new IRNode(ISA.EQI, left._id, right._reg, string);
+			n = new IRNode(ge, left._id, right._reg, string);
 		}else if(left._id != null && right._id != null){
 			
-			n = new IRNode(ISA.EQI, left._id, right._id, string);
+			n = new IRNode(ge, left._id, right._id, string);
 		}
 		_List.add(n);
 	}
+
+
+	
 }

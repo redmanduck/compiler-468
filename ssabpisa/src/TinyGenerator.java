@@ -45,7 +45,8 @@ public class TinyGenerator {
 		map_ISA.put(ISA.GTI, new Instruction [] {ISA.cmpi, ISA.jgt});
 
 		map_ISA.put(ISA.EQI, new Instruction [] {ISA.cmpi, ISA.jeq});
-
+		
+		map_ISA.put(ISA.NEI, new Instruction [] {ISA.cmpi, ISA.jne});
 		
 		map_ISA.put(ISA.JUMP, new Instruction [] {ISA.jmp}); //uncodntional jump
 		map_ISA.put(ISA.RET, new Instruction[]{ISA.__skip});

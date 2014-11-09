@@ -103,14 +103,24 @@ public class ExtractionListener extends MicroBaseListener {
 		IRDest left = irlist.attach_Expressions(current_scope, ctx.cond().expr(0));
 		
 		String generated_label = AutoLabelFactory.create();
-		//TODO: gotta handle other comparator 
 		String compop = ctx.cond().compop().getText();
 
 		//generate condition to jump to else part
+		//( '<' | '>' | '=' | '!=' | '<=' | '>=' ); //SUPPROT THESE
 		if(compop.equals("<")){
-			irlist.attach_GE(left, right, generated_label);  
+			irlist.attach_GE(left, right, generated_label);  //GEI,GEF
 		}else if(compop.equals(">")){
-			irlist.attach_LE(left, right, generated_label);  
+			irlist.attach_LE(left, right, generated_label); 
+		}else if(compop.equals("=")){
+			irlist.attach_NE(left, right, generated_label);  
+		}else if(compop.equals("!=")){
+			irlist.attach_EQ(left, right, generated_label);  
+		}else if(compop.equals("<=")){
+			irlist.attach_GT(left, right, generated_label); //GTI ,GTF  
+		}else if(compop.equals(">=")){
+			irlist.attach_LT(left, right, generated_label);  
+		}else{
+			System.err.println("Compop not supported! " + compop);
 		}
 		
 		if_else_label_stk.push(generated_label);
@@ -154,7 +164,24 @@ public class ExtractionListener extends MicroBaseListener {
 		IRDest right = irlist.attach_Expressions(current_scope, ctx.cond().expr(1));
 		
 		String newlabel = AutoLabelFactory.create(); 
-		irlist.attach_EQI(left, right, newlabel); //TODO: handle other comparator
+		String compop = ctx.cond().compop().getText();
+		
+		if(compop.equals("<")){
+			irlist.attach_GE(left, right, newlabel);  //GEI,GEF
+		}else if(compop.equals(">")){
+			irlist.attach_LE(left, right, newlabel); 
+		}else if(compop.equals("=")){
+			irlist.attach_NE(left, right, newlabel);  
+		}else if(compop.equals("!=")){
+			irlist.attach_EQ(left, right, newlabel);  
+		}else if(compop.equals("<=")){
+			irlist.attach_GT(left, right, newlabel); //GTI ,GTF  
+		}else if(compop.equals(">=")){
+			irlist.attach_LT(left, right, newlabel);  
+		}else{
+			System.err.println("Compop not supported! " + compop);
+		}
+		
 		while_label_stk.offer(newlabel);
 		
 		enterScope("WHILE_BLOCK " + ++blockcount);
