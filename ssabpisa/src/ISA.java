@@ -3,6 +3,10 @@ public class ISA{
 	public static Instruction __skip = new Instruction("__skip", 0);
 	public static Instruction ADDI = new Instruction("ADDI", 3, "INT");
 	public static Instruction ADDF = new Instruction("ADDF", 3, "FLOAT");
+
+	public static Instruction PUSH_EMPTY = new Instruction("PUSH", 0, "");
+	public static Instruction PUSH = new Instruction("PUSH", 1, "");
+
 	
 	public static Instruction SUBI = new Instruction("SUBI", 3, "INT");
 	public static Instruction SUBF = new Instruction("SUBF", 3, "FLOAT");

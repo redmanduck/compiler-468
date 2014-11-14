@@ -1,0 +1,21 @@
+PROGRAM factorial
+BEGIN
+	
+	FUNCTION FLOAT add (FLOAT a, FLOAT b, FLOAT x)
+	BEGIN
+	  	FLOAT result;
+		result := a+b;
+		RETURN result;
+	END
+
+	
+	FUNCTION INT main ()
+	BEGIN
+		FLOAT c, addresult,multiplyresult, x;
+		c := 1.0;
+		x := 3.2;
+		multiplyresult := 2.0;
+		addresult := add(multiplyresult,c, x);
+		RETURN 0;
+	END
+END

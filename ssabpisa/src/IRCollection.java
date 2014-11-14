@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
+
 
 
 public class IRCollection implements Iterable<IRNode>{
@@ -133,7 +133,17 @@ public class IRCollection implements Iterable<IRNode>{
 	 * @return IROperand
 	 */
 	private IRDest attach_PostfixExpr(SymbolTable scope, MicroParser.Postfix_exprContext postfix){
-		 
+		
+		if(postfix.call_expr() != null){
+			/*
+			 * Stop here if processing function calls
+			 */
+			return attach_CallExpr(scope, postfix.call_expr()); 
+		}
+		
+		/*
+		 *  Non-function calls expressions end up on this branch
+		 */
 		if(postfix.primary().expr() != null){
 			 return attach_Expressions(scope, postfix.primary().expr()); 
 		}else if(postfix.primary().FLOATLITERAL() != null){
@@ -207,9 +217,14 @@ public class IRCollection implements Iterable<IRNode>{
 		return new IRDest(dest);
 	}
 		
-	private void attach_CallExpr(SymbolTable scope, MicroParser.Call_exprContext call_expr) {
-		//Not implemented yet
-		if(call_expr == null) return;	
+	private IRDest attach_CallExpr(SymbolTable scope, MicroParser.Call_exprContext call_expr) {
+		/*
+		 * The destination is the popped register from activation record
+		 */
+		_List.add(new IRNode(ISA.PUSH_EMPTY));
+		MicroParser.Expr_listContext expr_list = call_expr.expr_list();
+		
+		return null;
 	}
 
 

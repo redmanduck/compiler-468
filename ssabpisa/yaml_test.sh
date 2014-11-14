@@ -1,11 +1,13 @@
 #!/bin/bash
 #
+#  Compile the compiler and test the result
+#
 TINY='tinyR'
 tc="${@: -1}_tests"
 if [[ $* == *-c* ]]
 then
   #compile the compiler first
-  tc="step5_tests" 
+  tc="${@: -1}_tests" 
   make clean && make
 fi
 dirs=$(ls $tc)
@@ -39,4 +41,3 @@ if (( $FAIL == 1 ))
   then
     exit 1
 fi
-

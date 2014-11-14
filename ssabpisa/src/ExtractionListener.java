@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -7,28 +9,36 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 public class ExtractionListener extends MicroBaseListener {
 	private SymbolTable current_scope;
+	private String current_function;
+	private IRCollection current_ir;
+	
 	private int blockcount;
-	private SymbolTable root;
-	private IRCollection irlist;
+	
+	public HashMap<String, IRCollection> IRMap;  //indexed by Function Name
 	
 	private Stack<String> if_else_label_stk;
 	private Queue<String> while_label_stk;
-	
+
+		
 	public ExtractionListener(MicroParser psr) {
 		current_scope = new SymbolTable(null, "GLOBAL");
-		irlist = new IRCollection();
-		root = current_scope;
 		this.blockcount = 0;
 		this.if_else_label_stk = new Stack<String>();
 		this.while_label_stk = new LinkedList<String>();
+		this.IRMap = new HashMap<String, IRCollection>();
 	}
+//
+//	public SymbolTable getRootSymbolTable() {
+//		return root;
+//	}
 
-	public SymbolTable getRootSymbolTable() {
-		return root;
-	}
 
-	public IRCollection getIRList() {
-		return irlist;
+	
+	public IRCollection getFullIR() {
+		/*
+		 * assuming main will be the main IR
+		 */
+		return IRMap.get("main");
 	}
 
 	private void enterScope(String scopename) {
@@ -56,7 +66,7 @@ public class ExtractionListener extends MicroBaseListener {
 				token_value);
 		if (!result) {
 			//System.out.println("DECLARATION ERROR " + token_name);
-			root.error = true;
+//			root.error = true;
 			System.exit(1);
 		}
 	}
@@ -71,7 +81,7 @@ public class ExtractionListener extends MicroBaseListener {
 		for (String name : names) {
 			if (!current_scope.AddSymbolToTable(ctx.var_type().getText(), name)) {
 				//System.out.println("DECLARATION ERROR " + name);
-				root.error = true;
+//				root.error = true;
 				System.exit(1);
 
 			}
@@ -83,14 +93,14 @@ public class ExtractionListener extends MicroBaseListener {
 				.getText(), ctx.id().getText()); // TODO: VAR could be INT or
 													// FLOAT
 		if (!result) {
-			root.error = true;
+//			root.error = true;
 			//System.out.println("DECLARATION ERROR " + ctx.id().getText());
 			System.exit(1);
 		}
 	}
 
 	public void exitPgm_body(MicroParser.Pgm_bodyContext ctx) {
-		irlist.RET();
+		current_ir.RET();
 		leaveScope();
 	}
 
@@ -99,8 +109,8 @@ public class ExtractionListener extends MicroBaseListener {
 	}
 
 	public void enterIf_stmt(MicroParser.If_stmtContext ctx) {
-		IRDest right = irlist.attach_Expressions(current_scope, ctx.cond().expr(1));
-		IRDest left = irlist.attach_Expressions(current_scope, ctx.cond().expr(0));
+		IRDest right = current_ir.attach_Expressions(current_scope, ctx.cond().expr(1));
+		IRDest left = current_ir.attach_Expressions(current_scope, ctx.cond().expr(0));
 		
 		String generated_label = AutoLabelFactory.create();
 		String compop = ctx.cond().compop().getText();
@@ -108,17 +118,17 @@ public class ExtractionListener extends MicroBaseListener {
 		//generate condition to jump to else part
 		//( '<' | '>' | '=' | '!=' | '<=' | '>=' ); //SUPPROT THESE
 		if(compop.equals("<")){
-			irlist.attach_GE(left, right, generated_label);  //GEI,GEF
+			current_ir.attach_GE(left, right, generated_label);  //GEI,GEF
 		}else if(compop.equals(">")){
-			irlist.attach_LE(left, right, generated_label); 
+			current_ir.attach_LE(left, right, generated_label); 
 		}else if(compop.equals("=")){
-			irlist.attach_NE(left, right, generated_label);  
+			current_ir.attach_NE(left, right, generated_label);  
 		}else if(compop.equals("!=")){
-			irlist.attach_EQ(left, right, generated_label);  
+			current_ir.attach_EQ(left, right, generated_label);  
 		}else if(compop.equals("<=")){
-			irlist.attach_GT(left, right, generated_label); //GTI ,GTF  
+			current_ir.attach_GT(left, right, generated_label); //GTI ,GTF  
 		}else if(compop.equals(">=")){
-			irlist.attach_LT(left, right, generated_label);  
+			current_ir.attach_LT(left, right, generated_label);  
 		}else{
 			System.err.println("Compop not supported! " + compop);
 		}
@@ -139,8 +149,8 @@ public class ExtractionListener extends MicroBaseListener {
 		String gelse_part = if_else_label_stk.pop();
 		if_else_label_stk.push(generated_label);
 		
-		irlist.attach_Jump(generated_label);
-		irlist.LABEL(gelse_part);
+		current_ir.attach_Jump(generated_label);
+		current_ir.LABEL(gelse_part);
 		enterScope("BLOCK " + ++blockcount);
 	}
 
@@ -148,36 +158,49 @@ public class ExtractionListener extends MicroBaseListener {
 		if (ctx.func_decl() == null) {
 			return;
 		}
+		System.out.println(";[log] func enter " + ctx.func_decl().id().getText());
+		//Update Current Function 
+		this.current_function = ctx.func_decl().id().getText();
+		//Create new IR
+		IRCollection i = new IRCollection();
 		
+		if(IRMap.containsKey(current_function)){
+			System.err.println("Double function declaration!");
+			System.exit(1);
+		}
+		
+		IRMap.put(current_function, i);
+		current_ir = i;
 		enterScope(ctx.func_decl().id().getText());
-		irlist.LABEL(current_scope.scopename);
-		irlist.LINK();
+		
+		current_ir.LABEL(current_scope.scopename);
+		current_ir.LINK();
 	}
 
 	public void enterWhile_stmt(@NotNull MicroParser.While_stmtContext ctx) {
 		
 		String recompare = AutoLabelFactory.create(); 
 		this.while_label_stk.offer(recompare);
-		irlist.LABEL(recompare);
+		current_ir.LABEL(recompare);
 		
-		IRDest left = irlist.attach_Expressions(current_scope, ctx.cond().expr(0));
-		IRDest right = irlist.attach_Expressions(current_scope, ctx.cond().expr(1));
+		IRDest left = current_ir.attach_Expressions(current_scope, ctx.cond().expr(0));
+		IRDest right = current_ir.attach_Expressions(current_scope, ctx.cond().expr(1));
 		
 		String newlabel = AutoLabelFactory.create(); 
 		String compop = ctx.cond().compop().getText();
 		
 		if(compop.equals("<")){
-			irlist.attach_GE(left, right, newlabel);  //GEI,GEF
+			current_ir.attach_GE(left, right, newlabel);  //GEI,GEF
 		}else if(compop.equals(">")){
-			irlist.attach_LE(left, right, newlabel); 
+			current_ir.attach_LE(left, right, newlabel); 
 		}else if(compop.equals("=")){
-			irlist.attach_NE(left, right, newlabel);  
+			current_ir.attach_NE(left, right, newlabel);  
 		}else if(compop.equals("!=")){
-			irlist.attach_EQ(left, right, newlabel);  
+			current_ir.attach_EQ(left, right, newlabel);  
 		}else if(compop.equals("<=")){
-			irlist.attach_GT(left, right, newlabel); //GTI ,GTF  
+			current_ir.attach_GT(left, right, newlabel); //GTI ,GTF  
 		}else if(compop.equals(">=")){
-			irlist.attach_LT(left, right, newlabel);  
+			current_ir.attach_LT(left, right, newlabel);  
 		}else{
 			System.err.println("Compop not supported! " + compop);
 		}
@@ -190,30 +213,31 @@ public class ExtractionListener extends MicroBaseListener {
 
 	@Override
 	public void exitIf_stmt(@NotNull MicroParser.If_stmtContext ctx) {
-		irlist.LABEL(this.if_else_label_stk.pop());
+		current_ir.LABEL(this.if_else_label_stk.pop());
 		leaveScope();
 	}
 
 	@Override
 	public void exitWhile_stmt(@NotNull MicroParser.While_stmtContext ctx) {
-		irlist.attach_Jump(this.while_label_stk.remove());
-		irlist.LABEL(this.while_label_stk.remove());
+		current_ir.attach_Jump(this.while_label_stk.remove());
+		current_ir.LABEL(this.while_label_stk.remove());
 		leaveScope();
 	}
 
 
 	@Override
 	public void exitWrite_stmt(@NotNull MicroParser.Write_stmtContext ctx) {
-		irlist.attach_Write(current_scope, ctx);
+		current_ir.attach_Write(current_scope, ctx);
 	}
 
 	@Override
 	public void exitAssign_expr(MicroParser.Assign_exprContext ctx) {
-		irlist.attach_Assignment(current_scope, ctx);
+		current_ir.attach_Assignment(current_scope, ctx);
 	}
 
 	@Override
 	public void exitRead_stmt(@NotNull MicroParser.Read_stmtContext ctx) {
-		irlist.attach_Read(current_scope, ctx);
+		current_ir.attach_Read(current_scope, ctx);
 	}
+
 }

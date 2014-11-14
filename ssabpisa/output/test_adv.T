@@ -1,3 +1,5 @@
+;[log] func enter main
+;[log] Total IR Lists: 1
 ;IR code
 ;LABEL main
 ;LINK

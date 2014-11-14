@@ -1,0 +1,21 @@
+PROGRAM duckfunc
+BEGIN
+	FLOAT a;
+	FLOAT b;
+	a := 1.0;
+	b := 2.0;
+
+	FUNCTION FLOAT duckman (FLOAT x, FLOAT y)
+	BEGIN
+	        FLOAT result;
+		result := x+y;
+		RETURN result;
+	END
+
+	FUNCTION INT main ()
+	BEGIN
+		FLOAT j;
+		j := duckman(a,b);
+		RETURN 0;
+	END
+END
