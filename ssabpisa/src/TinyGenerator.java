@@ -54,7 +54,7 @@ public class TinyGenerator {
 		map_ISA.put(ISA.LABEL, new Instruction []{ISA.label});
 	}
 
-	public void printAll() {
+	public String translate() {
 		StringBuffer code = new StringBuffer();
 		
 		
@@ -74,7 +74,8 @@ public class TinyGenerator {
 		}
 		code.append(ISA.sys_halt.getName() + "\n");
 		code.insert(0, ";tiny code\n");
-		System.out.print(code.toString());
+		
+		return (code.toString());
 	}
 
 	private String getField(String st, int i){

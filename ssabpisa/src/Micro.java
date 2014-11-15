@@ -23,14 +23,20 @@ public class Micro{
      }
 
      walker.walk(extractor, t);
-     TinyGenerator asmgen = new TinyGenerator(extractor.getFullIR());
-     
-   	 //Utils.printSymbolTable(extractor.getRootSymbolTable());
-
+ 
      System.out.println(";[log] Total IR Lists: " + extractor.IRMap.keySet().size());
+	 System.out.println(";IR code");
+	 
+	 StringBuffer tiny_buffer = new StringBuffer();
+     for(String fn : extractor.getFullIR().keySet()){
+	   	 Utils.printIR(extractor.getFullIR().get(fn));
+	   	 
+	   	 TinyGenerator asmgen = new TinyGenerator(extractor.getFullIR().get(fn));
+	     tiny_buffer.insert(0, asmgen.translate());
+     }
      
-   	 Utils.printIR(extractor.getFullIR());
-   	 asmgen.printAll();
+     System.out.println(tiny_buffer);
+     
   }
 }
 

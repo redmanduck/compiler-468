@@ -31,14 +31,13 @@ public class ExtractionListener extends MicroBaseListener {
 //	public SymbolTable getRootSymbolTable() {
 //		return root;
 //	}
-
-
 	
-	public IRCollection getFullIR() {
+	public HashMap<String, IRCollection> getFullIR() {
 		/*
 		 * assuming main will be the main IR
 		 */
-		return IRMap.get("main"); //TODO: link with add (or other shit)
+		
+		return IRMap; 
 	}
 
 	private void enterScope(String scopename) {
