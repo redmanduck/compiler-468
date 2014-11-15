@@ -6,7 +6,11 @@ public class IRCollection implements Iterable<IRNode>{
 	private ArrayList<IRNode> _List;
 
 	public IRCollection(){
+		/*
+		 * Constructor -- evokes for any new basic block of IR
+		 */
 		_List = new ArrayList<IRNode>();
+		TempRegisterFactory.reset();  //we want to reset the register count everytime
 	}
 	
 	public void LABEL(String L){
@@ -253,9 +257,18 @@ public class IRCollection implements Iterable<IRNode>{
 		//Jump and link
 		String jump_target = call_expr.id().getText();
 		_List.add(new IRNode(ISA.JSR, jump_target));
-		_List.add(new IRNode(ISA.POP_E));
 		
-		return null;
+		
+		for(@SuppressWarnings("unused") String param : parameters){
+			//do empty pop for each register you pushed for parameter
+			_List.add(new IRNode(ISA.POP_E));
+		}
+		//Pop return value
+		Register rhs = TempRegisterFactory.create("T");
+		_List.add(new IRNode(ISA.POP, rhs));
+
+		
+		return new IRDest(rhs);
 	}
 
 

@@ -6,6 +6,11 @@ public class TempRegisterFactory {
 	private static Hashtable<Integer, Register> regs = new Hashtable<Integer, Register>();
 	private static Register previous;
 	
+	
+	public static void reset(){
+		tempcount = 1;
+		regs.clear();
+	}
 	public static Register create(String type){
 		int v = tempcount++;
 		Register r = new Register('T', v, type);

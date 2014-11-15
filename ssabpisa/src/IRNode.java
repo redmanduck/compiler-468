@@ -26,6 +26,7 @@ public class IRNode {
      public static final int FORMAT_T = 15;
      public static final int FORMAT_RR = 16;
      public static final int FORMAT_DR = 17;
+     public static final int FORMAT_R = 18;
      
      public Id getIdOperand(int which){
     	 switch(which){
@@ -72,6 +73,12 @@ public class IRNode {
 		this.f_src1 = s;
 		this.r_dest = dest;
 		format = FORMAT_FR;
+	}
+	
+	public IRNode(Instruction OPCODE, Register r_dest){
+		this.OPCODE = OPCODE;
+		this.r_dest = r_dest;
+		format = FORMAT_R;
 	}
 	
 	public IRNode(Instruction OPCODE, Register r_src, Id id_dest){
@@ -220,6 +227,8 @@ public class IRNode {
 			return ";" + this.OPCODE.getName() + " " + this.r_src1 + " " + this.r_dest;
 		case FORMAT_DR:
 			return ";" + this.OPCODE.getName() + " " + this.id_src1 + " " + this.r_dest;
+		case FORMAT_R:
+			return ";" + this.OPCODE.getName() + " " + this.r_dest;
 		}
 
 		return ";" + this.OPCODE.getName();

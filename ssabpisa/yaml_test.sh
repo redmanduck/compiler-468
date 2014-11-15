@@ -9,12 +9,13 @@ then
   #compile the compiler first
   tc="${@: -1}_tests" 
   make clean && make
+  rm -rf output/*
 fi
-dirs=$(ls $tc)
+dirs=$(ls $tc/*.micro)
 FAIL=0
 for n in ${dirs}
 do
-  f=$(echo $n | cut -d'.' -f1)
+  f=$(echo $n | cut -d'/' -f2 | cut -d'.' -f1)
   if [ "no_auto" == "$f" ] 
   then
   	continue

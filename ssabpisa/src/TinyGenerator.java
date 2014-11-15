@@ -89,7 +89,7 @@ public class TinyGenerator {
 		String ircode = irn.toString();
 		
 		if(possible_instructions == null){
-			System.err.println("No Instruction Mapping is defined for " + irx.getName());
+			System.err.println(";No Instruction Mapping is defined for " + irx.getName());
 			return null;
 		}		
 		
