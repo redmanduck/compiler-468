@@ -14,7 +14,7 @@ public class ExtractionListener extends MicroBaseListener {
 	
 	private int blockcount;
 	
-	public HashMap<String, IRCollection> IRMap;  //indexed by Function Name
+	public HashMap<String, IRCollection> IRMap;  //indexed by Function Name -> IR list
 	
 	private Stack<String> if_else_label_stk;
 	private Queue<String> while_label_stk;
@@ -38,7 +38,7 @@ public class ExtractionListener extends MicroBaseListener {
 		/*
 		 * assuming main will be the main IR
 		 */
-		return IRMap.get("main");
+		return IRMap.get("main"); //TODO: link with add (or other shit)
 	}
 
 	private void enterScope(String scopename) {
@@ -75,9 +75,7 @@ public class ExtractionListener extends MicroBaseListener {
 
 		ParseTree decl_list = ctx.id_list();
 
-		String[] names = decl_list.getText().split(","); // TODO: ask Milind or
-															// TA , this is
-															// cheating
+		String[] names = decl_list.getText().split("(/s+)?(,)(/s+)?"); 
 		for (String name : names) {
 			if (!current_scope.AddSymbolToTable(ctx.var_type().getText(), name)) {
 				//System.out.println("DECLARATION ERROR " + name);
@@ -89,21 +87,30 @@ public class ExtractionListener extends MicroBaseListener {
 	}
 
 	public void enterParam_decl(MicroParser.Param_declContext ctx) {
-		boolean result = current_scope.AddSymbolToTable(ctx.var_type()
-				.getText(), ctx.id().getText()); // TODO: VAR could be INT or
-													// FLOAT
+		boolean result = current_scope.AddParameterToTable(ctx.var_type()
+				.getText(), ctx.id().getText()); 
+		
 		if (!result) {
 //			root.error = true;
-			//System.out.println("DECLARATION ERROR " + ctx.id().getText());
+			System.out.println("DECLARATION ERROR " + ctx.id().getText());
 			System.exit(1);
 		}
 	}
 
 	public void exitPgm_body(MicroParser.Pgm_bodyContext ctx) {
-		current_ir.RET();
+		
 		leaveScope();
 	}
-
+	
+	public void exitReturn_stmt(@NotNull MicroParser.Return_stmtContext ctx){
+		/*
+		 * move the symbol it want to return into $R
+		 */
+		
+		IRDest return_exp = current_ir.attach_Expressions(current_scope, ctx.expr());
+		current_ir.RET(return_exp);
+	}
+	
 	public void exitFunc_body(MicroParser.Func_bodyContext ctx) {
 		leaveScope();
 	}

@@ -15,7 +15,6 @@
 ;JUMP label1
 ;LABEL label2
 ;WRITEI i
-;RET
 ;tiny code
 var i
 label main

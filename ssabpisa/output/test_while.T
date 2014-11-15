@@ -25,7 +25,6 @@
 ;JUMP label1
 ;LABEL label2
 ;WRITEF approx
-;RET
 ;tiny code
 var num
 var i

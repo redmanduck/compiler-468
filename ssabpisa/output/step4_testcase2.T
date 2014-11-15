@@ -49,7 +49,6 @@
 ;STOREI $T18 a
 ;JUMP label1
 ;LABEL label2
-;RET
 ;tiny code
 var a
 var b

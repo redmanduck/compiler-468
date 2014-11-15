@@ -2,7 +2,7 @@
 #
 #  Compile the compiler and test the result
 #
-TINY='tinyR'
+TINY='tinyRx'
 tc="${@: -1}_tests"
 if [[ $* == *-c* ]]
 then

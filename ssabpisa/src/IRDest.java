@@ -16,7 +16,7 @@ public class IRDest {
 
 	public String toString() {
 		if (_id != null) {
-			return "<Id>" + _id.name;
+			return "<Id>" + _id.toString();
 		} else if (_reg != null) {
 			return "<Reg>" + _reg.toString();
 		}
@@ -25,7 +25,7 @@ public class IRDest {
 
 	public String getDataTypePrecedence() {
 		if (_id != null) {
-			return _id.type;
+			return _id.getType();
 		} else if (_reg != null) {
 			return _reg.dtype;
 		}
@@ -34,7 +34,7 @@ public class IRDest {
 	}
 
 	public boolean isFloat() {
-		if (this._id != null && this._id.type.equals("FLOAT")) {
+		if (this._id != null && this._id.getType().equals("FLOAT")) {
 			return true;
 		}
 

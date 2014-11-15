@@ -47,7 +47,6 @@
 ;STOREF newapprox approx
 ;JUMP label1
 ;LABEL label2
-;RET
 ;tiny code
 var tolerance
 var num

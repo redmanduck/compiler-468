@@ -4,8 +4,10 @@ public class ISA{
 	public static Instruction ADDI = new Instruction("ADDI", 3, "INT");
 	public static Instruction ADDF = new Instruction("ADDF", 3, "FLOAT");
 
-	public static Instruction PUSH_EMPTY = new Instruction("PUSH", 0, "");
-	public static Instruction PUSH = new Instruction("PUSH", 1, "");
+	public static Instruction PUSH_E = new Instruction("PUSH", 0);
+	public static Instruction PUSH = new Instruction("PUSH", 1, "REGISTER");
+	public static Instruction POP_E = new Instruction("POP", 0);
+	public static Instruction POP = new Instruction("POP", 1, "REGISTER");
 
 	
 	public static Instruction SUBI = new Instruction("SUBI", 3, "INT");
@@ -54,7 +56,7 @@ public class ISA{
 	
 	public static Instruction RET = new Instruction("RET");
 	public static Instruction LINK = new Instruction("LINK");
-	
+	public static Instruction JSR = new Instruction("JSR", 1, "LABEL");
 	
 	public static OperationGenreCollection _ADD = new OperationGenreCollection(ADDI, ADDF);
 	public static OperationGenreCollection _SUB = new OperationGenreCollection(SUBI, SUBF);

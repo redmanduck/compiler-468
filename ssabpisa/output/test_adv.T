@@ -47,7 +47,6 @@
 ;LABEL label2
 ;WRITEF approx
 ;WRITEI count
-;RET
 ;tiny code
 var tolerance
 var num

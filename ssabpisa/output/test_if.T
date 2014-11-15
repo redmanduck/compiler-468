@@ -24,7 +24,6 @@
 ;STOREI $T8 num
 ;LABEL label3
 ;WRITEI num
-;RET
 ;tiny code
 var num
 var i

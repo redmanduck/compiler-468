@@ -6,6 +6,8 @@ public class SymbolTable{
   protected ArrayList<SymbolTable> children;
   public String scopename;
   public boolean error;
+  private static int local_var_count; 
+  private static int parameter_count;
 
   public SymbolTable(SymbolTable par, String scopename){
 	// System.out.println("\nSymbol table " + scopename);
@@ -14,6 +16,8 @@ public class SymbolTable{
      this.children = new ArrayList<SymbolTable>();
      this.table = new LinkedHashMap<String, Id>();
      this.error =false;
+     local_var_count = 1;
+     parameter_count = 1;
   }
   
   public Id search(String symbol_name){
@@ -30,8 +34,25 @@ public class SymbolTable{
 	  if(this.table.containsKey(token)){
 		  return false;
 	  }
+	  Id sym = new Id(token, type);
+	  if(!this.scopename.equals("GLOBAL")){
+		  sym.non_global_code = local_var_count;
+		  local_var_count++;
+	  }
 	  //System.out.format("name %s type %s\n", token, type);
-      this.table.put(token, new Id(token, type));
+      this.table.put(token, sym);
+      return true;
+  }
+  
+  public boolean AddParameterToTable(String type, String token){
+	  if(this.table.containsKey(token)){
+		  return false;
+	  }
+	  
+	  Id sym = new Id(token, type);
+	  sym.parameter_code = parameter_count;
+	  parameter_count++;
+	  this.table.put(token, sym);
       return true;
   }
 

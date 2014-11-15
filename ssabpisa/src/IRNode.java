@@ -24,7 +24,9 @@ public class IRNode {
      public static final int FORMAT_DRT = 13; 
      public static final int FORMAT_DDT = 14;
      public static final int FORMAT_T = 15;
-
+     public static final int FORMAT_RR = 16;
+     public static final int FORMAT_DR = 17;
+     
      public Id getIdOperand(int which){
     	 switch(which){
     	 case 1:
@@ -96,6 +98,7 @@ public class IRNode {
 		format = FORMAT_RDR;
 	}
 	
+	
 	public IRNode(Instruction OPCODE, Register r_src1, Register r_src2, Register dest) {
 		this.OPCODE = OPCODE;
 		this.r_src1 = r_src1;
@@ -123,6 +126,20 @@ public class IRNode {
 		this.id_src1 = _id1;
 		this.id_dest = _id2;
 		format = FORMAT_DD;
+	}
+	
+	public IRNode(Instruction OPCODE, Register r1, Register r2) {
+		this.OPCODE = OPCODE;
+		this.r_src1 = r1;
+		this.r_dest = r2;
+		format = FORMAT_RR;
+	}
+	
+	public IRNode(Instruction OPCODE, Id _id1, Register rdest) {
+		this.OPCODE = OPCODE;
+		this.id_src1 = _id1;
+		this.r_dest = rdest;
+		format = FORMAT_DR;
 	}
 
 	public IRNode(Instruction conditional_control, Register left, Register right, String target) {
@@ -170,17 +187,17 @@ public class IRNode {
 		String prefix = ";" + this.OPCODE.getName();
 		switch(format){
 		case FORMAT_DD:
-			return prefix + " " + String.format("%s %s", this.id_src1.name, this.id_dest.name);
+			return prefix + " " + String.format("%s %s", this.id_src1.toString(), this.id_dest.toString());
 		case FORMAT_IR:
 			return prefix + " " + String.format("%s %s", this.i_src1, this.r_dest.toString());
 		case FORMAT_FR: 
 			return prefix + " " + String.format("%s %s", this.f_src1, this.r_dest.toString());
 		case FORMAT_RD: 
-			return prefix + " " + String.format("%s %s", this.r_src1.toString(), this.id_dest.name);
+			return prefix + " " + String.format("%s %s", this.r_src1.toString(), this.id_dest.toString());
 		case FORMAT_DDR: 
-			return prefix + " " + String.format("%s %s %s", this.id_src1.name, this.id_src2.name, this.r_dest.toString());
+			return prefix + " " + String.format("%s %s %s", this.id_src1.toString(), this.id_src2.toString(), this.r_dest.toString());
 		case FORMAT_RDR: 
-			return prefix + " " + String.format("%s %s %s", this.r_src1.toString(), this.id_src2.name, this.r_dest.toString());
+			return prefix + " " + String.format("%s %s %s", this.r_src1.toString(), this.id_src2.toString(), this.r_dest.toString());
 		case FORMAT_RRR:
 			return prefix + " " + String.format("%s %s %s", this.r_src1.toString(), this.r_src2.toString(), this.r_dest.toString());
 		case FORMAT_RRT:
@@ -192,13 +209,17 @@ public class IRNode {
 		case FORMAT_DDT:
 			return prefix + " " + String.format("%s %s %s", this.id_src1.toString(), this.id_src2.toString(), this.jtarget.toString());
 		case FORMAT_D:
-			return prefix + " " + this.id_readwrite.name;
+			return prefix + " " + this.id_readwrite.toString();
 		case FORMAT_DRR:
-			return prefix + " " +  String.format("%s %s %s", this.id_src1.name, this.r_src2.toString(), this.r_dest.toString());
+			return prefix + " " +  String.format("%s %s %s", this.id_src1.toString(), this.r_src2.toString(), this.r_dest.toString());
 		case FORMAT_O:
 			return ";" + this.OPCODE.getName();
 		case FORMAT_T:
 			return ";" + this.OPCODE.getName() + " " + this.jtarget;
+		case FORMAT_RR:
+			return ";" + this.OPCODE.getName() + " " + this.r_src1 + " " + this.r_dest;
+		case FORMAT_DR:
+			return ";" + this.OPCODE.getName() + " " + this.id_src1 + " " + this.r_dest;
 		}
 
 		return ";" + this.OPCODE.getName();

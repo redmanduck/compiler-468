@@ -25,4 +25,8 @@ public class TempRegisterFactory {
 	public static Register previous() {
 		return previous;
 	}
+	
+	public static Hashtable<Integer, Register> getRegMap(){
+		return regs;
+	}
 }

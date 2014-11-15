@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
-
 public class IRCollection implements Iterable<IRNode>{
 	private ArrayList<IRNode> _List;
 
@@ -20,6 +19,25 @@ public class IRCollection implements Iterable<IRNode>{
 	
 	public void Trace(String L){
 		_List.add(new IRNode(L));
+	}
+	
+	public void RET(IRDest ret){
+		//move return variable into $R
+		//load it into some temp reg
+		Register src_reg = null;
+		Instruction store_instr = ISA.STOREI;
+		if(ret.isFloat()){
+			store_instr = ISA.STOREF;
+		}
+		if(ret._id != null){
+			src_reg = TempRegisterFactory.create("T");
+			_List.add(new IRNode(store_instr, ret._id, src_reg));
+		}else if(ret._reg != null){
+			src_reg = ret._reg;
+		}
+		
+		_List.add(new IRNode(store_instr, src_reg, new Register('R')));
+		_List.add(new IRNode(ISA.RET));
 	}
 	
 	public void RET(){
@@ -62,7 +80,7 @@ public class IRCollection implements Iterable<IRNode>{
 		i_dest = v._reg;
 		
 		Instruction op  = ISA.STOREI;
-		if(dest_token.type.equals("FLOAT")){
+		if(dest_token.getType().equals("FLOAT")){
 			op = ISA.STOREF;
 		}
 		IRNode nodeB = null;
@@ -79,6 +97,7 @@ public class IRCollection implements Iterable<IRNode>{
 		return null;
 	}
 
+
 	/*
 	 *  Generate expression IR nodes and add them to IR list
 	 *  @param scope : the current scope
@@ -86,6 +105,8 @@ public class IRCollection implements Iterable<IRNode>{
 	 *  @return last node in the list
 	 */
 	public IRDest attach_Expressions(SymbolTable scope, MicroParser.ExprContext expr){
+		
+
 		IRDest dleft = attach_ExprPrefix(scope, expr.expr_prefix());
 		IRDest dright = attach_Factor(scope, expr.factor());
 				
@@ -101,9 +122,8 @@ public class IRCollection implements Iterable<IRNode>{
 			return dleft;
 		}
 		
+		
 		IRNode N = null;
-		
-		
 		
 		Instruction op = ISA.transform_type(ISA.ADDI, dleft.getDataTypePrecedence(), dright.getDataTypePrecedence());
 		
@@ -221,8 +241,19 @@ public class IRCollection implements Iterable<IRNode>{
 		/*
 		 * The destination is the popped register from activation record
 		 */
-		_List.add(new IRNode(ISA.PUSH_EMPTY));
-		MicroParser.Expr_listContext expr_list = call_expr.expr_list();
+		_List.add(new IRNode(ISA.PUSH_E)); //Space for return value
+		
+		//Space for parameters
+		String [] parameters = call_expr.expr_list().getText().split("(/s+)?(,)(/s+)?");
+		for(String param : parameters){
+			//look for the Register that has the param
+			_List.add(new IRNode(ISA.PUSH, scope.search(param)));
+		}
+		
+		//Jump and link
+		String jump_target = call_expr.id().getText();
+		_List.add(new IRNode(ISA.JSR, jump_target));
+		_List.add(new IRNode(ISA.POP_E));
 		
 		return null;
 	}
@@ -236,7 +267,7 @@ public class IRCollection implements Iterable<IRNode>{
 		}
 
 		//generate IRNode
-		//TODO: support MULTF
+		//TODO: support MULTF !!!
 		
 		IRDest fact = attach_FactorPrefix(scope, self.factor_prefix());
 		IRDest postfix = attach_PostfixExpr(scope, self.postfix_expr());
@@ -277,6 +308,7 @@ public class IRCollection implements Iterable<IRNode>{
 		IRDest right = attach_Factor(scope, expr_prefix.factor());
 		//TODO: handle case where right of expression is lambda
 		
+		
 		IRNode irn = null;
 		Instruction op = ISA.transform_type(ISA.ADDI, left.getDataTypePrecedence(), right.getDataTypePrecedence());
 		Register dest = TempRegisterFactory.create(op.supported_type);
@@ -303,7 +335,7 @@ public class IRCollection implements Iterable<IRNode>{
 	 * Grammar : ( READ BROPEN id_list BRCLOSE SEMI );
 	 */
 	public void attach_Read(SymbolTable scope, MicroParser.Read_stmtContext rstmt){
-		String [] ids = rstmt.id_list().getText().split(","); //TODO: ugly
+		String [] ids = rstmt.id_list().getText().split("(/s+)?(,)(/s+)?"); //TODO: ugly
 		for(int i = 0;i < ids.length; i++){
 			String token_name = ids[i];
 			IRNode n = new IRNode(ISA.READI, scope.search(token_name));
@@ -313,17 +345,17 @@ public class IRCollection implements Iterable<IRNode>{
 	}
 	
 	public void attach_Write(SymbolTable scope, MicroParser.Write_stmtContext wstmt){
-		String [] ids = wstmt.id_list().getText().split(",");
+		String [] ids = wstmt.id_list().getText().split("(/s+)?(,)(/s+)?");
 		for(int i = 0;i < ids.length; i++){
 			String token_name = ids[i];
 			Id token = scope.search(token_name);
 
 			IRNode n = null;
-			if(token.type.equals("FLOAT")){
+			if(token.getType().equals("FLOAT")){
 				n = new IRNode(ISA.WRITEF, token);
-			}else if(token.type.equals("INT")){
+			}else if(token.getType().equals("INT")){
 				n = new IRNode(ISA.WRITEI, token);
-			}else if(token.type.equals("STRING")){
+			}else if(token.getType().equals("STRING")){
 				n = new IRNode(ISA.WRITES, token);
 			}
 			_List.add(n);
@@ -486,6 +518,11 @@ public class IRCollection implements Iterable<IRNode>{
 		}
 		_List.add(n);
 	}
+
+	public void attach_Return(MicroParser.Return_stmtContext ctx) {
+		_List.add(new IRNode(ISA.RET, ctx.expr().getText()));
+	}
+
 
 
 	
