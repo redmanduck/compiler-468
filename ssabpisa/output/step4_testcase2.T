@@ -1,5 +1,3 @@
-;[log] func enter main
-;[log] Total IR Lists: 1
 ;IR code
 ;LABEL main
 ;LINK
@@ -8,6 +6,7 @@
 ;STOREI 1 $T2
 ;STOREI $T2 b
 ;LABEL label1
+;LINK
 ;STOREI 80 $T3
 ;GTI a $T3 label2
 ;STOREI 1 $T4
@@ -18,6 +17,7 @@
 ;WRITEI g
 ;WRITES newline
 ;LABEL label3
+;LINK
 ;STOREI 2 $T7
 ;NEI b $T7 label4
 ;STOREI 2 $T8
@@ -26,6 +26,7 @@
 ;WRITEI p
 ;WRITES newline
 ;LABEL label4
+;LINK
 ;STOREI 3 $T10
 ;NEI b $T10 label5
 ;STOREI 3 $T11
@@ -35,12 +36,14 @@
 ;WRITES newline
 ;JUMP label6
 ;LABEL label5
+;LINK
 ;STOREI 4 $T13
 ;MULTI $T13 a $T14
 ;STOREI $T14 u
 ;WRITEI u
 ;WRITES newline
 ;LABEL label6
+;LINK
 ;STOREI 1 $T15
 ;ADDI b $T15 $T16
 ;STOREI $T16 b
@@ -49,69 +52,76 @@
 ;STOREI $T18 a
 ;JUMP label1
 ;LABEL label2
-;tiny code
+;LINK
 var a
 var b
-var g
-str newline "\n"
-var p
 var k
+var g
+var p
 var u
+str newline "\n"
 label main
+link 0
 move 1 r0
 move r0 a
 move 1 r1
 move r1 b
 label label1
-move 80 r2
-cmpi a r2
+link 0
+move 80 r0
+cmpi a r0
 jgt label2
-move 1 r3
-cmpi b r3
+move 1 r1
+cmpi b r1
 jne label3
-move 1 r4
-move r4 r5
-muli a r5
-move r5 g
+move 1 r2
+move r2 r3
+muli a r3
+move r3 g
 sys writei g
 sys writes newline
 label label3
-move 2 r6
-cmpi b r6
+link 0
+move 2 r0
+cmpi b r0
 jne label4
-move 2 r7
-move r7 r8
-muli a r8
-move r8 p
+move 2 r1
+move r1 r2
+muli a r2
+move r2 p
 sys writei p
 sys writes newline
 label label4
-move 3 r9
-cmpi b r9
+link 0
+move 3 r0
+cmpi b r0
 jne label5
-move 3 r10
-move r10 r11
-muli a r11
-move r11 k
+move 3 r1
+move r1 r2
+muli a r2
+move r2 k
 sys writei k
 sys writes newline
 jmp label6
 label label5
-move 4 r12
-move r12 r13
-muli a r13
-move r13 u
+link 0
+move 4 r0
+move r0 r1
+muli a r1
+move r1 u
 sys writei u
 sys writes newline
 label label6
-move 1 r14
-move b r15
-addi r14 r15
-move r15 b
-move 20 r16
-move a r17
-addi r16 r17
-move r17 a
+link 0
+move 1 r0
+move b r1
+addi r0 r1
+move r1 b
+move 20 r2
+move a r3
+addi r2 r3
+move r3 a
 jmp label1
 label label2
-sys halt
+link 0
+

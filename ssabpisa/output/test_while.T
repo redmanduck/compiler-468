@@ -1,5 +1,3 @@
-;[log] func enter main
-;[log] Total IR Lists: 1
 ;IR code
 ;LABEL main
 ;LINK
@@ -11,6 +9,7 @@
 ;STOREI $T3 j
 ;STOREF num approx
 ;LABEL label1
+;LINK
 ;STOREI 0 $T4
 ;EQI i $T4 label2
 ;STOREF 0.5 $T5
@@ -24,14 +23,15 @@
 ;STOREI $T10 i
 ;JUMP label1
 ;LABEL label2
+;LINK
 ;WRITEF approx
-;tiny code
-var num
 var i
 var j
-var approx
 var newapprox
+var approx
+var num
 label main
+link 0
 move 7.0 r0
 move r0 num
 move 100 r1
@@ -41,24 +41,26 @@ move r2 j
 move num r3
 move r3 approx
 label label1
-move 0 r4
-cmpi i r4
+link 0
+move 0 r0
+cmpi i r0
 jeq label2
-move 0.5 r5
-move num r6
-divr approx r6
-move approx r7
-addr r6 r7
-move r5 r8
-mulr r7 r8
-move r8 newapprox
-move newapprox r9
-move r9 approx
-move 1 r10
-move i r11
-subi r10 r11
-move r11 i
+move 0.5 r1
+move num r2
+divr approx r2
+move approx r3
+addr r2 r3
+move r1 r4
+mulr r3 r4
+move r4 newapprox
+move newapprox r5
+move r5 approx
+move 1 r6
+move i r7
+subi r6 r7
+move r7 i
 jmp label1
 label label2
+link 0
 sys writer approx
-sys halt
+

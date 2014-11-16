@@ -21,6 +21,11 @@ public class Id {
 	   non_global_code = null;
    }
    
+   public boolean isLocalVariable(){
+	   if(non_global_code != null) return true;
+	   return false;
+   }
+   
    public String toString(){
 	   if(parameter_code != null) return "$P" + parameter_code;
 	   if(non_global_code != null) return "$L" + non_global_code;
@@ -29,6 +34,18 @@ public class Id {
    }
    
    public String getReferenceName(){
+	   return name;
+   }
+   
+   public String getTiny(){
+	   if(parameter_code != null){
+		   //parameter
+		   return "$" + TinyActivationRecord.getParameter(name); 
+	   }
+	   if(non_global_code != null){
+		   //local variable
+		   return "$" + TinyActivationRecord.getLocalVariable(name);
+	   }
 	   return name;
    }
    

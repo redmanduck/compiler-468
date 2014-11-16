@@ -1,5 +1,4 @@
-import java.util.HashMap;
-import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -12,31 +11,36 @@ public class ExtractionListener extends MicroBaseListener {
 	private String current_function;
 	private IRCollection current_ir;
 	
+	public SymbolTable root_scope;
+	
 	private int blockcount;
 	
-	public HashMap<String, IRCollection> IRMap;  //indexed by Function Name -> IR list
-	
+	private LinkedHashMap<String, IRCollection> IRMap;  //indexed by Function Name -> IR list
+	private LinkedHashMap<String, SymbolTable> STMap; //indexed by Function Name -> Symbol Table root for that func
 	private Stack<String> if_else_label_stk;
 	private Queue<String> while_label_stk;
 
 		
 	public ExtractionListener(MicroParser psr) {
 		current_scope = new SymbolTable(null, "GLOBAL");
+		root_scope = current_scope;
 		this.blockcount = 0;
 		this.if_else_label_stk = new Stack<String>();
 		this.while_label_stk = new LinkedList<String>();
-		this.IRMap = new HashMap<String, IRCollection>();
+		this.IRMap = new LinkedHashMap<String, IRCollection>();
+		this.STMap = new LinkedHashMap<String, SymbolTable>();
 	}
 //
 //	public SymbolTable getRootSymbolTable() {
 //		return root;
 //	}
 	
-	public HashMap<String, IRCollection> getFullIR() {
-		/*
-		 * assuming main will be the main IR
-		 */
-		
+	public LinkedHashMap<String, SymbolTable> getSymbolTableMap(){
+		return STMap;
+	}
+	
+	public LinkedHashMap<String, IRCollection> getFullIR() {
+
 		return IRMap; 
 	}
 
@@ -164,7 +168,6 @@ public class ExtractionListener extends MicroBaseListener {
 		if (ctx.func_decl() == null) {
 			return;
 		}
-		System.out.println(";[log] func enter " + ctx.func_decl().id().getText());
 		//Update Current Function 
 		this.current_function = ctx.func_decl().id().getText();
 		//Create new IR
@@ -176,11 +179,13 @@ public class ExtractionListener extends MicroBaseListener {
 		}
 		
 		IRMap.put(current_function, i);
+		
 		current_ir = i;
 		enterScope(ctx.func_decl().id().getText());
 		
 		current_ir.LABEL(current_scope.scopename);
-		current_ir.LINK();
+		
+		STMap.put(current_function, current_scope);
 	}
 
 	public void enterWhile_stmt(@NotNull MicroParser.While_stmtContext ctx) {

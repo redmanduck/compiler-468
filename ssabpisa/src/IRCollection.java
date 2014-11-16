@@ -13,13 +13,13 @@ public class IRCollection implements Iterable<IRNode>{
 		TempRegisterFactory.reset();  //we want to reset the register count everytime
 	}
 	
-	public void LABEL(String L){
-		_List.add(new IRNode(L));
+	public void LABEL(String fn){
+		_List.add(new IRNode(fn));
+		IRNode linkd = new IRNode(ISA.LINK);
+		linkd.fn_key = fn;
+		_List.add(linkd); 
 	}
 	
-	public void LINK(){
-		_List.add(new IRNode(ISA.LINK)); 
-	}
 	
 	public void Trace(String L){
 		_List.add(new IRNode(L));

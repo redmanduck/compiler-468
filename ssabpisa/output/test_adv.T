@@ -1,5 +1,3 @@
-;[log] func enter main
-;[log] Total IR Lists: 1
 ;IR code
 ;LABEL main
 ;LINK
@@ -15,6 +13,7 @@
 ;STOREI 0 $T5
 ;STOREI $T5 enough
 ;LABEL label1
+;LINK
 ;STOREI 1 $T6
 ;EQI enough $T6 label2
 ;STOREI 1 $T7
@@ -33,29 +32,34 @@
 ;STOREI 1 $T15
 ;STOREI $T15 enough
 ;LABEL label4
+;LINK
 ;JUMP label5
 ;LABEL label3
+;LINK
 ;STOREF 0.0 $T16
 ;SUBF $T16 tolerance $T17
 ;LEF diff $T17 label6
 ;STOREI 1 $T18
 ;STOREI $T18 enough
 ;LABEL label6
+;LINK
 ;LABEL label5
+;LINK
 ;STOREF newapprox approx
 ;JUMP label1
 ;LABEL label2
+;LINK
 ;WRITEF approx
 ;WRITEI count
-;tiny code
-var tolerance
-var num
-var approx
 var count
-var diff
 var enough
 var newapprox
+var approx
+var num
+var tolerance
+var diff
 label main
+link 0
 move 1.0E-4 r0
 move r0 tolerance
 move 7.0 r1
@@ -69,48 +73,54 @@ move r4 diff
 move 0 r5
 move r5 enough
 label label1
-move 1 r6
-cmpi enough r6
+link 0
+move 1 r0
+cmpi enough r0
 jeq label2
-move 1 r7
-move count r8
-addi r7 r8
-move r8 count
-move 0.5 r9
-move num r10
-divr approx r10
-move approx r11
-addr r10 r11
-move r9 r12
-mulr r11 r12
-move r12 newapprox
-move approx r13
-subr newapprox r13
-move r13 diff
-move 0.0 r14
-cmpr diff r14
+move 1 r1
+move count r2
+addi r1 r2
+move r2 count
+move 0.5 r3
+move num r4
+divr approx r4
+move approx r5
+addr r4 r5
+move r3 r6
+mulr r5 r6
+move r6 newapprox
+move approx r7
+subr newapprox r7
+move r7 diff
+move 0.0 r8
+cmpr diff r8
 jle label3
-move tolerance r15
-cmpr diff r15
+move tolerance r9
+cmpr diff r9
 jge label4
-move 1 r16
-move r16 enough
+move 1 r10
+move r10 enough
 label label4
+link 0
 jmp label5
 label label3
-move 0.0 r17
-move r17 r18
-subr tolerance r18
-cmpr diff r18
+link 0
+move 0.0 r0
+move r0 r1
+subr tolerance r1
+cmpr diff r1
 jle label6
-move 1 r19
-move r19 enough
+move 1 r2
+move r2 enough
 label label6
+link 0
 label label5
-move newapprox r20
-move r20 approx
+link 0
+move newapprox r0
+move r0 approx
 jmp label1
 label label2
+link 0
 sys writer approx
 sys writei count
-sys halt
+

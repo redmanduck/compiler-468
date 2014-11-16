@@ -1,7 +1,9 @@
 PROGRAM factorial
 BEGIN
+	INT gg;
+	STRING elop := "Please enter an integer number: ";
 	
-	FUNCTION FLOAT add (FLOAT a, FLOAT b, FLOAT x)
+	FUNCTION FLOAT add (FLOAT a, FLOAT b)
 	BEGIN
 	  	FLOAT result;
 		result := a+b;
@@ -11,11 +13,10 @@ BEGIN
 	
 	FUNCTION INT main ()
 	BEGIN
-		FLOAT c, addresult,multiplyresult, x;
+		FLOAT c, addresult,multiplyresult;
 		c := 1.0;
-		x := 3.2;
 		multiplyresult := 2.0;
-		addresult := add(multiplyresult,c, x);
+		addresult := add(multiplyresult,c);
 		RETURN 0;
 	END
 END

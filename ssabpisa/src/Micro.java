@@ -24,19 +24,33 @@ public class Micro{
 
      walker.walk(extractor, t);
  
-     System.out.println(";[log] Total IR Lists: " + extractor.IRMap.keySet().size());
 	 System.out.println(";IR code");
 	 
-	 StringBuffer tiny_buffer = new StringBuffer();
+	 
+	 //Generate Tiny Code
+	int vardec_offsets = 0;
+    StringBuffer tiny_buffer = new StringBuffer();
+
+	for(Id symbol: extractor.root_scope){
+			
+			String s =  String.format("var %s\n", symbol.getReferenceName());
+			if(symbol.getType() == "STRING"){
+				s = String.format("str %s %s\n", symbol.getReferenceName(), symbol.getStrValue());
+			}
+			tiny_buffer.insert(vardec_offsets, s);
+			vardec_offsets += s.length();
+	}
+		
      for(String fn : extractor.getFullIR().keySet()){
 	   	 Utils.printIR(extractor.getFullIR().get(fn));
 	   	 
-	   	 TinyGenerator asmgen = new TinyGenerator(extractor.getFullIR().get(fn));
-	     tiny_buffer.insert(0, asmgen.translate());
+	   	 TinyGenerator asmgen = new TinyGenerator(extractor.getFullIR().get(fn), extractor.getSymbolTableMap());
+	     tiny_buffer.insert(tiny_buffer.length(), asmgen.translate());
      }
      
-     System.out.println(tiny_buffer);
      
+     System.out.println(tiny_buffer);
+    // Utils.printSymbolTable(extractor.root_scope);
   }
 }
 

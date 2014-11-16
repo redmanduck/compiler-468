@@ -1,5 +1,3 @@
-;[log] func enter main
-;[log] Total IR Lists: 1
 ;IR code
 ;LABEL main
 ;LINK
@@ -18,17 +16,20 @@
 ;ADDI num a $T7
 ;STOREI $T7 num
 ;LABEL label2
+;LINK
 ;JUMP label3
 ;LABEL label1
+;LINK
 ;SUBI num a $T8
 ;STOREI $T8 num
 ;LABEL label3
+;LINK
 ;WRITEI num
-;tiny code
-var num
 var i
 var a
+var num
 label main
+link 0
 move 7 r0
 move r0 num
 move 2 r1
@@ -48,11 +49,14 @@ move num r6
 addi a r6
 move r6 num
 label label2
+link 0
 jmp label3
 label label1
-move num r7
-subi a r7
-move r7 num
+link 0
+move num r0
+subi a r0
+move r0 num
 label label3
+link 0
 sys writei num
-sys halt
+

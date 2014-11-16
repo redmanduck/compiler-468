@@ -7,6 +7,8 @@ public class IRNode {
      private Id id_readwrite;
      private String label,jtarget;
      
+     public String fn_key;
+     
      private int format;
      public static final int FORMAT_IR = 0; // int reg
      public static final int FORMAT_FR = 1; // float reg
@@ -24,7 +26,7 @@ public class IRNode {
      public static final int FORMAT_DRT = 13; 
      public static final int FORMAT_DDT = 14;
      public static final int FORMAT_T = 15;
-     public static final int FORMAT_RR = 16;
+     public static final int FORMAT_RS = 16;
      public static final int FORMAT_DR = 17;
      public static final int FORMAT_R = 18;
      
@@ -139,7 +141,7 @@ public class IRNode {
 		this.OPCODE = OPCODE;
 		this.r_src1 = r1;
 		this.r_dest = r2;
-		format = FORMAT_RR;
+		format = FORMAT_RS;
 	}
 	
 	public IRNode(Instruction OPCODE, Id _id1, Register rdest) {
@@ -223,7 +225,7 @@ public class IRNode {
 			return ";" + this.OPCODE.getName();
 		case FORMAT_T:
 			return ";" + this.OPCODE.getName() + " " + this.jtarget;
-		case FORMAT_RR:
+		case FORMAT_RS:
 			return ";" + this.OPCODE.getName() + " " + this.r_src1 + " " + this.r_dest;
 		case FORMAT_DR:
 			return ";" + this.OPCODE.getName() + " " + this.id_src1 + " " + this.r_dest;

@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class SymbolTable{
+public class SymbolTable implements Iterable<Id>{
   private LinkedHashMap<String, Id> table;
   protected SymbolTable parent;
   protected ArrayList<SymbolTable> children;
@@ -9,7 +9,7 @@ public class SymbolTable{
   private static int local_var_count; 
   private static int parameter_count;
 
-  public SymbolTable(SymbolTable par, String scopename){
+  public SymbolTable(SymbolTable par, String scopename) {
 	// System.out.println("\nSymbol table " + scopename);
      this.parent = par;
      this.scopename  = scopename;
@@ -19,6 +19,22 @@ public class SymbolTable{
      local_var_count = 1;
      parameter_count = 1;
   }
+  
+  public int count_local(){
+	  int i = 0;
+	  for(String key : this.table.keySet()){
+		  Id id = this.table.get(key);
+		  if(id.isLocalVariable()){
+			  i++;
+		  }
+	  }
+	  for(SymbolTable ch: this.children){
+		  i += ch.count_local();
+	  }
+	  return i;
+  }
+  
+  
   
   public Id search(String symbol_name){
 	  Id t = null;
@@ -80,5 +96,11 @@ public class SymbolTable{
   public Set<String> getKeys(){
 	  return this.table.keySet();
   }
+
+@Override
+public Iterator<Id> iterator() {
+	Iterator<Id> inode = this.table.values().iterator();
+    return inode; 
+}
 
 }

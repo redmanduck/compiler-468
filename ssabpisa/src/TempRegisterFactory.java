@@ -9,6 +9,7 @@ public class TempRegisterFactory {
 	
 	public static void reset(){
 		tempcount = 1;
+		tiny_tempcount = 0;
 		regs.clear();
 	}
 	public static Register create(String type){
