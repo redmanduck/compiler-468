@@ -21,6 +21,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 TINY='tiny'
+rm $TINY
+make tiny
 tc="${@: -1}_tests"
 if [[ $* == *-c* ]]
 then
