@@ -30,7 +30,7 @@ public class Micro{
 	 //Generate Tiny Code
 	int vardec_offsets = 0;
     StringBuffer tiny_buffer = new StringBuffer();
-
+    //Do global scope declarations
 	for(Id symbol: extractor.root_scope){
 			
 			String s =  String.format("var %s\n", symbol.getReferenceName());
@@ -40,8 +40,11 @@ public class Micro{
 			tiny_buffer.insert(vardec_offsets, s);
 			vardec_offsets += s.length();
 	}
-		
-     for(String fn : extractor.getFullIR().keySet()){
+	//Do push registers and JSR main and halt
+	tiny_buffer.insert(vardec_offsets, "sys halt\n");
+	tiny_buffer.insert(vardec_offsets, "jsr main\n");
+
+    for(String fn : extractor.getFullIR().keySet()){
 	   	 Utils.printIR(extractor.getFullIR().get(fn));
 	   	 
 	   	 TinyGenerator asmgen = new TinyGenerator(extractor.getFullIR().get(fn), extractor.getSymbolTableMap());

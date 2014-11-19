@@ -218,7 +218,7 @@ public class TinyGenerator {
 			return tiny.getName() +  " " + dest.toTiny();
 		}else if(irn.getFormat() == IRNode.FORMAT_RS){
 			//`S` is not really a register
-			return tiny.getName() + " " + reg_map_ir_tiny.get(getField(ircode, 1)) + " R$" + TinyActivationRecord.getReturnStackAddress();
+			return tiny.getName() + " " + reg_map_ir_tiny.get(getField(ircode, 1)).toTiny() + " $" + TinyActivationRecord.getReturnStackAddress();
 		}else{
 			return ";<unknown format> code: " + irn.getFormat();
 		}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="ssabpisa/build"/>
+	<classpathentry kind="src" path="ssabpisa/src"/>
+	<classpathentry kind="lib" path="ssabpisa/lib/antlr.jar"/>
+	<classpathentry kind="lib" path="step6.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="ssabpisa/classes"/>
+</classpath>
