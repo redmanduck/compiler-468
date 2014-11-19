@@ -27,6 +27,7 @@
 ;RET
 var gg
 str elop "Please enter an integer number: "
+push
 push r0
 push r1
 push r2

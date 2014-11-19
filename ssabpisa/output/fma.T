@@ -57,6 +57,7 @@ str eol "\n"
 str star "*"
 str plus "+"
 str equal "="
+push
 push r0
 push r1
 push r2

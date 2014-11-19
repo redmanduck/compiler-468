@@ -34,8 +34,22 @@ do
     FAIL=1
     continue
   fi
-  test=$(./$TINY output/$f.T < $inkey | sed '/STATISTICS/q' ) #run my micro
-  gold=$(./$TINY $tc/$f.out < $inkey | sed '/STATISTICS/q' )  #run given micro
+  t=$(./$TINY output/$f.T < $inkey 2>> transcript) #run my micro
+  j=$?
+  g=$(./$TINY $tc/$f.out < $inkey 2>> transcript)  #run given micro
+  if (( $? != 0 )) || (( $j != 0 )) 
+  then
+      FAIL=1
+      echo  "$(tput setaf 1) [ERROR] $(tput setaf 0)"
+      continue
+  fi
+  test=$(echo $t | sed s/ST/\\\|/g | cut -d'|' -f1)
+  gold=$(echo $g | sed s/ST/\\\|/g | cut -d'|' -f1)    
+  echo "++++ $n"  >> transcript
+  echo "===================================================================" >> transcript
+  echo $test >> transcript  
+  echo $gold >> transcript
+  echo "===================================================================" >> transcript
   df=$(diff -b -B <(echo $test) <(echo $gold))
   if [ "$df" = "" ]
   then

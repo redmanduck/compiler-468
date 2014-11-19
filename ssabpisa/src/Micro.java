@@ -27,8 +27,8 @@ public class Micro{
  
 	 System.out.println(";IR code");
 	 
-	 
-	 //Generate Tiny Code
+
+    //Generate Tiny Code
     StringBuffer tiny_buffer = new StringBuffer();
     //Do global scope declarations
 	for(Id symbol: extractor.root_scope){
@@ -40,6 +40,7 @@ public class Micro{
 			tiny_buffer.append(s);
 	}
 	//Do push registers and JSR main and halt
+        tiny_buffer.append(ISA.push.getName() + "\n");
 	for(int i = 0; i< Micro.CONST_NUM_REG_USE; i++){
 		tiny_buffer.append(String.format("%s r%d\n", ISA.push.getName(), i));
 	}
