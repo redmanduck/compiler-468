@@ -1,2 +1,2 @@
 language: java
-script: ./ssabpisa/yaml_test.sh -c step5
+script: ./test.sh
