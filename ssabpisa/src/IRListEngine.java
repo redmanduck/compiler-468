@@ -2,10 +2,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
-public class IRCollection implements Iterable<IRNode>{
+public class IRListEngine implements Iterable<IRNode>{
 	private ArrayList<IRNode> _List;
 
-	public IRCollection(){
+	public IRListEngine(){
 		/*
 		 * Constructor -- evokes for any new basic block of IR
 		 */
@@ -348,10 +348,17 @@ public class IRCollection implements Iterable<IRNode>{
 	 * Grammar : ( READ BROPEN id_list BRCLOSE SEMI );
 	 */
 	public void attach_Read(SymbolTable scope, MicroParser.Read_stmtContext rstmt){
-		String [] ids = rstmt.id_list().getText().split("(/s+)?(,)(/s+)?"); //TODO: ugly
+		String [] ids = rstmt.id_list().getText().split("(/s+)?(,)(/s+)?"); 
 		for(int i = 0;i < ids.length; i++){
 			String token_name = ids[i];
-			IRNode n = new IRNode(ISA.READI, scope.search(token_name));
+			Id symid = scope.search(token_name);
+			Instruction read_type = ISA.READI;
+			
+			if(symid.getType().equals("FLOAT")){
+				read_type = ISA.READF;
+			}
+			
+			IRNode n = new IRNode(read_type, symid);
 			_List.add(n);
 		}
 		

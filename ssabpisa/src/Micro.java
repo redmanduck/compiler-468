@@ -2,6 +2,7 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
 public class Micro{
+  public static int CONST_NUM_REG_USE = 15;
   public static void main(String[] args) throws Exception
   {
 	  
@@ -28,7 +29,6 @@ public class Micro{
 	 
 	 
 	 //Generate Tiny Code
-	int vardec_offsets = 0;
     StringBuffer tiny_buffer = new StringBuffer();
     //Do global scope declarations
 	for(Id symbol: extractor.root_scope){
@@ -37,12 +37,14 @@ public class Micro{
 			if(symbol.getType() == "STRING"){
 				s = String.format("str %s %s\n", symbol.getReferenceName(), symbol.getStrValue());
 			}
-			tiny_buffer.insert(vardec_offsets, s);
-			vardec_offsets += s.length();
+			tiny_buffer.append(s);
 	}
 	//Do push registers and JSR main and halt
-	tiny_buffer.insert(vardec_offsets, "sys halt\n");
-	tiny_buffer.insert(vardec_offsets, "jsr main\n");
+	for(int i = 0; i< Micro.CONST_NUM_REG_USE; i++){
+		tiny_buffer.append(String.format("%s r%d\n", ISA.push.getName(), i));
+	}
+	tiny_buffer.append(ISA.jsr.getName() + " main\n");
+	tiny_buffer.append("sys halt\n");
 
     for(String fn : extractor.getFullIR().keySet()){
 	   	 Utils.printIR(extractor.getFullIR().get(fn));

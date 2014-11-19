@@ -1,0 +1,6 @@
+;IR code
+;LABEL F
+;LINK
+;STOREI 2 $T1
+;LEI $P1 $T1 label1
+;PUSH

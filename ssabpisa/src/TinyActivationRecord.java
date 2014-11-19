@@ -2,8 +2,8 @@ import java.util.Hashtable;
 
 
 public class TinyActivationRecord {
-	public static int stack_growth_count = 1; 
-	public static int local_var_count = -1;
+	private static int stack_growth_count = 1; 
+	private static int local_var_count = -1;
 	public static Hashtable<String, Integer> ParameterStackMap = new Hashtable<String, Integer>(); 
 	public static Hashtable<String, Integer> LocalStackMap = new Hashtable<String, Integer>(); //local variable to stack
 	
@@ -41,6 +41,7 @@ public class TinyActivationRecord {
 	
 	public static void reset(){
 		LocalStackMap.clear();
+		ParameterStackMap.clear();
 		stack_growth_count = 1;
 		local_var_count = -1;
 	}

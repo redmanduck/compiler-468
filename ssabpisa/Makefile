@@ -5,6 +5,8 @@ all: group compiler
 
 group:
 	@echo "ssabpisa"
+tiny:
+	g++ -o tiny tinyNew.C
 compiler:
 	rm -rf build
 	mkdir build
@@ -12,8 +14,8 @@ compiler:
 	rm -rf classes
 	mkdir classes
 	javac -cp $(LIB_ANTLR) -d classes src/*.java build/*.java
-duckfma:
-	java -cp lib/antlr.jar:classes/ Micro step6_tests/duckfma.micro > output/duckfma.T
+single:
+	java -cp lib/antlr.jar:classes/ Micro step6_tests/$(single).micro > output/$(single).T
 clean:
 	rm -rf classes build
 

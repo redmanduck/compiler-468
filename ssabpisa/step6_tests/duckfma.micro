@@ -17,6 +17,8 @@ BEGIN
 		c := 1.0;
 		multiplyresult := 2.0;
 		addresult := add(multiplyresult,c);
+		WRITE(addresult);
+		WRITE(multiplyresult);
 		RETURN 0;
 	END
 END

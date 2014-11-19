@@ -3,13 +3,16 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Hashtable;
 public class TinyGenerator {
-	IRCollection IR;
+	IRListEngine IR;
 	HashMap<Instruction, Instruction[]> map_ISA;
 	Hashtable<String, Register> reg_map_ir_tiny;
 	LinkedHashSet<Id> usedSymbols; //contains all LVALUES
 	LinkedHashMap<String, SymbolTable> SymbolTable_Map;
 	
-	public TinyGenerator(IRCollection _irb, LinkedHashMap<String, SymbolTable> SMap) {
+	private static int SAVE = 1;
+	private static int RESTORE = 2;
+
+	public TinyGenerator(IRListEngine _irb, LinkedHashMap<String, SymbolTable> SMap) {
 		IR = _irb;
 		//generate IR -> asm map
 		this.SymbolTable_Map = SMap;
@@ -204,7 +207,15 @@ public class TinyGenerator {
 			return asms;
 			
 		}else if(irn.getFormat() == IRNode.FORMAT_T){
-			return tiny.getName() +  " " + getField(ircode, 1);
+			String output = "";
+			output += tiny.getName() +  " " + getField(ircode, 1) + "\n";
+			
+			if(irn.getInstruction().equals(ISA.JSR)){
+				output = save_regs() + "\n" + output; 
+				output += restore_regs();
+			}
+			return output;
+			
 		}else if(irn.getFormat() == IRNode.FORMAT_DR){
 			
 			Register dest = TempRegisterFactory.createTiny();
@@ -218,7 +229,8 @@ public class TinyGenerator {
 			return tiny.getName() +  " " + dest.toTiny();
 		}else if(irn.getFormat() == IRNode.FORMAT_RS){
 			//`S` is not really a register
-			return tiny.getName() + " " + reg_map_ir_tiny.get(getField(ircode, 1)).toTiny() + " $" + TinyActivationRecord.getReturnStackAddress();
+			String generate = tiny.getName() + " " + reg_map_ir_tiny.get(getField(ircode, 1)).toTiny() + " $" + TinyActivationRecord.getReturnStackAddress();
+			return generate;
 		}else{
 			return ";<unknown format> code: " + irn.getFormat();
 		}
@@ -227,7 +239,8 @@ public class TinyGenerator {
 	private String doLink(Instruction tiny, IRNode irn) {
 		TinyActivationRecord.reset(); //reset stack count etc 
 		TempRegisterFactory.reset();
-		TinyActivationRecord.saveRegisters(15);
+		
+		TinyActivationRecord.saveRegisters(Micro.CONST_NUM_REG_USE);
 		
 		if(SymbolTable_Map.containsKey(irn.fn_key)){
 			return tiny.getName() + " " + SymbolTable_Map.get(irn.fn_key).count_local();
@@ -236,5 +249,38 @@ public class TinyGenerator {
 	}
 	
 	
+	private String save_restore_register(int save_or_restore){
+		/*
+		 * for step6, there is no register allocation yet so we'll just hard code this
+		 */
+		StringBuffer sbuffer = new StringBuffer();
+		int i = 0;
+		int offset = 0;
+		Instruction pp = ISA.push;
+		
+		if(save_or_restore == RESTORE){
+			offset = 0;
+			pp = ISA.pop;
+		}
+		
+		for(i = 0; i< Micro.CONST_NUM_REG_USE; i++){
+			if(save_or_restore == SAVE){
+				offset = sbuffer.length();
+			}
+			String eol = "";
+			if(i != (save_or_restore == RESTORE ? 0 :  Micro.CONST_NUM_REG_USE - 1)) eol = "\n";
+			sbuffer.insert(offset, String.format("%s r%d%s", pp.getName(), i, eol));
+			
+		}
+		return sbuffer.toString();
+	}
+	
+	private String save_regs(){
+		return save_restore_register(SAVE);
+	}
+	
+	private String restore_regs(){
+		return save_restore_register(RESTORE);
+	}
 	
 }
