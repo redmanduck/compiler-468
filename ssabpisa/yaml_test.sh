@@ -21,15 +21,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 TINY='tiny'
+ if [[ $* == *-c* ]]
+then
 rm $TINY
 make tiny
-tc="${@: -1}_tests"
+fi
+tc="${@: -1}*"
 if [[ $* == *-c* ]]
 then
   #compile the compiler first
-  tc="${@: -1}_tests" 
   make clean && make
-  rm -rf output/*
 fi
 dirs=$(ls $tc/*.micro)
 FAIL=0
