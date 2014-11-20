@@ -40,6 +40,9 @@ public class IRListEngine implements Iterable<IRNode>{
 		_List.add(linkd); 
 	}
 	
+	public void LABEL_NOLINK(String fn){
+		_List.add(new IRNode(fn));
+	}
 	
 	public void Trace(String L){
 		_List.add(new IRNode(L));
@@ -260,19 +263,39 @@ public class IRListEngine implements Iterable<IRNode>{
 		
 		return new IRDest(dest);
 	}
+	
+	private void PostOrderWalkExprSubTree(SymbolTable scope, MicroParser.ExprContext t){
+		if(t == null) return; 
+		IRDest r = attach_Expressions(scope, t);
+		if(r._reg != null){
+			_List.add(new IRNode(ISA.PUSH, r._reg));
+		}else{
+			_List.add(new IRNode(ISA.PUSH, r._id));
+		}
 		
+
+	}
+	private void PostOrderWalkExprListTail(SymbolTable scope, MicroParser.Expr_list_tailContext t){
+		if(t == null) return; //no tail
+		PostOrderWalkExprSubTree(scope, t.expr());
+		PostOrderWalkExprListTail(scope, t.expr_list_tail());
+	}
+	private void PostOrderWalkExprListTree(SymbolTable scope, MicroParser.Expr_listContext t){
+		PostOrderWalkExprSubTree(scope, t.expr());
+		PostOrderWalkExprListTail(scope, t.expr_list_tail());
+	}
+	
 	private IRDest attach_CallExpr(SymbolTable scope, MicroParser.Call_exprContext call_expr) {
 		/*
 		 * The destination is the popped register from activation record
 		 */
 		_List.add(new IRNode(ISA.PUSH_E)); //Space for return value
 		
+		PostOrderWalkExprListTree(scope, call_expr.expr_list());
+		
 		//Space for parameters
 		String [] parameters = call_expr.expr_list().getText().split("(/s+)?(,)(/s+)?");
-		for(String param : parameters){
-			//look for the Register that has the param
-			_List.add(new IRNode(ISA.PUSH, scope.search(param)));
-		}
+		
 		
 		//Jump and link
 		String jump_target = call_expr.id().getText();

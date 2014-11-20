@@ -192,7 +192,7 @@ sys writei $-2
 sys writes eol
 move 0 r5
 move r5 r6
-move r6 $16
+move r6 $17
 unlnk
 ret
 end

@@ -180,7 +180,7 @@ public class ExtractionListener extends MicroBaseListener {
 		if_else_label_stk.push(generated_label);
 		
 		current_ir.attach_Jump(generated_label);
-		current_ir.LABEL(gelse_part);
+		current_ir.LABEL_NOLINK(gelse_part);
 		enterScope("BLOCK " + ++blockcount);
 	}
 
@@ -244,7 +244,7 @@ public class ExtractionListener extends MicroBaseListener {
 
 	@Override
 	public void exitIf_stmt(@NotNull MicroParser.If_stmtContext ctx) {
-		current_ir.LABEL(this.if_else_label_stk.pop());
+		current_ir.LABEL_NOLINK(this.if_else_label_stk.pop());
 		leaveScope();
 	}
 

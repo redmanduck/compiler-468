@@ -1,0 +1,19 @@
+PROGRAM duckfact2
+BEGIN
+	STRING input := "Please enter an integer number: ";
+	STRING eol := "\n";
+	
+	FUNCTION INT factorial(INT a, INT b, INT c)
+	BEGIN
+		INT ret;
+		INT tret;
+		tret := factorial(a-1,a+2,a+3);
+		RETURN ret;
+	END
+
+	FUNCTION INT main ()
+	BEGIN
+	
+		RETURN 0;
+	END
+END

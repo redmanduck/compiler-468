@@ -213,16 +213,16 @@ public class TinyGenerator {
 			return tiny.getName() + " " + getField(ircode, 1);
 		}else if(irn.getFormat() == IRNode.FORMAT_DRT){
 			
-			String asms =  possible_instructions[0].getName() + " " + getField(ircode,1) + " " + reg_map_ir_tiny.get(getField(ircode,2)).toTiny() + "\n";
+			String asms =  possible_instructions[0].getName() + " " + irn.getIdOperand(1).getTiny() + " " + reg_map_ir_tiny.get(getField(ircode,2)).toTiny() + "\n";
 			asms += possible_instructions[1].getName() + " " + getField(ircode, 3);
 			return asms;	
 		}else if(irn.getFormat() == IRNode.FORMAT_DDT){
 			
 			Register dest = TempRegisterFactory.createTiny();
 			
-			String asms = ISA.move.getName() + " " + getField(ircode,2) + " " + dest.toTiny()  + "\n";
+			String asms = ISA.move.getName() + " " + irn.getIdOperand(2).getTiny() + " " + dest.toTiny()  + "\n";
 			
-		    asms += possible_instructions[0].getName() + " " +  getField(ircode,1) + " " + dest.toTiny() + "\n";
+		    asms += possible_instructions[0].getName() + " " +  irn.getIdOperand(1).getTiny() + " " + dest.toTiny() + "\n";
 			asms += possible_instructions[1].getName() + " " + getField(ircode, 3);
 			return asms;
 			
@@ -243,8 +243,14 @@ public class TinyGenerator {
 
 			return tiny.getName() + " " + irn.getIdOperand(1).getTiny() + " " + dest.toTiny();
 		}else if(irn.getFormat() == IRNode.FORMAT_R){
-			Register dest = TempRegisterFactory.createTiny();
-			reg_map_ir_tiny.put(getField(ircode, 1), dest);
+			Register dest = null;
+		//	
+			if(reg_map_ir_tiny.containsKey(getField(ircode, 1))){
+				dest = reg_map_ir_tiny.get(getField(ircode, 1));
+			}else{
+				dest = TempRegisterFactory.createTiny();
+				reg_map_ir_tiny.put(getField(ircode, 1), dest);
+			}
 			
 			return tiny.getName() +  " " + dest.toTiny();
 		}else if(irn.getFormat() == IRNode.FORMAT_RS){
