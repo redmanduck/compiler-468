@@ -212,7 +212,7 @@ public class ExtractionListener extends MicroBaseListener {
 		
 		String recompare = AutoLabelFactory.create(); 
 		this.while_label_stk.offer(recompare);
-		current_ir.LABEL(recompare);
+		current_ir.LABEL_NOLINK(recompare);
 		
 		IRDest left = current_ir.attach_Expressions(current_scope, ctx.cond().expr(0));
 		IRDest right = current_ir.attach_Expressions(current_scope, ctx.cond().expr(1));
@@ -251,7 +251,7 @@ public class ExtractionListener extends MicroBaseListener {
 	@Override
 	public void exitWhile_stmt(@NotNull MicroParser.While_stmtContext ctx) {
 		current_ir.attach_Jump(this.while_label_stk.remove());
-		current_ir.LABEL(this.while_label_stk.remove());
+		current_ir.LABEL_NOLINK(this.while_label_stk.remove());
 		leaveScope();
 	}
 
