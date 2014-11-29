@@ -4,6 +4,10 @@ Super ultra cool minimally optimized Micro compiler for tiny using ANTLR 4.
 
 [travis-img]: https://travis-ci.org/ssabpisa/compiler-468.svg "Build Status"
 
+#Step 7
+
+Register allocation
+
 #Grammar
 
     CAPS : CAPS is a token (terminal) made up of one or more characters.  
