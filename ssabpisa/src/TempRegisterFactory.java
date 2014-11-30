@@ -32,7 +32,10 @@ public class TempRegisterFactory {
 		tiny_tempcount = 0;
 		regs.clear();
 	}
-	public static Register create(String type){
+	/*
+	 * determine the next usable temp register
+	 */
+	public static Register allocate(String type){
 		int v = tempcount++;
 		Register r = new Register('T', v, type);
 		regs.put(v, r);
@@ -40,7 +43,7 @@ public class TempRegisterFactory {
 		return r;
 	}
 	
-	public static Register createTiny(){
+	public static Register allocate_tiny(){
 		int v = tiny_tempcount++;
 		Register r = new Register('r', v);
 		regs.put(v, r);

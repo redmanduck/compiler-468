@@ -12,6 +12,7 @@ public class Register {
 		this.dirty = false;
 		this.live = false;
 	}
+	
 	public Register(char type, int number){
 		this.type = type;
 		this.number = number;

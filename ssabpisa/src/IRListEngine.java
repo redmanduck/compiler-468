@@ -57,7 +57,7 @@ public class IRListEngine implements Iterable<IRNode>{
 			store_instr = ISA.STOREF;
 		}
 		if(ret._id != null){
-			src_reg = TempRegisterFactory.create("T");
+			src_reg = TempRegisterFactory.allocate("T");
 			_List.add(new IRNode(store_instr, ret._id, src_reg));
 		}else if(ret._reg != null){
 			src_reg = ret._reg;
@@ -157,7 +157,7 @@ public class IRListEngine implements Iterable<IRNode>{
 		if(expr.expr_prefix().addop().getText().equals("-")) 
 			op = ISA.transform_type(ISA.SUBI, dleft.getDataTypePrecedence(), dright.getDataTypePrecedence());
 		
-		Register dest = TempRegisterFactory.create(op.supported_type);
+		Register dest = TempRegisterFactory.allocate(op.supported_type);
 		
 		if(dleft._reg != null && dright._reg != null){
 			N = new IRNode(op, dleft._reg, dright._reg, dest);
@@ -195,12 +195,12 @@ public class IRListEngine implements Iterable<IRNode>{
 			 return attach_Expressions(scope, postfix.primary().expr()); 
 		}else if(postfix.primary().FLOATLITERAL() != null){
 			//we detect a float literal, must be loaded to Temp Register
-			Register temp = TempRegisterFactory.create("FLOAT");
+			Register temp = TempRegisterFactory.allocate("FLOAT");
 			_List.add(new IRNode(ISA.STOREF, Float.parseFloat(postfix.primary().FLOATLITERAL().getText()) , temp));
 			return new IRDest(temp);
 		}else if(postfix.primary().INTLITERAL() != null){
 			//we detect an int literal, must be loaded to Temp Register
-			Register temp = TempRegisterFactory.create("INT");
+			Register temp = TempRegisterFactory.allocate("INT");
 			_List.add(new IRNode(ISA.STOREI, Integer.parseInt(postfix.primary().INTLITERAL().getText()) , temp));
 			return new IRDest(temp);
 		}else if(postfix.primary().id() != null){
@@ -242,7 +242,7 @@ public class IRListEngine implements Iterable<IRNode>{
 			op = ISA.transform_type(ISA.DIVI, fp.getDataTypePrecedence(), postfix.getDataTypePrecedence());
 		}
 		
-		Register dest = TempRegisterFactory.create(op.supported_type);
+		Register dest = TempRegisterFactory.allocate(op.supported_type);
 		
 		if(fp._id != null && postfix._id != null){
 			K = new IRNode(op, fp._id, postfix._id, dest);
@@ -307,7 +307,7 @@ public class IRListEngine implements Iterable<IRNode>{
 			_List.add(new IRNode(ISA.POP_E));
 		}
 		//Pop return value
-		Register rhs = TempRegisterFactory.create("T");
+		Register rhs = TempRegisterFactory.allocate("T");
 		_List.add(new IRNode(ISA.POP, rhs));
 
 		
@@ -328,7 +328,7 @@ public class IRListEngine implements Iterable<IRNode>{
 		IRDest fact = attach_FactorPrefix(scope, self.factor_prefix());
 		IRDest postfix = attach_PostfixExpr(scope, self.postfix_expr());
 		
-		Register dest = TempRegisterFactory.create("INT");
+		Register dest = TempRegisterFactory.allocate("INT");
 		
 		IRNode irn = null;
 		if(fact._reg != null && postfix._reg != null){
@@ -367,7 +367,7 @@ public class IRListEngine implements Iterable<IRNode>{
 		
 		IRNode irn = null;
 		Instruction op = ISA.transform_type(ISA.ADDI, left.getDataTypePrecedence(), right.getDataTypePrecedence());
-		Register dest = TempRegisterFactory.create(op.supported_type);
+		Register dest = TempRegisterFactory.allocate(op.supported_type);
 	
 		if(expr_prefix.expr_prefix().addop().getText().equals("-")) op = ISA.SUBI;
 		

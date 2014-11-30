@@ -129,7 +129,7 @@ public class TinyGenerator {
 			//move r1, id2
 
 			usedSymbols.add(irn.getIdOperand(3));
-			Register dest = TempRegisterFactory.createTiny();
+			Register dest = TempRegisterFactory.allocate_tiny();
 
 			String asms = ISA.move.getName() + " " + irn.getIdOperand(1).getTiny() +  " " + dest.toTiny() + "\n";
 			asms += tiny.getName() + " " + dest.toTiny() + " " + irn.getIdOperand(3).getTiny();
@@ -137,7 +137,7 @@ public class TinyGenerator {
 			
 		}else if(irn.getFormat() == IRNode.FORMAT_IR || irn.getFormat() == IRNode.FORMAT_FR){
 			
-			Register dest = TempRegisterFactory.createTiny();
+			Register dest = TempRegisterFactory.allocate_tiny();
 			reg_map_ir_tiny.put(getField(ircode,2), dest);
 			
 			return tiny.getName() + " " + getField(ircode, 1) + " " + dest.toTiny();
@@ -150,7 +150,7 @@ public class TinyGenerator {
 		}else if(irn.getFormat() == IRNode.FORMAT_DDR){
 
 			String move_op = ISA.move.getName();
-			Register reg = TempRegisterFactory.createTiny();
+			Register reg = TempRegisterFactory.allocate_tiny();
 			reg_map_ir_tiny.put(getField(ircode, 3), reg);
 			
 			Id d2 = irn.getIdOperand(2);
@@ -167,7 +167,7 @@ public class TinyGenerator {
 		}else if(irn.getFormat() == IRNode.FORMAT_RRR){
 			
 			String move_op = ISA.move.getName();
-			Register reg = TempRegisterFactory.createTiny();
+			Register reg = TempRegisterFactory.allocate_tiny();
 			reg_map_ir_tiny.put(getField(ircode, 3), reg);
 			
 			String asms = move_op + " " + reg_map_ir_tiny.get(getField(ircode, 1)).toTiny() + " " + reg.toTiny() + "\n";
@@ -177,7 +177,7 @@ public class TinyGenerator {
 		}else if(irn.getFormat() == IRNode.FORMAT_RDR){
 			
 			String move_op = ISA.move.getName();
-			Register reg = TempRegisterFactory.createTiny();
+			Register reg = TempRegisterFactory.allocate_tiny();
 			reg_map_ir_tiny.put(getField(ircode, 3), reg);
 			
 			Id d = irn.getIdOperand(2);
@@ -189,7 +189,7 @@ public class TinyGenerator {
 		}else if(irn.getFormat() == IRNode.FORMAT_DRR){
 			
 			String move_op = ISA.move.getName();
-			Register reg = TempRegisterFactory.createTiny();
+			Register reg = TempRegisterFactory.allocate_tiny();
 			reg_map_ir_tiny.put(getField(ircode, 3), reg);
 			usedSymbols.add(irn.getIdOperand(1));
 			String asms = move_op + " " + irn.getIdOperand(1).getTiny() + " " + reg.toTiny() + "\n";
@@ -218,7 +218,7 @@ public class TinyGenerator {
 			return asms;	
 		}else if(irn.getFormat() == IRNode.FORMAT_DDT){
 			
-			Register dest = TempRegisterFactory.createTiny();
+			Register dest = TempRegisterFactory.allocate_tiny();
 			
 			String asms = ISA.move.getName() + " " + irn.getIdOperand(2).getTiny() + " " + dest.toTiny()  + "\n";
 			
@@ -238,7 +238,7 @@ public class TinyGenerator {
 			
 		}else if(irn.getFormat() == IRNode.FORMAT_DR){
 			
-			Register dest = TempRegisterFactory.createTiny();
+			Register dest = TempRegisterFactory.allocate_tiny();
 			reg_map_ir_tiny.put(getField(ircode, 2), dest);
 
 			return tiny.getName() + " " + irn.getIdOperand(1).getTiny() + " " + dest.toTiny();
@@ -248,7 +248,7 @@ public class TinyGenerator {
 			if(reg_map_ir_tiny.containsKey(getField(ircode, 1))){
 				dest = reg_map_ir_tiny.get(getField(ircode, 1));
 			}else{
-				dest = TempRegisterFactory.createTiny();
+				dest = TempRegisterFactory.allocate_tiny();
 				reg_map_ir_tiny.put(getField(ircode, 1), dest);
 			}
 			

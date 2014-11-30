@@ -1,3 +1,5 @@
+import java.rmi.UnexpectedException;
+
 /*
     This program is part of an assignment for ECE468 at Purdue University, IN.
     Copying, modifying or reusing this program may result in disciplinary actions.
@@ -71,7 +73,11 @@ public class IRNode {
      public int getFormat(){
     	 return format;
      }
-     
+
+	public String getLabel(){
+		return label;
+	}
+
      public IRNode(String label){
     	 this.OPCODE = ISA.LABEL;
     	 this.label = label;
