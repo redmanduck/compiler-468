@@ -20,6 +20,7 @@
 */
 import java.util.ArrayList;
 public class IRNode {
+
      private Instruction OPCODE;
      private Register r_dest, r_src1, r_src2;
      private int i_src1;
@@ -30,9 +31,9 @@ public class IRNode {
      
      public String fn_key; //dedicated function name field
 
+	 public ArrayList<IRNode>  predecessors, successors;
 
 	 public ArrayList<Register> GEN, KILL;
-	 public ArrayList<Register> LIVE_IN, LIVE_OUT;
 
 	 private int format;
      public static final int FORMAT_IR = 0; // int reg
@@ -69,25 +70,41 @@ public class IRNode {
     		 return null;
     	 }
      }
-     public Instruction getInstruction(){
+
+	public Instruction getInstruction(){
     	 return OPCODE;
      }
      
-     public int getFormat(){
+    public int getFormat(){
     	 return format;
      }
 
+	public String getJumpTarget(){
+		return jtarget;
+	}
 	public String getLabel(){
 		return label;
 	}
 
+	/*
+	 * initialize control flow related properties that was added later
+	 */
+	private void init_cflow(){
+		predecessors = new ArrayList<IRNode>();
+		successors = new ArrayList<IRNode>();
+		GEN = new ArrayList<Register>();
+		KILL = new ArrayList<Register>();
+	}
+
      public IRNode(String label){
+		 init_cflow();
     	 this.OPCODE = ISA.LABEL;
     	 this.label = label;
     	 format = FORMAT_S;
      }
      
 	public IRNode(Instruction OPCODE, int src1, Register dest){
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.i_src1 = src1;
 		this.r_dest = dest;
@@ -95,11 +112,13 @@ public class IRNode {
 	}
 	
 	public IRNode(Instruction OPCODE){
+		init_cflow();
 		this.OPCODE = OPCODE;
 		format = FORMAT_O;
 	}
 	
 	public IRNode(Instruction OPCODE, float s, Register dest){
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.f_src1 = s;
 		this.r_dest = dest;
@@ -107,12 +126,14 @@ public class IRNode {
 	}
 	
 	public IRNode(Instruction OPCODE, Register r_dest){
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.r_dest = r_dest;
 		format = FORMAT_R;
 	}
 	
 	public IRNode(Instruction OPCODE, Register r_src, Id id_dest){
+		init_cflow();
 		//Like STOREI $T1 a
 		this.OPCODE = OPCODE;
 		this.r_src1 = r_src;
@@ -121,6 +142,7 @@ public class IRNode {
 	}	
 	
 	public IRNode(Instruction OPCODE, Id id_src1, Id id_src2, Register dest){
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.id_src1 = id_src1;
 		this.id_src2 = id_src2;
@@ -129,6 +151,7 @@ public class IRNode {
 	}
 	
 	public IRNode(Instruction OPCODE, Register r_src1, Id id_src2, Register dest) {
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.id_src2 = id_src2;
 		this.r_src1 = r_src1;
@@ -138,6 +161,7 @@ public class IRNode {
 	
 	
 	public IRNode(Instruction OPCODE, Register r_src1, Register r_src2, Register dest) {
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.r_src1 = r_src1;
 		this.r_src2 = r_src2;
@@ -146,12 +170,14 @@ public class IRNode {
 	}
 	
 	public IRNode(Instruction OPCODE, Id id_readwrite){
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.id_readwrite = id_readwrite;
 		format = FORMAT_D;
 	}
 	
 	public IRNode(Instruction OPCODE, Id _id, Register _reg, Register dest) {
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.id_src1 = _id;
 		this.r_src2 = _reg;
@@ -160,6 +186,7 @@ public class IRNode {
 	}
 	
 	public IRNode(Instruction OPCODE, Id _id1, Id _id2) {
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.id_src1 = _id1;
 		this.id_dest = _id2;
@@ -167,6 +194,7 @@ public class IRNode {
 	}
 	
 	public IRNode(Instruction OPCODE, Register r1, Register r2) {
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.r_src1 = r1;
 		this.r_dest = r2;
@@ -174,6 +202,7 @@ public class IRNode {
 	}
 	
 	public IRNode(Instruction OPCODE, Id _id1, Register rdest) {
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.id_src1 = _id1;
 		this.r_dest = rdest;
@@ -181,6 +210,7 @@ public class IRNode {
 	}
 
 	public IRNode(Instruction conditional_control, Register left, Register right, String target) {
+		init_cflow();
 		this.OPCODE = conditional_control;
 		this.r_src1 = left;
 		this.r_src2 = right;
@@ -189,6 +219,7 @@ public class IRNode {
 	}
 	
 	public IRNode(Instruction conditional_control, Register left, Id right, String string) {
+		init_cflow();
 		format = FORMAT_RDT;
 		this.OPCODE = conditional_control;
 		this.r_src1 = left;
@@ -197,6 +228,7 @@ public class IRNode {
 	}
 
 	public IRNode(Instruction conditional_control, Id left, Register right, String string) {
+		init_cflow();
 		format = FORMAT_DRT;
 		this.OPCODE = conditional_control;
 		this.id_src1 = left;
@@ -205,6 +237,7 @@ public class IRNode {
 	}
 	
 	public IRNode(Instruction conditional_control, Id left, Id right, String string) {
+		init_cflow();
 		format = FORMAT_DDT;
 		this.OPCODE = conditional_control;
 		this.id_src1 = left;
@@ -213,6 +246,7 @@ public class IRNode {
 	}
 	
 	public IRNode(Instruction j, String jtarget) {
+		init_cflow();
 		format = FORMAT_T;
 		this.OPCODE = j;
 		this.jtarget = jtarget;

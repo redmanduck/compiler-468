@@ -39,6 +39,29 @@ public class Instruction {
 		this.name = name;
 		this.supported_type = "NONE";
 	}
+
+	public boolean isConditionalJump(){
+
+		String qualifies = "GTI\n" +
+				"\t\tGEI\n" +
+				"\t\tLTI\n" +
+				"\t\tNEI\n" +
+				"\t\tEQI\n" +
+				"\t\tLEF\n" +
+				"\t\tLEI\n" +
+				"\t\tGTF\n" +
+				"\t\tGEF\n" +
+				"\t\tLTF\n" +
+				"\t\tNEF\n" +
+				"\t\tEQF";
+
+		if(name.length() == 3 && qualifies.contains(name.toUpperCase())){
+			return true;
+		}
+
+		return false;
+
+	}
 	
 	public String getName(){
 		return this.name;

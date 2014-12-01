@@ -19,29 +19,40 @@
 
 */
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Iterator;
 
 
 public class IRList implements Iterable<IRNode>{
 	private ArrayList<IRNode> _List;
+	private Hashtable<String, IRNode> _Labels;
 
 	public IRList(){
 		/*
 		 * Constructor -- evokes for any new basic block of IR
 		 */
 		_List = new ArrayList<IRNode>();
+		_Labels = new Hashtable<String, IRNode>();
 		TempRegisterFactory.reset();  //we want to reset the register count everytime
 	}
-	
+
+	public Hashtable<String, IRNode> getLabelMap(){
+		return _Labels;
+	}
+
 	public void LABEL(String fn){
-		_List.add(new IRNode(fn));
+		IRNode n = new IRNode(fn);
+		_List.add(n);
 		IRNode linkd = new IRNode(ISA.LINK);
 		linkd.fn_key = fn;
-		_List.add(linkd); 
+		_List.add(linkd);
+		_Labels.put(fn, n);
 	}
 	
 	public void LABEL_NOLINK(String fn){
-		_List.add(new IRNode(fn));
+		IRNode n = new IRNode(fn);
+		_List.add(n);
+		_Labels.put(fn, n);
 	}
 	
 	public void Trace(String L){

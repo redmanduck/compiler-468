@@ -50,16 +50,17 @@ public class Micro{
       RegAllocator ralloc = new RegAllocator(CONST_NUM_REG_USE);
       ralloc.setMode(ralloc.BOTTOM_UP);
 
+
       for(String fn : extractor.getFullIR().keySet()){
           System.out.println(";----" + fn);
           Utils.printIR(extractor.getFullIR().get(fn));
       }
 
-//      System.out.println(";Register Allocated IR code");
-//
-//      for(String fn : extractor.getFullIR().keySet()){
-//          Utils.printIR(ralloc.enforce(extractor.getFullIR().get(fn)));
-//      }
+      System.out.println(";Register Allocated IR code");
+
+      for(String fn : extractor.getFullIR().keySet()){
+          Utils.printIR(ralloc.enforce(extractor.getFullIR().get(fn)));
+      }
 
 /*
     //Generate Tiny Code
