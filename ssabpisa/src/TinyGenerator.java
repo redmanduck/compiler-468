@@ -23,7 +23,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Hashtable;
 public class TinyGenerator {
-	IRListEngine IR;
+	IRList IR;
 	HashMap<Instruction, Instruction[]> map_ISA;
 	Hashtable<String, Register> reg_map_ir_tiny;
 	LinkedHashSet<Id> usedSymbols; //contains all LVALUES
@@ -32,7 +32,7 @@ public class TinyGenerator {
 	private static int SAVE = 1;
 	private static int RESTORE = 2;
 
-	public TinyGenerator(IRListEngine _irb, LinkedHashMap<String, SymbolTable> SMap) {
+	public TinyGenerator(IRList _irb, LinkedHashMap<String, SymbolTable> SMap) {
 		IR = _irb;
 		//generate IR -> asm map
 		this.SymbolTable_Map = SMap;

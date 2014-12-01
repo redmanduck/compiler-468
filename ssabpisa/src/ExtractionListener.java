@@ -29,13 +29,13 @@ import org.antlr.v4.runtime.tree.ParseTree;
 public class ExtractionListener extends MicroBaseListener {
 	private SymbolTable current_scope;
 	private String current_function;
-	private IRListEngine current_ir;
+	private IRList current_ir;
 	
 	public SymbolTable root_scope;
 	
 	private int blockcount;
 	
-	private LinkedHashMap<String, IRListEngine> IRMap;  //indexed by Function Name -> IR list
+	private LinkedHashMap<String, IRList> IRMap;  //indexed by Function Name -> IR list
 	private LinkedHashMap<String, SymbolTable> STMap; //indexed by Function Name -> Symbol Table root for that func
 	private Stack<String> if_else_label_stk;
 	private Queue<String> while_label_stk;
@@ -47,7 +47,7 @@ public class ExtractionListener extends MicroBaseListener {
 		this.blockcount = 0;
 		this.if_else_label_stk = new Stack<String>();
 		this.while_label_stk = new LinkedList<String>();
-		this.IRMap = new LinkedHashMap<String, IRListEngine>();
+		this.IRMap = new LinkedHashMap<String, IRList>();
 		this.STMap = new LinkedHashMap<String, SymbolTable>();
 	}
 //
@@ -59,7 +59,7 @@ public class ExtractionListener extends MicroBaseListener {
 		return STMap;
 	}
 	
-	public LinkedHashMap<String, IRListEngine> getFullIR() {
+	public LinkedHashMap<String, IRList> getFullIR() {
 
 		return IRMap; 
 	}
@@ -191,7 +191,7 @@ public class ExtractionListener extends MicroBaseListener {
 		//Update Current Function 
 		this.current_function = ctx.func_decl().id().getText();
 		//Create new IR
-		IRListEngine i = new IRListEngine();
+		IRList i = new IRList();
 		
 		if(IRMap.containsKey(current_function)){
 			System.err.println("Double function declaration!");

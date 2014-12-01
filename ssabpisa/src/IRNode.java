@@ -1,5 +1,3 @@
-import java.rmi.UnexpectedException;
-
 /*
     This program is part of an assignment for ECE468 at Purdue University, IN.
     Copying, modifying or reusing this program may result in disciplinary actions.
@@ -20,6 +18,7 @@ import java.rmi.UnexpectedException;
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
+import java.util.ArrayList;
 public class IRNode {
      private Instruction OPCODE;
      private Register r_dest, r_src1, r_src2;
@@ -29,9 +28,13 @@ public class IRNode {
      private Id id_readwrite;
      private String label,jtarget;
      
-     public String fn_key;
-     
-     private int format;
+     public String fn_key; //dedicated function name field
+
+
+	 public ArrayList<Register> GEN, KILL;
+	 public ArrayList<Register> LIVE_IN, LIVE_OUT;
+
+	 private int format;
      public static final int FORMAT_IR = 0; // int reg
      public static final int FORMAT_FR = 1; // float reg
      public static final int FORMAT_RD = 2; // reg identifier

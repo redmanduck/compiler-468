@@ -22,7 +22,7 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
 public class Micro{
-  public static int CONST_NUM_REG_USE = 15;
+  public static int CONST_NUM_REG_USE = 15; //TODO: change to 4
   public static void main(String[] args) throws Exception
   {
 	  
@@ -46,8 +46,22 @@ public class Micro{
      walker.walk(extractor, t);
  
 	 System.out.println(";IR code");
-	 
 
+      RegAllocator ralloc = new RegAllocator(CONST_NUM_REG_USE);
+      ralloc.setMode(ralloc.BOTTOM_UP);
+
+      for(String fn : extractor.getFullIR().keySet()){
+          System.out.println(";----" + fn);
+          Utils.printIR(extractor.getFullIR().get(fn));
+      }
+
+//      System.out.println(";Register Allocated IR code");
+//
+//      for(String fn : extractor.getFullIR().keySet()){
+//          Utils.printIR(ralloc.enforce(extractor.getFullIR().get(fn)));
+//      }
+
+/*
     //Generate Tiny Code
     StringBuffer tiny_buffer = new StringBuffer();
     //Do global scope declarations
@@ -60,13 +74,14 @@ public class Micro{
 			tiny_buffer.append(s);
 	}
 	//Do push registers and JSR main and halt
-        tiny_buffer.append(ISA.push.getName() + "\n");
+    tiny_buffer.append(ISA.push.getName() + "\n");
 	for(int i = 0; i< Micro.CONST_NUM_REG_USE; i++){
 		tiny_buffer.append(String.format("%s r%d\n", ISA.push.getName(), i));
 	}
 	tiny_buffer.append(ISA.jsr.getName() + " main\n");
 	tiny_buffer.append("sys halt\n");
 
+    //Generate the rest of the tiny
     for(String fn : extractor.getFullIR().keySet()){
 	   	 Utils.printIR(extractor.getFullIR().get(fn));
 	   	 
@@ -77,6 +92,8 @@ public class Micro{
      
      System.out.println(tiny_buffer);
     // Utils.printSymbolTable(extractor.root_scope);
+
+    */
   }
 }
 

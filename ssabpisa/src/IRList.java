@@ -22,10 +22,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
-public class IRListEngine implements Iterable<IRNode>{
+public class IRList implements Iterable<IRNode>{
 	private ArrayList<IRNode> _List;
 
-	public IRListEngine(){
+	public IRList(){
 		/*
 		 * Constructor -- evokes for any new basic block of IR
 		 */
