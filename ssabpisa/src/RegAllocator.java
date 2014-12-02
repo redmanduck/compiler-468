@@ -9,6 +9,9 @@ public class RegAllocator {
         mode = BOTTOM_UP;
     }
 
+    /*
+     * Fill successors and predecssors for each IR
+     */
     private void buildCFG(IRList original){
         int i = 0;
         for(IRNode m : original){
@@ -25,9 +28,29 @@ public class RegAllocator {
                 m.successors.add(taken);
                 taken.predecessors.add(m);
                 fallthru.predecessors.add(m);
+            }else if(!m.getInstruction().equals(ISA.RET) && (i+1) < original.size()){
+                //return node doesnt have any successor
+                m.successors.add(original.get(i+1));
             }
             i++;
         }
+    }
+
+    /*
+     * Data flow analysis
+     * Iterate over each IR node updating IN and OUT set
+     * until "convergence"
+     * Q: Is this across all basic blocks?
+     */
+    public void analyzeDataFlow(IRList original){
+
+    }
+
+    /*
+     * Do bottom up register allocation
+     */
+    public void bottomUp(){
+
     }
 
     /*
@@ -37,6 +60,7 @@ public class RegAllocator {
      */
     public IRList enforce(IRList original){
         buildCFG(original);
+        analyzeDataFlow(original);
         return original;
     }
 

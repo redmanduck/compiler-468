@@ -59,10 +59,12 @@ public class Micro{
       System.out.println(";Register Allocated IR code");
 
       for(String fn : extractor.getFullIR().keySet()){
+          //enforce register allocation accross each basic block
           Utils.printIR(ralloc.enforce(extractor.getFullIR().get(fn)));
       }
 
-/*
+      System.out.println(";----------------- tiny ------------------------");
+
     //Generate Tiny Code
     StringBuffer tiny_buffer = new StringBuffer();
     //Do global scope declarations
@@ -94,7 +96,7 @@ public class Micro{
      System.out.println(tiny_buffer);
     // Utils.printSymbolTable(extractor.root_scope);
 
-    */
+
   }
 }
 
