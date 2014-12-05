@@ -1,3 +1,5 @@
+import java.util.HashSet;
+
 public class RegAllocator {
     private int reg_limit;
     private int mode;
@@ -28,9 +30,11 @@ public class RegAllocator {
                 m.successors.add(taken);
                 taken.predecessors.add(m);
                 fallthru.predecessors.add(m);
-            }else if(!m.getInstruction().equals(ISA.RET) && (i+1) < original.size()){
+            }else if( (i+1) < original.size()){
                 //return node doesnt have any successor
-                m.successors.add(original.get(i+1));
+                IRNode k = original.get(i + 1);
+                m.successors.add(k);
+                k.predecessors.add(m);
             }
             i++;
         }
@@ -38,12 +42,39 @@ public class RegAllocator {
 
     /*
      * Data flow analysis
-     * Iterate over each IR node updating IN and OUT set
+     * Iterate over each IR node updating IN and LIVE_OUT set
      * until "convergence"
      * Q: Is this across all basic blocks?
      */
     public void analyzeDataFlow(IRList original){
+        System.out.println(";====ANALYZING DATAFLOW=====");
+        //populate worklist
+        HashSet<IRNode> worklist = new HashSet<IRNode>();
+        IRNode p = null;
+        for(IRNode n : original){
+            worklist.add(n);
+            n.prev = p;
+            p = n;
+        }
+        //traverse CFG upward
+        IRNode node = original.get(original.size() - 1);
+        do{
+            for(IRNode pred : node.predecessors){
+                computeGenKillSet(pred);
+            }
+            worklist.remove(node);
+            if(node.predecessors.size() == 0){
+                break;
+            }
+            node = node.prev;
+        }while(!worklist.isEmpty());
 
+        System.out.println(";====END ANALYSIS OF DATAFLOW=====");
+
+    }
+
+    public void computeGenKillSet(IRNode node){
+        System.out.println("Computing GEN KILL Set for " + node.toString());
     }
 
     /*

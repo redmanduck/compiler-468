@@ -28,13 +28,15 @@ public class IRNode {
      private float f_src1;
      private Id id_readwrite;
      private String label,jtarget;
+
+	 public IRNode prev;
      
      public String fn_key; //dedicated function name field
 
 	 public ArrayList<IRNode>  predecessors, successors;
 
 	 public ArrayList<Register> GEN, KILL;
-	 public ArrayList<Register> IN, OUT;
+	 public ArrayList<Register> LIVE_IN, LIVE_OUT;
 
 	 private int format;
      public static final int FORMAT_IR = 0; // int reg
@@ -95,8 +97,8 @@ public class IRNode {
 		successors = new ArrayList<IRNode>();
 		GEN = new ArrayList<Register>();
 		KILL = new ArrayList<Register>();
-		IN = new ArrayList<Register>();
-		OUT = new ArrayList<Register>();
+		LIVE_IN = new ArrayList<Register>();
+		LIVE_OUT = new ArrayList<Register>();
 	}
 
      public IRNode(String label){
