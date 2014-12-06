@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class RegAllocator {
+public class DataflowBuilder {
     private int reg_limit;
     private int mode;
     public static int BOTTOM_UP = 5;
@@ -8,7 +8,7 @@ public class RegAllocator {
 
     private SymbolTable symtb;
 
-    public RegAllocator(int max_use){
+    public DataflowBuilder(int max_use){
         reg_limit = max_use;
         mode = BOTTOM_UP;
     }

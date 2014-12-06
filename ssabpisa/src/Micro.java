@@ -47,7 +47,7 @@ public class Micro{
  
 	 System.out.println(";IR code");
 
-      RegAllocator ralloc = new RegAllocator(CONST_NUM_REG_USE);
+      DataflowBuilder ralloc = new DataflowBuilder(CONST_NUM_REG_USE);
       ralloc.setMode(ralloc.BOTTOM_UP);
       ralloc.setGlobalVars(extractor.root_scope);
 

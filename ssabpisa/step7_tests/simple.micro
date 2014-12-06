@@ -1,0 +1,18 @@
+PROGRAM simple
+BEGIN
+	INT glo;
+
+	FUNCTION INT main ()
+	BEGIN
+		INT a,b,c,d;
+		a := 2;
+		b := 3;
+		c := 4;
+		WRITE(a);
+		c := a + b;
+		d := a + c;
+		READ(c);
+
+		RETURN 0;
+	END
+END
