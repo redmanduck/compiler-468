@@ -49,18 +49,22 @@ public class Micro{
 
       RegAllocator ralloc = new RegAllocator(CONST_NUM_REG_USE);
       ralloc.setMode(ralloc.BOTTOM_UP);
+      ralloc.setGlobalVars(extractor.root_scope);
 
+//      for(String fn : extractor.getFullIR().keySet()){
+//          System.out.println(";----" + fn);
+//          Utils.printIR(extractor.getFullIR().get(fn));
+//      }
 
-      for(String fn : extractor.getFullIR().keySet()){
-          System.out.println(";----" + fn);
-          Utils.printIR(extractor.getFullIR().get(fn));
-      }
-
-      System.out.println(";Register Allocated IR code");
+//      System.out.println(";Register Allocated IR code");
 
       for(String fn : extractor.getFullIR().keySet()){
           //enforce register allocation accross each basic block
+          System.out.println(";--- IR for  ---" + fn);
+          Utils.printIR(extractor.getFullIR().get(fn));
+          System.out.println(";--- enforce ---" + fn);
           Utils.printIR(ralloc.enforce(extractor.getFullIR().get(fn)));
+
       }
 
 //      System.out.println(";----------------- tiny ------------------------");

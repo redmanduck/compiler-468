@@ -6,11 +6,17 @@ public class RegAllocator {
     public static int BOTTOM_UP = 5;
     public static int GRAPH_COLORING = 6;
 
+    private SymbolTable symtb;
+
     public RegAllocator(int max_use){
         reg_limit = max_use;
         mode = BOTTOM_UP;
     }
 
+
+    public void setGlobalVars(SymbolTable itable){
+        symtb = itable;
+    }
     /*
      * Fill successors and predecssors for each IR
      */
@@ -40,6 +46,27 @@ public class RegAllocator {
         }
     }
 
+
+    public void DFS(IRNode vtx){
+        vtx.discovered = true;
+        System.out.println(vtx.toString());
+        for(IRNode w : vtx.predecessors){
+            if(!w.discovered){
+                DFS(w);
+            }
+        }
+    }
+
+    /*
+     * initialize live out set to
+     * all global variables
+     */
+    private void initLiveOutSet(IRNode nd){
+        for(Id n : symtb){
+            nd.LIVE_OUT.add(n.toString());
+        }
+    }
+
     /*
      * Data flow analysis
      * Iterate over each IR node updating IN and LIVE_OUT set
@@ -47,34 +74,18 @@ public class RegAllocator {
      * Q: Is this across all basic blocks?
      */
     public void analyzeDataFlow(IRList original){
-        System.out.println(";====ANALYZING DATAFLOW=====");
         //populate worklist
         HashSet<IRNode> worklist = new HashSet<IRNode>();
         IRNode p = null;
         for(IRNode n : original){
             worklist.add(n);
-            n.prev = p;
             p = n;
         }
         //traverse CFG upward
-        IRNode node = original.get(original.size() - 1);
-        do{
-            for(IRNode pred : node.predecessors){
-                computeGenKillSet(pred);
-            }
-            worklist.remove(node);
-            if(node.predecessors.size() == 0){
-                break;
-            }
-            node = node.prev;
-        }while(!worklist.isEmpty());
+        IRNode lnode = original.get(original.size() - 1);
+        initLiveOutSet(lnode);
+        DFS(lnode);
 
-        System.out.println(";====END ANALYSIS OF DATAFLOW=====");
-
-    }
-
-    public void computeGenKillSet(IRNode node){
-        System.out.println("Computing GEN KILL Set for " + node.toString());
     }
 
     /*

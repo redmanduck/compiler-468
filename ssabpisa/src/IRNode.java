@@ -18,6 +18,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
+import com.sun.tools.javac.jvm.Gen;
+
 import java.util.ArrayList;
 public class IRNode {
 
@@ -28,15 +30,13 @@ public class IRNode {
      private float f_src1;
      private Id id_readwrite;
      private String label,jtarget;
-
-	 public IRNode prev;
-     
+	 public boolean discovered;
      public String fn_key; //dedicated function name field
 
 	 public ArrayList<IRNode>  predecessors, successors;
 
-	 public ArrayList<Register> GEN, KILL;
-	 public ArrayList<Register> LIVE_IN, LIVE_OUT;
+	 public ArrayList<String> GEN, KILL;
+	 public ArrayList<String> LIVE_IN, LIVE_OUT;
 
 	 private int format;
      public static final int FORMAT_IR = 0; // int reg
@@ -95,10 +95,13 @@ public class IRNode {
 	private void init_cflow(){
 		predecessors = new ArrayList<IRNode>();
 		successors = new ArrayList<IRNode>();
-		GEN = new ArrayList<Register>();
-		KILL = new ArrayList<Register>();
-		LIVE_IN = new ArrayList<Register>();
-		LIVE_OUT = new ArrayList<Register>();
+
+		GEN = new ArrayList<String>();
+		KILL = new ArrayList<String>();
+		LIVE_IN = new ArrayList<String>();
+		LIVE_OUT = new ArrayList<String>();
+
+		discovered = false;
 	}
 
      public IRNode(String label){
@@ -114,6 +117,7 @@ public class IRNode {
 		this.i_src1 = src1;
 		this.r_dest = dest;
 		format = FORMAT_IR;
+		KILL.add(dest.toString());
 	}
 	
 	public IRNode(Instruction OPCODE){
@@ -128,6 +132,7 @@ public class IRNode {
 		this.f_src1 = s;
 		this.r_dest = dest;
 		format = FORMAT_FR;
+		KILL.add(dest.toString());
 	}
 	
 	public IRNode(Instruction OPCODE, Register r_dest){
@@ -135,15 +140,18 @@ public class IRNode {
 		this.OPCODE = OPCODE;
 		this.r_dest = r_dest;
 		format = FORMAT_R;
+		KILL.add(r_dest.toString());
 	}
 	
-	public IRNode(Instruction OPCODE, Register r_src, Id id_dest){
+	public IRNode(Instruction OPCODE, Register r_src, Id idd){
 		init_cflow();
 		//Like STOREI $T1 a
 		this.OPCODE = OPCODE;
 		this.r_src1 = r_src;
-		this.id_dest = id_dest;
+		this.id_dest = idd;
 		format = FORMAT_RD;
+		KILL.add(idd.toString());
+		GEN.add(r_src.toString());
 	}	
 	
 	public IRNode(Instruction OPCODE, Id id_src1, Id id_src2, Register dest){
@@ -153,6 +161,9 @@ public class IRNode {
 		this.id_src2 = id_src2;
 		this.r_dest = dest;
 		format = FORMAT_DDR;
+		KILL.add(r_dest.toString());
+		GEN.add(id_src1.toString());
+		GEN.add(id_src2.toString());
 	}
 	
 	public IRNode(Instruction OPCODE, Register r_src1, Id id_src2, Register dest) {
@@ -162,6 +173,9 @@ public class IRNode {
 		this.r_src1 = r_src1;
 		this.r_dest = dest;
 		format = FORMAT_RDR;
+		KILL.add(dest.toString());
+		GEN.add(r_src1.toString());
+		GEN.add(id_src2.toString());
 	}
 	
 	
@@ -172,6 +186,9 @@ public class IRNode {
 		this.r_src2 = r_src2;
 		this.r_dest = dest;
 		format = FORMAT_RRR;
+		KILL.add(dest.toString());
+		GEN.add(r_src1.toString());
+		GEN.add(r_src2.toString());
 	}
 	
 	public IRNode(Instruction OPCODE, Id id_readwrite){
@@ -179,6 +196,11 @@ public class IRNode {
 		this.OPCODE = OPCODE;
 		this.id_readwrite = id_readwrite;
 		format = FORMAT_D;
+		if(ISA.InstructionSpecies(OPCODE, ISA._READ)){
+			GEN.add(id_readwrite.toString());
+		}else if(ISA.InstructionSpecies(OPCODE, ISA._WRITE)){
+			KILL.add(id_readwrite.toString());
+		}
 	}
 	
 	public IRNode(Instruction OPCODE, Id _id, Register _reg, Register dest) {
@@ -188,6 +210,9 @@ public class IRNode {
 		this.r_src2 = _reg;
 		this.r_dest = dest;
 		format = FORMAT_DRR;
+		KILL.add(dest.toString());
+		GEN.add(_id.toString());
+		GEN.add(_reg.toString());
 	}
 	
 	public IRNode(Instruction OPCODE, Id _id1, Id _id2) {
@@ -196,6 +221,8 @@ public class IRNode {
 		this.id_src1 = _id1;
 		this.id_dest = _id2;
 		format = FORMAT_DD;
+		KILL.add(_id2.toString());
+		GEN.add(id_src1.toString());
 	}
 	
 	public IRNode(Instruction OPCODE, Register r1, Register r2) {
@@ -204,6 +231,8 @@ public class IRNode {
 		this.r_src1 = r1;
 		this.r_dest = r2;
 		format = FORMAT_RS;
+		KILL.add(r2.toString());
+		GEN.add(r1.toString());
 	}
 	
 	public IRNode(Instruction OPCODE, Id _id1, Register rdest) {
@@ -212,6 +241,8 @@ public class IRNode {
 		this.id_src1 = _id1;
 		this.r_dest = rdest;
 		format = FORMAT_DR;
+		KILL.add(rdest.toString());
+		GEN.add(_id1.toString());
 	}
 
 	public IRNode(Instruction conditional_control, Register left, Register right, String target) {
@@ -221,6 +252,9 @@ public class IRNode {
 		this.r_src2 = right;
 		this.jtarget = target;
 		format = FORMAT_RRT;
+		GEN.add(left.toString());
+		GEN.add(right.toString());
+
 	}
 	
 	public IRNode(Instruction conditional_control, Register left, Id right, String string) {
@@ -230,6 +264,8 @@ public class IRNode {
 		this.r_src1 = left;
 		this.id_src2 = right;
 		this.jtarget = string;
+		GEN.add(left.toString());
+		GEN.add(right.toString());
 	}
 
 	public IRNode(Instruction conditional_control, Id left, Register right, String string) {
@@ -239,6 +275,8 @@ public class IRNode {
 		this.id_src1 = left;
 		this.r_src2 = right;
 		this.jtarget = string;
+		GEN.add(left.toString());
+		GEN.add(right.toString());
 	}
 	
 	public IRNode(Instruction conditional_control, Id left, Id right, String string) {
@@ -248,6 +286,8 @@ public class IRNode {
 		this.id_src1 = left;
 		this.id_src2 = right;
 		this.jtarget = string;
+		GEN.add(left.toString());
+		GEN.add(right.toString());
 	}
 	
 	public IRNode(Instruction j, String jtarget) {
@@ -260,7 +300,7 @@ public class IRNode {
 	public String toString(){
 		if(this.label != null)
 			return String.format(";LABEL " + this.label);
-		
+
 		String prefix = ";" + this.OPCODE.getName();
 		switch(format){
 		case FORMAT_DD:
