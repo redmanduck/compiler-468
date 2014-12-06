@@ -189,8 +189,7 @@ public class ISA{
 			}
 		}
 		
-		System.err.print("Something gone wrong in ISA.java isa transform");
+		System.err.print("Something gone wrong while performing ISA Transform!!");
 		return null;
 	}
 }
-

@@ -109,6 +109,7 @@ public class TinyGenerator {
 		Instruction [] possible_instructions = map_ISA.get(irx);
 		
 		String ircode = irn.toString();
+		String output;
 		
 		if(possible_instructions == null){
 			System.err.println(";No Instruction Mapping is defined for " + irx.getName());
@@ -133,19 +134,19 @@ public class TinyGenerator {
 
 			String asms = ISA.move.getName() + " " + irn.getIdOperand(1).getTiny() +  " " + dest.toTiny() + "\n";
 			asms += tiny.getName() + " " + dest.toTiny() + " " + irn.getIdOperand(3).getTiny();
-			return asms;
+			output = asms;
 			
 		}else if(irn.getFormat() == IRNode.FORMAT_IR || irn.getFormat() == IRNode.FORMAT_FR){
 			
 			Register dest = TempRegisterFactory.allocate_tiny();
 			reg_map_ir_tiny.put(getField(ircode,2), dest);
-			
-			return tiny.getName() + " " + getField(ircode, 1) + " " + dest.toTiny();
+
+			output = tiny.getName() + " " + getField(ircode, 1) + " " + dest.toTiny();
 			
 		}else if(irn.getFormat() == IRNode.FORMAT_RD){
 			usedSymbols.add(irn.getIdOperand(3));
 
-			return tiny.getName() + " " + TempRegisterFactory.previous().toTiny() + " " + irn.getIdOperand(3).getTiny();
+			output = tiny.getName() + " " + TempRegisterFactory.previous().toTiny() + " " + irn.getIdOperand(3).getTiny();
 			
 		}else if(irn.getFormat() == IRNode.FORMAT_DDR){
 
@@ -161,8 +162,8 @@ public class TinyGenerator {
 			
 			String asms = move_op + " " + d1.getTiny() + " " + reg.toTiny() + "\n";
 			asms += tiny.getName() + " " +  d2.getTiny() + " " + reg.toTiny();
-			
-			return asms;
+
+			output = asms;
 			
 		}else if(irn.getFormat() == IRNode.FORMAT_RRR){
 			
@@ -172,8 +173,8 @@ public class TinyGenerator {
 			
 			String asms = move_op + " " + reg_map_ir_tiny.get(getField(ircode, 1)).toTiny() + " " + reg.toTiny() + "\n";
 			asms += tiny.getName() + " " +  reg_map_ir_tiny.get(getField(ircode, 2)).toTiny() + " " + reg.toTiny();
-			
-			return asms;
+
+			output= asms;
 		}else if(irn.getFormat() == IRNode.FORMAT_RDR){
 			
 			String move_op = ISA.move.getName();
@@ -184,8 +185,8 @@ public class TinyGenerator {
 			usedSymbols.add(d);
 			String asms = move_op + " " + reg_map_ir_tiny.get(getField(ircode, 1)).toTiny() + " " + reg.toTiny() + "\n";
 			asms += tiny.getName() + " " + d.getTiny()  + " " + reg.toTiny();
-			
-			return asms;
+
+			output= asms;
 		}else if(irn.getFormat() == IRNode.FORMAT_DRR){
 			
 			String move_op = ISA.move.getName();
@@ -194,7 +195,7 @@ public class TinyGenerator {
 			usedSymbols.add(irn.getIdOperand(1));
 			String asms = move_op + " " + irn.getIdOperand(1).getTiny() + " " + reg.toTiny() + "\n";
 			asms += tiny.getName() + " " + reg_map_ir_tiny.get(getField(ircode, 2)).toTiny() + " " + reg.toTiny();
-			return asms;
+			output= asms;
 			
 		}else if(irn.getFormat() == IRNode.FORMAT_O){
 			//handle link separately 
@@ -206,45 +207,47 @@ public class TinyGenerator {
 				if(i > 0) str += "\n";
 				str += possible_instructions[i].getName();
 			}
-			return str;
+			output = str;
 			
 		}else if(irn.getFormat() == IRNode.FORMAT_S){
-			
-			return tiny.getName() + " " + getField(ircode, 1);
+
+			output = tiny.getName() + " " + getField(ircode, 1);
 		}else if(irn.getFormat() == IRNode.FORMAT_DRT){
 			
-			String asms =  possible_instructions[0].getName() + " " + irn.getIdOperand(1).getTiny() + " " + reg_map_ir_tiny.get(getField(ircode,2)).toTiny() + "\n";
+			String asms =  possible_instructions[0].getName() + " " + irn.getIdOperand(1).getTiny() + " " +
+					reg_map_ir_tiny.get(getField(ircode,2)).toTiny() + "\n";
 			asms += possible_instructions[1].getName() + " " + getField(ircode, 3);
-			return asms;	
+			output= asms;
 		}else if(irn.getFormat() == IRNode.FORMAT_DDT){
 			
 			Register dest = TempRegisterFactory.allocate_tiny();
 			
 			String asms = ISA.move.getName() + " " + irn.getIdOperand(2).getTiny() + " " + dest.toTiny()  + "\n";
 			
-		    asms += possible_instructions[0].getName() + " " +  irn.getIdOperand(1).getTiny() + " " + dest.toTiny() + "\n";
+		    asms += possible_instructions[0].getName() + " " +  irn.getIdOperand(1).getTiny() +
+					" " + dest.toTiny() + "\n";
 			asms += possible_instructions[1].getName() + " " + getField(ircode, 3);
-			return asms;
+			output= asms;
 			
 		}else if(irn.getFormat() == IRNode.FORMAT_T){
-			String output = "";
-			output += tiny.getName() +  " " + getField(ircode, 1) + "\n";
-			
+			String buff = "";
+			buff += tiny.getName() +  " " + getField(ircode, 1) + "\n";
+
 			if(irn.getInstruction().equals(ISA.JSR)){
-				output = save_regs() + "\n" + output; 
-				output += restore_regs();
+				buff = save_regs() + "\n" + buff;
+				buff += restore_regs();
 			}
-			return output;
-			
+			output= buff;
+
 		}else if(irn.getFormat() == IRNode.FORMAT_DR){
 			
 			Register dest = TempRegisterFactory.allocate_tiny();
 			reg_map_ir_tiny.put(getField(ircode, 2), dest);
 
-			return tiny.getName() + " " + irn.getIdOperand(1).getTiny() + " " + dest.toTiny();
+			output= tiny.getName() + " " + irn.getIdOperand(1).getTiny() + " " + dest.toTiny();
 		}else if(irn.getFormat() == IRNode.FORMAT_R){
 			Register dest = null;
-		//	
+
 			if(reg_map_ir_tiny.containsKey(getField(ircode, 1))){
 				dest = reg_map_ir_tiny.get(getField(ircode, 1));
 			}else{
@@ -255,11 +258,16 @@ public class TinyGenerator {
 			return tiny.getName() +  " " + dest.toTiny();
 		}else if(irn.getFormat() == IRNode.FORMAT_RS){
 			//`S` is not really a register
-			String generate = tiny.getName() + " " + reg_map_ir_tiny.get(getField(ircode, 1)).toTiny() + " $" + TinyActivationRecord.getReturnStackAddress();
-			return generate;
+			String generate = tiny.getName() + " " + reg_map_ir_tiny.get(getField(ircode, 1)).toTiny() + " $" +
+					TinyActivationRecord.getReturnStackAddress();
+			output= generate;
 		}else{
-			return ";<unknown format> code: " + irn.getFormat();
+			output= ";<unknown format> code: " + irn.getFormat();
 		}
+
+		String info = ";	 ^live into this node ~ " + irn.LIVE_IN.toString();
+		output += "\n" + info;
+		return output;
 	}
 
 	private String doLink(Instruction tiny, IRNode irn) {
@@ -280,7 +288,7 @@ public class TinyGenerator {
 		 * for step6, there is no register allocation yet so we'll just hard code this
 		 */
 		StringBuffer sbuffer = new StringBuffer();
-		int i = 0;
+		int i;
 		int offset = 0;
 		Instruction pp = ISA.push;
 		
