@@ -43,7 +43,8 @@ public class Utils {
 	
 	public static void printIR(IRList irl){
 		for(IRNode a : irl){
-			System.out.println(a.toString());
+			System.out.print(a.toString());
+			System.out.println(" --- LIVEIN: " + a.LIVE_IN.toString() + ", LIVEOUT: " + a.LIVE_OUT.toString());
 		}
 	}
 	

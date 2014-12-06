@@ -24,7 +24,13 @@ TINY='tiny'
  if [[ $* == *-c* ]]
 then
 rm $TINY
+if [[ $* == *-f* ]]
+then
+make tiny4
+else
 make tiny
+fi
+
 fi
 tc="${@: -1}*"
 if [[ $* == *-c* ]]

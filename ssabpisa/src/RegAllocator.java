@@ -1,4 +1,4 @@
-import java.util.HashSet;
+import java.util.ArrayList;
 
 public class RegAllocator {
     private int reg_limit;
@@ -75,24 +75,77 @@ public class RegAllocator {
      */
     public void analyzeDataFlow(IRList original){
         //populate worklist
-        HashSet<IRNode> worklist = new HashSet<IRNode>();
+        ArrayList<IRNode> worklist = new ArrayList<IRNode>();
         IRNode p = null;
         for(IRNode n : original){
             worklist.add(n);
             p = n;
         }
-        //traverse CFG upward
+
         IRNode lnode = original.get(original.size() - 1);
         initLiveOutSet(lnode);
-        DFS(lnode);
+        //work the worklist
+
+        do{
+            IRNode n = worklist.get(worklist.size() - 1);
+            boolean fixed = computeLiveness(n);
+            if(!fixed){
+                //keep going
+                worklist.addAll(n.predecessors);
+                System.out.println("Added all preds of " + n.toString() + " to work list");
+            }
+            worklist.remove(n);
+        }while(!worklist.isEmpty());
 
     }
 
     /*
-     * Do bottom up register allocation
+     * Compute Liveness for one IR Node (CFG)
+     *
+     * The set of variables that are live out of a node is the union of all the variables that are live in to the node's successors.
+     * The set of variables that are live in to a node is the set of variables that are live out for the node, minus any variables
+     * that are killed by the node, plus any variables that are gen-ed by the node.
+     *
+     * Return true if fix point (no set changed)
      */
-    public void bottomUp(){
+    public boolean computeLiveness(IRNode n){
 
+//        if(n.GEN.size() == 0 && n.KILL.size() == 0){
+//            return true;
+//        }
+
+        System.out.println("Computing Liveness for " + n.toString());
+        String digestLiveOut = n.LIVE_OUT.toString();
+        String digestLiveIn = n.LIVE_IN.toString();
+        String digestLiveOut_new = "";
+        String digestLiveIn_new = "";
+
+
+        //compute live out
+        //union of all the variables that are live in to the node's successors.
+        System.out.println("has " + n.successors.size() + " successors");
+        for(IRNode suc: n.successors){
+            System.out.println("successor " + suc.toString() +  " has LIVEIN = " + suc.LIVE_IN.toString());
+            n.LIVE_OUT.addAll(suc.LIVE_IN);
+        }
+        //compute live in
+        //LIVE_IN = (LIVE_OUT - KILL) U GEN
+        n.LIVE_IN.addAll(n.LIVE_OUT);
+        n.LIVE_IN.removeAll(n.KILL);
+        n.LIVE_IN.addAll(n.GEN);
+
+        System.out.println("KILL: " + n.KILL.toString());
+        System.out.println("GEN: " + n.GEN.toString());
+        digestLiveOut_new = n.LIVE_OUT.toString();
+        digestLiveIn_new = n.LIVE_IN.toString();
+
+        System.out.println("LIVE In" + digestLiveIn + " --> " + digestLiveIn_new);
+        System.out.println("LIVE Out " + digestLiveOut + " --> " + digestLiveOut_new);
+
+        if(digestLiveIn != digestLiveIn_new) return false; //something changed
+        if(digestLiveOut != digestLiveOut_new) return false; //something changed
+
+        return true; //is fixed
     }
 
     /*

@@ -18,9 +18,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-import com.sun.tools.javac.jvm.Gen;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 public class IRNode {
 
      private Instruction OPCODE;
@@ -33,10 +33,10 @@ public class IRNode {
 	 public boolean discovered;
      public String fn_key; //dedicated function name field
 
-	 public ArrayList<IRNode>  predecessors, successors;
+	 public HashSet<IRNode>  predecessors, successors;
 
-	 public ArrayList<String> GEN, KILL;
-	 public ArrayList<String> LIVE_IN, LIVE_OUT;
+	 public HashSet<String> GEN, KILL;
+	 public HashSet<String> LIVE_IN, LIVE_OUT;
 
 	 private int format;
      public static final int FORMAT_IR = 0; // int reg
@@ -93,13 +93,13 @@ public class IRNode {
 	 * initialize control flow related properties that was added later
 	 */
 	private void init_cflow(){
-		predecessors = new ArrayList<IRNode>();
-		successors = new ArrayList<IRNode>();
+		predecessors = new HashSet<IRNode>();
+		successors = new HashSet<IRNode>();
 
-		GEN = new ArrayList<String>();
-		KILL = new ArrayList<String>();
-		LIVE_IN = new ArrayList<String>();
-		LIVE_OUT = new ArrayList<String>();
+		GEN = new HashSet<String>();
+		KILL = new HashSet<String>();
+		LIVE_IN = new HashSet<String>();
+		LIVE_OUT = new HashSet<String>();
 
 		discovered = false;
 	}
@@ -117,7 +117,8 @@ public class IRNode {
 		this.i_src1 = src1;
 		this.r_dest = dest;
 		format = FORMAT_IR;
-		KILL.add(dest.toString());
+
+		if(!dest.toString().contains("$R"))  KILL.add(dest.toString());
 	}
 	
 	public IRNode(Instruction OPCODE){
@@ -132,7 +133,7 @@ public class IRNode {
 		this.f_src1 = s;
 		this.r_dest = dest;
 		format = FORMAT_FR;
-		KILL.add(dest.toString());
+		if(!dest.toString().contains("$R")) KILL.add(dest.toString());
 	}
 	
 	public IRNode(Instruction OPCODE, Register r_dest){
@@ -140,7 +141,7 @@ public class IRNode {
 		this.OPCODE = OPCODE;
 		this.r_dest = r_dest;
 		format = FORMAT_R;
-		KILL.add(r_dest.toString());
+		if(!r_dest.toString().contains("$R")) KILL.add(r_dest.toString());
 	}
 	
 	public IRNode(Instruction OPCODE, Register r_src, Id idd){
@@ -150,7 +151,7 @@ public class IRNode {
 		this.r_src1 = r_src;
 		this.id_dest = idd;
 		format = FORMAT_RD;
-		KILL.add(idd.toString());
+		if(!idd.toString().contains("$R")) KILL.add(idd.toString());
 		GEN.add(r_src.toString());
 	}	
 	
@@ -161,7 +162,7 @@ public class IRNode {
 		this.id_src2 = id_src2;
 		this.r_dest = dest;
 		format = FORMAT_DDR;
-		KILL.add(r_dest.toString());
+		if(!dest.toString().contains("$R")) KILL.add(dest.toString());
 		GEN.add(id_src1.toString());
 		GEN.add(id_src2.toString());
 	}
@@ -173,7 +174,7 @@ public class IRNode {
 		this.r_src1 = r_src1;
 		this.r_dest = dest;
 		format = FORMAT_RDR;
-		KILL.add(dest.toString());
+		if(!dest.toString().contains("$R")) KILL.add(dest.toString());
 		GEN.add(r_src1.toString());
 		GEN.add(id_src2.toString());
 	}
@@ -186,7 +187,7 @@ public class IRNode {
 		this.r_src2 = r_src2;
 		this.r_dest = dest;
 		format = FORMAT_RRR;
-		KILL.add(dest.toString());
+		if(!dest.toString().contains("$R")) KILL.add(dest.toString());
 		GEN.add(r_src1.toString());
 		GEN.add(r_src2.toString());
 	}
@@ -199,7 +200,7 @@ public class IRNode {
 		if(ISA.InstructionSpecies(OPCODE, ISA._READ)){
 			GEN.add(id_readwrite.toString());
 		}else if(ISA.InstructionSpecies(OPCODE, ISA._WRITE)){
-			KILL.add(id_readwrite.toString());
+			if(!id_readwrite.toString().contains("$R")) KILL.add(id_readwrite.toString());
 		}
 	}
 	
@@ -210,7 +211,7 @@ public class IRNode {
 		this.r_src2 = _reg;
 		this.r_dest = dest;
 		format = FORMAT_DRR;
-		KILL.add(dest.toString());
+		if(!dest.toString().contains("$R")) KILL.add(dest.toString());
 		GEN.add(_id.toString());
 		GEN.add(_reg.toString());
 	}
@@ -221,7 +222,7 @@ public class IRNode {
 		this.id_src1 = _id1;
 		this.id_dest = _id2;
 		format = FORMAT_DD;
-		KILL.add(_id2.toString());
+		if(!_id2.toString().contains("$R")) KILL.add(_id2.toString());
 		GEN.add(id_src1.toString());
 	}
 	
@@ -231,7 +232,7 @@ public class IRNode {
 		this.r_src1 = r1;
 		this.r_dest = r2;
 		format = FORMAT_RS;
-		KILL.add(r2.toString());
+		if(!r2.toString().contains("$R")) KILL.add(r2.toString());
 		GEN.add(r1.toString());
 	}
 	
@@ -241,7 +242,7 @@ public class IRNode {
 		this.id_src1 = _id1;
 		this.r_dest = rdest;
 		format = FORMAT_DR;
-		KILL.add(rdest.toString());
+		if(!rdest.toString().contains("$R")) KILL.add(rdest.toString());
 		GEN.add(_id1.toString());
 	}
 

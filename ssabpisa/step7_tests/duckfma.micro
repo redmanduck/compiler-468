@@ -1,0 +1,24 @@
+PROGRAM factorial
+BEGIN
+	INT gg;
+	STRING elop := "Please enter an integer number: ";
+	
+	FUNCTION FLOAT add (FLOAT a, FLOAT b)
+	BEGIN
+	  	FLOAT result;
+		result := a+b;
+		RETURN result;
+	END
+
+	
+	FUNCTION INT main ()
+	BEGIN
+		FLOAT c, addresult,multiplyresult;
+		c := 1.0;
+		multiplyresult := 2.0;
+		addresult := add(multiplyresult,c);
+		WRITE(addresult);
+		WRITE(multiplyresult);
+		RETURN 0;
+	END
+END
