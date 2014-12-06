@@ -1,0 +1,7 @@
+ssabpisa
+rm -rf build
+mkdir build
+java -cp lib/antlr.jar org.antlr.v4.Tool -o build Micro.g4
+rm -rf classes
+mkdir classes
+javac -cp lib/antlr.jar -d classes src/*.java build/*.java

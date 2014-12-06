@@ -21,7 +21,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 TINY='tiny'
- if [[ $* == *-c* ]]
+tc="${@: -1}*"
+if [[ $* == *-n* ]] 
+then
+echo "Testing $tc without recompiling tiny"
+else
+echo "Testing $tc"
+if [[ $* == *-c* ]]
 then
 rm $TINY
 if [[ $* == *-f* ]]
@@ -30,13 +36,14 @@ make tiny4
 else
 make tiny
 fi
+fi
 
 fi
-tc="${@: -1}*"
 if [[ $* == *-c* ]]
 then
   #compile the compiler first
-  make clean && make
+  make clean > /dev/null
+  make > temp_makelog
 fi
 dirs=$(ls $tc/*.micro)
 FAIL=0
@@ -68,6 +75,9 @@ do
   then
       FAIL=1
       echo  "$(tput setaf 1) [ERROR] $(tput setaf 0)"
+      echo $f.out >> error.log
+      echo ---------------------------------------------------- >> error.log
+      ./$TINY $tc/$f.out < $inkey >> error.log
       continue
   fi
   test=$(echo $t | sed s/ST/\\\|/g | cut -d'|' -f1)

@@ -92,7 +92,7 @@ public class DataflowBuilder {
             if(!fixed){
                 //keep going
                 worklist.addAll(n.predecessors);
-                System.out.println("Added all preds of " + n.toString() + " to work list");
+                System.out.println(";Added all preds of " + n.toString() + " to work list");
             }
             worklist.remove(n);
         }while(!worklist.isEmpty());
@@ -114,7 +114,7 @@ public class DataflowBuilder {
 //            return true;
 //        }
 
-        System.out.println("Computing Liveness for " + n.toString());
+        System.out.println(";=======Computing Liveness for " + n.toString() + " ============");
         String digestLiveOut = n.LIVE_OUT.toString();
         String digestLiveIn = n.LIVE_IN.toString();
         String digestLiveOut_new = "";
@@ -123,9 +123,9 @@ public class DataflowBuilder {
 
         //compute live out
         //union of all the variables that are live in to the node's successors.
-        System.out.println("has " + n.successors.size() + " successors");
+        System.out.println(";Has " + n.successors.size() + " successors");
         for(IRNode suc: n.successors){
-            System.out.println("successor " + suc.toString() +  " has LIVEIN = " + suc.LIVE_IN.toString());
+            System.out.println(";successor " + suc.toString() +  " has LIVEIN = " + suc.LIVE_IN.toString());
             n.LIVE_OUT.addAll(suc.LIVE_IN);
         }
         //compute live in
@@ -134,16 +134,18 @@ public class DataflowBuilder {
         n.LIVE_IN.removeAll(n.KILL);
         n.LIVE_IN.addAll(n.GEN);
 
-        System.out.println("KILL: " + n.KILL.toString());
-        System.out.println("GEN: " + n.GEN.toString());
+        System.out.println(";KILL set: " + n.KILL.toString());
+        System.out.println(";GEN set: " + n.GEN.toString());
         digestLiveOut_new = n.LIVE_OUT.toString();
         digestLiveIn_new = n.LIVE_IN.toString();
 
-        System.out.println("LIVE In" + digestLiveIn + " --> " + digestLiveIn_new);
-        System.out.println("LIVE Out " + digestLiveOut + " --> " + digestLiveOut_new);
+        System.out.println(";LIVE In set " + digestLiveIn + " --> " + digestLiveIn_new);
+        System.out.println(";LIVE Out set" + digestLiveOut + " --> " + digestLiveOut_new);
 
-        if(digestLiveIn != digestLiveIn_new) return false; //something changed
-        if(digestLiveOut != digestLiveOut_new) return false; //something changed
+        if(!digestLiveIn.equals(digestLiveIn_new) || !digestLiveOut.equals(digestLiveOut_new))
+        {
+            return false; //something changed
+        }
 
         return true; //is fixed
     }

@@ -1,0 +1,63 @@
+;IR code
+;LABEL main
+;LINK 
+;STOREI 2 $T1
+;STOREI $T1 $L1
+;STOREI 3 $T2
+;STOREI $T2 $L2
+;STOREI 4 $T3
+;STOREI $T3 $L3
+;WRITEI $L1
+;ADDI $L1 $L2 $T4
+;STOREI $T4 $L3
+;ADDI $L1 $L3 $T5
+;STOREI $T5 $L4
+;READI $L3
+;STOREI 0 $T6
+;STOREI $T6 $T7
+;STOREI $T7 $R
+;RET
+;tiny code
+var glo
+push
+push r0
+push r1
+push r2
+push r3
+jsr main
+sys halt
+label main 
+link 11
+move $-5 r0
+move 2 r0
+move $-1 r1
+move r0 r1
+move $-6 r0
+move 3 r0
+move $-2 r2
+move r0 r2
+move $-7 r0
+move 4 r0
+move $-3 r3
+move r0 r3
+sys writei r1
+move $-8 r0
+move r1 r0
+addi r2 r0
+move $-3 r2
+move r0 r2
+move $-9 r0
+move r1 r0
+addi r2 r0
+move $-4 r1
+move r0 r1
+move $-3 r0
+sys readi r0
+move $-10 r0
+move 0 r0
+move $-11 r1
+move r0 r1
+move r1 $6
+unlnk
+ret
+end

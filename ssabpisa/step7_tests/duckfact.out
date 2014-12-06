@@ -1,0 +1,98 @@
+;IR code
+;LABEL factorial
+;LINK 
+;ADDI $P1 $P2 $T1
+;ADDI $T1 $P3 $T2
+;STOREI $T2 $L1
+;STOREI $L1 $T3
+;STOREI $T3 $R
+;RET
+;LABEL main
+;LINK 
+;STOREI 5 $T1
+;STOREI $T1 $L2
+;STOREI 1 $T2
+;ADDI $L2 $T2 $T3
+;PUSH 
+;PUSH $T3
+;PUSH $L2
+;PUSH $L2
+;JSR factorial
+;POP 
+;POP 
+;POP 
+;POP $T4
+;STOREI $T4 $L1
+;WRITEI $L1
+;STOREI 0 $T5
+;STOREI $T5 $T6
+;STOREI $T6 $R
+;RET
+;tiny code
+str input "Please enter an integer number: "
+str eol "\n"
+push
+push r0
+push r1
+push r2
+push r3
+jsr main
+sys halt
+label factorial 
+link 7
+move $8 r0
+move $-2 r1
+move r0 r1
+move $7 r2
+addi r2 r1
+move $-3 r0
+move r1 r0
+move $6 r2
+addi r2 r0
+move $-1 r1
+move r0 r1
+move $-4 r0
+move r1 r0
+move r0 $9
+unlnk
+ret
+label main 
+link 8
+move $-3 r0
+move 5 r0
+move $-2 r1
+move r0 r1
+move $-4 r0
+move 1 r0
+move $-5 r2
+move r1 r2
+addi r0 r2
+push
+push r2
+push r1
+push r1
+push r0
+push r1
+push r2
+push r3
+jsr factorial
+pop r3
+pop r2
+pop r1
+pop r0
+pop
+pop
+pop
+move $-6 r0
+pop r0
+move $-1 r1
+move r0 r1
+sys writei r1
+move $-7 r0
+move 0 r0
+move $-8 r1
+move r0 r1
+move r1 $6
+unlnk
+ret
+end
