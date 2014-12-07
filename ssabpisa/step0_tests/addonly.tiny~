@@ -95,13 +95,13 @@
 ; tiny generated = move r0 r0
 ;-------------------------------------------------------
 ; ir node ;STOREF $T2 $R! (FRMT-16)
-; reg state : {r0=$T2, r1=nothing, r2=nothing, r3=nothing, }
+; reg state : {r0=$T2*, r1=nothing, r2=nothing, r3=nothing, }
 ; found $T2 in r0
 ; ensuring $T2 use r0
 ; tiny generated = move r0 $8
 ;-------------------------------------------------------
 ; ir node ;RET! (FRMT-9)
-; reg state : {r0=$T2, r1=nothing, r2=nothing, r3=nothing, }
+; reg state : {r0=$T2*, r1=nothing, r2=nothing, r3=nothing, }
 ; tiny generated = unlnk; ret
 ; tiny generated = ; ;flushing registers; 
 ; tiny generated = ;flush done; 
@@ -158,13 +158,13 @@
 ; tiny generated = move r0 r0
 ;-------------------------------------------------------
 ; ir node ;STOREF $T2 $R! (FRMT-16)
-; reg state : {r0=$T2, r1=nothing, r2=nothing, r3=nothing, }
+; reg state : {r0=$T2*, r1=nothing, r2=nothing, r3=nothing, }
 ; found $T2 in r0
 ; ensuring $T2 use r0
 ; tiny generated = move r0 $8
 ;-------------------------------------------------------
 ; ir node ;RET! (FRMT-9)
-; reg state : {r0=$T2, r1=nothing, r2=nothing, r3=nothing, }
+; reg state : {r0=$T2*, r1=nothing, r2=nothing, r3=nothing, }
 ; tiny generated = unlnk; ret
 ; tiny generated = ; ;flushing registers; 
 ; tiny generated = ;flush done; 
@@ -178,122 +178,164 @@
 ;-------------------------------------------------------
 ; ir node ;WRITES intro! (FRMT-6)
 ; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; tiny generated = sys writes intro
 ;-------------------------------------------------------
 ; ir node ;WRITES first! (FRMT-6)
 ; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; tiny generated = sys writes first
 ;-------------------------------------------------------
 ; ir node ;READF $L1! (FRMT-6)
 ; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; allocating $-1 to r0
+; tiny generated = 
+; tiny generated = sys readr r0
 ;-------------------------------------------------------
 ; ir node ;WRITES second! (FRMT-6)
-; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; reg state : {r0=$-1*, r1=nothing, r2=nothing, r3=nothing, }
+; tiny generated = sys writes second
 ;-------------------------------------------------------
 ; ir node ;READF $L2! (FRMT-6)
-; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; reg state : {r0=$-1*, r1=nothing, r2=nothing, r3=nothing, }
+; allocating $-2 to r1
+; tiny generated = 
+; tiny generated = sys readr r1
 ;-------------------------------------------------------
 ; ir node ;WRITES third! (FRMT-6)
-; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; reg state : {r0=$-1*, r1=$-2*, r2=nothing, r3=nothing, }
+; tiny generated = sys writes third
 ;-------------------------------------------------------
 ; ir node ;READF $L3! (FRMT-6)
-; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; reg state : {r0=$-1*, r1=$-2*, r2=nothing, r3=nothing, }
+; allocating $-3 to r2
+; tiny generated = 
+; tiny generated = sys readr r2
 ;-------------------------------------------------------
 ; ir node ;STOREI 5 $T1! (FRMT-0)
-; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
-; allocating $T1 to r0
+; reg state : {r0=$-1*, r1=$-2*, r2=$-3*, r3=nothing, }
+; allocating $T1 to r3
 ; tiny generated = 
-; tiny generated = move 5 r0
+; tiny generated = move 5 r3
 ;-------------------------------------------------------
 ; ir node ;STOREF $T1 $L5! (FRMT-2)
-; reg state : {r0=$T1*, r1=nothing, r2=nothing, r3=nothing, }
-; found $T1 in r0
-; ensuring $T1 use r0
+; reg state : {r0=$-1*, r1=$-2*, r2=$-3*, r3=$T1*, }
+; found $T1 in r3
+; ensuring $T1 use r3
 ; tiny generated = 
-; evicting r0 for opr $T1
+; evicting r3 for opr $T1
 ; free: false, dirty:true, live: false
 ; live out: [second, star, third, first, intro]
-; allocating $-4 to r0
+; allocating $-4 to r3
 ; tiny generated = 
-; tiny generated = move r0 r0
+; tiny generated = move r3 r3
 ;-------------------------------------------------------
 ; ir node ;PUSH! (FRMT-9)
-; reg state : {r0=$-4*, r1=nothing, r2=nothing, r3=nothing, }
+; reg state : {r0=$-1*, r1=$-2*, r2=$-3*, r3=$-4*, }
 ; tiny generated = ; ;flushing registers; 
-; tiny generated = move r0 $-4; 
+; tiny generated = move r0 $-1; 
+; tiny generated = move r1 $-2; 
+; tiny generated = move r2 $-3; 
+; tiny generated = move r3 $-4; 
 ; tiny generated = ;flush done; 
 ; tiny generated = push
 ;-------------------------------------------------------
 ; ir node ;PUSH $L5! (FRMT-6)
-; reg state : {r0=$-4*, r1=nothing, r2=nothing, r3=nothing, }
+; reg state : {r0=$-1*, r1=$-2*, r2=$-3*, r3=$-4*, }
+; tiny generated = push $-4
 ;-------------------------------------------------------
 ; ir node ;PUSH $L3! (FRMT-6)
-; reg state : {r0=$-4*, r1=nothing, r2=nothing, r3=nothing, }
+; reg state : {r0=$-1*, r1=$-2*, r2=$-3*, r3=$-4*, }
+; tiny generated = push $-3
 ;-------------------------------------------------------
 ; ir node ;JSR add! (FRMT-15)
-; reg state : {r0=$-4*, r1=nothing, r2=nothing, r3=nothing, }
+; reg state : {r0=$-1*, r1=$-2*, r2=$-3*, r3=$-4*, }
 ; tiny generated = push r0; push r1; push r2; push r3; jsr add; pop r3; pop r2; pop r1; pop r0
 ;-------------------------------------------------------
 ; ir node ;POP! (FRMT-9)
-; reg state : {r0=$-4*, r1=nothing, r2=nothing, r3=nothing, }
+; reg state : {r0=$-1*, r1=$-2*, r2=$-3*, r3=$-4*, }
 ; tiny generated = pop
 ;-------------------------------------------------------
 ; ir node ;POP! (FRMT-9)
-; reg state : {r0=$-4*, r1=nothing, r2=nothing, r3=nothing, }
+; reg state : {r0=$-1*, r1=$-2*, r2=$-3*, r3=$-4*, }
 ; tiny generated = pop
 ;-------------------------------------------------------
 ; ir node ;POP $T2! (FRMT-18)
-; reg state : {r0=$-4*, r1=nothing, r2=nothing, r3=nothing, }
-; allocating $T2 to r1
+; reg state : {r0=$-1*, r1=$-2*, r2=$-3*, r3=$-4*, }
+; No free register!
+; evicting r0 for opr $-1
+; free: false, dirty:true, live: false
+; live out: [$T2, second, star, third, first, intro]
+; allocating $T2 to r0
 ; tiny generated = 
-; tiny generated = pop r1
+; tiny generated = pop r0
 ;-------------------------------------------------------
 ; ir node ;STOREF $T2 $L4! (FRMT-2)
-; reg state : {r0=$-4*, r1=$T2, r2=nothing, r3=nothing, }
-; found $T2 in r1
-; ensuring $T2 use r1
+; reg state : {r0=$T2*, r1=$-2*, r2=$-3*, r3=$-4*, }
+; found $T2 in r0
+; ensuring $T2 use r0
 ; tiny generated = 
-; evicting r1 for opr $T2
-; free: false, dirty:false, live: false
+; evicting r0 for opr $T2
+; free: false, dirty:true, live: false
 ; live out: [second, star, third, first, intro]
-; allocating $-5 to r1
+; allocating $-5 to r0
 ; tiny generated = 
-; tiny generated = move r1 r1
+; tiny generated = move r0 r0
 ;-------------------------------------------------------
 ; ir node ;WRITEF $L5! (FRMT-6)
-; reg state : {r0=$-4*, r1=$-5*, r2=nothing, r3=nothing, }
+; reg state : {r0=$-5*, r1=$-2*, r2=$-3*, r3=$-4*, }
+; found $-4 in r3
+; ensuring $-4 use r3
+; tiny generated = 
+; tiny generated = sys writer r3
 ;-------------------------------------------------------
 ; ir node ;WRITES plus! (FRMT-6)
-; reg state : {r0=$-4*, r1=$-5*, r2=nothing, r3=nothing, }
+; reg state : {r0=$-5*, r1=$-2*, r2=$-3*, r3=$-4*, }
+; tiny generated = sys writes plus
 ;-------------------------------------------------------
 ; ir node ;WRITEF $L3! (FRMT-6)
-; reg state : {r0=$-4*, r1=$-5*, r2=nothing, r3=nothing, }
+; reg state : {r0=$-5*, r1=$-2*, r2=$-3*, r3=$-4*, }
+; found $-3 in r2
+; ensuring $-3 use r2
+; tiny generated = 
+; tiny generated = sys writer r2
 ;-------------------------------------------------------
 ; ir node ;WRITES equal! (FRMT-6)
-; reg state : {r0=$-4*, r1=$-5*, r2=nothing, r3=nothing, }
+; reg state : {r0=$-5*, r1=$-2*, r2=$-3*, r3=$-4*, }
+; tiny generated = sys writes equal
 ;-------------------------------------------------------
 ; ir node ;WRITEF $L4! (FRMT-6)
-; reg state : {r0=$-4*, r1=$-5*, r2=nothing, r3=nothing, }
+; reg state : {r0=$-5*, r1=$-2*, r2=$-3*, r3=$-4*, }
+; found $-5 in r0
+; ensuring $-5 use r0
+; tiny generated = 
+; tiny generated = sys writer r0
 ;-------------------------------------------------------
 ; ir node ;WRITES eol! (FRMT-6)
-; reg state : {r0=$-4*, r1=$-5*, r2=nothing, r3=nothing, }
+; reg state : {r0=$-5*, r1=$-2*, r2=$-3*, r3=$-4*, }
+; tiny generated = sys writes eol
 ;-------------------------------------------------------
 ; ir node ;STOREI 0 $T3! (FRMT-0)
-; reg state : {r0=$-4*, r1=$-5*, r2=nothing, r3=nothing, }
-; allocating $T3 to r2
+; reg state : {r0=$-5*, r1=$-2*, r2=$-3*, r3=$-4*, }
+; No free register!
+; evicting r0 for opr $-5
+; free: false, dirty:true, live: false
+; live out: [plus, $T3, second, star, eol, equal, third, first, intro]
+; allocating $T3 to r0
 ; tiny generated = 
-; tiny generated = move 0 r2
+; tiny generated = move 0 r0
 ;-------------------------------------------------------
 ; ir node ;STOREI $T3 $R! (FRMT-16)
-; reg state : {r0=$-4*, r1=$-5*, r2=$T3*, r3=nothing, }
-; found $T3 in r2
-; ensuring $T3 use r2
-; tiny generated = move r2 $6
+; reg state : {r0=$T3*, r1=$-2*, r2=$-3*, r3=$-4*, }
+; found $T3 in r0
+; ensuring $T3 use r0
+; tiny generated = move r0 $6
 ;-------------------------------------------------------
 ; ir node ;RET! (FRMT-9)
-; reg state : {r0=$-4*, r1=$-5*, r2=$T3*, r3=nothing, }
+; reg state : {r0=$T3*, r1=$-2*, r2=$-3*, r3=$-4*, }
 ; tiny generated = unlnk; ret
 ; tiny generated = ; ;flushing registers; 
-; tiny generated = move r0 $-4; 
-; tiny generated = move r1 $-5; 
+; tiny generated = move r1 $-2; 
+; tiny generated = move r2 $-3; 
+; tiny generated = move r3 $-4; 
 ; tiny generated = ;flush done; 
 str intro "You will be asked for three float numbers\n"
 str first "Please enter the first float number: "
@@ -342,16 +384,19 @@ label main
 link 5
 sys writes intro
 sys writes first
-sys readr $-1
+sys readr r0
 sys writes second
-sys readr $-2
+sys readr r1
 sys writes third
-sys readr $-3
-move 5 r0
-move r0 r0
+sys readr r2
+move 5 r3
+move r3 r3
 
 ;flushing registers
-move r0 $-4
+move r0 $-1
+move r1 $-2
+move r2 $-3
+move r3 $-4
 ;flush done
 push
 push $-4
@@ -367,23 +412,23 @@ pop r1
 pop r0
 pop
 pop
-pop r1
-move r1 r1
-;flushing registers
-move r0 $-4
-move r1 $-5
-;flush done
-
-sys writer $-4
+pop r0
+move r0 r0
+sys writer r3
 sys writes plus
-sys writer $-3
+sys writer r2
 sys writes equal
-sys writer $-5
+sys writer r0
 sys writes eol
-move 0 r2
-move r2 $6
+move 0 r0
+move r0 $6
 unlnk
 ret
+;flushing registers
+move r1 $-2
+move r2 $-3
+move r3 $-4
+;flush done
 
 
 
