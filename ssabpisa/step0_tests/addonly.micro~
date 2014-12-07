@@ -1,0 +1,90 @@
+str intro "You will be asked for three float numbers\n"
+str first "Please enter the first float number: "
+str second "Please enter the second float number: "
+str third "Please enter the third float number: "
+str eol "\n"
+str star "*"
+str plus "+"
+str equal "="
+push
+push r0
+push r1
+push r2
+push r3
+jsr add
+sys halt
+label add
+link 1
+move $6 r0 ;generated load
+move $7 r1 ;generated load
+move r0 r2; DDRmove
+addr r1 r2
+move r2 r3
+move r3 r0
+move r0 $8
+unlnk
+ret
+label multiply
+link 1
+move $6 r0 ;generated load
+move $7 r1 ;generated load
+move r0 r2; DDRmove
+mulr r1 r2
+move r2 r3
+move r3 r0
+move r0 $8
+unlnk
+ret
+label main
+link 5
+sys writes intro
+sys writes first
+sys readr $-1
+sys writes second
+sys readr $-2
+sys writes third
+sys readr $-3
+push
+push $-1
+push $-2
+push r0
+push r1
+push r2
+push r3
+jsr multiply
+pop r3
+pop r2
+pop r1
+pop r0
+pop
+pop
+pop r0
+move r0 r1
+push
+push $-4
+push $-3
+push r0
+push r1
+push r2
+push r3
+jsr add
+pop r3
+pop r2
+pop r1
+pop r0
+pop
+pop
+pop r2
+move r2 r3
+sys writer $-1
+sys writes star
+sys writer $-2
+sys writes plus
+sys writer $-3
+sys writes equal
+sys writer $-5
+sys writes eol
+move 0 r0
+move r0 $6
+unlnk
+ret
