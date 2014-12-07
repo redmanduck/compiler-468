@@ -459,12 +459,27 @@ public class TinyGenerator {
 		}else if(irn.getFormat() == IRNode.FORMAT_R){
 			
 			String C = getField(ircode, 1);
-			Statement deststmt = allocate(C, irn.LIVE_OUT) ; 
-			Generated.add(deststmt.generated_asm);
-			Register Rz = deststmt.return_reg;
-			Rz.dirty = true;
 			
-			Generated.add(tiny.getName() +  " " + Rz.toTiny());
+			if(irn.getInstruction().equals(ISA.PUSH)){
+				Statement use = ensure(C, irn.LIVE_OUT); 
+				
+				Generated.add(use.generated_asm);
+				Register Rx = use.return_reg;
+				
+				Generated.add(tiny.getName() +  " " + Rx.toTiny());
+
+			}else if(irn.getInstruction().equals(ISA.POP)){
+				Statement deststmt = allocate(C, irn.LIVE_OUT); 
+				
+				Generated.add(deststmt.generated_asm);
+				Register Rz = deststmt.return_reg;
+				Rz.dirty = true;
+				
+				Generated.add(tiny.getName() +  " " + Rz.toTiny());
+			}else{
+				System.err.println("Unknown operation for FORMAT_R : " + ircode);
+			}
+			
 		}else if(irn.getFormat() == IRNode.FORMAT_RS){
 			//`S` is not really a register, its $R
 			this.ensure(getField(ircode, 1), irn.LIVE_OUT); 
@@ -555,6 +570,7 @@ public class TinyGenerator {
 	}
 	
 	private Statement ensure(String opr, HashSet<String> liveness){
+		System.out.println("; attempting to ensure " + opr);
 		Register r = in_register(opr);
 		if(r != null){
 			System.out.println("; ensuring " + opr + " use " + r.toTiny());
@@ -591,8 +607,12 @@ public class TinyGenerator {
 	}
 	
 	private Statement allocate(String opr, HashSet<String> liveness){
+		System.out.println("; Attempting to allocate " + opr);
+		//waiting for response on piazza 
+		Register r = in_register(opr);
+//		if(r!=null) return new Statement("", r);
 		
-		Register r = getFreeReg();
+		r = getFreeReg();
 		if(r == null){
 			//there is no free r
 			//choose r by most distant use
