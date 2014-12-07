@@ -143,11 +143,11 @@ public class TinyGenerator {
 		Instruction [] possible_instructions = map_ISA.get(irx);
 		
 		String ircode = irn.toString();
-		System.out.println(";> Processing Node " + ircode + "!" + " ( " + irn.getFormat() +  ")");
-		System.out.println(";> Register State : " + getRegistersState() );
+		System.out.println(";-------------------------------------------------------");
+		System.out.println("; ir node " + ircode + "!" + " (FRMT-" + irn.getFormat() +  ")");
+		System.out.println("; reg state : " + getRegistersState() );
 		
-		CustomArrayList Generated = new CustomArrayList();
-		
+		TinyOutputBuffer Generated = new TinyOutputBuffer();
 		
 		if(possible_instructions == null){
 			System.err.println(";No Instruction Mapping is defined for " + irx.getName());
@@ -167,17 +167,16 @@ public class TinyGenerator {
 			//move id1, r1
 			//move r1, id2
 			
-			String A = irn.getIdOperand(IRNode.OP_ID_SRC1).getTiny();//getField(ircode, 1);
-			String C = irn.getIdOperand(IRNode.OP_ID_DEST).getTiny();//getField(ircode, 2);
+			String A = irn.getIdOperand(IRNode.OP_ID_SRC1).getTiny();
+			String C = irn.getIdOperand(IRNode.OP_ID_DEST).getTiny();
 			
 			Statement stmt_en = ensure(A, irn.LIVE_OUT); 
 			Register Rx = stmt_en.return_reg;
 			Generated.add(stmt_en.generated_asm);
 			
-//			if(!varAlive(A, irn.LIVE_OUT)){
-//				String cmd_fr = free(Rx, irn.LIVE_OUT);
-//				if(cmd_fr != null) Generated.add(cmd_fr);
-//			}
+			//TODO: do if dead free check
+			if(!varAlive(A, irn.LIVE_OUT)){ free(Rx, irn.LIVE_OUT); }
+			
 			Statement stmt_alloc = allocate(C, irn.LIVE_OUT);
 			Register Rz = stmt_alloc.return_reg;
 				
@@ -197,12 +196,11 @@ public class TinyGenerator {
 			
 		}else if(irn.getFormat() == IRNode.FORMAT_IR || irn.getFormat() == IRNode.FORMAT_FR){
 			
-			String C = getField(ircode, 2);//getField(ircode, 2);
-			Statement deststmt = allocate(C, irn.LIVE_OUT) ; //TempRegisterFactory.allocate_tiny();
+			String C = getField(ircode, 2);
+			Statement deststmt = allocate(C, irn.LIVE_OUT) ; 
 			Generated.add(deststmt.generated_asm);
 			Register dest = deststmt.return_reg;
 			dest.dirty = true;
-			
 			
 			reg_map_ir_tiny.put(C, dest);
 
@@ -216,10 +214,9 @@ public class TinyGenerator {
 			Generated.add(stmt_ensure.generated_asm);
 			Register Rx = stmt_ensure.return_reg;
 			
-//			if(!varAlive(A, irn.LIVE_OUT)){
-//				String cmd_fr = free(Rx, irn.LIVE_OUT);
-//				if(cmd_fr != null) Generated.add(cmd_fr);
-//			}
+			//TODO: do if dead free check
+			if(!varAlive(A, irn.LIVE_OUT)){ free(Rx, irn.LIVE_OUT); }
+
 			
 			String C = irn.getIdOperand(3).getTiny();
 			Statement deststmt = allocate(C, irn.LIVE_OUT) ; 
@@ -249,15 +246,10 @@ public class TinyGenerator {
 			Register Rx = EN1.return_reg;
 			Register Ry = EN2.return_reg;
 			
-//			if(!varAlive(d1.toString(), irn.LIVE_OUT)){
-//				String cmd_fr = free(Rx, irn.LIVE_OUT);
-//				if(cmd_fr != null) Generated.add(cmd_fr);
-//			}
-//			if(!varAlive(d2.toString(), irn.LIVE_OUT)){
-//				String cmd_fr = free(Ry, irn.LIVE_OUT);
-//				if(cmd_fr != null) Generated.add(cmd_fr);
-//			}
-			
+			//TODO: do if dead free check
+			if(!varAlive(d1.getTiny(), irn.LIVE_OUT)){ free(Rx, irn.LIVE_OUT); }
+			if(!varAlive(d2.getTiny(), irn.LIVE_OUT)){ free(Ry, irn.LIVE_OUT); }
+
 			Statement AL = allocate(this.getField(ircode, 3), irn.LIVE_OUT);
 			Register Rz = AL.return_reg;
 			Rz.dirty = true;
@@ -265,9 +257,8 @@ public class TinyGenerator {
 			
 			reg_map_ir_tiny.put(getField(ircode, 3), Rz);
 	
-			String asms = move_op + " " + Rx.toTiny() + " " + Rz.toTiny() + "; DDRmove\n";
+			String asms = move_op + " " + Rx.toTiny() + " " + Rz.toTiny() + "\n";
 			asms += tiny.getName() + " " +  Ry.toTiny() + " " + Rz.toTiny();
-//			String asms = tiny.getName() + " " + Rx.toTiny() + " " + Ry.toTiny() + "; expr";
 
 			Generated.add(asms);
 			
@@ -324,6 +315,8 @@ public class TinyGenerator {
 			//handle link separately 
 			if(irn.getInstruction().equals(ISA.LINK)){
 				return doLink(tiny, irn);
+			}else if(irn.getInstruction().equals(ISA.PUSH_E)){
+				this.flushDirty(Generated);
 			}
 			String str = "";
 			for(int i = 0; i < possible_instructions.length ; i++){
@@ -360,7 +353,8 @@ public class TinyGenerator {
 		}else if(irn.getFormat() == IRNode.FORMAT_T){
 			String buff = "";
 			buff += tiny.getName() +  " " + getField(ircode, 1) + "\n";
-
+			
+			//function call
 			if(irn.getInstruction().equals(ISA.JSR)){
 				buff = save_regs() + "\n" + buff;
 				buff += restore_regs();
@@ -375,7 +369,8 @@ public class TinyGenerator {
 			Register Rx = D_STMT.return_reg;
 			
 			//TODO: do if dead free check
-			
+			if(!varAlive(irn.getIdOperand(IRNode.OP_ID_SRC1).getTiny(), irn.LIVE_OUT)){ free(Rx, irn.LIVE_OUT); }
+
 			Statement R_STMT = this.allocate(getField(ircode,2 ), irn.LIVE_OUT);
 			Register Rz = R_STMT.return_reg;
 			Generated.add(R_STMT.generated_asm);
@@ -393,16 +388,10 @@ public class TinyGenerator {
 			Generated.add(deststmt.generated_asm);
 			Register Rz = deststmt.return_reg;
 			
-//			if(reg_map_ir_tiny.containsKey(getField(ircode, 1))){
-//				dest = reg_map_ir_tiny.get(getField(ircode, 1));
-//			}else{
-//				dest = TempRegisterFactory.allocate_tiny();
-//				reg_map_ir_tiny.put(getField(ircode, 1), dest);
-//			}
 			
 			Generated.add(tiny.getName() +  " " + Rz.toTiny());
 		}else if(irn.getFormat() == IRNode.FORMAT_RS){
-			//`S` is not really a register
+			//`S` is not really a register, its $R
 			this.ensure(getField(ircode, 1), irn.LIVE_OUT); 
 
 			String generate = tiny.getName() + " " + reg_map_ir_tiny.get(getField(ircode, 1)).toTiny() + " $" +
@@ -410,16 +399,33 @@ public class TinyGenerator {
 			Generated.add(generate);
 		}else{
 			Generated.add( ";<unknown format> code: " + irn.getFormat());
+			System.err.println("Unknown Format Error");
 		}
+		
+		if(irn.getInstruction().equals(ISA.RET)){
+			//generate  store dirty for registers
+			flushDirty(Generated);
 
-		//String info = ";	 ^live into this node ~ " + irn.LIVE_IN.toString();
-		//output += "\n" + info;
+		}
+		
 		
 		String outputc = "";
 		for(String k : Generated){
 			outputc += k;
 		}
 		return outputc;
+	}
+	
+	private void flushDirty(TinyOutputBuffer Generated){
+		Generated.add("\n;flushing registers\n");
+		for(int j = 0; j< RegisterFile.length; j++){
+			if(RegisterFile[j].dirty){
+				String memloc = RegisterFile[j].opr;
+				if(memloc.contains("$T")) continue;
+				Generated.add(ISA.move.getName() + " r" + j + " " + memloc + "\n");
+			}
+		}
+		Generated.add(";flush done\n");
 	}
 
 	private String doLink(Instruction tiny, IRNode irn) {
@@ -468,12 +474,11 @@ public class TinyGenerator {
 				return RegisterFile[i];
 			}
 		}
-		System.out.println(";" + opr + ": not loaded ");
+		System.out.println("; " + opr + ": not loaded in any register..");
 		return null;
 	}
 	
 	private Statement ensure(String opr, HashSet<String> liveness){
-		//TODO: use opr as $-1 instead of $L notation
 		Register r = in_register(opr);
 		if(r != null){
 			System.out.println("; ensuring " + opr + " use " + r.toTiny());
@@ -481,10 +486,10 @@ public class TinyGenerator {
 		}else{
 			
 			r = allocate(opr, liveness).return_reg;
-			System.out.println("; ensuring " + opr + " gets " + r.toTiny());
+			if(Micro.TINYGEN_VERBOSE) System.out.println("; ensuring " + opr + " gets " + r.toTiny());
 
-			//generate load ***TODO: problem here***
-			String load_cmd = String.format("%s %s %s ;generated load\n",
+			//generate load 
+			String load_cmd = String.format("%s %s %s \n",
 					ISA.move.getName(),
 					opr, 
 					r.toTiny());
@@ -496,10 +501,11 @@ public class TinyGenerator {
 		String variable = r.opr;
 		String gen_cmd = "";
 		System.out.println("; evicting " + r.toTiny() + " for opr " + r.opr);
-		System.out.println(";> FREE: " + r.free + ", DIRTY:" + r.dirty + ", LIVE: " + liveness.contains(variable));
+		System.out.println("; free: " + r.free + ", dirty:" + r.dirty + ", live: " + liveness.contains(variable));
+		System.out.println("; live out: " + liveness.toString());
 		if(r.dirty && liveness.contains(variable)){
 			//generate store
-			System.out.println(";>  spilling " + r.toTiny());
+			System.out.println(";  spilling " + r.toTiny());
 			gen_cmd = "STORE ...\n";
 		}
 		r.free = true;
@@ -514,13 +520,13 @@ public class TinyGenerator {
 		if(r == null){
 			//there is no free r
 			//choose r by most distant use
-			System.out.println(";No free register!");
+			System.out.println("; No free register!");
 			r = mostDistantUsedReg();
 			
 			free(r, liveness);
 		}
 		
-		System.out.println(";> allocating " + opr + " to " + r.toTiny());
+		System.out.println("; allocating " + opr + " to " + r.toTiny());
 		
 		r.opr = opr;
 		r.free = false;
@@ -540,7 +546,7 @@ public class TinyGenerator {
 				return RegisterFile[i];
 			}
 		}
-		return null; //no free R
+		return null; //no free Register
 	}
 	
 	private String save_regs(){
@@ -565,19 +571,6 @@ public class TinyGenerator {
 		}
 	}
 	
-	class CustomArrayList extends ArrayList<String>{
-
-		private static final long serialVersionUID = 2648572864328128569L;
-		public CustomArrayList(){
-			super();
-		}
 		
-		@Override public boolean add(String k){
-			super.add(k);
-			System.out.println("; generated -----> " + k);
-			return true;
-		}
-	}
-	
 	
 }

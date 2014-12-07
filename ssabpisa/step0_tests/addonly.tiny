@@ -1,3 +1,300 @@
+;IR code
+;LABEL add; --- LIVEIN: [plus, second, star, eol, equal, first, third, $3, intro, $2], LIVEOUT: [plus, second, star, eol, equal, third, first, intro, $3, $2]
+;LINK; --- LIVEIN: [plus, second, star, eol, equal, first, third, $3, intro, $2], LIVEOUT: [plus, second, star, eol, equal, third, first, intro, $3, $2]
+;ADDF $P1 $P2 $T1; --- LIVEIN: [plus, second, star, eol, equal, first, third, $3, intro, $2], LIVEOUT: [plus, $T1, second, star, eol, equal, third, first, intro]
+;STOREF $T1 $L1; --- LIVEIN: [plus, $T1, second, star, eol, equal, first, third, intro], LIVEOUT: [plus, second, $-1, star, eol, equal, third, first, intro]
+;STOREF $L1 $T2; --- LIVEIN: [plus, second, $-1, star, eol, equal, first, third, intro], LIVEOUT: [$T2, plus, second, star, eol, equal, third, first, intro]
+;STOREF $T2 $R; --- LIVEIN: [$T2, plus, second, star, eol, equal, first, third, intro], LIVEOUT: [plus, second, star, eol, equal, third, first, intro]
+;RET; --- LIVEIN: [plus, second, star, eol, equal, first, third, intro], LIVEOUT: [plus, second, star, eol, equal, third, first, intro]
+;LABEL multiply; --- LIVEIN: [plus, second, star, eol, equal, first, third, $3, intro, $2], LIVEOUT: [plus, second, star, eol, equal, third, first, intro, $3, $2]
+;LINK; --- LIVEIN: [plus, second, star, eol, equal, first, third, $3, intro, $2], LIVEOUT: [plus, second, star, eol, equal, third, first, intro, $3, $2]
+;MULTF $P1 $P2 $T1; --- LIVEIN: [plus, second, star, eol, equal, first, third, $3, intro, $2], LIVEOUT: [plus, $T1, second, star, eol, equal, third, first, intro]
+;STOREF $T1 $L1; --- LIVEIN: [plus, $T1, second, star, eol, equal, first, third, intro], LIVEOUT: [plus, second, $-1, star, eol, equal, third, first, intro]
+;STOREF $L1 $T2; --- LIVEIN: [plus, second, $-1, star, eol, equal, first, third, intro], LIVEOUT: [$T2, plus, second, star, eol, equal, third, first, intro]
+;STOREF $T2 $R; --- LIVEIN: [$T2, plus, second, star, eol, equal, first, third, intro], LIVEOUT: [plus, second, star, eol, equal, third, first, intro]
+;RET; --- LIVEIN: [plus, second, star, eol, equal, first, third, intro], LIVEOUT: [plus, second, star, eol, equal, third, first, intro]
+;LABEL main; --- LIVEIN: [$-2, $-4, $-3, star], LIVEOUT: [$-2, $-4, $-3, star]
+;LINK; --- LIVEIN: [$-2, $-4, $-3, star], LIVEOUT: [$-2, $-4, $-3, star]
+;WRITES intro; --- LIVEIN: [$-2, $-4, $-3, star], LIVEOUT: [$-2, $-4, $-3, star, intro]
+;WRITES first; --- LIVEIN: [$-2, $-4, $-3, star, intro], LIVEOUT: [$-2, $-4, $-3, star, first, intro]
+;READF $L1; --- LIVEIN: [$-2, $-4, $-3, star, first, intro], LIVEOUT: [$-4, $-3, star, first, intro]
+;WRITES second; --- LIVEIN: [$-4, $-3, star, first, intro], LIVEOUT: [second, $-4, $-3, star, first, intro]
+;READF $L2; --- LIVEIN: [second, $-4, $-3, star, first, intro], LIVEOUT: [second, $-4, star, first, intro]
+;WRITES third; --- LIVEIN: [second, $-4, star, first, intro], LIVEOUT: [second, $-4, star, third, first, intro]
+;READF $L3; --- LIVEIN: [second, $-4, star, first, third, intro], LIVEOUT: [second, star, third, first, intro]
+;STOREI 5 $T1; --- LIVEIN: [second, star, first, third, intro], LIVEOUT: [$T1, second, star, third, first, intro]
+;STOREF $T1 $L5; --- LIVEIN: [$T1, second, star, first, third, intro], LIVEOUT: [second, star, third, first, intro]
+;PUSH; --- LIVEIN: [second, star, first, third, intro], LIVEOUT: [second, star, third, first, intro]
+;PUSH $L5; --- LIVEIN: [second, star, first, third, intro], LIVEOUT: [second, star, third, first, intro]
+;PUSH $L3; --- LIVEIN: [second, star, first, third, intro], LIVEOUT: [second, star, third, first, intro]
+;JSR add; --- LIVEIN: [second, star, first, third, intro], LIVEOUT: [second, star, third, first, intro]
+;POP; --- LIVEIN: [second, star, first, third, intro], LIVEOUT: [second, star, third, first, intro]
+;POP; --- LIVEIN: [second, star, first, third, intro], LIVEOUT: [second, star, third, first, intro]
+;POP $T2; --- LIVEIN: [second, star, first, third, intro], LIVEOUT: [$T2, second, star, third, first, intro]
+;STOREF $T2 $L4; --- LIVEIN: [$T2, second, star, first, third, intro], LIVEOUT: [second, star, third, first, intro]
+;WRITEF $L5; --- LIVEIN: [second, star, first, third, intro], LIVEOUT: [second, star, third, first, intro]
+;WRITES plus; --- LIVEIN: [second, star, first, third, intro], LIVEOUT: [plus, second, star, third, first, intro]
+;WRITEF $L3; --- LIVEIN: [plus, second, star, first, third, intro], LIVEOUT: [plus, second, star, third, first, intro]
+;WRITES equal; --- LIVEIN: [plus, second, star, first, third, intro], LIVEOUT: [plus, second, star, equal, third, first, intro]
+;WRITEF $L4; --- LIVEIN: [plus, second, star, equal, first, third, intro], LIVEOUT: [plus, second, star, equal, third, first, intro]
+;WRITES eol; --- LIVEIN: [plus, second, star, equal, first, third, intro], LIVEOUT: [plus, second, star, eol, equal, third, first, intro]
+;STOREI 0 $T3; --- LIVEIN: [plus, second, star, eol, equal, first, third, intro], LIVEOUT: [plus, $T3, second, star, eol, equal, third, first, intro]
+;STOREI $T3 $R; --- LIVEIN: [$T3, plus, second, star, eol, equal, first, third, intro], LIVEOUT: [plus, second, star, eol, equal, third, first, intro]
+;RET; --- LIVEIN: [plus, second, star, eol, equal, first, third, intro], LIVEOUT: [plus, second, star, eol, equal, third, first, intro]
+;----------------- tiny ------------------------
+;-------------------------------------------------------
+; ir node ;LABEL add! (FRMT-8)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; tiny generated = label add
+;-------------------------------------------------------
+; ir node ;LINK! (FRMT-9)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;ADDF $P1 $P2 $T1! (FRMT-3)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; $6: not loaded in any register..
+; allocating $6 to r0
+; ensuring $6 gets r0
+; $7: not loaded in any register..
+; allocating $7 to r1
+; ensuring $7 gets r1
+; tiny generated = move $6 r0 ; 
+; tiny generated = move $7 r1 ; 
+; evicting r0 for opr $6
+; free: false, dirty:false, live: false
+; live out: [plus, $T1, second, star, eol, equal, third, first, intro]
+; evicting r1 for opr $7
+; free: false, dirty:false, live: false
+; live out: [plus, $T1, second, star, eol, equal, third, first, intro]
+; allocating $T1 to r0
+; tiny generated = 
+; tiny generated = move r0 r0; addr r1 r0
+;-------------------------------------------------------
+; ir node ;STOREF $T1 $L1! (FRMT-2)
+; reg state : {r0=$T1*, r1=nothing, r2=nothing, r3=nothing, }
+; found $T1 in r0
+; ensuring $T1 use r0
+; tiny generated = 
+; evicting r0 for opr $T1
+; free: false, dirty:true, live: false
+; live out: [plus, second, $-1, star, eol, equal, third, first, intro]
+; allocating $-1 to r0
+; tiny generated = 
+; tiny generated = move r0 r0
+;-------------------------------------------------------
+; ir node ;STOREF $L1 $T2! (FRMT-17)
+; reg state : {r0=$-1*, r1=nothing, r2=nothing, r3=nothing, }
+; found $-1 in r0
+; ensuring $-1 use r0
+; tiny generated = 
+; evicting r0 for opr $-1
+; free: false, dirty:true, live: false
+; live out: [$T2, plus, second, star, eol, equal, third, first, intro]
+; allocating $T2 to r0
+; tiny generated = 
+; tiny generated = move r0 r0
+;-------------------------------------------------------
+; ir node ;STOREF $T2 $R! (FRMT-16)
+; reg state : {r0=$T2, r1=nothing, r2=nothing, r3=nothing, }
+; found $T2 in r0
+; ensuring $T2 use r0
+; tiny generated = move r0 $8
+;-------------------------------------------------------
+; ir node ;RET! (FRMT-9)
+; reg state : {r0=$T2, r1=nothing, r2=nothing, r3=nothing, }
+; tiny generated = unlnk; ret
+; tiny generated = ; ;flushing registers; 
+; tiny generated = ;flush done; 
+;-------------------------------------------------------
+; ir node ;LABEL multiply! (FRMT-8)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; tiny generated = label multiply
+;-------------------------------------------------------
+; ir node ;LINK! (FRMT-9)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;MULTF $P1 $P2 $T1! (FRMT-3)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; $6: not loaded in any register..
+; allocating $6 to r0
+; ensuring $6 gets r0
+; $7: not loaded in any register..
+; allocating $7 to r1
+; ensuring $7 gets r1
+; tiny generated = move $6 r0 ; 
+; tiny generated = move $7 r1 ; 
+; evicting r0 for opr $6
+; free: false, dirty:false, live: false
+; live out: [plus, $T1, second, star, eol, equal, third, first, intro]
+; evicting r1 for opr $7
+; free: false, dirty:false, live: false
+; live out: [plus, $T1, second, star, eol, equal, third, first, intro]
+; allocating $T1 to r0
+; tiny generated = 
+; tiny generated = move r0 r0; mulr r1 r0
+;-------------------------------------------------------
+; ir node ;STOREF $T1 $L1! (FRMT-2)
+; reg state : {r0=$T1*, r1=nothing, r2=nothing, r3=nothing, }
+; found $T1 in r0
+; ensuring $T1 use r0
+; tiny generated = 
+; evicting r0 for opr $T1
+; free: false, dirty:true, live: false
+; live out: [plus, second, $-1, star, eol, equal, third, first, intro]
+; allocating $-1 to r0
+; tiny generated = 
+; tiny generated = move r0 r0
+;-------------------------------------------------------
+; ir node ;STOREF $L1 $T2! (FRMT-17)
+; reg state : {r0=$-1*, r1=nothing, r2=nothing, r3=nothing, }
+; found $-1 in r0
+; ensuring $-1 use r0
+; tiny generated = 
+; evicting r0 for opr $-1
+; free: false, dirty:true, live: false
+; live out: [$T2, plus, second, star, eol, equal, third, first, intro]
+; allocating $T2 to r0
+; tiny generated = 
+; tiny generated = move r0 r0
+;-------------------------------------------------------
+; ir node ;STOREF $T2 $R! (FRMT-16)
+; reg state : {r0=$T2, r1=nothing, r2=nothing, r3=nothing, }
+; found $T2 in r0
+; ensuring $T2 use r0
+; tiny generated = move r0 $8
+;-------------------------------------------------------
+; ir node ;RET! (FRMT-9)
+; reg state : {r0=$T2, r1=nothing, r2=nothing, r3=nothing, }
+; tiny generated = unlnk; ret
+; tiny generated = ; ;flushing registers; 
+; tiny generated = ;flush done; 
+;-------------------------------------------------------
+; ir node ;LABEL main! (FRMT-8)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; tiny generated = label main
+;-------------------------------------------------------
+; ir node ;LINK! (FRMT-9)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;WRITES intro! (FRMT-6)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;WRITES first! (FRMT-6)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;READF $L1! (FRMT-6)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;WRITES second! (FRMT-6)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;READF $L2! (FRMT-6)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;WRITES third! (FRMT-6)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;READF $L3! (FRMT-6)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;STOREI 5 $T1! (FRMT-0)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; allocating $T1 to r0
+; tiny generated = 
+; tiny generated = move 5 r0
+;-------------------------------------------------------
+; ir node ;STOREF $T1 $L5! (FRMT-2)
+; reg state : {r0=$T1*, r1=nothing, r2=nothing, r3=nothing, }
+; found $T1 in r0
+; ensuring $T1 use r0
+; tiny generated = 
+; evicting r0 for opr $T1
+; free: false, dirty:true, live: false
+; live out: [second, star, third, first, intro]
+; allocating $-4 to r0
+; tiny generated = 
+; tiny generated = move r0 r0
+;-------------------------------------------------------
+; ir node ;PUSH! (FRMT-9)
+; reg state : {r0=$-4*, r1=nothing, r2=nothing, r3=nothing, }
+; tiny generated = ; ;flushing registers; 
+; tiny generated = move r0 $-4; 
+; tiny generated = ;flush done; 
+; tiny generated = push
+;-------------------------------------------------------
+; ir node ;PUSH $L5! (FRMT-6)
+; reg state : {r0=$-4*, r1=nothing, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;PUSH $L3! (FRMT-6)
+; reg state : {r0=$-4*, r1=nothing, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;JSR add! (FRMT-15)
+; reg state : {r0=$-4*, r1=nothing, r2=nothing, r3=nothing, }
+; tiny generated = push r0; push r1; push r2; push r3; jsr add; pop r3; pop r2; pop r1; pop r0
+;-------------------------------------------------------
+; ir node ;POP! (FRMT-9)
+; reg state : {r0=$-4*, r1=nothing, r2=nothing, r3=nothing, }
+; tiny generated = pop
+;-------------------------------------------------------
+; ir node ;POP! (FRMT-9)
+; reg state : {r0=$-4*, r1=nothing, r2=nothing, r3=nothing, }
+; tiny generated = pop
+;-------------------------------------------------------
+; ir node ;POP $T2! (FRMT-18)
+; reg state : {r0=$-4*, r1=nothing, r2=nothing, r3=nothing, }
+; allocating $T2 to r1
+; tiny generated = 
+; tiny generated = pop r1
+;-------------------------------------------------------
+; ir node ;STOREF $T2 $L4! (FRMT-2)
+; reg state : {r0=$-4*, r1=$T2, r2=nothing, r3=nothing, }
+; found $T2 in r1
+; ensuring $T2 use r1
+; tiny generated = 
+; evicting r1 for opr $T2
+; free: false, dirty:false, live: false
+; live out: [second, star, third, first, intro]
+; allocating $-5 to r1
+; tiny generated = 
+; tiny generated = move r1 r1
+;-------------------------------------------------------
+; ir node ;WRITEF $L5! (FRMT-6)
+; reg state : {r0=$-4*, r1=$-5*, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;WRITES plus! (FRMT-6)
+; reg state : {r0=$-4*, r1=$-5*, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;WRITEF $L3! (FRMT-6)
+; reg state : {r0=$-4*, r1=$-5*, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;WRITES equal! (FRMT-6)
+; reg state : {r0=$-4*, r1=$-5*, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;WRITEF $L4! (FRMT-6)
+; reg state : {r0=$-4*, r1=$-5*, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;WRITES eol! (FRMT-6)
+; reg state : {r0=$-4*, r1=$-5*, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;STOREI 0 $T3! (FRMT-0)
+; reg state : {r0=$-4*, r1=$-5*, r2=nothing, r3=nothing, }
+; allocating $T3 to r2
+; tiny generated = 
+; tiny generated = move 0 r2
+;-------------------------------------------------------
+; ir node ;STOREI $T3 $R! (FRMT-16)
+; reg state : {r0=$-4*, r1=$-5*, r2=$T3*, r3=nothing, }
+; found $T3 in r2
+; ensuring $T3 use r2
+; tiny generated = move r2 $6
+;-------------------------------------------------------
+; ir node ;RET! (FRMT-9)
+; reg state : {r0=$-4*, r1=$-5*, r2=$T3*, r3=nothing, }
+; tiny generated = unlnk; ret
+; tiny generated = ; ;flushing registers; 
+; tiny generated = move r0 $-4; 
+; tiny generated = move r1 $-5; 
+; tiny generated = ;flush done; 
 str intro "You will be asked for three float numbers\n"
 str first "Please enter the first float number: "
 str second "Please enter the second float number: "
@@ -6,28 +303,87 @@ str eol "\n"
 str star "*"
 str plus "+"
 str equal "="
-link 2
-sys readi $-1
-sys readi $-2
 push
-push $-1
-push $-2
 push r0
 push r1
 push r2
 push r3
-jsr add
+jsr main
 sys halt
 label add
 link 1
 move $6 r0 
 move $7 r1 
-move r0 r2
-addr r1 r2
-move r2 r3
-move r3 r0
+move r0 r0
+addr r1 r0
+move r0 r0
+move r0 r0
 move r0 $8
 unlnk
 ret
+;flushing registers
+;flush done
+
+label multiply
+link 1
+move $6 r0 
+move $7 r1 
+move r0 r0
+mulr r1 r0
+move r0 r0
+move r0 r0
+move r0 $8
+unlnk
+ret
+;flushing registers
+;flush done
+
+label main
+link 5
+sys writes intro
+sys writes first
+sys readr $-1
+sys writes second
+sys readr $-2
+sys writes third
+sys readr $-3
+move 5 r0
+move r0 r0
+
+;flushing registers
+move r0 $-4
+;flush done
+push
+push $-4
+push $-3
+push r0
+push r1
+push r2
+push r3
+jsr add
+pop r3
+pop r2
+pop r1
+pop r0
+pop
+pop
+pop r1
+move r1 r1
+;flushing registers
+move r0 $-4
+move r1 $-5
+;flush done
+
+sys writer $-4
+sys writes plus
+sys writer $-3
+sys writes equal
+sys writer $-5
+sys writes eol
+move 0 r2
+move r2 $6
+unlnk
+ret
+
 
 

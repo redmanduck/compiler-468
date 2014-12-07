@@ -57,6 +57,7 @@ public class Id {
 	   return name;
    }
    
+
    public String getTiny(){
 	   if(parameter_code != null){
 		   //parameter

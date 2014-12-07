@@ -157,7 +157,8 @@ public class IRNode {
 		this.r_src1 = r_src;
 		this.id_dest = idd;
 		format = FORMAT_RD;
-		if(!idd.toString().contains("$R")) KILL.add(idd.toString());
+		if(!idd.toString().contains("$R")) 
+			KILL.add(idd.getTiny());
 		GEN.add(r_src.toString());
 	}	
 	
@@ -168,9 +169,10 @@ public class IRNode {
 		this.id_src2 = id_src2;
 		this.r_dest = dest;
 		format = FORMAT_DDR;
-		if(!dest.toString().contains("$R")) KILL.add(dest.toString());
-		GEN.add(id_src1.toString());
-		GEN.add(id_src2.toString());
+		if(!dest.toString().contains("$R")) 
+			KILL.add(dest.toString());
+		GEN.add(id_src1.getTiny());
+		GEN.add(id_src2.getTiny());
 	}
 	
 	public IRNode(Instruction OPCODE, Register r_src1, Id id_src2, Register dest) {
@@ -182,7 +184,7 @@ public class IRNode {
 		format = FORMAT_RDR;
 		if(!dest.toString().contains("$R")) KILL.add(dest.toString());
 		GEN.add(r_src1.toString());
-		GEN.add(id_src2.toString());
+		GEN.add(id_src2.getTiny());
 	}
 	
 	
@@ -193,7 +195,8 @@ public class IRNode {
 		this.r_src2 = r_src2;
 		this.r_dest = dest;
 		format = FORMAT_RRR;
-		if(!dest.toString().contains("$R")) KILL.add(dest.toString());
+		if(!dest.toString().contains("$R")) 
+			KILL.add(dest.toString());
 		GEN.add(r_src1.toString());
 		GEN.add(r_src2.toString());
 	}
@@ -204,9 +207,10 @@ public class IRNode {
 		this.id_readwrite = id_readwrite;
 		format = FORMAT_D;
 		if(ISA.InstructionSpecies(OPCODE, ISA._READ)){
-			GEN.add(id_readwrite.toString());
+			GEN.add(id_readwrite.getTiny());
 		}else if(ISA.InstructionSpecies(OPCODE, ISA._WRITE)){
-			if(!id_readwrite.toString().contains("$R")) KILL.add(id_readwrite.toString());
+			if(!id_readwrite.toString().contains("$R")) 
+				KILL.add(id_readwrite.getTiny());
 		}
 	}
 	
@@ -217,8 +221,9 @@ public class IRNode {
 		this.r_src2 = _reg;
 		this.r_dest = dest;
 		format = FORMAT_DRR;
-		if(!dest.toString().contains("$R")) KILL.add(dest.toString());
-		GEN.add(_id.toString());
+		if(!dest.toString().contains("$R")) 
+			KILL.add(dest.toString());
+		GEN.add(_id.getTiny());
 		GEN.add(_reg.toString());
 	}
 	
@@ -228,8 +233,9 @@ public class IRNode {
 		this.id_src1 = _id1;
 		this.id_dest = _id2;
 		format = FORMAT_DD;
-		if(!_id2.toString().contains("$R")) KILL.add(_id2.toString());
-		GEN.add(id_src1.toString());
+		if(!_id2.toString().contains("$R")) 
+			KILL.add(_id2.getTiny());
+		GEN.add(id_src1.getTiny());
 	}
 	
 	public IRNode(Instruction OPCODE, Register r1, Register r2) {
@@ -238,7 +244,8 @@ public class IRNode {
 		this.r_src1 = r1;
 		this.r_dest = r2;
 		format = FORMAT_RS;
-		if(!r2.toString().contains("$R")) KILL.add(r2.toString());
+		if(!r2.toString().contains("$R")) 
+			KILL.add(r2.toString());
 		GEN.add(r1.toString());
 	}
 	
@@ -248,8 +255,9 @@ public class IRNode {
 		this.id_src1 = _id1;
 		this.r_dest = rdest;
 		format = FORMAT_DR;
-		if(!rdest.toString().contains("$R")) KILL.add(rdest.toString());
-		GEN.add(_id1.toString());
+		if(!rdest.toString().contains("$R")) 
+			KILL.add(rdest.toString());
+		GEN.add(_id1.getTiny());
 	}
 
 	public IRNode(Instruction conditional_control, Register left, Register right, String target) {
@@ -272,7 +280,7 @@ public class IRNode {
 		this.id_src2 = right;
 		this.jtarget = string;
 		GEN.add(left.toString());
-		GEN.add(right.toString());
+		GEN.add(right.getTiny());
 	}
 
 	public IRNode(Instruction conditional_control, Id left, Register right, String string) {
@@ -282,7 +290,7 @@ public class IRNode {
 		this.id_src1 = left;
 		this.r_src2 = right;
 		this.jtarget = string;
-		GEN.add(left.toString());
+		GEN.add(left.getTiny());
 		GEN.add(right.toString());
 	}
 	
@@ -293,7 +301,7 @@ public class IRNode {
 		this.id_src1 = left;
 		this.id_src2 = right;
 		this.jtarget = string;
-		GEN.add(left.toString());
+		GEN.add(left.getTiny());
 		GEN.add(right.toString());
 	}
 	

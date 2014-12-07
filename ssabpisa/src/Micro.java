@@ -23,6 +23,9 @@ import org.antlr.v4.runtime.tree.*;
 
 public class Micro{
   public static int CONST_NUM_REG_USE = 4; 
+  public static boolean DATAFLOW_VERBOSE = false;
+  public static boolean TINYGEN_VERBOSE = true;
+  
   public static void main(String[] args) throws Exception
   {
 	  
@@ -59,12 +62,8 @@ public class Micro{
 //      System.out.println(";Register Allocated IR code");
 
       for(String fn : extractor.getFullIR().keySet()){
-          //enforce register allocation accross each basic block
-//          System.out.println(";--- IR for  ---" + fn);
-//          Utils.printIR(extractor.getFullIR().get(fn));
-          System.out.println(";--- enforce ---" + fn);
+          //System.out.println(";--- enforce ---" + fn);
           Utils.printIR(ralloc.enforce(extractor.getFullIR().get(fn)));
-
       }
 
       System.out.println(";----------------- tiny ------------------------");
