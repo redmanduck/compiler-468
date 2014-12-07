@@ -398,21 +398,29 @@ public class TinyGenerator {
 			asms += possible_instructions[1].getName() + " " + getField(ircode, 3);
 			Generated.add(asms);
 		}else if(irn.getFormat() == IRNode.FORMAT_DDT){
-			System.err.println(ircode);
 			//TODO: incomplete 
 			
 			Statement stmt_d1 = this.ensure(irn.getIdOperand(IRNode.OP_ID_SRC1).getTiny(), irn.LIVE_OUT); 
 			Statement stmt_d2 = this.ensure(irn.getIdOperand(IRNode.OP_ID_SRC2).getTiny(), irn.LIVE_OUT); 
 			
-			Register dest = this.getFreeReg();
+			Generated.add(stmt_d1.generated_asm);
+			Generated.add(stmt_d2.generated_asm);
+			
+			Register d1 = stmt_d1.return_reg;
+			Register d2 = stmt_d2.return_reg;
+			
+			Statement stmt_tempdest = this.allocate("$Tx", irn.LIVE_OUT); //this doesn't matter, its going to be killed immediately
 
-			//Register dest = stmt_dest.return_reg; //TempRegisterFactory.allocate_tiny(); //FIX this
+			Register tmpdest = stmt_tempdest.return_reg; //TempRegisterFactory.allocate_tiny(); //FIX this
+			tmpdest.dirty = false;
+			tmpdest.free = true; //become free immediately
 			
-			String asms = ISA.move.getName() + " " + irn.getIdOperand(2).getTiny() + " " + dest.toTiny()  + "\n";
+			String target=  getField(ircode, 3);
+			String asms = ISA.move.getName() + " " + d2.toTiny() + " " + tmpdest.toTiny()  + "\n";
 			
-		    asms += possible_instructions[0].getName() + " " +  irn.getIdOperand(1).getTiny() +
-					" " + dest.toTiny() + "\n";
-			asms += possible_instructions[1].getName() + " " + getField(ircode, 3);
+		    asms += possible_instructions[0].getName() + " " +  d1.toTiny() +
+					" " + tmpdest.toTiny() + "\n";
+			asms += possible_instructions[1].getName() + " " + target;
 			
 			Generated.add(asms);
 			
