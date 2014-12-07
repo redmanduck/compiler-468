@@ -25,6 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Hashtable;
 import java.util.LinkedList;
+import java.util.Queue;
 public class TinyGenerator {
 	IRList IR;
 	HashMap<Instruction, Instruction[]> map_ISA;
@@ -597,14 +598,24 @@ public class TinyGenerator {
 		
 		r.opr = opr;
 		r.free = false;
+		r.updateTimestamp();
 		
 		return new Statement(null, r);
 	}
 	
 	
-	//Not implemented yet for simplicity
 	private Register mostDistantUsedReg(){
-		return RegisterFile[0]; 
+		Register min = RegisterFile[0];
+		System.out.print("; Most distant used {");
+		for(int r = 0 ; r < RegisterFile.length; r++){
+			System.out.print("r" + r + "=" + RegisterFile[r].getTimestamp() + ",");
+			if(RegisterFile[r].getTimestamp() < min.getTimestamp()){
+				min = RegisterFile[r];
+			}
+		}
+		System.out.print("}\n");
+		System.out.println("; Chose " + min.toTiny());
+		return min;
 	}
 	
 	private Register getFreeReg(){
