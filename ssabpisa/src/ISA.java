@@ -126,7 +126,7 @@ public class ISA{
 	
 	public ISA(){}
 
-	
+
 	public static boolean InstructionSpecies(Instruction op, OperationGenreCollection g){
 		return g.contains(op);
 	}

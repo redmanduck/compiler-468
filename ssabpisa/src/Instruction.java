@@ -70,4 +70,8 @@ public class Instruction {
 	public int getFieldsCount(){
 		return this.fields_count;
 	}
+	
+	public String toString(){
+		return this.name;
+	}
 }

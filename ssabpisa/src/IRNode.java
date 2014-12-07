@@ -59,6 +59,12 @@ public class IRNode {
      public static final int FORMAT_DR = 17;
      public static final int FORMAT_R = 18;
      
+     
+     public static final int OP_ID_SRC1 = 1;
+     public static final int OP_ID_SRC2 = 2;
+     public static final int OP_ID_DEST = 3;
+     public static final int OP_ID_READWRITE = 4;
+
      public Id getIdOperand(int which){
     	 switch(which){
     	 case 1:

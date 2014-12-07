@@ -3,14 +3,16 @@ public class Register {
 	public int number;
 	public String dtype;
 	public boolean dirty;
-	public boolean live;
+	public String opr; //used by ensure() & allocate() 
+	public boolean free;
 	
 	public Register(char type, int number, String datatype){
 		this.type = type;
 		this.number = number;
 		this.dtype = datatype;
 		this.dirty = false;
-		this.live = false;
+		free = false;
+		opr = "nothing";
 	}
 	
 	public Register(char type, int number){
@@ -18,7 +20,8 @@ public class Register {
 		this.number = number;
 		this.dtype = "tiny";
 		this.dirty = false;
-		this.live = false;
+		free = false;
+		opr = "nothing";
 	}
 	
 	public Register(char type){
@@ -26,7 +29,8 @@ public class Register {
 		this.number = -1;
 		this.dtype = "return";
 		this.dirty = false;
-		this.live = false;
+		free = false;
+		opr = "nothing";
 	}
 	public String toString(){
 		if(number == -1){

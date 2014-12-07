@@ -22,7 +22,7 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
 public class Micro{
-  public static int CONST_NUM_REG_USE = 15; //TODO: change to 4
+  public static int CONST_NUM_REG_USE = 4; 
   public static void main(String[] args) throws Exception
   {
 	  
@@ -87,13 +87,14 @@ public class Micro{
 	}
 	tiny_buffer.append(ISA.jsr.getName() + " main\n");
 	tiny_buffer.append("sys halt\n");
+	
 
     //Generate the rest of the tiny
     for(String fn : extractor.getFullIR().keySet()){
-	   	 Utils.printIR(extractor.getFullIR().get(fn));
+	   	 //Utils.printIR(extractor.getFullIR().get(fn));
 
 	   	 TinyGenerator asmgen = new TinyGenerator(extractor.getFullIR().get(fn), extractor.getSymbolTableMap());
-	     tiny_buffer.insert(tiny_buffer.length(), asmgen.translate());
+	     tiny_buffer.append(asmgen.translate());
      }
 
 
