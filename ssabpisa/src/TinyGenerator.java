@@ -231,7 +231,9 @@ public class TinyGenerator {
 			Generated.add(stmt_en.generated_asm);
 			
 			//TODO: do if dead free check
-			if(!varAlive(A, irn.LIVE_OUT)){ free(Rx, irn.LIVE_OUT); }
+			if(!varAlive(A, irn.LIVE_OUT)){
+				Generated.add( free(Rx, irn.LIVE_OUT));
+			}
 			
 			Statement stmt_alloc = allocate(C, irn.LIVE_OUT);
 			Register Rz = stmt_alloc.return_reg;
@@ -271,7 +273,7 @@ public class TinyGenerator {
 			Register Rx = stmt_ensure.return_reg;
 			
 			//TODO: do if dead free check
-			if(!varAlive(A, irn.LIVE_OUT)){ free(Rx, irn.LIVE_OUT); }
+			if(!varAlive(A, irn.LIVE_OUT)){ Generated.add(free(Rx, irn.LIVE_OUT)); }
 
 			
 			String C = irn.getIdOperand(3).getTiny();
@@ -303,8 +305,13 @@ public class TinyGenerator {
 			Register Ry = EN2.return_reg;
 			
 			//TODO: do if dead free check
-			if(!varAlive(d1.getTiny(), irn.LIVE_OUT)){ free(Rx, irn.LIVE_OUT); }
-			if(!varAlive(d2.getTiny(), irn.LIVE_OUT)){ free(Ry, irn.LIVE_OUT); }
+			if(!varAlive(d1.getTiny(), irn.LIVE_OUT)){ 
+				Generated.add(free(Rx, irn.LIVE_OUT)); 
+				
+			}
+			if(!varAlive(d2.getTiny(), irn.LIVE_OUT)){ 
+				Generated.add(free(Ry, irn.LIVE_OUT));
+			}
 
 			Statement AL = allocate(this.getField(ircode, 3), irn.LIVE_OUT);
 			Register Rz = AL.return_reg;
@@ -334,6 +341,16 @@ public class TinyGenerator {
 			Register Ry = stmt_r2.return_reg;
 			Register Rz = stmt_r3.return_reg; //TempRegisterFactory.allocate_tiny(); //: use Rz
 			Rz.dirty = true;
+			
+			
+			if(!varAlive(getField(ircode, 1), irn.LIVE_OUT)){ 
+				Generated.add(free(Rx, irn.LIVE_OUT));
+			}
+			if(!varAlive(getField(ircode, 2), irn.LIVE_OUT)){ 
+				Generated.add(free(Ry, irn.LIVE_OUT)); 
+			}
+
+			
 			reg_map_ir_tiny.put(getField(ircode, 3), Rz);
 
 			
@@ -363,6 +380,15 @@ public class TinyGenerator {
 			Register Rz = stmt_r3.return_reg;
 			Rz.dirty = true;
 			reg_map_ir_tiny.put(getField(ircode, 3), Rz);
+			
+			if(!varAlive(getField(ircode, 1), irn.LIVE_OUT)){ 
+				Generated.add(free(Rx, irn.LIVE_OUT));
+			}
+			if(!varAlive(irn.getIdOperand(IRNode.OP_ID_SRC2).getTiny()
+					, irn.LIVE_OUT)){ 
+				Generated.add(free(Ry, irn.LIVE_OUT)); 
+			}
+
 
 			String asms = move_op + " " + Rx.toTiny() + " " + Rz.toTiny() + "\n";
 			asms += tiny.getName() + " " + Ry.toTiny()  + " " + Rz.toTiny();
@@ -388,6 +414,14 @@ public class TinyGenerator {
 			
 			reg_map_ir_tiny.put(getField(ircode, 3), Rz);
 			usedSymbols.add(irn.getIdOperand(1));
+			
+			if(!varAlive(irn.getIdOperand(IRNode.OP_ID_SRC1).getTiny(), irn.LIVE_OUT)){
+				Generated.add(free(Rx, irn.LIVE_OUT)); 
+			}
+			if(!varAlive(getField(ircode, 2),irn.LIVE_OUT)){ 
+				Generated.add(free(Ry, irn.LIVE_OUT)); 
+			}
+
 			
 			String asms = move_op + " " + Rx.toTiny() + " " + Rz.toTiny() + "\n";
 			asms += tiny.getName() + " " + Ry.toTiny() + " " + Rz.toTiny();
@@ -466,7 +500,9 @@ public class TinyGenerator {
 			Register Rx = D_STMT.return_reg;
 			
 			//TODO: do if dead free check
-			if(!varAlive(irn.getIdOperand(IRNode.OP_ID_SRC1).getTiny(), irn.LIVE_OUT)){ free(Rx, irn.LIVE_OUT); }
+			if(!varAlive(irn.getIdOperand(IRNode.OP_ID_SRC1).getTiny(), irn.LIVE_OUT)){
+				Generated.add(free(Rx, irn.LIVE_OUT)); 
+			}
 
 			Statement R_STMT = this.allocate(getField(ircode,2 ), irn.LIVE_OUT);
 			Register Rz = R_STMT.return_reg;
@@ -621,7 +657,9 @@ public class TinyGenerator {
 		if(r.dirty && isAlive){
 			//generate store
 			System.out.println("; spilling " + r.toTiny());
-			gen_cmd = "STORE ...\n";
+			gen_cmd = String.format("%s %s %s ; spill\n", ISA.move.getName(),
+					r.toTiny(),
+					r.opr);
 		}
 		r.free = true;
 		r.opr = "nothing";
