@@ -31,6 +31,28 @@ public class TinyActivationRecord {
 		LocalStackMap.put(name, local_var_count);
 		local_var_count--;
 	}
+
+	public static String getReverseName(String var){
+//		System.err.println("Reverse lookup " + var);
+//		System.err.println(ParameterStackMap.toString());
+//		System.err.println(LocalStackMap.toString());
+		
+		//Search Parameter Map
+		for(String k : ParameterStackMap.keySet()){
+			Integer v = ParameterStackMap.get(k);
+			if(v.toString().equals(var)){
+				return k;
+			}
+		}
+		//Seacrh Local Map
+		for(String k : LocalStackMap.keySet()){
+			Integer v = LocalStackMap.get(k);
+			if(v.toString().equals(var)){
+				return k;
+			}
+		}
+		return null;
+	}
 	
 	public static void assignParameter(String name){
 		ParameterStackMap.put(name, ++stack_growth_count);

@@ -33,7 +33,6 @@ public class TinyGenerator {
 	LinkedHashSet<Id> usedSymbols; //contains all LVALUES
 	LinkedHashMap<String, SymbolTable> SymbolTable_Map;
 	
-	
 	public static Register[] RegisterFile = new Register[Micro.CONST_NUM_REG_USE];
 	
 	private static int SAVE = 1;
@@ -117,9 +116,32 @@ public class TinyGenerator {
 	}
 
 	private boolean varAlive(String var, HashSet<String> liveness){
+		System.out.println("; Checking Liveness " + var);
+		System.out.println("; live out: " + liveness.toString());
+		//primary checking
 		if(liveness.contains(var)){
+			System.out.println("; " + var + " is live");
 			return true;
 		}
+		//secondary checking
+		//need to do this because, the liveness set are referred by IR Name 
+		//but IR allocation written here only know about tiny name
+		//so we need to reverse lookup the IR-Tiny Conversion Map
+		String rn = TinyActivationRecord.getReverseName(var.substring(1));
+		System.out.print("; map bijection search result: ");
+		System.out.println(rn);
+		if(rn == null){
+			System.out.println("; " + var + " is dead");
+			return false;
+		}
+
+		//check liveness again
+		if(liveness.contains(var)){
+			System.out.println("; " + var + " is live");
+			return true;
+		}
+		System.out.println("; " + var + " is dead");
+		
 		return false;
 	}
 	
@@ -163,6 +185,7 @@ public class TinyGenerator {
 			
 			Register reg = null;
 			String X = irn.getIdOperand(4).getTiny();
+			
 			Statement stmt = null;
 
 			//these includes sys calls etc
@@ -177,7 +200,7 @@ public class TinyGenerator {
 				
 			}else if(irn.getInstruction().equals(ISA.READF) || irn.getInstruction().equals(ISA.READI)){
 				//this is a DEF
-				stmt = allocate(X, irn.LIVE_OUT);
+				stmt = allocate(X, irn.LIVE_OUT); 
 				reg = stmt.return_reg;
 				reg.dirty = true;
 				Generated.add(stmt.generated_asm);
@@ -593,9 +616,9 @@ public class TinyGenerator {
 		String variable = r.opr;
 		String gen_cmd = "";
 		System.out.println("; evicting " + r.toTiny() + " for opr " + r.opr);
-		System.out.println("; free: " + r.free + ", dirty:" + r.dirty + ", live: " + liveness.contains(variable));
-		System.out.println("; live out: " + liveness.toString());
-		if(r.dirty && liveness.contains(variable)){
+		Boolean isAlive = varAlive(variable, liveness);
+		System.out.println("; free: " + r.free + ", dirty:" + r.dirty + ", live: " + isAlive);
+		if(r.dirty && isAlive){
 			//generate store
 			System.out.println("; spilling " + r.toTiny());
 			gen_cmd = "STORE ...\n";
