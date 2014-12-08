@@ -18,14 +18,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.Queue;
 public class TinyGenerator {
 	IRList IR;
 	HashMap<Instruction, Instruction[]> map_ISA;
@@ -541,10 +538,10 @@ public class TinyGenerator {
 			
 		}else if(irn.getFormat() == IRNode.FORMAT_RS){
 			//`S` is not really a register, its $R
-			this.ensure(getField(ircode, 1), irn.LIVE_OUT); 
-
-			String generate = tiny.getName() + " " + reg_map_ir_tiny.get(getField(ircode, 1)).toTiny() + " $" +
-					TinyActivationRecord.getReturnStackAddress();
+			Statement q = this.ensure(getField(ircode, 1), irn.LIVE_OUT); 
+			Generated.add(q.generated_asm);
+			
+			String generate = tiny.getName() + " " + q.return_reg.toTiny() + " $" + TinyActivationRecord.getReturnStackAddress();
 			Generated.add(generate);
 		}else{
 			Generated.add( ";<unknown format> code: " + irn.getFormat());
@@ -571,7 +568,7 @@ public class TinyGenerator {
 			if(RegisterFile[j].dirty){ 
 				//TODO:  (a) hold local/global variable condition as well
 				String memloc = RegisterFile[j].opr;
-				if(memloc.contains("$T")) continue;
+				if(memloc.contains("$T")) continue; //TODO: handle $T differently
 				Generated.add(ISA.move.getName() + " r" + j + " " + memloc + "\n");
 			}
 		}
@@ -581,14 +578,14 @@ public class TinyGenerator {
 	private String doLink(Instruction tiny, IRNode irn) {
 
 		//TODO: also allocate space $-n for temporaries
-
+//		int count_temporaries = SymbolTable_Map.get(irn.fn_key).count_temporaries();
 		TinyActivationRecord.reset(); //reset stack count etc 
 		TempRegisterFactory.reset();
 		
 		TinyActivationRecord.saveRegisters(Micro.CONST_NUM_REG_USE);
 		
 		if(SymbolTable_Map.containsKey(irn.fn_key)){
-			return tiny.getName() + " " + SymbolTable_Map.get(irn.fn_key).count_local();
+			return tiny.getName() + " " + (SymbolTable_Map.get(irn.fn_key).count_local() + IR.getTempLinkSize());
 		}
 		return tiny.getName() + " " + 0;
 	}
@@ -641,11 +638,11 @@ public class TinyGenerator {
 			
 			r = allocate(opr, liveness).return_reg;
 			if(Micro.TINYGEN_VERBOSE) System.out.println("; ensuring " + opr + " gets " + r.toTiny());
-
+			Integer ov_opr = TinyActivationRecord.getPStackPointerReadOnly(opr); //check if its allocated to the PStack
 			//generate load 
-			String load_cmd = String.format("%s %s %s \n",
+			String load_cmd = String.format("%s %s %s ; load ensure\n",
 					ISA.move.getName(),
-					opr, 
+					(ov_opr!=null ? "$" + ov_opr : opr), 
 					r.toTiny());
 			return new Statement(load_cmd, r);
 		}
@@ -660,8 +657,9 @@ public class TinyGenerator {
 		if(r.dirty && isAlive){
 			//generate store
 			System.out.println("; spilling " + r.toTiny());
-			gen_cmd = String.format("%s %s %s ; spill\n", ISA.move.getName(),
+			gen_cmd = String.format("%s %s %s ; spill %s\n", ISA.move.getName(),
 					r.toTiny(),
+					"$" + TinyActivationRecord.getPStackPointer(r.opr),
 					r.opr);
 		}
 		r.free = true;

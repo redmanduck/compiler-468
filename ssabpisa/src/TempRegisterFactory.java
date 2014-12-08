@@ -26,7 +26,6 @@ public class TempRegisterFactory {
 	private static Hashtable<Integer, Register> regs = new Hashtable<Integer, Register>();
 	private static Register previous;
 	
-	
 	public static void reset(){
 		tempcount = 1;
 		tiny_tempcount = 0;
@@ -41,6 +40,10 @@ public class TempRegisterFactory {
 		regs.put(v, r);
 		previous = r;
 		return r;
+	}
+	
+	public static int getTempCount(){
+		return tempcount - 1;
 	}
 	
 	public static Register allocate_tiny(){

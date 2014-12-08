@@ -63,7 +63,8 @@ public class Micro{
 
       for(String fn : extractor.getFullIR().keySet()){
           //System.out.println(";--- enforce ---" + fn);
-          Utils.printIR(ralloc.enforce(extractor.getFullIR().get(fn)));
+    	  IRList block = extractor.getFullIR().get(fn);
+          Utils.printIR(ralloc.enforce(block));
       }
 
       System.out.println(";----------------- tiny ------------------------");

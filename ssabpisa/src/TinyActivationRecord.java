@@ -55,17 +55,22 @@ public class TinyActivationRecord {
 	}
 	
 	public static void assignParameter(String name){
+		//TODO: ensure that the stack dont overflow!
 		ParameterStackMap.put(name, ++stack_growth_count);
 	}
 	
-	public static Integer getParameter(String name){
+	public static Integer getPStackPointerReadOnly(String name){
+		return ParameterStackMap.get(name);
+	}
+	
+	public static Integer getPStackPointer(String name){
 		if(!ParameterStackMap.containsKey(name)){
 			assignParameter(name);
 		}
 		return ParameterStackMap.get(name);
 	}
 	
-	public static Integer getLocalVariable(String name){
+	public static Integer getLStackPointer(String name){
 		if(!LocalStackMap.containsKey(name)){
 			   //if its not already in the Stack Map
 			   //we put it there 

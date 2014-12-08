@@ -6,11 +6,14 @@ public class DataflowBuilder {
 	public static int BOTTOM_UP = 5;
 	public static int GRAPH_COLORING = 6;
 
+	public int count_max_temporaries;
+	
 	private SymbolTable symtb;
 
 	public DataflowBuilder(int max_use) {
 		reg_limit = max_use;
 		mode = BOTTOM_UP;
+		count_max_temporaries = 0;
 	}
 
 	public void setGlobalVars(SymbolTable itable) {
@@ -168,6 +171,7 @@ public class DataflowBuilder {
 		analyzeDataFlow(original);
 		return original;
 	}
+	
 
 	public void setMode(int v) {
 		mode = v;

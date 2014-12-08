@@ -48,12 +48,17 @@ public class Register {
 	}
 	public String toString(){
 		if(number == -1){
+			//RETURN $R
 			return "$" + type;
 		}
+		
 		return "$" + type + number;
 	}
 
 	public String toTiny(){
+		if(TinyActivationRecord.getPStackPointerReadOnly("$" + type + number) != null){
+			return "$" + TinyActivationRecord.getPStackPointerReadOnly("$" + type + number);
+		}
 		return "r" + number;
 	}
 }

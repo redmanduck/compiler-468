@@ -135,6 +135,8 @@ public class ExtractionListener extends MicroBaseListener {
 	}
 	
 	public void exitFunc_body(MicroParser.Func_bodyContext ctx) {
+		current_ir.setTempLinkSize(TempRegisterFactory.getTempCount());
+
 		leaveScope();
 	}
 
@@ -188,6 +190,7 @@ public class ExtractionListener extends MicroBaseListener {
 		if (ctx.func_decl() == null) {
 			return;
 		}
+		
 		//Update Current Function 
 		this.current_function = ctx.func_decl().id().getText();
 		//Create new IR
