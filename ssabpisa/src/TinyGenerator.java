@@ -579,6 +579,9 @@ public class TinyGenerator {
 	}
 
 	private String doLink(Instruction tiny, IRNode irn) {
+
+		//TODO: also allocate space $-n for temporaries
+
 		TinyActivationRecord.reset(); //reset stack count etc 
 		TempRegisterFactory.reset();
 		

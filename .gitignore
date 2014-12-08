@@ -3,3 +3,5 @@
 *.db
 *__MACOSX*
 .idea/*
+.project
+.classpath
