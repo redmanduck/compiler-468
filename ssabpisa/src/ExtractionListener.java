@@ -112,6 +112,7 @@ public class ExtractionListener extends MicroBaseListener {
 	public void enterParam_decl(MicroParser.Param_declContext ctx) {
 		boolean result = current_scope.AddParameterToTable(ctx.var_type()
 				.getText(), ctx.id().getText()); 
+		this.current_ir.incrementParamCount();
 		
 		if (!result) {
 //			root.error = true;

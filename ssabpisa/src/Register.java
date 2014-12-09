@@ -1,3 +1,4 @@
+import java.util.Date;
 public class Register {
 	public char type;
 	public int number;
@@ -6,9 +7,20 @@ public class Register {
 	private boolean free;
 	
 	public String opr; //$Lx $Tx varname
-
+	
+	private long LastAllocated;
+	public void updateTimestamp(){
+		Date d = new Date();
+		LastAllocated = d.getTime();
+	}
+	
+	public long getTimestamp(){
+		return LastAllocated;
+	}
+	
 	public void clear(){
 		free = true;
+		dirty = false;
 		opr = "none";
 	}
 	
@@ -23,17 +35,25 @@ public class Register {
 		return opr;
 	}
 	
+	public String getWritebackStatement(){
+		return ISA.move.getName() + " " + this.toTiny() + " " + this.getMemory();
+	}
+	
 	public Register(char type, int number, String datatype){
 		this.type = type;
 		this.number = number;
 		this.dtype = datatype;
 		this.dirty = false;
+		free = false;
+		opr = "none";
 	}
 	public Register(char type, int number){
 		this.type = type;
 		this.number = number;
 		this.dtype = "tiny";
 		this.dirty = false;
+		free = false;
+		opr = "none";
 	}
 	
 	public Register(char type){
@@ -41,6 +61,8 @@ public class Register {
 		this.number = -1;
 		this.dtype = "return";
 		this.dirty = false;
+		free = false;
+		opr = "none";
 	}
 	
 	public String toString(){

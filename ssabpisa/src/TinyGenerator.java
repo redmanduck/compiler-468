@@ -19,6 +19,7 @@
 
 */
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Hashtable;
@@ -30,6 +31,8 @@ public class TinyGenerator {
 	LinkedHashMap<String, SymbolTable> SymbolTable_Map;
 	
 	public static Register[] RegisterFile = new Register[Micro.CONST_NUM_REG_USE];
+	
+	
 	
 	private static int SAVE = 1;
 	private static int RESTORE = 2;
@@ -114,6 +117,8 @@ public class TinyGenerator {
 	}
 
 	private String generate_asm(IRNode irn){	
+		TinyOutputBuffer CodeBuffer = new TinyOutputBuffer();
+
 		Instruction irx = irn.getInstruction();
 		Instruction [] possible_instructions = map_ISA.get(irx);
 		
@@ -277,9 +282,16 @@ public class TinyGenerator {
 		
 		TinyActivationRecord.saveRegisters(Micro.CONST_NUM_REG_USE);
 		
+		int lcsize = SymbolTable_Map.get(irn.fn_key).count_local();
+		int paramsize = IR.getParamCount();
+		
+		TinyActivationRecord.initParamLocal(paramsize, lcsize);
+
 		if(SymbolTable_Map.containsKey(irn.fn_key)){
-			return tiny.getName() + " " + SymbolTable_Map.get(irn.fn_key).count_local();
+			return tiny.getName() + " " + lcsize;
 		}
+		
+		
 		return tiny.getName() + " " + 0;
 	}
 	
@@ -310,6 +322,7 @@ public class TinyGenerator {
 		return sbuffer.toString();
 	}
 	
+	
 	private String save_regs(){
 		return save_restore_register(SAVE);
 	}
@@ -317,5 +330,31 @@ public class TinyGenerator {
 	private String restore_regs(){
 		return save_restore_register(RESTORE);
 	}
+	
+//	private Register ensure(String opr, HashSet<String> liveness, TinyOutputBuffer G){
+//		//ensure(a) --> load a rx
+//		//ensure($T1) --> load $(Scope_LC+T#) rx
+//		//ensure($L1) --> load $1 rx
+//		//ensure($P1) --> load $-1 rx
+//		
+//		System.out.println("; attempting to ensure " + opr);
+//		Register r = Utils.varInRegister(opr);
+//		if(r != null){
+//			System.out.println("; ensuring " + opr + " use " + r.toTiny());
+//			return r;
+//		}else{
+//			
+//			r = allocate(opr, liveness).return_reg;
+//			if(Micro.TINYGEN_VERBOSE) System.out.println("; ensuring " + opr + " gets " + r.toTiny());
+//			
+//			String load_cmd = String.format("%s %s %s ; load ensure\n",
+//					ISA.move.getName(),
+//					(ov_opr!=null ? "$" + ov_opr : opr), 
+//					r.toTiny());
+//			
+//			G.add(load_cmd);
+//			return r;
+//		}
+//	}
 	
 }

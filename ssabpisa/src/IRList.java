@@ -27,11 +27,14 @@ public class IRList implements Iterable<IRNode>{
 	private ArrayList<IRNode> _List;
 	private int TempLinkSize; //offset for LINK for temporaries
 	private Hashtable<String, IRNode> _Labels;
+	
+	private int paramsize;
 
 	public IRList(){
 		/*
 		 * Constructor -- evokes for any new basic block of IR
 		 */
+		paramsize = 0;
 		TempLinkSize = 0;
 		_List = new ArrayList<IRNode>();
 		_Labels = new Hashtable<String, IRNode>();
@@ -606,6 +609,14 @@ public class IRList implements Iterable<IRNode>{
 
 	public int getTempLinkSize(){
 		return TempLinkSize;
+	}
+	
+	public int getParamCount(){
+		return paramsize;
+	}
+	
+	public void incrementParamCount(){
+		paramsize =paramsize + 1;
 	}
 
 

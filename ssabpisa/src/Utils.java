@@ -1,3 +1,5 @@
+import java.util.HashSet;
+
 /*
     This program is part of an assignment for ECE468 at Purdue University, IN.
     Copying, modifying or reusing this program may result in disciplinary actions.
@@ -47,5 +49,53 @@ public class Utils {
 			System.out.println("; --- LIVEIN: " + a.LIVE_IN.toString() + ", LIVEOUT: " + a.LIVE_OUT.toString());
 		}
 	}
+	
+
+	public static String printRegisters(){
+		String longtext = "{";
+		for(int i = 0; i < TinyGenerator.RegisterFile.length; i++){
+			longtext += "r" + i + "=" + TinyGenerator.RegisterFile[i].opr + ( TinyGenerator.RegisterFile[i].isDirty() ? "*" : "") + ", ";
+		}
+		longtext += "}";
+		return longtext;
+	}
+
+	
+	/*
+	 * @param var - $Lx or $Tx or global variable
+	 */
+	public static boolean varIsLive(String var, HashSet<String> liveness){
+		
+		System.out.println("; Checking Liveness " + var);
+		System.out.println("; Live out: " + liveness.toString());
+		
+		if(liveness.contains(var)){
+			System.out.println("; " + var + " is live");
+			return true;
+		}
+		if(liveness.contains(var)){
+			System.out.println("; " + var + " is live");
+			return true;
+		}
+		
+		System.out.println("; " + var + " is dead");
+		return false;
+	}
+	
+	/*
+	 * @param opr - $Lx or $Tx or global variable
+	 */
+	public static Register varInRegister(String opr){
+		for(int i =0; i<TinyGenerator.RegisterFile.length; i++){
+			if(TinyGenerator.RegisterFile[i].opr.equals(opr)){
+					System.out.println("; found " + opr + " in r" + i);
+					return TinyGenerator.RegisterFile[i];
+				}
+			}
+		
+			System.out.println("; " + opr + ": not loaded in any register..");
+			return null;
+	}
+	
 	
 }

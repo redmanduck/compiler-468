@@ -24,11 +24,19 @@ public class TinyActivationRecord {
 	private static int local_var_count = 0;
 	private static int register_count = 0;
 	
+	public static void initParamLocal(int param, int local){
+
+		param_count = param;
+		local_var_count = local;
+	}
+	
 	public static String getParameter(String name){
 		//GIVEN $P1 returns $1
 		String j = name.replace("$P", "");
 		int num = Integer.parseInt(j);
-		if(num > param_count) param_count = num;
+//		if(num > param_count){
+//			 param_count = num;
+//		}
 		
 		return "$" + (num + register_count + 1);
 	}
@@ -37,7 +45,7 @@ public class TinyActivationRecord {
 		//GIVEN $L1 returns $-1
 		String j = name.replace("$L", "");
 		int num = Integer.parseInt(j);
-		if(num > local_var_count) local_var_count = num;
+//		if(num > local_var_count) local_var_count = num;
 		return "$-" + num;
 	}
 	public static void saveRegisters(int increm){
@@ -53,5 +61,13 @@ public class TinyActivationRecord {
 		param_count =0;
 		local_var_count = 0;
 		register_count = 0;
+	}
+	
+	/*
+	 * Convert $Lx $Py $Tz into $-x $y $T(LC + z) 
+	 * if given global var, return globalvar
+	 */
+	public static String getStackRef(String opr){
+		return null;
 	}
 }
