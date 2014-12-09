@@ -1,0 +1,750 @@
+; setting temp link size to 11 for list scope ;LABEL main
+;IR code
+;LABEL main; --- LIVEIN: [newapprox], LIVEOUT: [newapprox]
+;LINK; --- LIVEIN: [newapprox], LIVEOUT: [newapprox]
+;STOREF 7.0 $T1; --- LIVEIN: [newapprox], LIVEOUT: [$T1, newapprox]
+;STOREF $T1 num; --- LIVEIN: [$T1, newapprox], LIVEOUT: [num, newapprox]
+;STOREI 100 $T2; --- LIVEIN: [num, newapprox], LIVEOUT: [$T2, num, newapprox]
+;STOREI $T2 i; --- LIVEIN: [$T2, num, newapprox], LIVEOUT: [num, newapprox, i]
+;STOREI 1 $T3; --- LIVEIN: [num, newapprox, i], LIVEOUT: [$T3, num, newapprox, i]
+;STOREI $T3 j; --- LIVEIN: [$T3, num, newapprox, i], LIVEOUT: [num, newapprox, j, i]
+;STOREF num approx; --- LIVEIN: [num, newapprox, j, i], LIVEOUT: [num, approx, newapprox, j, i]
+;LABEL label1; --- LIVEIN: [approx, num, newapprox, j, i], LIVEOUT: [approx, num, newapprox, j, i]
+;STOREI 0 $T4; --- LIVEIN: [approx, num, newapprox, j, i], LIVEOUT: [approx, num, $T4, newapprox, j, i]
+;EQI i $T4 label2; --- LIVEIN: [approx, num, $T4, newapprox, j, i], LIVEOUT: [approx, num, newapprox, j, i]
+;STOREF 0.5 $T5; --- LIVEIN: [approx, num, j, i], LIVEOUT: [num, approx, $T5, j, i]
+;DIVF num approx $T6; --- LIVEIN: [approx, num, $T5, j, i], LIVEOUT: [num, approx, $T6, $T5, j, i]
+;ADDF approx $T6 $T7; --- LIVEIN: [approx, num, $T6, $T5, j, i], LIVEOUT: [num, $T7, $T5, j, i]
+;MULTF $T5 $T7 $T8; --- LIVEIN: [num, $T7, $T5, j, i], LIVEOUT: [num, $T8, j, i]
+;STOREF $T8 newapprox; --- LIVEIN: [num, $T8, j, i], LIVEOUT: [num, newapprox, j, i]
+;STOREF newapprox approx; --- LIVEIN: [num, newapprox, j, i], LIVEOUT: [approx, num, newapprox, j, i]
+;STOREI 1 $T9; --- LIVEIN: [approx, num, newapprox, j, i], LIVEOUT: [approx, num, newapprox, $T9, j, i]
+;SUBI i $T9 $T10; --- LIVEIN: [approx, num, newapprox, $T9, j, i], LIVEOUT: [approx, num, $T10, newapprox, j]
+;STOREI $T10 i; --- LIVEIN: [approx, num, $T10, newapprox, j], LIVEOUT: [approx, num, newapprox, j, i]
+;JUMP label1; --- LIVEIN: [approx, num, newapprox, j, i], LIVEOUT: [approx, num, newapprox, j, i]
+;LABEL label2; --- LIVEIN: [num, newapprox, j, i], LIVEOUT: [num, newapprox, j, i]
+;WRITEF approx; --- LIVEIN: [num, newapprox, j, i], LIVEOUT: [num, approx, newapprox, j, i]
+;STOREI 0 $T11; --- LIVEIN: [approx, num, newapprox, j, i], LIVEOUT: [num, approx, newapprox, $T11, j, i]
+;STOREI $T11 $R; --- LIVEIN: [approx, num, newapprox, $T11, j, i], LIVEOUT: [num, approx, newapprox, j, i]
+;RET; --- LIVEIN: [approx, num, newapprox, j, i], LIVEOUT: [num, approx, newapprox, j, i]
+;----------------- tiny ------------------------
+;-------------------------------------------------------
+; ir node ;LABEL main! (FRMT-8)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; tiny generated = label main
+;-------------------------------------------------------
+; ir node ;LINK! (FRMT-9)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;STOREF 7.0 $T1! (FRMT-1)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; Attempting to allocate $T1
+; $T1: not loaded in any register..
+; allocation - generated spill 
+; allocating $T1 to r0
+; {r0=$T1, r1=nothing, r2=nothing, r3=nothing, }
+; tiny generated = 
+; {r0=$T1*, r1=nothing, r2=nothing, r3=nothing, }
+; tiny generated = move 7.0 r0
+;-------------------------------------------------------
+; ir node ;STOREF $T1 num! (FRMT-2)
+; reg state : {r0=$T1*, r1=nothing, r2=nothing, r3=nothing, }
+; attempting to ensure $T1
+; found $T1 in r0
+; ensuring $T1 use r0
+; {r0=$T1*, r1=nothing, r2=nothing, r3=nothing, }
+; tiny generated = 
+; Attempting to allocate num
+; num: not loaded in any register..
+; allocation - generated spill 
+; allocating num to r1
+; {r0=$T1*, r1=num, r2=nothing, r3=nothing, }
+; tiny generated = 
+; Checking Liveness $T1
+; live out: [num, newapprox]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; $T1 is dead
+; evicting r0 for opr $T1
+; Checking Liveness $T1
+; live out: [num, newapprox]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; $T1 is dead
+; free: false, dirty:true, live: false
+; {r0=nothing, r1=num*, r2=nothing, r3=nothing, }
+; tiny generated = 
+; {r0=nothing, r1=num*, r2=nothing, r3=nothing, }
+; tiny generated = move r0 r1
+;-------------------------------------------------------
+; ir node ;STOREI 100 $T2! (FRMT-0)
+; reg state : {r0=nothing, r1=num*, r2=nothing, r3=nothing, }
+; Attempting to allocate $T2
+; $T2: not loaded in any register..
+; allocation - generated spill 
+; allocating $T2 to r0
+; {r0=$T2, r1=num*, r2=nothing, r3=nothing, }
+; tiny generated = 
+; {r0=$T2*, r1=num*, r2=nothing, r3=nothing, }
+; tiny generated = move 100 r0
+;-------------------------------------------------------
+; ir node ;STOREI $T2 i! (FRMT-2)
+; reg state : {r0=$T2*, r1=num*, r2=nothing, r3=nothing, }
+; attempting to ensure $T2
+; found $T2 in r0
+; ensuring $T2 use r0
+; {r0=$T2*, r1=num*, r2=nothing, r3=nothing, }
+; tiny generated = 
+; Attempting to allocate i
+; i: not loaded in any register..
+; allocation - generated spill 
+; allocating i to r2
+; {r0=$T2*, r1=num*, r2=i, r3=nothing, }
+; tiny generated = 
+; Checking Liveness $T2
+; live out: [num, newapprox, i]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; $T2 is dead
+; evicting r0 for opr $T2
+; Checking Liveness $T2
+; live out: [num, newapprox, i]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; $T2 is dead
+; free: false, dirty:true, live: false
+; {r0=nothing, r1=num*, r2=i*, r3=nothing, }
+; tiny generated = 
+; {r0=nothing, r1=num*, r2=i*, r3=nothing, }
+; tiny generated = move r0 r2
+;-------------------------------------------------------
+; ir node ;STOREI 1 $T3! (FRMT-0)
+; reg state : {r0=nothing, r1=num*, r2=i*, r3=nothing, }
+; Attempting to allocate $T3
+; $T3: not loaded in any register..
+; allocation - generated spill 
+; allocating $T3 to r0
+; {r0=$T3, r1=num*, r2=i*, r3=nothing, }
+; tiny generated = 
+; {r0=$T3*, r1=num*, r2=i*, r3=nothing, }
+; tiny generated = move 1 r0
+;-------------------------------------------------------
+; ir node ;STOREI $T3 j! (FRMT-2)
+; reg state : {r0=$T3*, r1=num*, r2=i*, r3=nothing, }
+; attempting to ensure $T3
+; found $T3 in r0
+; ensuring $T3 use r0
+; {r0=$T3*, r1=num*, r2=i*, r3=nothing, }
+; tiny generated = 
+; Attempting to allocate j
+; j: not loaded in any register..
+; allocation - generated spill 
+; allocating j to r3
+; {r0=$T3*, r1=num*, r2=i*, r3=j, }
+; tiny generated = 
+; Checking Liveness $T3
+; live out: [num, newapprox, j, i]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; $T3 is dead
+; evicting r0 for opr $T3
+; Checking Liveness $T3
+; live out: [num, newapprox, j, i]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; $T3 is dead
+; free: false, dirty:true, live: false
+; {r0=nothing, r1=num*, r2=i*, r3=j*, }
+; tiny generated = 
+; {r0=nothing, r1=num*, r2=i*, r3=j*, }
+; tiny generated = move r0 r3
+;-------------------------------------------------------
+; ir node ;STOREF num approx! (FRMT-10)
+; reg state : {r0=nothing, r1=num*, r2=i*, r3=j*, }
+; attempting to ensure num
+; found num in r1
+; ensuring num use r1
+; {r0=nothing, r1=num*, r2=i*, r3=j*, }
+; tiny generated = 
+; Attempting to allocate Tmp
+; Tmp: not loaded in any register..
+; allocation - generated spill 
+; allocating Tmp to r0
+; Attempting to allocate approx
+; approx: not loaded in any register..
+; No free register!
+; Most distant used {r0=1418094212638,r1=1418094212631,r2=1418094212633,r3=1418094212636,}
+; Chose r1
+; evicting r1 for opr num
+; Checking Liveness num
+; live out: [num, approx, newapprox, j, i]
+; num is live
+; free: false, dirty:true, live: true
+; spilling r1
+; allocation - generated spill move r1 num ; spill num
+
+; allocating approx to r1
+; {r0=Tmp, r1=approx, r2=i*, r3=j*, }
+; tiny generated = move r1 num ; spill num; 
+; Checking Liveness num
+; live out: [num, approx, newapprox, j, i]
+; num is live
+; evicting r0 for opr Tmp
+; Checking Liveness Tmp
+; live out: [num, approx, newapprox, j, i]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; Tmp is dead
+; free: true, dirty:false, live: false
+; {r0=nothing, r1=approx*, r2=i*, r3=j*, }
+; tiny generated = move num r0; move r0 r1
+;-------------------------------------------------------
+; ir node ;LABEL label1! (FRMT-8)
+; reg state : {r0=nothing, r1=approx*, r2=i*, r3=j*, }
+; {r0=nothing, r1=approx*, r2=i*, r3=j*, }
+; tiny generated = label label1
+;-------------------------------------------------------
+; ir node ;STOREI 0 $T4! (FRMT-0)
+; reg state : {r0=nothing, r1=approx*, r2=i*, r3=j*, }
+; Attempting to allocate $T4
+; $T4: not loaded in any register..
+; allocation - generated spill 
+; allocating $T4 to r0
+; {r0=$T4, r1=approx*, r2=i*, r3=j*, }
+; tiny generated = 
+; {r0=$T4*, r1=approx*, r2=i*, r3=j*, }
+; tiny generated = move 0 r0
+;-------------------------------------------------------
+; ir node ;EQI i $T4 label2! (FRMT-13)
+; reg state : {r0=$T4*, r1=approx*, r2=i*, r3=j*, }
+; {r0=$T4*, r1=approx*, r2=i*, r3=j*, }
+; tiny generated = cmpi i r0; jeq label2
+;-------------------------------------------------------
+; ir node ;STOREF 0.5 $T5! (FRMT-1)
+; reg state : {r0=$T4*, r1=approx*, r2=i*, r3=j*, }
+; Attempting to allocate $T5
+; $T5: not loaded in any register..
+; No free register!
+; Most distant used {r0=1418094212641,r1=1418094212639,r2=1418094212633,r3=1418094212636,}
+; Chose r2
+; evicting r2 for opr i
+; Checking Liveness i
+; live out: [num, approx, $T5, j, i]
+; i is live
+; free: false, dirty:true, live: true
+; spilling r2
+; allocation - generated spill move r2 i ; spill i
+
+; allocating $T5 to r2
+; {r0=$T4*, r1=approx*, r2=$T5, r3=j*, }
+; tiny generated = move r2 i ; spill i; 
+; {r0=$T4*, r1=approx*, r2=$T5*, r3=j*, }
+; tiny generated = move 0.5 r2
+;-------------------------------------------------------
+; ir node ;DIVF num approx $T6! (FRMT-3)
+; reg state : {r0=$T4*, r1=approx*, r2=$T5*, r3=j*, }
+; attempting to ensure num
+; num: not loaded in any register..
+; Attempting to allocate num
+; num: not loaded in any register..
+; No free register!
+; Most distant used {r0=1418094212641,r1=1418094212639,r2=1418094212644,r3=1418094212636,}
+; Chose r3
+; evicting r3 for opr j
+; Checking Liveness j
+; live out: [num, approx, $T6, $T5, j, i]
+; j is live
+; free: false, dirty:true, live: true
+; spilling r3
+; allocation - generated spill move r3 j ; spill j
+
+; allocating num to r3
+; ensuring num gets r3
+; attempting to ensure approx
+; found approx in r1
+; ensuring approx use r1
+; {r0=$T4*, r1=approx*, r2=$T5*, r3=num, }
+; tiny generated = move r3 j ; spill j; move num r3 ; load ensure; 
+; {r0=$T4*, r1=approx*, r2=$T5*, r3=num, }
+; tiny generated = 
+; Attempting to allocate $T6
+; $T6: not loaded in any register..
+; No free register!
+; Most distant used {r0=1418094212641,r1=1418094212639,r2=1418094212644,r3=1418094212645,}
+; Chose r1
+; evicting r1 for opr approx
+; Checking Liveness approx
+; live out: [num, approx, $T6, $T5, j, i]
+; approx is live
+; free: false, dirty:true, live: true
+; spilling r1
+; allocation - generated spill move r1 approx ; spill approx
+
+; allocating $T6 to r1
+; {r0=$T4*, r1=$T6*, r2=$T5*, r3=num, }
+; tiny generated = move r1 approx ; spill approx; 
+; Attempting to allocate $Td
+; $Td: not loaded in any register..
+; No free register!
+; Most distant used {r0=1418094212641,r1=1418094212646,r2=1418094212644,r3=1418094212645,}
+; Chose r0
+; evicting r0 for opr $T4
+; Checking Liveness $T4
+; live out: [num, approx, $T6, $T5, j, i]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; $T4 is dead
+; free: false, dirty:true, live: false
+; allocation - generated spill 
+; allocating $Td to r0
+; {r0=$Td, r1=$T6*, r2=$T5*, r3=num, }
+; tiny generated = 
+; Checking Liveness num
+; live out: [num, approx, $T6, $T5, j, i]
+; num is live
+; Checking Liveness approx
+; live out: [num, approx, $T6, $T5, j, i]
+; approx is live
+; evicting r0 for opr $Td
+; Checking Liveness $Td
+; live out: [num, approx, $T6, $T5, j, i]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; $Td is dead
+; free: false, dirty:false, live: false
+; {r0=nothing, r1=$T6*, r2=$T5*, r3=num, }
+; tiny generated = move r3 r0; divr r0 r1; move r1 r1
+;-------------------------------------------------------
+; ir node ;ADDF approx $T6 $T7! (FRMT-7)
+; reg state : {r0=nothing, r1=$T6*, r2=$T5*, r3=num, }
+; attempting to ensure approx
+; approx: not loaded in any register..
+; Attempting to allocate approx
+; approx: not loaded in any register..
+; allocation - generated spill 
+; allocating approx to r0
+; ensuring approx gets r0
+; attempting to ensure $T6
+; found $T6 in r1
+; ensuring $T6 use r1
+; Attempting to allocate $T7
+; $T7: not loaded in any register..
+; No free register!
+; Most distant used {r0=1418094212647,r1=1418094212646,r2=1418094212644,r3=1418094212645,}
+; Chose r2
+; evicting r2 for opr $T5
+; Checking Liveness $T5
+; live out: [num, $T7, $T5, j, i]
+; $T5 is live
+; free: false, dirty:true, live: true
+; spilling r2
+; allocation - generated spill move r2 $T5 ; spill $T5
+
+; allocating $T7 to r2
+; {r0=approx, r1=$T6*, r2=$T7, r3=num, }
+; tiny generated = move approx r0 ; load ensure; 
+; {r0=approx, r1=$T6*, r2=$T7, r3=num, }
+; tiny generated = 
+; {r0=approx, r1=$T6*, r2=$T7, r3=num, }
+; tiny generated = move r2 $T5 ; spill $T5; 
+; Checking Liveness approx
+; live out: [num, $T7, $T5, j, i]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; approx is dead
+; evicting r0 for opr approx
+; Checking Liveness approx
+; live out: [num, $T7, $T5, j, i]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; approx is dead
+; free: false, dirty:false, live: false
+; {r0=nothing, r1=$T6*, r2=$T7*, r3=num, }
+; tiny generated = 
+; Checking Liveness $T6
+; live out: [num, $T7, $T5, j, i]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; $T6 is dead
+; evicting r1 for opr $T6
+; Checking Liveness $T6
+; live out: [num, $T7, $T5, j, i]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; $T6 is dead
+; free: false, dirty:true, live: false
+; {r0=nothing, r1=nothing, r2=$T7*, r3=num, }
+; tiny generated = 
+; {r0=nothing, r1=nothing, r2=$T7*, r3=num, }
+; tiny generated = move r0 r2; addr r1 r2
+;-------------------------------------------------------
+; ir node ;MULTF $T5 $T7 $T8! (FRMT-5)
+; reg state : {r0=nothing, r1=nothing, r2=$T7*, r3=num, }
+; attempting to ensure $T5
+; $T5: not loaded in any register..
+; Attempting to allocate $T5
+; $T5: not loaded in any register..
+; allocation - generated spill 
+; allocating $T5 to r0
+; ensuring $T5 gets r0
+; attempting to ensure $T7
+; found $T7 in r2
+; ensuring $T7 use r2
+; Attempting to allocate $T8
+; $T8: not loaded in any register..
+; allocation - generated spill 
+; allocating $T8 to r1
+; {r0=$T5, r1=$T8, r2=$T7*, r3=num, }
+; tiny generated = move $T5 r0 ; load ensure; 
+; {r0=$T5, r1=$T8, r2=$T7*, r3=num, }
+; tiny generated = 
+; {r0=$T5, r1=$T8, r2=$T7*, r3=num, }
+; tiny generated = 
+; Checking Liveness $T5
+; live out: [num, $T8, j, i]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; $T5 is dead
+; evicting r0 for opr $T5
+; Checking Liveness $T5
+; live out: [num, $T8, j, i]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; $T5 is dead
+; free: false, dirty:false, live: false
+; {r0=nothing, r1=$T8*, r2=$T7*, r3=num, }
+; tiny generated = 
+; Checking Liveness $T7
+; live out: [num, $T8, j, i]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; $T7 is dead
+; evicting r2 for opr $T7
+; Checking Liveness $T7
+; live out: [num, $T8, j, i]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; $T7 is dead
+; free: false, dirty:true, live: false
+; {r0=nothing, r1=$T8*, r2=nothing, r3=num, }
+; tiny generated = 
+; {r0=nothing, r1=$T8*, r2=nothing, r3=num, }
+; tiny generated = move r0 r1; mulr r2 r1
+;-------------------------------------------------------
+; ir node ;STOREF $T8 newapprox! (FRMT-2)
+; reg state : {r0=nothing, r1=$T8*, r2=nothing, r3=num, }
+; attempting to ensure $T8
+; found $T8 in r1
+; ensuring $T8 use r1
+; {r0=nothing, r1=$T8*, r2=nothing, r3=num, }
+; tiny generated = 
+; Attempting to allocate newapprox
+; newapprox: not loaded in any register..
+; allocation - generated spill 
+; allocating newapprox to r0
+; {r0=newapprox, r1=$T8*, r2=nothing, r3=num, }
+; tiny generated = 
+; Checking Liveness $T8
+; live out: [num, newapprox, j, i]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; $T8 is dead
+; evicting r1 for opr $T8
+; Checking Liveness $T8
+; live out: [num, newapprox, j, i]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; $T8 is dead
+; free: false, dirty:true, live: false
+; {r0=newapprox*, r1=nothing, r2=nothing, r3=num, }
+; tiny generated = 
+; {r0=newapprox*, r1=nothing, r2=nothing, r3=num, }
+; tiny generated = move r1 r0
+;-------------------------------------------------------
+; ir node ;STOREF newapprox approx! (FRMT-10)
+; reg state : {r0=newapprox*, r1=nothing, r2=nothing, r3=num, }
+; attempting to ensure newapprox
+; found newapprox in r0
+; ensuring newapprox use r0
+; {r0=newapprox*, r1=nothing, r2=nothing, r3=num, }
+; tiny generated = 
+; Attempting to allocate Tmp
+; Tmp: not loaded in any register..
+; allocation - generated spill 
+; allocating Tmp to r1
+; Attempting to allocate approx
+; approx: not loaded in any register..
+; allocation - generated spill 
+; allocating approx to r2
+; {r0=newapprox*, r1=Tmp, r2=approx, r3=num, }
+; tiny generated = 
+; Checking Liveness newapprox
+; live out: [approx, num, newapprox, j, i]
+; newapprox is live
+; evicting r1 for opr Tmp
+; Checking Liveness Tmp
+; live out: [approx, num, newapprox, j, i]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; Tmp is dead
+; free: true, dirty:false, live: false
+; {r0=newapprox*, r1=nothing, r2=approx*, r3=num, }
+; tiny generated = move newapprox r1; move r1 r2
+;-------------------------------------------------------
+; ir node ;STOREI 1 $T9! (FRMT-0)
+; reg state : {r0=newapprox*, r1=nothing, r2=approx*, r3=num, }
+; Attempting to allocate $T9
+; $T9: not loaded in any register..
+; allocation - generated spill 
+; allocating $T9 to r1
+; {r0=newapprox*, r1=$T9, r2=approx*, r3=num, }
+; tiny generated = 
+; {r0=newapprox*, r1=$T9*, r2=approx*, r3=num, }
+; tiny generated = move 1 r1
+;-------------------------------------------------------
+; ir node ;SUBI i $T9 $T10! (FRMT-7)
+; reg state : {r0=newapprox*, r1=$T9*, r2=approx*, r3=num, }
+; attempting to ensure i
+; i: not loaded in any register..
+; Attempting to allocate i
+; i: not loaded in any register..
+; No free register!
+; Most distant used {r0=1418094212652,r1=1418094212654,r2=1418094212653,r3=1418094212645,}
+; Chose r3
+; evicting r3 for opr num
+; Checking Liveness num
+; live out: [approx, num, $T10, newapprox, j]
+; num is live
+; free: false, dirty:false, live: true
+; allocation - generated spill 
+; allocating i to r3
+; ensuring i gets r3
+; attempting to ensure $T9
+; found $T9 in r1
+; ensuring $T9 use r1
+; Attempting to allocate $T10
+; $T10: not loaded in any register..
+; No free register!
+; Most distant used {r0=1418094212652,r1=1418094212654,r2=1418094212653,r3=1418094212655,}
+; Chose r0
+; evicting r0 for opr newapprox
+; Checking Liveness newapprox
+; live out: [approx, num, $T10, newapprox, j]
+; newapprox is live
+; free: false, dirty:true, live: true
+; spilling r0
+; allocation - generated spill move r0 newapprox ; spill newapprox
+
+; allocating $T10 to r0
+; {r0=$T10, r1=$T9*, r2=approx*, r3=i, }
+; tiny generated = move i r3 ; load ensure; 
+; {r0=$T10, r1=$T9*, r2=approx*, r3=i, }
+; tiny generated = 
+; {r0=$T10, r1=$T9*, r2=approx*, r3=i, }
+; tiny generated = move r0 newapprox ; spill newapprox; 
+; Checking Liveness i
+; live out: [approx, num, $T10, newapprox, j]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; i is dead
+; evicting r3 for opr i
+; Checking Liveness i
+; live out: [approx, num, $T10, newapprox, j]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; i is dead
+; free: false, dirty:false, live: false
+; {r0=$T10*, r1=$T9*, r2=approx*, r3=nothing, }
+; tiny generated = 
+; Checking Liveness $T9
+; live out: [approx, num, $T10, newapprox, j]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; $T9 is dead
+; evicting r1 for opr $T9
+; Checking Liveness $T9
+; live out: [approx, num, $T10, newapprox, j]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; $T9 is dead
+; free: false, dirty:true, live: false
+; {r0=$T10*, r1=nothing, r2=approx*, r3=nothing, }
+; tiny generated = 
+; {r0=$T10*, r1=nothing, r2=approx*, r3=nothing, }
+; tiny generated = move r3 r0; subi r1 r0
+;-------------------------------------------------------
+; ir node ;STOREI $T10 i! (FRMT-2)
+; reg state : {r0=$T10*, r1=nothing, r2=approx*, r3=nothing, }
+; attempting to ensure $T10
+; found $T10 in r0
+; ensuring $T10 use r0
+; {r0=$T10*, r1=nothing, r2=approx*, r3=nothing, }
+; tiny generated = 
+; Attempting to allocate i
+; i: not loaded in any register..
+; allocation - generated spill 
+; allocating i to r1
+; {r0=$T10*, r1=i, r2=approx*, r3=nothing, }
+; tiny generated = 
+; Checking Liveness $T10
+; live out: [approx, num, newapprox, j, i]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; $T10 is dead
+; evicting r0 for opr $T10
+; Checking Liveness $T10
+; live out: [approx, num, newapprox, j, i]
+; PStack {}
+; LStack {}
+; map bijection search result: null
+; $T10 is dead
+; free: false, dirty:true, live: false
+; {r0=nothing, r1=i*, r2=approx*, r3=nothing, }
+; tiny generated = 
+; {r0=nothing, r1=i*, r2=approx*, r3=nothing, }
+; tiny generated = move r0 r1
+;-------------------------------------------------------
+; ir node ;JUMP label1! (FRMT-15)
+; reg state : {r0=nothing, r1=i*, r2=approx*, r3=nothing, }
+; {r0=nothing, r1=i*, r2=approx*, r3=nothing, }
+; tiny generated = jmp label1; 
+;-------------------------------------------------------
+; ir node ;LABEL label2! (FRMT-8)
+; reg state : {r0=nothing, r1=i*, r2=approx*, r3=nothing, }
+; {r0=nothing, r1=i*, r2=approx*, r3=nothing, }
+; tiny generated = label label2
+;-------------------------------------------------------
+; ir node ;WRITEF approx! (FRMT-6)
+; reg state : {r0=nothing, r1=i*, r2=approx*, r3=nothing, }
+; attempting to ensure approx
+; found approx in r2
+; ensuring approx use r2
+; {r0=nothing, r1=i*, r2=approx*, r3=nothing, }
+; tiny generated = 
+; {r0=nothing, r1=i*, r2=approx*, r3=nothing, }
+; tiny generated = sys writer r2
+;-------------------------------------------------------
+; ir node ;STOREI 0 $T11! (FRMT-0)
+; reg state : {r0=nothing, r1=i*, r2=approx*, r3=nothing, }
+; Attempting to allocate $T11
+; $T11: not loaded in any register..
+; allocation - generated spill 
+; allocating $T11 to r0
+; {r0=$T11, r1=i*, r2=approx*, r3=nothing, }
+; tiny generated = 
+; {r0=$T11*, r1=i*, r2=approx*, r3=nothing, }
+; tiny generated = move 0 r0
+;-------------------------------------------------------
+; ir node ;STOREI $T11 $R! (FRMT-16)
+; reg state : {r0=$T11*, r1=i*, r2=approx*, r3=nothing, }
+; attempting to ensure $T11
+; found $T11 in r0
+; ensuring $T11 use r0
+; {r0=$T11*, r1=i*, r2=approx*, r3=nothing, }
+; tiny generated = 
+; {r0=$T11*, r1=i*, r2=approx*, r3=nothing, }
+; tiny generated = move r0 $6
+;-------------------------------------------------------
+; ir node ;RET! (FRMT-9)
+; reg state : {r0=$T11*, r1=i*, r2=approx*, r3=nothing, }
+; {r0=$T11*, r1=i*, r2=approx*, r3=nothing, }
+; tiny generated = unlnk; ret
+; {r0=$T11*, r1=i*, r2=approx*, r3=nothing, }
+; tiny generated = ; ;flushing registers; 
+; {r0=$T11*, r1=i*, r2=approx*, r3=nothing, }
+; tiny generated = move r1 i; 
+; {r0=$T11*, r1=i*, r2=approx*, r3=nothing, }
+; tiny generated = move r2 approx; 
+; {r0=$T11*, r1=i*, r2=approx*, r3=nothing, }
+; tiny generated = ;flush done; 
+var i
+var j
+var newapprox
+var approx
+var num
+push
+push r0
+push r1
+push r2
+push r3
+jsr main
+sys halt
+label main
+link 11
+move 7.0 r0
+move r0 r1
+move 100 r0
+move r0 r2
+move 1 r0
+move r0 r3
+move r1 num ; spill num
+move num r0
+move r0 r1
+label label1
+move 0 r0
+cmpi i r0
+jeq label2
+move r2 i ; spill i
+move 0.5 r2
+move r3 j ; spill j
+move num r3 ; load ensure
+move r1 approx ; spill approx
+move r3 r0
+divr r0 r1
+move r1 r1
+move approx r0 ; load ensure
+move r2 $T5 ; spill $T5
+move r0 r2
+addr r1 r2
+move $T5 r0 ; load ensure
+move r0 r1
+mulr r2 r1
+move r1 r0
+move newapprox r1
+move r1 r2
+move 1 r1
+move i r3 ; load ensure
+move r0 newapprox ; spill newapprox
+move r3 r0
+subi r1 r0
+move r0 r1
+jmp label1
+
+label label2
+sys writer r2
+move 0 r0
+move r0 $6
+unlnk
+ret
+;flushing registers
+move r1 i
+move r2 approx
+;flush done
+
+

@@ -1,0 +1,294 @@
+; setting temp link size to 4 for list scope ;LABEL main
+;IR code
+;LABEL main<FMT-8>;  GEN :[], KILL :[]
+;LINK<FMT-9>;  GEN :[], KILL :[]
+;STOREI 0 $T1<FMT-0>;  GEN :[], KILL :[$T1]
+;STOREI $T1 $L1<FMT-2>;  GEN :[$T1], KILL :[$L1]
+;WRITES input<FMT-6>;  GEN :[input], KILL :[]
+;READI $L2<FMT-6>;  GEN :[], KILL :[$L2]
+;LABEL label1<FMT-8>;  GEN :[], KILL :[]
+;EQI $L1 $L2 label2<FMT-14>;  GEN :[$L1, $L2], KILL :[]
+;WRITES fibtext<FMT-6>;  GEN :[fibtext], KILL :[]
+;WRITEI $L1<FMT-6>;  GEN :[$L1], KILL :[]
+;WRITES closebr<FMT-6>;  GEN :[closebr], KILL :[]
+;WRITES space<FMT-6>;  GEN :[space], KILL :[]
+;WRITEI $L3<FMT-6>;  GEN :[$L3], KILL :[]
+;WRITES eol<FMT-6>;  GEN :[eol], KILL :[]
+;STOREI 1 $T2<FMT-0>;  GEN :[], KILL :[$T2]
+;ADDI $L1 $T2 $T3<FMT-7>;  GEN :[$T2, $L1], KILL :[$T3]
+;STOREI $T3 $L1<FMT-2>;  GEN :[$T3], KILL :[$L1]
+;JUMP label1<FMT-15>;  GEN :[], KILL :[]
+;LABEL label2<FMT-8>;  GEN :[], KILL :[]
+;STOREI 0 $T4<FMT-0>;  GEN :[], KILL :[$T4]
+;STOREI $T4 $R<FMT-16>;  GEN :[$T4], KILL :[]
+;RET<FMT-9>;  GEN :[], KILL :[]
+;----------------- tiny ------------------------
+;-------------------------------------------------------
+; ir node ;LABEL main! (FRMT-8)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; tiny generated = label main
+;-------------------------------------------------------
+; ir node ;LINK! (FRMT-9)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;STOREI 0 $T1! (FRMT-0)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; Attempting to allocate $T1
+; {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; $T1: not loaded in any register..
+; allocating $T1 to r0
+; tiny generated = 
+; tiny generated = move 0 r0
+;-------------------------------------------------------
+; ir node ;STOREI $T1 $L1! (FRMT-2)
+; reg state : {r0=$T1*, r1=nothing, r2=nothing, r3=nothing, }
+; attempting to ensure $T1
+; found $T1 in r0
+; ensuring $T1 use r0
+; tiny generated = 
+; Attempting to allocate $-1
+; {r0=$T1*, r1=nothing, r2=nothing, r3=nothing, }
+; $-1: not loaded in any register..
+; allocating $-1 to r1
+; tiny generated = 
+; Checking Liveness $T1, live out: [fibtext, input, eol, $L1, $L3, space, closebr]
+; $T1 is dead
+; evicting r0 for opr $T1
+; Checking Liveness $T1, live out: [fibtext, input, eol, $L1, $L3, space, closebr]
+; $T1 is dead
+; free: false, dirty:true, live: false
+; tiny generated = 
+; tiny generated = move r0 r1
+;-------------------------------------------------------
+; ir node ;WRITES input! (FRMT-6)
+; reg state : {r0=nothing, r1=$-1*, r2=nothing, r3=nothing, }
+; tiny generated = sys writes input
+;-------------------------------------------------------
+; ir node ;READI $L2! (FRMT-6)
+; reg state : {r0=nothing, r1=$-1*, r2=nothing, r3=nothing, }
+; Attempting to allocate $-2
+; {r0=nothing, r1=$-1*, r2=nothing, r3=nothing, }
+; $-2: not loaded in any register..
+; allocating $-2 to r0
+; tiny generated = 
+; tiny generated = sys readi r0
+;-------------------------------------------------------
+; ir node ;LABEL label1! (FRMT-8)
+; reg state : {r0=$-2*, r1=$-1*, r2=nothing, r3=nothing, }
+; tiny generated = label label1
+;-------------------------------------------------------
+; ir node ;EQI $L1 $L2 label2! (FRMT-14)
+; reg state : {r0=$-2*, r1=$-1*, r2=nothing, r3=nothing, }
+; attempting to ensure $-1
+; found $-1 in r1
+; ensuring $-1 use r1
+; attempting to ensure $-2
+; found $-2 in r0
+; ensuring $-2 use r0
+; tiny generated = 
+; tiny generated = 
+; Attempting to allocate $Tx
+; {r0=$-2*, r1=$-1*, r2=nothing, r3=nothing, }
+; $Tx: not loaded in any register..
+; allocating $Tx to r2
+; tiny generated = move r0 r2; cmpi r1 r2; jeq label2
+;-------------------------------------------------------
+; ir node ;WRITES fibtext! (FRMT-6)
+; reg state : {r0=$-2*, r1=$-1*, r2=$Tx, r3=nothing, }
+; tiny generated = sys writes fibtext
+;-------------------------------------------------------
+; ir node ;WRITEI $L1! (FRMT-6)
+; reg state : {r0=$-2*, r1=$-1*, r2=$Tx, r3=nothing, }
+; attempting to ensure $-1
+; found $-1 in r1
+; ensuring $-1 use r1
+; tiny generated = 
+; Checking Liveness $-1, live out: [fibtext, input, eol, $L1, $L2, $L3, space, closebr]
+; $-1 is dead
+; evicting r1 for opr $-1
+; Checking Liveness $-1, live out: [fibtext, input, eol, $L1, $L2, $L3, space, closebr]
+; $-1 is dead
+; free: false, dirty:true, live: false
+; tiny generated = 
+; tiny generated = sys writei r1
+;-------------------------------------------------------
+; ir node ;WRITES closebr! (FRMT-6)
+; reg state : {r0=$-2*, r1=nothing, r2=$Tx, r3=nothing, }
+; tiny generated = sys writes closebr
+;-------------------------------------------------------
+; ir node ;WRITES space! (FRMT-6)
+; reg state : {r0=$-2*, r1=nothing, r2=$Tx, r3=nothing, }
+; tiny generated = sys writes space
+;-------------------------------------------------------
+; ir node ;WRITEI $L3! (FRMT-6)
+; reg state : {r0=$-2*, r1=nothing, r2=$Tx, r3=nothing, }
+; attempting to ensure $-3
+; {r0=$-2*, r1=nothing, r2=$Tx, r3=nothing, }
+; $-3: not loaded in any register..
+; Attempting to allocate $-3
+; {r0=$-2*, r1=nothing, r2=$Tx, r3=nothing, }
+; $-3: not loaded in any register..
+; allocating $-3 to r1
+; ensuring $-3 gets r1
+; tiny generated = move $-3 r1 ; load ensure; 
+; Checking Liveness $-3, live out: [fibtext, input, eol, $L1, $L2, $L3, space, closebr]
+; $-3 is dead
+; evicting r1 for opr $-3
+; Checking Liveness $-3, live out: [fibtext, input, eol, $L1, $L2, $L3, space, closebr]
+; $-3 is dead
+; free: false, dirty:false, live: false
+; tiny generated = 
+; tiny generated = sys writei r1
+;-------------------------------------------------------
+; ir node ;WRITES eol! (FRMT-6)
+; reg state : {r0=$-2*, r1=nothing, r2=$Tx, r3=nothing, }
+; tiny generated = sys writes eol
+;-------------------------------------------------------
+; ir node ;STOREI 1 $T2! (FRMT-0)
+; reg state : {r0=$-2*, r1=nothing, r2=$Tx, r3=nothing, }
+; Attempting to allocate $T2
+; {r0=$-2*, r1=nothing, r2=$Tx, r3=nothing, }
+; $T2: not loaded in any register..
+; allocating $T2 to r1
+; tiny generated = 
+; tiny generated = move 1 r1
+;-------------------------------------------------------
+; ir node ;ADDI $L1 $T2 $T3! (FRMT-7)
+; reg state : {r0=$-2*, r1=$T2*, r2=$Tx, r3=nothing, }
+; attempting to ensure $-1
+; {r0=$-2*, r1=$T2*, r2=$Tx, r3=nothing, }
+; $-1: not loaded in any register..
+; Attempting to allocate $-1
+; {r0=$-2*, r1=$T2*, r2=$Tx, r3=nothing, }
+; $-1: not loaded in any register..
+; allocating $-1 to r2
+; ensuring $-1 gets r2
+; State {r0=$-2*, r1=$T2*, r2=$-1, r3=nothing, }
+; attempting to ensure $T2
+; found $T2 in r1
+; ensuring $T2 use r1
+; State {r0=$-2*, r1=$T2*, r2=$-1, r3=nothing, }
+; Attempting to allocate $T3
+; {r0=$-2*, r1=$T2*, r2=$-1, r3=nothing, }
+; $T3: not loaded in any register..
+; allocating $T3 to r3
+; State {r0=$-2*, r1=$T2*, r2=$-1, r3=$T3, }
+; tiny generated = move $-1 r2 ; load ensure; 
+; tiny generated = 
+; tiny generated = 
+; Checking Liveness $-1, live out: [fibtext, $T3, input, eol, $L2, $L3, space, closebr]
+; $-1 is dead
+; evicting r2 for opr $-1
+; Checking Liveness $-1, live out: [fibtext, $T3, input, eol, $L2, $L3, space, closebr]
+; $-1 is dead
+; free: false, dirty:false, live: false
+; tiny generated = 
+; Checking Liveness $T2, live out: [fibtext, $T3, input, eol, $L2, $L3, space, closebr]
+; $T2 is dead
+; evicting r1 for opr $T2
+; Checking Liveness $T2, live out: [fibtext, $T3, input, eol, $L2, $L3, space, closebr]
+; $T2 is dead
+; free: false, dirty:true, live: false
+; tiny generated = 
+; tiny generated = move r2 r3; addi r1 r3
+;-------------------------------------------------------
+; ir node ;STOREI $T3 $L1! (FRMT-2)
+; reg state : {r0=$-2*, r1=nothing, r2=nothing, r3=$T3*, }
+; attempting to ensure $T3
+; found $T3 in r3
+; ensuring $T3 use r3
+; tiny generated = 
+; Attempting to allocate $-1
+; {r0=$-2*, r1=nothing, r2=nothing, r3=$T3*, }
+; $-1: not loaded in any register..
+; allocating $-1 to r1
+; tiny generated = 
+; Checking Liveness $T3, live out: [fibtext, input, eol, $L1, $L2, $L3, space, closebr]
+; $T3 is dead
+; evicting r3 for opr $T3
+; Checking Liveness $T3, live out: [fibtext, input, eol, $L1, $L2, $L3, space, closebr]
+; $T3 is dead
+; free: false, dirty:true, live: false
+; tiny generated = 
+; tiny generated = move r3 r1
+;-------------------------------------------------------
+; ir node ;JUMP label1! (FRMT-15)
+; reg state : {r0=$-2*, r1=$-1*, r2=nothing, r3=nothing, }
+; tiny generated = jmp label1; 
+;-------------------------------------------------------
+; ir node ;LABEL label2! (FRMT-8)
+; reg state : {r0=$-2*, r1=$-1*, r2=nothing, r3=nothing, }
+; tiny generated = label label2
+;-------------------------------------------------------
+; ir node ;STOREI 0 $T4! (FRMT-0)
+; reg state : {r0=$-2*, r1=$-1*, r2=nothing, r3=nothing, }
+; Attempting to allocate $T4
+; {r0=$-2*, r1=$-1*, r2=nothing, r3=nothing, }
+; $T4: not loaded in any register..
+; allocating $T4 to r2
+; tiny generated = 
+; tiny generated = move 0 r2
+;-------------------------------------------------------
+; ir node ;STOREI $T4 $R! (FRMT-16)
+; reg state : {r0=$-2*, r1=$-1*, r2=$T4*, r3=nothing, }
+; attempting to ensure $T4
+; found $T4 in r2
+; ensuring $T4 use r2
+; tiny generated = 
+; tiny generated = move r2 $6
+;-------------------------------------------------------
+; ir node ;RET! (FRMT-9)
+; reg state : {r0=$-2*, r1=$-1*, r2=$T4*, r3=nothing, }
+; tiny generated = unlnk; ret
+; tiny generated = ; ;flushing registers; 
+; tiny generated = move r0 $-2; 
+; tiny generated = move r1 $-1; 
+; tiny generated = ;flush done; 
+str input "Please input an integer number: "
+str space " = "
+str eol "\n"
+str fibtext "fib("
+str closebr ")"
+push
+push r0
+push r1
+push r2
+push r3
+jsr main
+sys halt
+label main
+link 7
+move 0 r0
+move r0 $-2
+sys writes input
+sys readi r0
+label label1
+move r0 r2
+cmpi r1 r2
+jeq label2
+sys writes fibtext
+sys writei r1
+sys writes closebr
+sys writes space
+move $-3 r1 ; load ensure
+sys writei r1
+sys writes eol
+move 1 r1
+move $-1 r2 ; load ensure
+move r2 r3
+addi r1 r3
+move r3 r1
+jmp label1
+
+label label2
+move 0 r2
+move r2 $6
+unlnk
+ret
+;flushing registers
+move r0 $-2
+move r1 $-1
+;flush done
+
+
+

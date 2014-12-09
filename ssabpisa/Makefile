@@ -7,6 +7,8 @@ group:
 	@echo "ssabpisa"
 tiny:
 	g++ -o tiny tinyNew.C
+tiny4:
+	g++ -o tiny tiny4regs.C 
 compiler:
 	rm -rf build
 	mkdir build

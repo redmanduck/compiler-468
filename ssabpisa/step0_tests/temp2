@@ -1,0 +1,798 @@
+; setting temp link size to 11 for list scope ;LABEL F
+; setting temp link size to 5 for list scope ;LABEL main
+;IR code
+;LABEL F; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, eol, space, $P1]
+;LINK; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, eol, space, $P1]
+;STOREI 2 $T1; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, $T1, eol, space, $P1]
+;LEI $P1 $T1 label1; --- LIVEIN: [input, $T1, eol, space, $P1], LIVEOUT: [input, eol, space, $P1]
+;PUSH; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, eol, space, $P1]
+;STOREI 1 $T2; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [$T2, input, eol, space, $P1]
+;SUBI $P1 $T2 $T3; --- LIVEIN: [$T2, input, eol, space, $P1], LIVEOUT: [input, eol, space, $P1]
+;PUSH $T3; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, eol, space, $P1]
+;JSR F; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, eol, space, $P1]
+;POP; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, eol, space, $P1]
+;POP $T4; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, $T4, eol, space, $P1]
+;STOREI $T4 $L1; --- LIVEIN: [input, $T4, eol, space, $P1], LIVEOUT: [input, eol, $L1, space, $P1]
+;PUSH; --- LIVEIN: [input, $L1, eol, space, $P1], LIVEOUT: [input, eol, $L1, space, $P1]
+;STOREI 2 $T5; --- LIVEIN: [input, $L1, eol, space, $P1], LIVEOUT: [input, $T5, eol, $L1, space, $P1]
+;SUBI $P1 $T5 $T6; --- LIVEIN: [input, $T5, $L1, eol, space, $P1], LIVEOUT: [input, eol, $L1, space, $P1]
+;PUSH $T6; --- LIVEIN: [input, $L1, eol, space, $P1], LIVEOUT: [input, eol, $L1, space, $P1]
+;JSR F; --- LIVEIN: [input, $L1, eol, space, $P1], LIVEOUT: [input, eol, $L1, space, $P1]
+;POP; --- LIVEIN: [input, $L1, eol, space, $P1], LIVEOUT: [input, eol, $L1, space, $P1]
+;POP $T7; --- LIVEIN: [input, $L1, eol, space, $P1], LIVEOUT: [input, $T7, eol, $L1, space, $P1]
+;STOREI $T7 $L2; --- LIVEIN: [input, $T7, $L1, eol, space, $P1], LIVEOUT: [input, eol, $L1, $L2, space, $P1]
+;ADDI $L1 $L2 $T8; --- LIVEIN: [input, $L1, eol, $L2, space, $P1], LIVEOUT: [input, eol, $T8, space, $P1]
+;STOREI $T8 $R; --- LIVEIN: [input, eol, $T8, space, $P1], LIVEOUT: [input, eol, space, $P1]
+;RET; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, eol, space, $P1]
+;LABEL label1; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, eol, space, $P1]
+;STOREI 0 $T9; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, eol, $T9, space, $P1]
+;NEI $P1 $T9 label2; --- LIVEIN: [input, eol, $T9, space, $P1], LIVEOUT: [input, eol, space]
+;STOREI 0 $T10; --- LIVEIN: [input, eol, space], LIVEOUT: [input, $T10, eol, space]
+;STOREI $T10 $R; --- LIVEIN: [input, $T10, eol, space], LIVEOUT: [input, eol, space]
+;RET; --- LIVEIN: [input, eol, space], LIVEOUT: [input, eol, space]
+;JUMP label3; --- LIVEIN: [input, eol, space], LIVEOUT: [input, eol, space]
+;LABEL label2; --- LIVEIN: [input, eol, space], LIVEOUT: [input, eol, space]
+;STOREI 1 $T11; --- LIVEIN: [input, eol, space], LIVEOUT: [input, eol, $T11, space]
+;STOREI $T11 $R; --- LIVEIN: [input, eol, $T11, space], LIVEOUT: [input, eol, space]
+;RET; --- LIVEIN: [input, eol, space], LIVEOUT: [input, eol, space]
+;LABEL label3; --- LIVEIN: [input, eol, space], LIVEOUT: [input, eol, space]
+;LABEL main; --- LIVEIN: [eol, $L2, space], LIVEOUT: [eol, $L2, space]
+;LINK; --- LIVEIN: [eol, $L2, space], LIVEOUT: [eol, $L2, space]
+;STOREI 0 $T1; --- LIVEIN: [eol, $L2, space], LIVEOUT: [$T1, eol, $L2, space]
+;STOREI $T1 $L1; --- LIVEIN: [$T1, eol, $L2, space], LIVEOUT: [eol, $L1, $L2, space]
+;WRITES input; --- LIVEIN: [$L1, eol, $L2, space], LIVEOUT: [input, eol, $L1, $L2, space]
+;READI $L2; --- LIVEIN: [input, $L1, eol, $L2, space], LIVEOUT: [input, eol, $L1, space]
+;PUSH; --- LIVEIN: [input, $L1, eol, space], LIVEOUT: [input, eol, $L1, space]
+;PUSH $L1; --- LIVEIN: [input, $L1, eol, space], LIVEOUT: [input, eol, $L1, space]
+;JSR F; --- LIVEIN: [input, $L1, eol, space], LIVEOUT: [input, eol, $L1, space]
+;POP; --- LIVEIN: [input, $L1, eol, space], LIVEOUT: [input, eol, $L1, space]
+;POP $T2; --- LIVEIN: [input, $L1, eol, space], LIVEOUT: [$T2, input, eol, $L1, space]
+;STOREI $T2 $L3; --- LIVEIN: [$T2, input, $L1, eol, space], LIVEOUT: [input, eol, $L1, space]
+;STOREI 1 $T3; --- LIVEIN: [input, $L1, eol, space], LIVEOUT: [$T3, input, eol, $L1, space]
+;ADDI $L1 $T3 $T4; --- LIVEIN: [$T3, input, $L1, eol, space], LIVEOUT: [input, $T4, eol, space]
+;STOREI $T4 $L1; --- LIVEIN: [input, $T4, eol, space], LIVEOUT: [input, eol, space]
+;STOREI 0 $T5; --- LIVEIN: [input, eol, space], LIVEOUT: [input, $T5, eol, space]
+;STOREI $T5 $R; --- LIVEIN: [input, $T5, eol, space], LIVEOUT: [input, eol, space]
+;RET; --- LIVEIN: [input, eol, space], LIVEOUT: [input, eol, space]
+;----------------- tiny ------------------------
+;-------------------------------------------------------
+; ir node ;LABEL F! (FRMT-8)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; tiny generated = label F
+;-------------------------------------------------------
+; ir node ;LINK! (FRMT-9)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;STOREI 2 $T1! (FRMT-0)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; Attempting to allocate $T1
+; {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; $T1: not loaded in any register..
+; allocating $T1 to r0
+; tiny generated = 
+; tiny generated = move 2 r0
+;-------------------------------------------------------
+; ir node ;LEI $P1 $T1 label1! (FRMT-13)
+; reg state : {r0=$T1*, r1=nothing, r2=nothing, r3=nothing, }
+; tiny generated = cmpi $6 r0; jle label1
+;-------------------------------------------------------
+; ir node ;PUSH! (FRMT-9)
+; reg state : {r0=$T1*, r1=nothing, r2=nothing, r3=nothing, }
+; tiny generated = ; ;flushing registers; 
+; tiny generated = ;flush done; 
+; tiny generated = push
+;-------------------------------------------------------
+; ir node ;STOREI 1 $T2! (FRMT-0)
+; reg state : {r0=$T1*, r1=nothing, r2=nothing, r3=nothing, }
+; Attempting to allocate $T2
+; {r0=$T1*, r1=nothing, r2=nothing, r3=nothing, }
+; $T2: not loaded in any register..
+; allocating $T2 to r1
+; tiny generated = 
+; tiny generated = move 1 r1
+;-------------------------------------------------------
+; ir node ;SUBI $P1 $T2 $T3! (FRMT-7)
+; reg state : {r0=$T1*, r1=$T2*, r2=nothing, r3=nothing, }
+; attempting to ensure $6
+; {r0=$T1*, r1=$T2*, r2=nothing, r3=nothing, }
+; $6: not loaded in any register..
+; Attempting to allocate $6
+; {r0=$T1*, r1=$T2*, r2=nothing, r3=nothing, }
+; $6: not loaded in any register..
+; allocating $6 to r2
+; ensuring $6 gets r2
+; attempting to ensure $T2
+; found $T2 in r1
+; ensuring $T2 use r1
+; Attempting to allocate $T3
+; {r0=$T1*, r1=$T2*, r2=$6, r3=nothing, }
+; $T3: not loaded in any register..
+; allocating $T3 to r3
+; tiny generated = move $6 r2 ; load ensure; 
+; tiny generated = 
+; tiny generated = 
+; Checking Liveness $6
+; live out: [input, eol, space, $P1]
+; map bijection search result: $P1
+; $6 is dead
+; evicting r2 for opr $6
+; Checking Liveness $6
+; live out: [input, eol, space, $P1]
+; map bijection search result: $P1
+; $6 is dead
+; free: false, dirty:false, live: false
+; tiny generated = 
+; Checking Liveness $T2
+; live out: [input, eol, space, $P1]
+; map bijection search result: null
+; $T2 is dead
+; evicting r1 for opr $T2
+; Checking Liveness $T2
+; live out: [input, eol, space, $P1]
+; map bijection search result: null
+; $T2 is dead
+; free: false, dirty:true, live: false
+; tiny generated = 
+; tiny generated = move r2 r3; subi r1 r3
+;-------------------------------------------------------
+; ir node ;PUSH $T3! (FRMT-18)
+; reg state : {r0=$T1*, r1=nothing, r2=nothing, r3=$T3*, }
+; attempting to ensure $T3
+; found $T3 in r3
+; ensuring $T3 use r3
+; tiny generated = 
+; tiny generated = push r3
+;-------------------------------------------------------
+; ir node ;JSR F! (FRMT-15)
+; reg state : {r0=$T1*, r1=nothing, r2=nothing, r3=$T3*, }
+; tiny generated = push r0; push r1; push r2; push r3; jsr F; pop r3; pop r2; pop r1; pop r0
+;-------------------------------------------------------
+; ir node ;POP! (FRMT-9)
+; reg state : {r0=$T1*, r1=nothing, r2=nothing, r3=$T3*, }
+; tiny generated = pop
+;-------------------------------------------------------
+; ir node ;POP $T4! (FRMT-18)
+; reg state : {r0=$T1*, r1=nothing, r2=nothing, r3=$T3*, }
+; Attempting to allocate $T4
+; {r0=$T1*, r1=nothing, r2=nothing, r3=$T3*, }
+; $T4: not loaded in any register..
+; allocating $T4 to r1
+; tiny generated = 
+; tiny generated = pop r1
+;-------------------------------------------------------
+; ir node ;STOREI $T4 $L1! (FRMT-2)
+; reg state : {r0=$T1*, r1=$T4*, r2=nothing, r3=$T3*, }
+; attempting to ensure $T4
+; found $T4 in r1
+; ensuring $T4 use r1
+; tiny generated = 
+; Attempting to allocate $-1
+; {r0=$T1*, r1=$T4*, r2=nothing, r3=$T3*, }
+; $-1: not loaded in any register..
+; allocating $-1 to r2
+; tiny generated = 
+; Checking Liveness $T4
+; live out: [input, eol, $L1, space, $P1]
+; map bijection search result: null
+; $T4 is dead
+; evicting r1 for opr $T4
+; Checking Liveness $T4
+; live out: [input, eol, $L1, space, $P1]
+; map bijection search result: null
+; $T4 is dead
+; free: false, dirty:true, live: false
+; tiny generated = 
+; tiny generated = move r1 r2
+;-------------------------------------------------------
+; ir node ;PUSH! (FRMT-9)
+; reg state : {r0=$T1*, r1=nothing, r2=$-1*, r3=$T3*, }
+; tiny generated = ; ;flushing registers; 
+; tiny generated = move r2 $-1; 
+; tiny generated = ;flush done; 
+; tiny generated = push
+;-------------------------------------------------------
+; ir node ;STOREI 2 $T5! (FRMT-0)
+; reg state : {r0=$T1*, r1=nothing, r2=$-1*, r3=$T3*, }
+; Attempting to allocate $T5
+; {r0=$T1*, r1=nothing, r2=$-1*, r3=$T3*, }
+; $T5: not loaded in any register..
+; allocating $T5 to r1
+; tiny generated = 
+; tiny generated = move 2 r1
+;-------------------------------------------------------
+; ir node ;SUBI $P1 $T5 $T6! (FRMT-7)
+; reg state : {r0=$T1*, r1=$T5*, r2=$-1*, r3=$T3*, }
+; attempting to ensure $6
+; {r0=$T1*, r1=$T5*, r2=$-1*, r3=$T3*, }
+; $6: not loaded in any register..
+; Attempting to allocate $6
+; {r0=$T1*, r1=$T5*, r2=$-1*, r3=$T3*, }
+; $6: not loaded in any register..
+; No free register!
+; Most distant used {r0=1418070164866,r1=1418070164876,r2=1418070164875,r3=1418070164870,}
+; Chose r0
+; evicting r0 for opr $T1
+; Checking Liveness $T1
+; live out: [input, eol, $L1, space, $P1]
+; map bijection search result: null
+; $T1 is dead
+; free: false, dirty:true, live: false
+; allocating $6 to r0
+; ensuring $6 gets r0
+; attempting to ensure $T5
+; found $T5 in r1
+; ensuring $T5 use r1
+; Attempting to allocate $T6
+; {r0=$6, r1=$T5*, r2=$-1*, r3=$T3*, }
+; $T6: not loaded in any register..
+; No free register!
+; Most distant used {r0=1418070164877,r1=1418070164876,r2=1418070164875,r3=1418070164870,}
+; Chose r3
+; evicting r3 for opr $T3
+; Checking Liveness $T3
+; live out: [input, eol, $L1, space, $P1]
+; map bijection search result: null
+; $T3 is dead
+; free: false, dirty:true, live: false
+; allocating $T6 to r3
+; tiny generated = move $6 r0 ; load ensure; 
+; tiny generated = 
+; tiny generated = 
+; Checking Liveness $6
+; live out: [input, eol, $L1, space, $P1]
+; map bijection search result: $P1
+; $6 is dead
+; evicting r0 for opr $6
+; Checking Liveness $6
+; live out: [input, eol, $L1, space, $P1]
+; map bijection search result: $P1
+; $6 is dead
+; free: false, dirty:false, live: false
+; tiny generated = 
+; Checking Liveness $T5
+; live out: [input, eol, $L1, space, $P1]
+; map bijection search result: null
+; $T5 is dead
+; evicting r1 for opr $T5
+; Checking Liveness $T5
+; live out: [input, eol, $L1, space, $P1]
+; map bijection search result: null
+; $T5 is dead
+; free: false, dirty:true, live: false
+; tiny generated = 
+; tiny generated = move r0 r3; subi r1 r3
+;-------------------------------------------------------
+; ir node ;PUSH $T6! (FRMT-18)
+; reg state : {r0=nothing, r1=nothing, r2=$-1*, r3=$T6*, }
+; attempting to ensure $T6
+; found $T6 in r3
+; ensuring $T6 use r3
+; tiny generated = 
+; tiny generated = push r3
+;-------------------------------------------------------
+; ir node ;JSR F! (FRMT-15)
+; reg state : {r0=nothing, r1=nothing, r2=$-1*, r3=$T6*, }
+; tiny generated = push r0; push r1; push r2; push r3; jsr F; pop r3; pop r2; pop r1; pop r0
+;-------------------------------------------------------
+; ir node ;POP! (FRMT-9)
+; reg state : {r0=nothing, r1=nothing, r2=$-1*, r3=$T6*, }
+; tiny generated = pop
+;-------------------------------------------------------
+; ir node ;POP $T7! (FRMT-18)
+; reg state : {r0=nothing, r1=nothing, r2=$-1*, r3=$T6*, }
+; Attempting to allocate $T7
+; {r0=nothing, r1=nothing, r2=$-1*, r3=$T6*, }
+; $T7: not loaded in any register..
+; allocating $T7 to r0
+; tiny generated = 
+; tiny generated = pop r0
+;-------------------------------------------------------
+; ir node ;STOREI $T7 $L2! (FRMT-2)
+; reg state : {r0=$T7*, r1=nothing, r2=$-1*, r3=$T6*, }
+; attempting to ensure $T7
+; found $T7 in r0
+; ensuring $T7 use r0
+; tiny generated = 
+; Attempting to allocate $-2
+; {r0=$T7*, r1=nothing, r2=$-1*, r3=$T6*, }
+; $-2: not loaded in any register..
+; allocating $-2 to r1
+; tiny generated = 
+; Checking Liveness $T7
+; live out: [input, eol, $L1, $L2, space, $P1]
+; map bijection search result: null
+; $T7 is dead
+; evicting r0 for opr $T7
+; Checking Liveness $T7
+; live out: [input, eol, $L1, $L2, space, $P1]
+; map bijection search result: null
+; $T7 is dead
+; free: false, dirty:true, live: false
+; tiny generated = 
+; tiny generated = move r0 r1
+;-------------------------------------------------------
+; ir node ;ADDI $L1 $L2 $T8! (FRMT-3)
+; reg state : {r0=nothing, r1=$-2*, r2=$-1*, r3=$T6*, }
+; attempting to ensure $-1
+; found $-1 in r2
+; ensuring $-1 use r2
+; attempting to ensure $-2
+; found $-2 in r1
+; ensuring $-2 use r1
+; tiny generated = 
+; tiny generated = 
+; Attempting to allocate $T8
+; {r0=nothing, r1=$-2*, r2=$-1*, r3=$T6*, }
+; $T8: not loaded in any register..
+; allocating $T8 to r0
+; tiny generated = 
+; Checking Liveness $-1
+; live out: [input, eol, $T8, space, $P1]
+; map bijection search result: $L1
+; $-1 is dead
+; evicting r2 for opr $-1
+; Checking Liveness $-1
+; live out: [input, eol, $T8, space, $P1]
+; map bijection search result: $L1
+; $-1 is dead
+; free: false, dirty:true, live: false
+; tiny generated = 
+; Checking Liveness $-2
+; live out: [input, eol, $T8, space, $P1]
+; map bijection search result: $L2
+; $-2 is dead
+; evicting r1 for opr $-2
+; Checking Liveness $-2
+; live out: [input, eol, $T8, space, $P1]
+; map bijection search result: $L2
+; $-2 is dead
+; free: false, dirty:true, live: false
+; tiny generated = 
+; tiny generated = move r2 r0; addi r1 r0
+;-------------------------------------------------------
+; ir node ;STOREI $T8 $R! (FRMT-16)
+; reg state : {r0=$T8*, r1=nothing, r2=nothing, r3=$T6*, }
+; attempting to ensure $T8
+; found $T8 in r0
+; ensuring $T8 use r0
+; tiny generated = 
+; tiny generated = move r0 $7
+;-------------------------------------------------------
+; ir node ;RET! (FRMT-9)
+; reg state : {r0=$T8*, r1=nothing, r2=nothing, r3=$T6*, }
+; tiny generated = unlnk; ret
+; tiny generated = ; ;flushing registers; 
+; tiny generated = ;flush done; 
+;-------------------------------------------------------
+; ir node ;LABEL label1! (FRMT-8)
+; reg state : {r0=$T8*, r1=nothing, r2=nothing, r3=$T6*, }
+; tiny generated = label label1
+;-------------------------------------------------------
+; ir node ;STOREI 0 $T9! (FRMT-0)
+; reg state : {r0=$T8*, r1=nothing, r2=nothing, r3=$T6*, }
+; Attempting to allocate $T9
+; {r0=$T8*, r1=nothing, r2=nothing, r3=$T6*, }
+; $T9: not loaded in any register..
+; allocating $T9 to r1
+; tiny generated = 
+; tiny generated = move 0 r1
+;-------------------------------------------------------
+; ir node ;NEI $P1 $T9 label2! (FRMT-13)
+; reg state : {r0=$T8*, r1=$T9*, r2=nothing, r3=$T6*, }
+; tiny generated = cmpi $6 r1; jne label2
+;-------------------------------------------------------
+; ir node ;STOREI 0 $T10! (FRMT-0)
+; reg state : {r0=$T8*, r1=$T9*, r2=nothing, r3=$T6*, }
+; Attempting to allocate $T10
+; {r0=$T8*, r1=$T9*, r2=nothing, r3=$T6*, }
+; $T10: not loaded in any register..
+; allocating $T10 to r2
+; tiny generated = 
+; tiny generated = move 0 r2
+;-------------------------------------------------------
+; ir node ;STOREI $T10 $R! (FRMT-16)
+; reg state : {r0=$T8*, r1=$T9*, r2=$T10*, r3=$T6*, }
+; attempting to ensure $T10
+; found $T10 in r2
+; ensuring $T10 use r2
+; tiny generated = 
+; tiny generated = move r2 $7
+;-------------------------------------------------------
+; ir node ;RET! (FRMT-9)
+; reg state : {r0=$T8*, r1=$T9*, r2=$T10*, r3=$T6*, }
+; tiny generated = unlnk; ret
+; tiny generated = ; ;flushing registers; 
+; tiny generated = ;flush done; 
+;-------------------------------------------------------
+; ir node ;JUMP label3! (FRMT-15)
+; reg state : {r0=$T8*, r1=$T9*, r2=$T10*, r3=$T6*, }
+; tiny generated = jmp label3; 
+;-------------------------------------------------------
+; ir node ;LABEL label2! (FRMT-8)
+; reg state : {r0=$T8*, r1=$T9*, r2=$T10*, r3=$T6*, }
+; tiny generated = label label2
+;-------------------------------------------------------
+; ir node ;STOREI 1 $T11! (FRMT-0)
+; reg state : {r0=$T8*, r1=$T9*, r2=$T10*, r3=$T6*, }
+; Attempting to allocate $T11
+; {r0=$T8*, r1=$T9*, r2=$T10*, r3=$T6*, }
+; $T11: not loaded in any register..
+; No free register!
+; Most distant used {r0=1418070164883,r1=1418070164886,r2=1418070164887,r3=1418070164878,}
+; Chose r3
+; evicting r3 for opr $T6
+; Checking Liveness $T6
+; live out: [input, eol, $T11, space]
+; map bijection search result: null
+; $T6 is dead
+; free: false, dirty:true, live: false
+; allocating $T11 to r3
+; tiny generated = 
+; tiny generated = move 1 r3
+;-------------------------------------------------------
+; ir node ;STOREI $T11 $R! (FRMT-16)
+; reg state : {r0=$T8*, r1=$T9*, r2=$T10*, r3=$T11*, }
+; attempting to ensure $T11
+; found $T11 in r3
+; ensuring $T11 use r3
+; tiny generated = 
+; tiny generated = move r3 $7
+;-------------------------------------------------------
+; ir node ;RET! (FRMT-9)
+; reg state : {r0=$T8*, r1=$T9*, r2=$T10*, r3=$T11*, }
+; tiny generated = unlnk; ret
+; tiny generated = ; ;flushing registers; 
+; tiny generated = ;flush done; 
+;-------------------------------------------------------
+; ir node ;LABEL label3! (FRMT-8)
+; reg state : {r0=$T8*, r1=$T9*, r2=$T10*, r3=$T11*, }
+; tiny generated = label label3
+;-------------------------------------------------------
+; ir node ;LABEL main! (FRMT-8)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; tiny generated = label main
+;-------------------------------------------------------
+; ir node ;LINK! (FRMT-9)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+;-------------------------------------------------------
+; ir node ;STOREI 0 $T1! (FRMT-0)
+; reg state : {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; Attempting to allocate $T1
+; {r0=nothing, r1=nothing, r2=nothing, r3=nothing, }
+; $T1: not loaded in any register..
+; allocating $T1 to r0
+; tiny generated = 
+; tiny generated = move 0 r0
+;-------------------------------------------------------
+; ir node ;STOREI $T1 $L1! (FRMT-2)
+; reg state : {r0=$T1*, r1=nothing, r2=nothing, r3=nothing, }
+; attempting to ensure $T1
+; found $T1 in r0
+; ensuring $T1 use r0
+; tiny generated = 
+; Attempting to allocate $-1
+; {r0=$T1*, r1=nothing, r2=nothing, r3=nothing, }
+; $-1: not loaded in any register..
+; allocating $-1 to r1
+; tiny generated = 
+; Checking Liveness $T1
+; live out: [eol, $L1, $L2, space]
+; map bijection search result: null
+; $T1 is dead
+; evicting r0 for opr $T1
+; Checking Liveness $T1
+; live out: [eol, $L1, $L2, space]
+; map bijection search result: null
+; $T1 is dead
+; free: false, dirty:true, live: false
+; tiny generated = 
+; tiny generated = move r0 r1
+;-------------------------------------------------------
+; ir node ;WRITES input! (FRMT-6)
+; reg state : {r0=nothing, r1=$-1*, r2=nothing, r3=nothing, }
+; tiny generated = sys writes input
+;-------------------------------------------------------
+; ir node ;READI $L2! (FRMT-6)
+; reg state : {r0=nothing, r1=$-1*, r2=nothing, r3=nothing, }
+; Attempting to allocate $-2
+; {r0=nothing, r1=$-1*, r2=nothing, r3=nothing, }
+; $-2: not loaded in any register..
+; allocating $-2 to r0
+; tiny generated = 
+; tiny generated = sys readi r0
+;-------------------------------------------------------
+; ir node ;PUSH! (FRMT-9)
+; reg state : {r0=$-2*, r1=$-1*, r2=nothing, r3=nothing, }
+; tiny generated = ; ;flushing registers; 
+; tiny generated = move r0 $-2; 
+; tiny generated = move r1 $-1; 
+; tiny generated = ;flush done; 
+; tiny generated = push
+;-------------------------------------------------------
+; ir node ;PUSH $L1! (FRMT-6)
+; reg state : {r0=$-2*, r1=$-1*, r2=nothing, r3=nothing, }
+; tiny generated = push $-1
+;-------------------------------------------------------
+; ir node ;JSR F! (FRMT-15)
+; reg state : {r0=$-2*, r1=$-1*, r2=nothing, r3=nothing, }
+; tiny generated = push r0; push r1; push r2; push r3; jsr F; pop r3; pop r2; pop r1; pop r0
+;-------------------------------------------------------
+; ir node ;POP! (FRMT-9)
+; reg state : {r0=$-2*, r1=$-1*, r2=nothing, r3=nothing, }
+; tiny generated = pop
+;-------------------------------------------------------
+; ir node ;POP $T2! (FRMT-18)
+; reg state : {r0=$-2*, r1=$-1*, r2=nothing, r3=nothing, }
+; Attempting to allocate $T2
+; {r0=$-2*, r1=$-1*, r2=nothing, r3=nothing, }
+; $T2: not loaded in any register..
+; allocating $T2 to r2
+; tiny generated = 
+; tiny generated = pop r2
+;-------------------------------------------------------
+; ir node ;STOREI $T2 $L3! (FRMT-2)
+; reg state : {r0=$-2*, r1=$-1*, r2=$T2*, r3=nothing, }
+; attempting to ensure $T2
+; found $T2 in r2
+; ensuring $T2 use r2
+; tiny generated = 
+; Attempting to allocate $-3
+; {r0=$-2*, r1=$-1*, r2=$T2*, r3=nothing, }
+; $-3: not loaded in any register..
+; allocating $-3 to r3
+; tiny generated = 
+; Checking Liveness $T2
+; live out: [input, eol, $L1, space]
+; map bijection search result: null
+; $T2 is dead
+; evicting r2 for opr $T2
+; Checking Liveness $T2
+; live out: [input, eol, $L1, space]
+; map bijection search result: null
+; $T2 is dead
+; free: false, dirty:true, live: false
+; tiny generated = 
+; tiny generated = move r2 r3
+;-------------------------------------------------------
+; ir node ;STOREI 1 $T3! (FRMT-0)
+; reg state : {r0=$-2*, r1=$-1*, r2=nothing, r3=$-3*, }
+; Attempting to allocate $T3
+; {r0=$-2*, r1=$-1*, r2=nothing, r3=$-3*, }
+; $T3: not loaded in any register..
+; allocating $T3 to r2
+; tiny generated = 
+; tiny generated = move 1 r2
+;-------------------------------------------------------
+; ir node ;ADDI $L1 $T3 $T4! (FRMT-7)
+; reg state : {r0=$-2*, r1=$-1*, r2=$T3*, r3=$-3*, }
+; attempting to ensure $-1
+; found $-1 in r1
+; ensuring $-1 use r1
+; attempting to ensure $T3
+; found $T3 in r2
+; ensuring $T3 use r2
+; Attempting to allocate $T4
+; {r0=$-2*, r1=$-1*, r2=$T3*, r3=$-3*, }
+; $T4: not loaded in any register..
+; No free register!
+; Most distant used {r0=1418070164892,r1=1418070164891,r2=1418070164895,r3=1418070164895,}
+; Chose r1
+; evicting r1 for opr $-1
+; Checking Liveness $-1
+; live out: [input, $T4, eol, space]
+; map bijection search result: $L1
+; $-1 is dead
+; free: false, dirty:true, live: false
+; allocating $T4 to r1
+; tiny generated = 
+; tiny generated = 
+; tiny generated = 
+; Checking Liveness $-1
+; live out: [input, $T4, eol, space]
+; map bijection search result: $L1
+; $-1 is dead
+; evicting r1 for opr $T4
+; Checking Liveness $T4
+; live out: [input, $T4, eol, space]
+; $T4 is live
+; free: false, dirty:true, live: true
+; spilling r1
+; tiny generated = move r1 $6 ; spill $T4; 
+; Checking Liveness $T3
+; live out: [input, $T4, eol, space]
+; map bijection search result: null
+; $T3 is dead
+; evicting r2 for opr $T3
+; Checking Liveness $T3
+; live out: [input, $T4, eol, space]
+; map bijection search result: null
+; $T3 is dead
+; free: false, dirty:true, live: false
+; tiny generated = 
+; tiny generated = move r1 r1; addi r2 r1
+;-------------------------------------------------------
+; ir node ;STOREI $T4 $L1! (FRMT-2)
+; reg state : {r0=$-2*, r1=nothing, r2=nothing, r3=$-3*, }
+; attempting to ensure $T4
+; {r0=$-2*, r1=nothing, r2=nothing, r3=$-3*, }
+; $T4: not loaded in any register..
+; Attempting to allocate $T4
+; {r0=$-2*, r1=nothing, r2=nothing, r3=$-3*, }
+; $T4: not loaded in any register..
+; allocating $T4 to r1
+; ensuring $T4 gets r1
+; tiny generated = move $6 r1 ; load ensure; 
+; Attempting to allocate $-1
+; {r0=$-2*, r1=$T4, r2=nothing, r3=$-3*, }
+; $-1: not loaded in any register..
+; allocating $-1 to r2
+; tiny generated = 
+; Checking Liveness $T4
+; live out: [input, eol, space]
+; map bijection search result: null
+; $T4 is dead
+; evicting r1 for opr $T4
+; Checking Liveness $T4
+; live out: [input, eol, space]
+; map bijection search result: null
+; $T4 is dead
+; free: false, dirty:false, live: false
+; tiny generated = 
+; tiny generated = move r1 r2
+;-------------------------------------------------------
+; ir node ;STOREI 0 $T5! (FRMT-0)
+; reg state : {r0=$-2*, r1=nothing, r2=$-1*, r3=$-3*, }
+; Attempting to allocate $T5
+; {r0=$-2*, r1=nothing, r2=$-1*, r3=$-3*, }
+; $T5: not loaded in any register..
+; allocating $T5 to r1
+; tiny generated = 
+; tiny generated = move 0 r1
+;-------------------------------------------------------
+; ir node ;STOREI $T5 $R! (FRMT-16)
+; reg state : {r0=$-2*, r1=$T5*, r2=$-1*, r3=$-3*, }
+; attempting to ensure $T5
+; found $T5 in r1
+; ensuring $T5 use r1
+; tiny generated = 
+; tiny generated = move r1 $7
+;-------------------------------------------------------
+; ir node ;RET! (FRMT-9)
+; reg state : {r0=$-2*, r1=$T5*, r2=$-1*, r3=$-3*, }
+; tiny generated = unlnk; ret
+; tiny generated = ; ;flushing registers; 
+; tiny generated = move r0 $-2; 
+; tiny generated = move r2 $-1; 
+; tiny generated = move r3 $-3; 
+; tiny generated = ;flush done; 
+str input "Please input an integer number: "
+str space " "
+str eol "\n"
+push
+push r0
+push r1
+push r2
+push r3
+jsr main
+sys halt
+label F
+link 13
+move 2 r0
+cmpi $6 r0
+jle label1
+
+;flushing registers
+;flush done
+push
+move 1 r1
+move $6 r2 ; load ensure
+move r2 r3
+subi r1 r3
+push r3
+push r0
+push r1
+push r2
+push r3
+jsr F
+pop r3
+pop r2
+pop r1
+pop r0
+pop
+pop r1
+move r1 r2
+
+;flushing registers
+move r2 $-1
+;flush done
+push
+move 2 r1
+move $6 r0 ; load ensure
+move r0 r3
+subi r1 r3
+push r3
+push r0
+push r1
+push r2
+push r3
+jsr F
+pop r3
+pop r2
+pop r1
+pop r0
+pop
+pop r0
+move r0 r1
+move r2 r0
+addi r1 r0
+move r0 $7
+unlnk
+ret
+;flushing registers
+;flush done
+
+label label1
+move 0 r1
+cmpi $6 r1
+jne label2
+move 0 r2
+move r2 $7
+unlnk
+ret
+;flushing registers
+;flush done
+
+jmp label3
+
+label label2
+move 1 r3
+move r3 $7
+unlnk
+ret
+;flushing registers
+;flush done
+
+label label3
+label main
+link 8
+move 0 r0    
+move r0 r1   ; i := 0
+sys writes input
+sys readi r0    ;r0 := input
+
+;flushing registers
+move r0 $-2     ;input --> Tx
+move r1 $-1	;i --> Ty
+;flush done
+push
+push $-1      ; param = Ty
+push r0
+push r1
+push r2
+push r3
+jsr F
+pop r3
+pop r2
+pop r1
+pop r0
+pop
+pop r2          ;r2 as rvalue
+move r2 r3	;r2 ---> r3 (r3 is what)
+move 1 r2	
+move r1 $6 ; spill $T4  
+move r1 r1
+addi r2 r1
+move $6 r1 ; load ensure
+move r1 r2
+move 0 r1
+move r1 $7
+unlnk
+ret
+;flushing registers
+move r0 $-2
+move r2 $-1
+move r3 $-3
+;flush done
+
+
+
