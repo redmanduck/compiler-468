@@ -18,51 +18,41 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-import java.util.Hashtable;
-
 
 public class TinyActivationRecord {
-	private static int stack_growth_count = 1; 
-	private static int local_var_count = -1;
-	public static Hashtable<String, Integer> ParameterStackMap = new Hashtable<String, Integer>(); 
-	public static Hashtable<String, Integer> LocalStackMap = new Hashtable<String, Integer>(); //local variable to stack
+	private static int param_count = 0; 
+	private static int local_var_count = 0;
+	private static int register_count = 0;
+
 	
-	public static void assignLocalVariable(String name) {
-		LocalStackMap.put(name, local_var_count);
-		local_var_count--;
+	public static String getParameter(String name){
+		//GIVEN $P1 returns $1
+		String j = name.replace("$P", "");
+		int num = Integer.parseInt(j);
+		if(num > param_count) param_count = num;
+		
+		return "$" + (num + register_count + 1);
 	}
 	
-	public static void assignParameter(String name){
-		ParameterStackMap.put(name, ++stack_growth_count);
-	}
-	
-	public static Integer getParameter(String name){
-		if(!ParameterStackMap.containsKey(name)){
-			assignParameter(name);
-		}
-		return ParameterStackMap.get(name);
-	}
-	
-	public static Integer getLocalVariable(String name){
-		if(!LocalStackMap.containsKey(name)){
-			   //if its not already in the Stack Map
-			   //we put it there 
-			   assignLocalVariable(name);
-		}
-		return LocalStackMap.get(name);
+	public static String getLocalVariable(String name){
+		//GIVEN $L1 returns $-1
+		String j = name.replace("$L", "");
+		int num = Integer.parseInt(j);
+		if(num > local_var_count) local_var_count = num;
+		return "$-" + num;
 	}
 	public static void saveRegisters(int increm){
-		stack_growth_count += increm;
+		register_count += increm;
+		
 	}
 	
 	public static int getReturnStackAddress(){
-		return stack_growth_count + 1;
+		return param_count + register_count + 2;
 	}
 	
 	public static void reset(){
-		LocalStackMap.clear();
-		ParameterStackMap.clear();
-		stack_growth_count = 1;
-		local_var_count = -1;
+		param_count =0;
+		local_var_count = 0;
+		register_count = 0;
 	}
 }

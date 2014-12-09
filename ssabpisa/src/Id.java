@@ -60,11 +60,11 @@ public class Id {
    public String getTiny(){
 	   if(parameter_code != null){
 		   //parameter
-		   return "$" + TinyActivationRecord.getParameter(name); 
+		   return TinyActivationRecord.getParameter(this.toString()); 
 	   }
 	   if(non_global_code != null){
 		   //local variable
-		   return "$" + TinyActivationRecord.getLocalVariable(name);
+		   return TinyActivationRecord.getLocalVariable(this.toString());
 	   }
 	   return name;
    }
