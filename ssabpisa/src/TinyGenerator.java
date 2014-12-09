@@ -401,13 +401,13 @@ public class TinyGenerator {
 			String f1 = getField(ircode, 1);
 			String f2 = getField(ircode, 2);
 
+
+			//TODO: in some case its not doing ensure correctly or something
 			Register T1 = ensure(f1, irn.LIVE_OUT, CodeBuffer);
 			Register T2 = ensure(f2, irn.LIVE_OUT, CodeBuffer);
 
-			String asms = possible_instructions[0].getName() + " "
-					+ T1.toTiny() + " " + T2.toTiny() + "\n";
-			asms += possible_instructions[1].getName() + " "
-					+ getField(ircode, 3);
+			String asms = possible_instructions[0].getName() + " " + T1.toTiny() + " " + T2.toTiny() + "\n";
+			asms += possible_instructions[1].getName() + " " + getField(ircode, 3);
 
 			CodeBuffer.add(asms);
 
@@ -651,7 +651,9 @@ public class TinyGenerator {
 				String memloc = TinyActivationRecord.getStackRef(
 						RegisterFile[j].opr, LCSize);
 				G.add(ISA.move.getName() + " r" + j + " " + memloc + "\n");
+				RegisterFile[j].clear();
 			}
+
 		}
 
 		G.add(";Flush done\n");

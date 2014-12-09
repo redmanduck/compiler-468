@@ -1,0 +1,151 @@
+;IR code
+;LABEL flyduck
+;LINK 
+;STOREI 2 $T1
+;MULTI $P1 $T1 $T2
+;STOREI $T2 $L1
+;WRITES yeye
+;WRITEI $L1
+;WRITES eol
+;STOREI $L1 $T3
+;STOREI $T3 $R
+;RET
+;LABEL main
+;LINK 
+;READI $L1
+;STOREI 10 $T1
+;LTI $L1 $T1 label1
+;WRITES terminat
+;WRITES eol
+;STOREI 1 $T2
+;STOREI $T2 $T3
+;STOREI $T3 $R
+;RET
+;LABEL label1
+;LABEL label2
+;STOREI 10 $T4
+;GEI $L1 $T4 label3
+;STOREI 1 $T5
+;ADDI $L1 $T5 $T6
+;STOREI $T6 $L1
+;WRITES tvc
+;WRITEI $L1
+;WRITES eol
+;PUSH 
+;PUSH $L1
+;JSR flyduck
+;POP 
+;POP $T7
+;STOREI $T7 $L2
+;WRITES jsd
+;WRITEI $L2
+;WRITES eol
+;JUMP label2
+;LABEL label3
+;WRITEI $L1
+;STOREI 0 $T8
+;STOREI $T8 $T9
+;STOREI $T9 $R
+;RET
+;tiny code
+str eol "\n"
+str tvc "------ Iteration c = "
+str yeye "Peide Ye saw duck flying at speed: "
+str jsd "JSD saw duck flying at speed = "
+str terminat "Duck is dead. Its not flying. Thanks!"
+push
+push r0
+push r1
+push r2
+push r3
+jsr main
+sys halt
+label flyduck 
+link 10
+move $-2 r0
+move 2 r0
+move $6 r1
+move $-3 r2
+move r1 r2
+muli r0 r2
+move $-1 r0
+move r2 r0
+sys writes yeye
+sys writei r0
+sys writes eol
+move $-4 r1
+move r0 r1
+move r1 $7
+unlnk
+ret
+label main 
+link 11
+move $-1 r0
+sys readi r0
+move $-3 r1
+move 10 r1
+cmpi r0 r1
+move r0 $-1
+move r1 $-3
+jlt label1
+sys writes terminat
+sys writes eol
+move $-4 r0
+move 1 r0
+move $-5 r1
+move r0 r1
+move r1 $6
+unlnk
+ret
+label label1 
+label label2 
+move $-6 r0
+move 10 r0
+move $-1 r1
+cmpi r1 r0
+move r0 $-6
+move r1 $-1
+jge label3
+move $-7 r0
+move 1 r0
+move $-1 r1
+move $-8 r2
+move r1 r2
+addi r0 r2
+move $-1 r0
+move r2 r0
+sys writes tvc
+sys writei r0
+sys writes eol
+push
+push r0
+push r0
+push r1
+push r2
+push r3
+jsr flyduck
+pop r3
+pop r2
+pop r1
+pop r0
+pop
+move $-9 r1
+pop r1
+move $-2 r2
+move r1 r2
+sys writes jsd
+sys writei r2
+sys writes eol
+move r0 $-1
+jmp label2 
+label label3 
+move $-1 r0
+sys writei r0
+move $-10 r0
+move 0 r0
+move $-11 r1
+move r0 r1
+move r1 $6
+unlnk
+ret
+end

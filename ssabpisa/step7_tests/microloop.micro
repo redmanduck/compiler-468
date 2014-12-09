@@ -1,0 +1,42 @@
+PROGRAM microloop 
+BEGIN
+	
+	STRING eol := "\n";
+	STRING tvc := "------ Iteration c = ";
+	STRING yeye := "Peide Ye saw duck flying at speed: ";
+	STRING jsd := "JSD saw duck flying at speed = ";
+	STRING terminat := "Duck is dead. Its not flying. Thanks!";
+
+	FUNCTION INT flyduck(INT china)
+	BEGIN
+		INT f;
+		f := china*2;
+		WRITE(yeye, f,eol);
+		RETURN f;
+	END
+
+	FUNCTION INT main ()
+	BEGIN
+		INT c,b;
+		READ(c);
+
+		IF(c >= 10) 
+			WRITE(terminat, eol);
+			RETURN 1;
+		ENDIF
+
+		WHILE(c < 10)
+			WRITE(c);
+			c := c + 1;
+			WRITE(tvc);
+			WRITE(c);
+			WRITE(eol);
+			b := flyduck(c);
+			WRITE(jsd, b, eol);
+		ENDWHILE
+		
+		WRITE(c);
+		RETURN 0;
+	END
+
+END

@@ -1,0 +1,31 @@
+PROGRAM breaktheTA 
+BEGIN
+	
+	STRING eol := "\n";
+	STRING tvc := "c = ";
+	STRING yeye := "yeye duck\n";
+
+	FUNCTION INT flyduck()
+	BEGIN
+		WRITE(yeye);
+		RETURN 1;
+	END
+
+	FUNCTION INT main ()
+	BEGIN
+		INT c,b;
+		READ(c);
+
+		WHILE(c < 10)
+			c := c + 1;
+			WRITE(tvc);
+			WRITE(c);
+			WRITE(eol);
+			b := flyduck();
+		ENDWHILE
+		
+		WRITE(c);
+		RETURN 0;
+	END
+
+END
