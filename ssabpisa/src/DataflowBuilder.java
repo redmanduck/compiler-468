@@ -169,9 +169,21 @@ public class DataflowBuilder {
 	public IRList enforce(IRList original) {
 		buildCFG(original);
 		analyzeDataFlow(original);
+		analyzeBB(original);
 		return original;
 	}
-	
+
+
+
+	public void analyzeBB(IRList original){
+		IRNode p = null;
+		for(IRNode n : original){
+			if(Utils.nodeIsLeader(n)){
+				p.markEndBB();
+			}
+			p = n;
+		}
+	}
 
 	public void setMode(int v) {
 		mode = v;

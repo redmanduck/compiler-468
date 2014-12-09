@@ -160,13 +160,16 @@ public class TinyGenerator {
 			return null;
 		Instruction IROp = irn.getInstruction();
 
-		System.out
+		if(Micro.TINYGEN_VERBOSE) System.out
 				.println(";-------------------------------------------------------");
-		System.out.println("; ir node " + ircode + "!" + " (FRMT-"
+		if(Micro.TINYGEN_VERBOSE)  System.out.println("; ir node " + ircode + "!" + " (FRMT-"
 				+ irn.getFormat() + ")");
-		System.out.println("; reg state : " + Utils.printRegisters());
+		if(Micro.TINYGEN_VERBOSE)  System.out.println("; reg state : " + Utils.printRegisters());
 
 		if (irn.getInstruction().equals(ISA.RET)) {
+			/*
+			 * End of basic block includes RET and other merge of controls
+			 */
 			// generate store dirty for registers
 			this.flushRegisters(CodeBuffer, irn.LIVE_OUT);
 		}
@@ -567,10 +570,10 @@ public class TinyGenerator {
 
 		String mem_name = TinyActivationRecord.getStackRef(opr, LCSize);
 
-		System.out.println("; attempting to ensure " + opr);
+		if(Micro.TINYGEN_VERBOSE) System.out.println("; attempting to ensure " + opr);
 		Register r = Utils.varInRegister(opr);
 		if (r != null) {
-			System.out.println("; ensuring " + opr + " use " + r.toTiny());
+			if(Micro.TINYGEN_VERBOSE) System.out.println("; ensuring " + opr + " use " + r.toTiny());
 			return r;
 		} else {
 
@@ -592,7 +595,7 @@ public class TinyGenerator {
 	 */
 	private Register allocate(String opr, HashSet<String> liveness,
 			TinyOutputBuffer G) {
-		System.out.println("; Attempting to allocate " + opr);
+		if(Micro.TINYGEN_VERBOSE) System.out.println("; Attempting to allocate " + opr);
 		Register r = Utils.varInRegister(opr);
 
 		// if r is not in Register
@@ -604,7 +607,7 @@ public class TinyGenerator {
 
 				r = Utils.getMostDistantUsedReg();
 
-				System.out
+				if(Micro.TINYGEN_VERBOSE) System.out
 						.println("; No free register! Choosing most distant used reg : "
 								+ r.toTiny());
 
@@ -612,7 +615,7 @@ public class TinyGenerator {
 			}
 		}
 
-		System.out.println("; allocating " + opr + "@("
+		if(Micro.TINYGEN_VERBOSE) System.out.println("; allocating " + opr + "@("
 				+ TinyActivationRecord.getStackRef(opr, LCSize) + ") to "
 				+ r.toTiny());
 		r.occupy(opr);
@@ -623,13 +626,13 @@ public class TinyGenerator {
 	private void free(Register r, HashSet<String> liveness, TinyOutputBuffer G) {
 		String variable = r.opr;
 		String gen_cmd = "";
-		System.out.println("; evicting " + r.toTiny() + " for opr " + r.opr);
+		if(Micro.TINYGEN_VERBOSE) System.out.println("; evicting " + r.toTiny() + " for opr " + r.opr);
 		Boolean isAlive = Utils.varIsLive(variable, liveness);
-		System.out.println("; free: " + r.isFree() + ", dirty:" + r.isDirty()
+		if(Micro.TINYGEN_VERBOSE) System.out.println("; free: " + r.isFree() + ", dirty:" + r.isDirty()
 				+ ", live: " + isAlive);
-		if (r.isDirty()) {
+		if (true) {
 			// generate store (spill out)
-			System.out.println("; spilling " + r.toTiny());
+			if(Micro.TINYGEN_VERBOSE)  System.out.println("; spilling " + r.toTiny());
 			gen_cmd = String.format("%s %s %s ; spill %s\n",
 					ISA.move.getName(), r.toTiny(),
 					TinyActivationRecord.getStackRef(variable, LCSize), r.opr);

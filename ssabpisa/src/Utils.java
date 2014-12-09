@@ -49,6 +49,8 @@ public class Utils {
 			System.out.println("; --- LIVEIN: " + a.LIVE_IN.toString() +
 					", LIVEOUT: " + a.LIVE_OUT.toString()
 					+ ", GEN " + a.GEN +  " KILL " + a.KILL);
+			if(a.isEndOfBB())
+				System.out.println(";----------------");
 		}
 	}
 	
@@ -68,19 +70,19 @@ public class Utils {
 	 */
 	public static boolean varIsLive(String var, HashSet<String> liveness){
 		
-		System.out.println("; Checking Liveness " + var);
-		System.out.println("; Live out: " + liveness.toString());
+		if(Micro.TINYGEN_VERBOSE) System.out.println("; Checking Liveness " + var);
+		if(Micro.TINYGEN_VERBOSE) System.out.println("; Live out: " + liveness.toString());
 		
 		if(liveness.contains(var)){
-			System.out.println("; " + var + " is live");
+			if(Micro.TINYGEN_VERBOSE) System.out.println("; " + var + " is live");
 			return true;
 		}
 		if(liveness.contains(var)){
-			System.out.println("; " + var + " is live");
+			if(Micro.TINYGEN_VERBOSE) System.out.println("; " + var + " is live");
 			return true;
 		}
-		
-		System.out.println("; " + var + " is dead");
+
+		if(Micro.TINYGEN_VERBOSE) System.out.println("; " + var + " is dead");
 		return false;
 	}
 	
@@ -90,12 +92,12 @@ public class Utils {
 	public static Register varInRegister(String opr){
 		for(int i =0; i<TinyGenerator.RegisterFile.length; i++){
 			if(TinyGenerator.RegisterFile[i].opr.equals(opr)){
-					System.out.println("; found " + opr + " in r" + i);
+				if(Micro.TINYGEN_VERBOSE) System.out.println("; found " + opr + " in r" + i);
 					return TinyGenerator.RegisterFile[i];
 				}
 			}
-		
-			System.out.println("; " + opr + ": not loaded in any register..");
+
+		if(Micro.TINYGEN_VERBOSE) System.out.println("; " + opr + ": not loaded in any register..");
 			return null;
 	}
 	
@@ -118,6 +120,16 @@ public class Utils {
 		}
 		return min;
 	}
-	
-	
+
+
+	/*
+	 * Determine if the given IR Node is a leader of a basic block
+	 */
+	public static boolean nodeIsLeader(IRNode n){
+		if(n.successors.size() > 1 || n.predecessors.size() > 1){
+			return true;
+		}
+		return false;
+	}
+
 }

@@ -143,7 +143,7 @@ public class ExtractionListener extends MicroBaseListener {
 		IRDest right = current_ir.attach_Expressions(current_scope, ctx.cond().expr(1));
 		IRDest left = current_ir.attach_Expressions(current_scope, ctx.cond().expr(0));
 		
-		String generated_label = AutoLabelFactory.create();
+		String generated_label = AutoLabelFactory.create("ifnot");
 		String compop = ctx.cond().compop().getText();
 
 		//generate condition to jump to else part
@@ -176,7 +176,7 @@ public class ExtractionListener extends MicroBaseListener {
 		}
 		leaveScope(); // leave the if scope
 
-		String generated_label = AutoLabelFactory.create();
+		String generated_label = AutoLabelFactory.create("else");
 		String gelse_part = if_else_label_stk.pop();
 		if_else_label_stk.push(generated_label);
 		
@@ -211,14 +211,14 @@ public class ExtractionListener extends MicroBaseListener {
 
 	public void enterWhile_stmt(@NotNull MicroParser.While_stmtContext ctx) {
 		
-		String recompare = AutoLabelFactory.create(); 
+		String recompare = AutoLabelFactory.create("while_compare");
 		this.while_label_stk.offer(recompare);
 		current_ir.LABEL_NOLINK(recompare);
 		
 		IRDest left = current_ir.attach_Expressions(current_scope, ctx.cond().expr(0));
 		IRDest right = current_ir.attach_Expressions(current_scope, ctx.cond().expr(1));
 		
-		String newlabel = AutoLabelFactory.create(); 
+		String newlabel = AutoLabelFactory.create("endwhile");
 		String compop = ctx.cond().compop().getText();
 		
 		if(compop.equals("<")){

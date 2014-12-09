@@ -21,9 +21,9 @@
 public class AutoLabelFactory {
 	private static int tempcount = 1;
 	
-	public static String create(){
+	public static String create(String tag){
 		int v = tempcount++;
-		return "label" + v;
+		return "lbl" + v + "_" + tag;
 	}
 	
 }
