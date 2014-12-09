@@ -8,6 +8,10 @@ public class Register {
 	
 	public String opr; //$Lx $Tx varname
 	
+	public boolean isFree(){
+		return free;
+	}
+	
 	private long LastAllocated;
 	public void updateTimestamp(){
 		Date d = new Date();
@@ -24,8 +28,23 @@ public class Register {
 		opr = "none";
 	}
 	
+	/*
+	 * @param fullname - Px Lx or global variable
+	 */
+	public void occupy(String fullname){
+		free = false;
+		dirty = false;
+		opr = fullname;
+		updateTimestamp();
+	}
+	
 	public boolean isDirty(){
 		return dirty;
+	}
+	
+	public void markDirty(){
+		dirty = true;
+		updateTimestamp();
 	}
 	
 	public String getMemory(){

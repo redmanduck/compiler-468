@@ -98,4 +98,24 @@ public class Utils {
 	}
 	
 	
+	public static Register getFreeReg(){
+		for(int i =0; i<TinyGenerator.RegisterFile.length; i++){
+			if(TinyGenerator.RegisterFile[i].isFree()){
+				return TinyGenerator.RegisterFile[i];
+			}
+		}
+		return null; //no free Register
+	}
+	
+	public static Register getMostDistantUsedReg(){
+		Register min = TinyGenerator.RegisterFile[0];
+		for(int r = 0 ; r < TinyGenerator.RegisterFile.length; r++){
+			if(TinyGenerator.RegisterFile[r].getTimestamp() < min.getTimestamp()){
+				min = TinyGenerator.RegisterFile[r];
+			}
+		}
+		return min;
+	}
+	
+	
 }
