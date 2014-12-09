@@ -68,11 +68,9 @@ public class TinyActivationRecord {
 		String stripped = opr.replace("$T", "").replace("$P", "").replace("$L", ""); //strip out non numeric part
 		int num = -10134;
 		if(opr.contains("$L")){
-			num = Integer.parseInt(stripped);
-			return "$-" + num;
+			return getLocalVariable(opr);
 		}else if(opr.contains("$P")){
-			num = Integer.parseInt(stripped);
-			return "$" + num;
+			return getParameter(opr);
 		}else if(opr.contains("$T")){
 			num = Integer.parseInt(stripped);
 			return "$-" + (LCSize + num);

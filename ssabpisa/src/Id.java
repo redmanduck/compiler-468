@@ -58,17 +58,17 @@ public class Id {
 	   return name;
    }
    
-   public String getTiny(){
-	   if(parameter_code != null){
-		   //parameter
-		   return TinyActivationRecord.getParameter(this.toString()); 
-	   }
-	   if(non_global_code != null){
-		   //local variable
-		   return TinyActivationRecord.getLocalVariable(this.toString());
-	   }
-	   return name;
-   }
+//   public String getTiny(){
+//	   if(parameter_code != null){
+//		   //parameter
+//		   return TinyActivationRecord.getParameter(this.toString()); 
+//	   }
+//	   if(non_global_code != null){
+//		   //local variable
+//		   return TinyActivationRecord.getLocalVariable(this.toString());
+//	   }
+//	   return name;
+//   }
    
    public String getType(){
 	   return type;

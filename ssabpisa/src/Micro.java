@@ -22,7 +22,7 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
 public class Micro{
-  public static int CONST_NUM_REG_USE = 15; 
+  public static int CONST_NUM_REG_USE = 4; 
   public static boolean DATAFLOW_VERBOSE = false;
   public static boolean TINYGEN_VERBOSE = true;
   
