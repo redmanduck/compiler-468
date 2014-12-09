@@ -23,16 +23,18 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Hashtable;
 public class TinyGenerator {
-	IRListEngine IR;
+	IRList IR;
 	HashMap<Instruction, Instruction[]> map_ISA;
 	Hashtable<String, Register> reg_map_ir_tiny;
 	LinkedHashSet<Id> usedSymbols; //contains all LVALUES
 	LinkedHashMap<String, SymbolTable> SymbolTable_Map;
 	
+	public static Register[] RegisterFile = new Register[Micro.CONST_NUM_REG_USE];
+	
 	private static int SAVE = 1;
 	private static int RESTORE = 2;
 
-	public TinyGenerator(IRListEngine _irb, LinkedHashMap<String, SymbolTable> SMap) {
+	public TinyGenerator(IRList _irb, LinkedHashMap<String, SymbolTable> SMap) {
 		IR = _irb;
 		//generate IR -> asm map
 		this.SymbolTable_Map = SMap;
@@ -40,6 +42,13 @@ public class TinyGenerator {
 		reg_map_ir_tiny = new Hashtable<String, Register>();
 		usedSymbols = new LinkedHashSet<Id>(); //these are bunch of used stuff 
 		loadIRMapping();
+		
+		//allocate finite registers
+		for(int i = 0; i < RegisterFile.length ; i++){
+			Register R = new Register('r', i);
+			R.clear();
+			RegisterFile[i] = R;
+		}
 	}
 	
 	private void loadIRMapping(){

@@ -23,7 +23,6 @@ public class TinyActivationRecord {
 	private static int param_count = 0; 
 	private static int local_var_count = 0;
 	private static int register_count = 0;
-
 	
 	public static String getParameter(String name){
 		//GIVEN $P1 returns $1

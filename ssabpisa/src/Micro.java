@@ -22,7 +22,10 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
 public class Micro{
-  public static int CONST_NUM_REG_USE = 15;
+  public static int CONST_NUM_REG_USE = 15; 
+  public static boolean DATAFLOW_VERBOSE = false;
+  public static boolean TINYGEN_VERBOSE = true;
+  
   public static void main(String[] args) throws Exception
   {
 	  
@@ -46,37 +49,51 @@ public class Micro{
      walker.walk(extractor, t);
  
 	 System.out.println(";IR code");
-	 
 
-    //Generate Tiny Code
-    StringBuffer tiny_buffer = new StringBuffer();
-    //Do global scope declarations
-	for(Id symbol: extractor.root_scope){
-			
-			String s =  String.format("var %s\n", symbol.getReferenceName());
-			if(symbol.getType() == "STRING"){
-				s = String.format("str %s %s\n", symbol.getReferenceName(), symbol.getStrValue());
-			}
-			tiny_buffer.append(s);
-	}
-	//Do push registers and JSR main and halt
-        tiny_buffer.append(ISA.push.getName() + "\n");
-	for(int i = 0; i< Micro.CONST_NUM_REG_USE; i++){
-		tiny_buffer.append(String.format("%s r%d\n", ISA.push.getName(), i));
-	}
-	tiny_buffer.append(ISA.jsr.getName() + " main\n");
-	tiny_buffer.append("sys halt\n");
+      DataflowBuilder cfgb = new DataflowBuilder(CONST_NUM_REG_USE);
+      cfgb.setMode(cfgb.BOTTOM_UP);
+      cfgb.setGlobalVars(extractor.root_scope);
 
-    for(String fn : extractor.getFullIR().keySet()){
-	   	 Utils.printIR(extractor.getFullIR().get(fn));
-	   	 
-	   	 TinyGenerator asmgen = new TinyGenerator(extractor.getFullIR().get(fn), extractor.getSymbolTableMap());
-	     tiny_buffer.insert(tiny_buffer.length(), asmgen.translate());
-     }
-     
-     
-     System.out.println(tiny_buffer);
-    // Utils.printSymbolTable(extractor.root_scope);
+      for(String fn : extractor.getFullIR().keySet()){
+    	  IRList block = extractor.getFullIR().get(fn);
+          Utils.printIR(cfgb.enforce(block));
+      }
+
+      System.out.println(";----------------- tiny ------------------------");
+
+	    //Generate Tiny Code
+	    StringBuffer tiny_buffer = new StringBuffer();
+	    //Do global scope declarations
+		for(Id symbol: extractor.root_scope){
+	
+				String s =  String.format("var %s\n", symbol.getReferenceName());
+				if(symbol.getType() == "STRING"){
+					s = String.format("str %s %s\n", symbol.getReferenceName(), symbol.getStrValue());
+				}
+				tiny_buffer.append(s);
+		}
+		//Do push registers and JSR main and halt
+	    tiny_buffer.append(ISA.push.getName() + "\n");
+		for(int i = 0; i< Micro.CONST_NUM_REG_USE; i++){
+			tiny_buffer.append(String.format("%s r%d\n", ISA.push.getName(), i));
+		}
+		tiny_buffer.append(ISA.jsr.getName() + " main\n");
+		tiny_buffer.append("sys halt\n");
+		
+	
+	    //Generate the rest of the tiny
+	    for(String fn : extractor.getFullIR().keySet()){
+		   	 //Utils.printIR(extractor.getFullIR().get(fn));
+	
+		   	 TinyGenerator asmgen = new TinyGenerator(extractor.getFullIR().get(fn), extractor.getSymbolTableMap());
+		     tiny_buffer.append(asmgen.translate());
+	     }
+	
+	
+	     System.out.println(tiny_buffer);
+	    // Utils.printSymbolTable(extractor.root_scope);
+
+
   }
 }
 

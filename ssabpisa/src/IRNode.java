@@ -18,7 +18,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
+
+import java.util.ArrayList;
+import java.util.HashSet;
 public class IRNode {
+
      private Instruction OPCODE;
      private Register r_dest, r_src1, r_src2;
      private int i_src1;
@@ -26,10 +30,15 @@ public class IRNode {
      private float f_src1;
      private Id id_readwrite;
      private String label,jtarget;
-     
-     public String fn_key;
-     
-     private int format;
+	 public boolean discovered;
+     public String fn_key; //dedicated function name field
+
+	 public HashSet<IRNode>  predecessors, successors;
+
+	 public HashSet<String> GEN, KILL;
+	 public HashSet<String> LIVE_IN, LIVE_OUT;
+
+	 private int format;
      public static final int FORMAT_IR = 0; // int reg
      public static final int FORMAT_FR = 1; // float reg
      public static final int FORMAT_RD = 2; // reg identifier
@@ -50,6 +59,12 @@ public class IRNode {
      public static final int FORMAT_DR = 17;
      public static final int FORMAT_R = 18;
      
+     
+     public static final int OP_ID_SRC1 = 1;
+     public static final int OP_ID_SRC2 = 2;
+     public static final int OP_ID_DEST = 3;
+     public static final int OP_ID_READWRITE = 4;
+
      public Id getIdOperand(int which){
     	 switch(which){
     	 case 1:
@@ -64,146 +79,234 @@ public class IRNode {
     		 return null;
     	 }
      }
-     public Instruction getInstruction(){
+
+	public Instruction getInstruction(){
     	 return OPCODE;
      }
      
-     public int getFormat(){
+    public int getFormat(){
     	 return format;
      }
-     
+
+	public String getJumpTarget(){
+		return jtarget;
+	}
+	public String getLabel(){
+		return label;
+	}
+
+	/*
+	 * initialize control flow related properties that was added later
+	 */
+	private void init_cflow(){
+		predecessors = new HashSet<IRNode>();
+		successors = new HashSet<IRNode>();
+
+		GEN = new HashSet<String>();
+		KILL = new HashSet<String>();
+		LIVE_IN = new HashSet<String>();
+		LIVE_OUT = new HashSet<String>();
+
+		discovered = false;
+	}
+
      public IRNode(String label){
+		 init_cflow();
     	 this.OPCODE = ISA.LABEL;
     	 this.label = label;
     	 format = FORMAT_S;
      }
      
 	public IRNode(Instruction OPCODE, int src1, Register dest){
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.i_src1 = src1;
 		this.r_dest = dest;
 		format = FORMAT_IR;
+
+		if(!dest.toString().contains("$R"))  KILL.add(dest.toString());
 	}
 	
 	public IRNode(Instruction OPCODE){
+		init_cflow();
 		this.OPCODE = OPCODE;
 		format = FORMAT_O;
 	}
 	
 	public IRNode(Instruction OPCODE, float s, Register dest){
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.f_src1 = s;
 		this.r_dest = dest;
 		format = FORMAT_FR;
+		if(!dest.toString().contains("$R")) KILL.add(dest.toString());
 	}
 	
 	public IRNode(Instruction OPCODE, Register r_dest){
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.r_dest = r_dest;
 		format = FORMAT_R;
+		if(!r_dest.toString().contains("$R")) KILL.add(r_dest.toString());
 	}
 	
-	public IRNode(Instruction OPCODE, Register r_src, Id id_dest){
+	public IRNode(Instruction OPCODE, Register r_src, Id idd){
+		init_cflow();
 		//Like STOREI $T1 a
 		this.OPCODE = OPCODE;
 		this.r_src1 = r_src;
-		this.id_dest = id_dest;
+		this.id_dest = idd;
 		format = FORMAT_RD;
+		if(!idd.toString().contains("$R")) 
+			KILL.add(idd.toString());
+		GEN.add(r_src.toString());
 	}	
 	
 	public IRNode(Instruction OPCODE, Id id_src1, Id id_src2, Register dest){
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.id_src1 = id_src1;
 		this.id_src2 = id_src2;
 		this.r_dest = dest;
 		format = FORMAT_DDR;
+		if(!dest.toString().contains("$R")) 
+			KILL.add(dest.toString());
+		GEN.add(id_src1.toString());
+		GEN.add(id_src2.toString());
 	}
 	
 	public IRNode(Instruction OPCODE, Register r_src1, Id id_src2, Register dest) {
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.id_src2 = id_src2;
 		this.r_src1 = r_src1;
 		this.r_dest = dest;
 		format = FORMAT_RDR;
+		if(!dest.toString().contains("$R")) KILL.add(dest.toString());
+		GEN.add(r_src1.toString());
+		GEN.add(id_src2.toString());
 	}
 	
 	
 	public IRNode(Instruction OPCODE, Register r_src1, Register r_src2, Register dest) {
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.r_src1 = r_src1;
 		this.r_src2 = r_src2;
 		this.r_dest = dest;
 		format = FORMAT_RRR;
+		if(!dest.toString().contains("$R")) 
+			KILL.add(dest.toString());
+		GEN.add(r_src1.toString());
+		GEN.add(r_src2.toString());
 	}
 	
 	public IRNode(Instruction OPCODE, Id id_readwrite){
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.id_readwrite = id_readwrite;
 		format = FORMAT_D;
+		if(ISA.InstructionSpecies(OPCODE, ISA._READ)){
+			GEN.add(id_readwrite.toString());
+		}else if(ISA.InstructionSpecies(OPCODE, ISA._WRITE)){
+			if(!id_readwrite.toString().contains("$R")) 
+				KILL.add(id_readwrite.toString());
+		}
 	}
 	
 	public IRNode(Instruction OPCODE, Id _id, Register _reg, Register dest) {
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.id_src1 = _id;
 		this.r_src2 = _reg;
 		this.r_dest = dest;
 		format = FORMAT_DRR;
+		if(!dest.toString().contains("$R")) 
+			KILL.add(dest.toString());
+		GEN.add(_id.toString());
+		GEN.add(_reg.toString());
 	}
 	
 	public IRNode(Instruction OPCODE, Id _id1, Id _id2) {
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.id_src1 = _id1;
 		this.id_dest = _id2;
 		format = FORMAT_DD;
+		if(!_id2.toString().contains("$R")) 
+			KILL.add(_id2.toString());
+		GEN.add(_id1.toString());
 	}
 	
 	public IRNode(Instruction OPCODE, Register r1, Register r2) {
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.r_src1 = r1;
 		this.r_dest = r2;
 		format = FORMAT_RS;
+		if(!r2.toString().contains("$R")) 
+			KILL.add(r2.toString());
+		GEN.add(r1.toString());
 	}
 	
 	public IRNode(Instruction OPCODE, Id _id1, Register rdest) {
+		init_cflow();
 		this.OPCODE = OPCODE;
 		this.id_src1 = _id1;
 		this.r_dest = rdest;
 		format = FORMAT_DR;
+		if(!rdest.toString().contains("$R")) 
+			KILL.add(rdest.toString());
+		GEN.add(_id1.toString());
 	}
 
 	public IRNode(Instruction conditional_control, Register left, Register right, String target) {
+		init_cflow();
 		this.OPCODE = conditional_control;
 		this.r_src1 = left;
 		this.r_src2 = right;
 		this.jtarget = target;
 		format = FORMAT_RRT;
+		GEN.add(left.toString());
+		GEN.add(right.toString());
+
 	}
 	
 	public IRNode(Instruction conditional_control, Register left, Id right, String string) {
+		init_cflow();
 		format = FORMAT_RDT;
 		this.OPCODE = conditional_control;
 		this.r_src1 = left;
 		this.id_src2 = right;
 		this.jtarget = string;
+		GEN.add(left.toString());
+		GEN.add(right.toString());
 	}
 
 	public IRNode(Instruction conditional_control, Id left, Register right, String string) {
+		init_cflow();
 		format = FORMAT_DRT;
 		this.OPCODE = conditional_control;
 		this.id_src1 = left;
 		this.r_src2 = right;
 		this.jtarget = string;
+		GEN.add(left.toString());
+		GEN.add(right.toString());
 	}
 	
 	public IRNode(Instruction conditional_control, Id left, Id right, String string) {
+		init_cflow();
 		format = FORMAT_DDT;
 		this.OPCODE = conditional_control;
 		this.id_src1 = left;
 		this.id_src2 = right;
 		this.jtarget = string;
+		GEN.add(left.toString());
+		GEN.add(right.toString());
 	}
 	
 	public IRNode(Instruction j, String jtarget) {
+		init_cflow();
 		format = FORMAT_T;
 		this.OPCODE = j;
 		this.jtarget = jtarget;
@@ -212,7 +315,7 @@ public class IRNode {
 	public String toString(){
 		if(this.label != null)
 			return String.format(";LABEL " + this.label);
-		
+
 		String prefix = ";" + this.OPCODE.getName();
 		switch(format){
 		case FORMAT_DD:
