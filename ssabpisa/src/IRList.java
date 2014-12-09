@@ -25,7 +25,6 @@ import java.util.Iterator;
 
 public class IRList implements Iterable<IRNode>{
 	private ArrayList<IRNode> _List;
-	private int TempLinkSize; //offset for LINK for temporaries
 	private Hashtable<String, IRNode> _Labels;
 	
 	private int paramsize;
@@ -35,7 +34,6 @@ public class IRList implements Iterable<IRNode>{
 		 * Constructor -- evokes for any new basic block of IR
 		 */
 		paramsize = 0;
-		TempLinkSize = 0;
 		_List = new ArrayList<IRNode>();
 		_Labels = new Hashtable<String, IRNode>();
 		TempRegisterFactory.reset();  //we want to reset the register count everytime
@@ -602,15 +600,6 @@ public class IRList implements Iterable<IRNode>{
 		_List.add(new IRNode(ISA.RET, ctx.expr().getText()));
 	}
 
-	public void setTempLinkSize(int tempCount) {
-		System.out.println("; setting temp link size to " + tempCount + " for list scope " + _List.get(0).toString());
-		TempLinkSize = tempCount;
-	}
-
-	public int getTempLinkSize(){
-		return TempLinkSize;
-	}
-	
 	public int getParamCount(){
 		return paramsize;
 	}

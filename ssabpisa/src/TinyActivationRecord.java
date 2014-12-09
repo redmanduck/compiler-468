@@ -34,9 +34,6 @@ public class TinyActivationRecord {
 		//GIVEN $P1 returns $1
 		String j = name.replace("$P", "");
 		int num = Integer.parseInt(j);
-//		if(num > param_count){
-//			 param_count = num;
-//		}
 		
 		return "$" + (num + register_count + 1);
 	}
@@ -45,7 +42,6 @@ public class TinyActivationRecord {
 		//GIVEN $L1 returns $-1
 		String j = name.replace("$L", "");
 		int num = Integer.parseInt(j);
-//		if(num > local_var_count) local_var_count = num;
 		return "$-" + num;
 	}
 	public static void saveRegisters(int increm){
@@ -64,10 +60,23 @@ public class TinyActivationRecord {
 	}
 	
 	/*
-	 * Convert $Lx $Py $Tz into $-x $y $T(LC + z) 
+	 * Convert $Lx $Py $Tz into $-x $y $-(LC + z) 
 	 * if given global var, return globalvar
+	 * @param LCSize - the number of local variable
 	 */
-	public static String getStackRef(String opr){
-		return null;
+	public static String getStackRef(String opr, int LCSize){
+		String stripped = opr.replace("$T", "").replace("$P", "").replace("$L", ""); //strip out non numeric part
+		int num = -10134;
+		if(opr.contains("$L")){
+			num = Integer.parseInt(stripped);
+			return "$-" + num;
+		}else if(opr.contains("$P")){
+			num = Integer.parseInt(stripped);
+			return "$" + num;
+		}else if(opr.contains("$T")){
+			num = Integer.parseInt(stripped);
+			return "$-" + (LCSize + num);
+		}
+		return opr;
 	}
 }
