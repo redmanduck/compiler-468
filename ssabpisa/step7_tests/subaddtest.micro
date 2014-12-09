@@ -1,0 +1,16 @@
+PROGRAM subaddtest
+BEGIN
+	
+	
+	FUNCTION INT main ()
+	BEGIN
+		INT i,j;
+		i := 15;
+		j := i-3;
+		WRITE(j);
+
+
+		RETURN 0;
+	END
+
+END	
