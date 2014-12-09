@@ -166,6 +166,11 @@ public class TinyGenerator {
 				+ irn.getFormat() + ")");
 		System.out.println("; reg state : " + Utils.printRegisters());
 
+		if (irn.getInstruction().equals(ISA.RET)) {
+			// generate store dirty for registers
+			this.flushRegisters(CodeBuffer, irn.LIVE_OUT);
+		}
+		
 		if (irn.getFormat() == IRNode.FORMAT_D) {
 			/*
 			 * Could be sys calls : WRITE (use) READ (def)
@@ -352,11 +357,14 @@ public class TinyGenerator {
 
 			Register A = ensure(T1, irn.LIVE_OUT, CodeBuffer);
 			Register B = ensure(T2, irn.LIVE_OUT, CodeBuffer);
-			CodeBuffer.add(tinyOp.getName() + " " + A.toTiny() + " "
-					+ B.toTiny());
+			
+			CodeBuffer.add(tinyOp.getName() + " " + B.toTiny() + " " + A.toTiny()); //ex. SUB A B  = B = B - A
+			
+			
 			Register C = ensure(T3, irn.LIVE_OUT, CodeBuffer);
 			C.markDirty();
-			CodeBuffer.add(ISA.move.getName() + " " + B.toTiny() + " "
+			
+			CodeBuffer.add(ISA.move.getName() + " " + A.toTiny() + " "
 					+ C.toTiny());
 
 		} else if (irn.getFormat() == IRNode.FORMAT_O) {
@@ -488,10 +496,7 @@ public class TinyGenerator {
 			System.exit(1);
 		}
 
-		if (irn.getInstruction().equals(ISA.RET)) {
-			// generate store dirty for registers
-			this.flushRegisters(CodeBuffer, irn.LIVE_OUT);
-		}
+		
 
 		/*
 		 * Finally print the generated code sequence
