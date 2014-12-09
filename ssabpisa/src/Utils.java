@@ -45,8 +45,10 @@ public class Utils {
 	
 	public static void printIR(IRList irl){
 		for(IRNode a : irl){
-			System.out.print(a.toString());
-			System.out.println("; --- LIVEIN: " + a.LIVE_IN.toString() + ", LIVEOUT: " + a.LIVE_OUT.toString());
+			System.out.print(a.toString() + " [FRMT-" + a.getFormat() + "]");
+			System.out.println("; --- LIVEIN: " + a.LIVE_IN.toString() +
+					", LIVEOUT: " + a.LIVE_OUT.toString()
+					+ ", GEN " + a.GEN +  " KILL " + a.KILL);
 		}
 	}
 	

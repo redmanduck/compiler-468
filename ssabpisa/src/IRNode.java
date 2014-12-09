@@ -206,11 +206,13 @@ public class IRNode {
 		this.OPCODE = OPCODE;
 		this.id_readwrite = id_readwrite;
 		format = FORMAT_D;
+		
 		if(ISA.InstructionSpecies(OPCODE, ISA._READ)){
-			GEN.add(id_readwrite.toString());
+			//GEN.add(id_readwrite.toString());
+			KILL.add(id_readwrite.toString());
 		}else if(ISA.InstructionSpecies(OPCODE, ISA._WRITE)){
 			if(!id_readwrite.toString().contains("$R")) 
-				KILL.add(id_readwrite.toString());
+				GEN.add(id_readwrite.toString());
 		}
 	}
 	

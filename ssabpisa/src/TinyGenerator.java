@@ -41,7 +41,7 @@ public class TinyGenerator {
 		this.IR = _irb;
 		// generate IR -> asm map
 		this.LCSize = 0;
-		this.TmpSize = 20; // Assume constant Temp link size for simplicity!
+		this.TmpSize = 15; // Assume constant Temp link size for simplicity!
 							// TODO: fix later
 		this.SymbolTable_Map = SMap; // Symboltable as indexed by function nmame
 		map_ISA = new HashMap<Instruction, Instruction[]>();
@@ -107,9 +107,7 @@ public class TinyGenerator {
 
 		for (IRNode n : IR) {
 			String S = generate_asm(n);
-			if (S == null)
-				continue;
-			code.append(S + "\n");
+			code.append(S);
 		}
 
 		return (code.toString());
@@ -144,7 +142,8 @@ public class TinyGenerator {
 	private String generate_asm(IRNode irn) {
 
 		TinyOutputBuffer CodeBuffer = new TinyOutputBuffer();
-
+		CodeBuffer.add(";------------------" + irn.toString() + " ----------------");
+		CodeBuffer.add(";  " + Utils.printRegisters() + "\n");
 		Instruction irx = irn.getInstruction();
 		Instruction[] possible_instructions = map_ISA.get(irx);
 
@@ -179,7 +178,8 @@ public class TinyGenerator {
 				// if VAR already in register use it
 				// if VAR is not in register bring it in and then use it
 
-				if (SymbolTable_Map.get("main").search(VAR) != null) {
+				Id Vid = SymbolTable_Map.get("main").search(VAR);
+				if (Vid != null && Vid.getType().equals("STRING")) {
 					/*
 					 * We can write directly to memory
 					 */
@@ -228,12 +228,7 @@ public class TinyGenerator {
 
 			String IdSRC1 = getField(ircode, 1);
 			String IdSRC2 = getField(ircode, 2);
-			// $U for useless
-			// Register dest = allocate("$U",irn.LIVE_OUT,CodeBuffer);
-			// Id id1 = irn.getIdOperand(1);
-			// String asms = ISA.move.getName() + " " + id1.getTiny() + " " +
-			// dest.toTiny() + "\n";
-
+	
 			Register src = ensure(IdSRC1, irn.LIVE_OUT, CodeBuffer); // this
 																		// will
 																		// do
@@ -293,18 +288,6 @@ public class TinyGenerator {
 			 * --ensure Add T2 T3 --OP MOV Reg R --ensure MOV T3 R --MOVE
 			 */
 
-			// String move_op = ISA.move.getName();
-			// Register reg = TempRegisterFactory.createTiny();
-			// reg_map_ir_tiny.put(getField(ircode, 3), reg);
-			//
-			// Id d2 = irn.getIdOperand(2);
-			// Id d1 = irn.getIdOperand(1);
-			//
-			// String asms = move_op + " " + d1.getTiny() + " " + reg.toTiny() +
-			// "\n";
-			// asms += tinyOp.getName() + " " + d2.getTiny() + " " +
-			// reg.toTiny();
-
 			String IdSrc1 = getField(ircode, 1);
 			String IdSrc2 = getField(ircode, 2);
 			String TDest = getField(ircode, 3);
@@ -324,34 +307,6 @@ public class TinyGenerator {
 			 * OP R1 R2 RD may expands into: MOV r1 rtemp OP r2 rD
 			 */
 
-			// // String move_op = ISA.move.getName();String IdSRC1 =
-			// getField(ircode, 1);
-			// String IdSRC2 = getField(ircode, 2);
-			// //$U for useless
-			// // Register dest = allocate("$U",irn.LIVE_OUT,CodeBuffer);
-			// // Id id1 = irn.getIdOperand(1);
-			// // String asms = ISA.move.getName() + " " + id1.getTiny() + " " +
-			// dest.toTiny() + "\n";
-			//
-			// Register src = ensure(IdSRC1, irn.LIVE_OUT, CodeBuffer); //this
-			// will do the first move (load) into some r
-			// Register dest = ensure(IdSRC2, irn.LIVE_OUT, CodeBuffer);
-			//
-			// String asms = tinyOp.getName() + " " + src.toTiny() + " " +
-			// dest.toTiny();
-			//
-			// CodeBuffer.add(asms);
-			// // Register reg = TempRegisterFactory.createTiny();
-			// // reg_map_ir_tiny.put(getField(ircode, 3), reg);
-			// //
-			// // String asms = move_op + " " +
-			// reg_map_ir_tiny.get(getField(ircode, 1)).toTiny() + " " +
-			// reg.toTiny() + "\n";
-			// // asms += tinyOp.getName() + " " +
-			// reg_map_ir_tiny.get(getField(ircode, 2)).toTiny() + " " +
-			// reg.toTiny();
-			// //
-
 			String T1 = getField(ircode, 1);
 			String T2 = getField(ircode, 2);
 			String T3 = getField(ircode, 3);
@@ -370,18 +325,6 @@ public class TinyGenerator {
 			 * OP R1 ID RZ may expands into : MOV r1 rtemp OP rtemp rZ
 			 */
 
-			// String move_op = ISA.move.getName();
-			// Register reg = TempRegisterFactory.createTiny();
-			// reg_map_ir_tiny.put(getField(ircode, 3), reg);
-			//
-			// Id d = irn.getIdOperand(2);
-			// String asms = move_op + " " +
-			// reg_map_ir_tiny.get(getField(ircode, 1)).toTiny() + " " +
-			// reg.toTiny() + "\n";
-			// asms += tinyOp.getName() + " " + d.getTiny() + " " +
-			// reg.toTiny();
-			//
-			// CodeBuffer.add(asms);
 
 			String T1 = getField(ircode, 1);
 			String T2 = getField(ircode, 2);
@@ -401,16 +344,7 @@ public class TinyGenerator {
 			/*
 			 * OP ID R2 RZ may expands into: MOV ID rtemp OP r2 rZ
 			 */
-			//
-			// String move_op = ISA.move.getName();
-			// Register reg = TempRegisterFactory.createTiny();
-			// reg_map_ir_tiny.put(getField(ircode, 3), reg);
-			// String asms = move_op + " " + irn.getIdOperand(1).getTiny() + " "
-			// + reg.toTiny() + "\n";
-			// asms += tinyOp.getName() + " " +
-			// reg_map_ir_tiny.get(getField(ircode, 2)).toTiny() + " " +
-			// reg.toTiny();
-			// CodeBuffer.add(asms);
+			
 
 			String T1 = getField(ircode, 1);
 			String T2 = getField(ircode, 2);
@@ -432,7 +366,7 @@ public class TinyGenerator {
 
 			// handle link separately
 			if (irn.getInstruction().equals(ISA.LINK)) {
-				return doLink(tinyOp, irn);
+				return doLink(tinyOp, irn) + "\n";
 			} else if (irn.getInstruction().equals(ISA.PUSH_E)) {
 				this.flushRegisters(CodeBuffer, irn.LIVE_IN);
 			}
@@ -453,34 +387,38 @@ public class TinyGenerator {
 
 		} else if (irn.getFormat() == IRNode.FORMAT_DRT) {
 			/*
-			 * DRT Jump target 
+			 * DRT Jump target
 			 */
-			
-			 String f1 = getField(ircode, 1); 
-			 String f2 = getField(ircode, 2);
-			 
-			 Register T1 = ensure(f1, irn.LIVE_OUT, CodeBuffer);
-			 Register T2 = ensure(f2, irn.LIVE_OUT, CodeBuffer);
 
-			 String asms = possible_instructions[0].getName() + " " + T1.toTiny() + " " + T2.toTiny() + "\n";
-			 asms += possible_instructions[1].getName() + " " + getField(ircode, 3);
-			 
-			 CodeBuffer.add(asms);
-			
+			String f1 = getField(ircode, 1);
+			String f2 = getField(ircode, 2);
+
+			Register T1 = ensure(f1, irn.LIVE_OUT, CodeBuffer);
+			Register T2 = ensure(f2, irn.LIVE_OUT, CodeBuffer);
+
+			String asms = possible_instructions[0].getName() + " "
+					+ T1.toTiny() + " " + T2.toTiny() + "\n";
+			asms += possible_instructions[1].getName() + " "
+					+ getField(ircode, 3);
+
+			CodeBuffer.add(asms);
+
 		} else if (irn.getFormat() == IRNode.FORMAT_DDT) {
 			/*
 			 * DDT Jump Target
 			 */
-			 String f1 = getField(ircode, 1); 
-			 String f2 = getField(ircode, 2);
-			 
-			 Register T1 = ensure(f1, irn.LIVE_OUT, CodeBuffer);
-			 Register T2 = ensure(f2, irn.LIVE_OUT, CodeBuffer);
+			String f1 = getField(ircode, 1);
+			String f2 = getField(ircode, 2);
 
-			 String asms = possible_instructions[0].getName() + " " + T1.toTiny() + " " + T2.toTiny() + "\n";
-			 asms += possible_instructions[1].getName() + " " + getField(ircode, 3);
-			 
-			 CodeBuffer.add(asms);
+			Register T1 = ensure(f1, irn.LIVE_OUT, CodeBuffer);
+			Register T2 = ensure(f2, irn.LIVE_OUT, CodeBuffer);
+
+			String asms = possible_instructions[0].getName() + " "
+					+ T1.toTiny() + " " + T2.toTiny() + "\n";
+			asms += possible_instructions[1].getName() + " "
+					+ getField(ircode, 3);
+
+			CodeBuffer.add(asms);
 
 		} else if (irn.getFormat() == IRNode.FORMAT_T) {
 			/*
@@ -499,12 +437,7 @@ public class TinyGenerator {
 			/*
 			 * Single motion moving Id to register
 			 */
-			// Register dest = TempRegisterFactory.createTiny();
-			// reg_map_ir_tiny.put(getField(ircode, 2), dest);
-			//
-			// String t = tinyOp.getName() + " " + irn.getIdOperand(1).getTiny()
-			// + " " + dest.toTiny();
-			// CodeBuffer.add(t);
+
 
 			String IdSRC1 = getField(ircode, 1);
 			String IdSRC2 = getField(ircode, 2);
@@ -522,16 +455,6 @@ public class TinyGenerator {
 			 * This could be PUSH (use) or POP (def)
 			 */
 
-			// Register dest = null;
-			// if(reg_map_ir_tiny.containsKey(getField(ircode, 1))){
-			// dest = reg_map_ir_tiny.get(getField(ircode, 1));
-			// }else{
-			// dest = TempRegisterFactory.createTiny();
-			// reg_map_ir_tiny.put(getField(ircode, 1), dest);
-			// }
-			//
-			// String t= tinyOp.getName() + " " + dest.toTiny();
-			// CodeBuffer.add(t);
 
 			String C = getField(ircode, 1);
 
@@ -573,6 +496,9 @@ public class TinyGenerator {
 		/*
 		 * Finally print the generated code sequence
 		 */
+		
+		CodeBuffer.add(";  " + Utils.printRegisters());
+
 		String outputc = "";
 		for (String strc : CodeBuffer) {
 			outputc += strc;

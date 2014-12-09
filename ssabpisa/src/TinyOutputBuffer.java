@@ -8,8 +8,9 @@ public class TinyOutputBuffer extends ArrayList<String>{
 		}
 		
 		@Override public boolean add(String k){
-			super.add(k + "\n");
-			if(Micro.TINYGEN_VERBOSE) System.out.println("; tiny generated = " + k.replaceAll("\n", "; "));
+			String eol = (k.indexOf(k.length() - 1) == '\n') ? "" : "\n";
+			super.add(k + eol);
+			System.out.println("; >  " + k.replaceAll("\n",";"));
 			return true;
 		}
 	}
