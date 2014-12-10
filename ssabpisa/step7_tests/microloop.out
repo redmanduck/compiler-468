@@ -4,27 +4,34 @@
 ;STOREI 2 $T1
 ;MULTI $P1 $T1 $T2
 ;STOREI $T2 $L1
+;STOREI 5 $T3
+;GEI $P1 $T3 label1
+;STOREI 100 $T4
+;MULTI $P1 $T4 $T5
+;STOREI $T5 $L1
+;LABEL label1
 ;WRITES yeye
 ;WRITEI $L1
 ;WRITES eol
-;STOREI $L1 $T3
-;STOREI $T3 $R
+;STOREI $L1 $T6
+;STOREI $T6 $R
 ;RET
 ;LABEL main
 ;LINK 
 ;READI $L1
 ;STOREI 10 $T1
-;LTI $L1 $T1 label1
+;LTI $L1 $T1 label2
 ;WRITES terminat
 ;WRITES eol
 ;STOREI 1 $T2
 ;STOREI $T2 $T3
 ;STOREI $T3 $R
 ;RET
-;LABEL label1
 ;LABEL label2
+;LABEL label3
 ;STOREI 10 $T4
-;GEI $L1 $T4 label3
+;GEI $L1 $T4 label4
+;WRITEI $L1
 ;STOREI 1 $T5
 ;ADDI $L1 $T5 $T6
 ;STOREI $T6 $L1
@@ -40,8 +47,8 @@
 ;WRITES jsd
 ;WRITEI $L2
 ;WRITES eol
-;JUMP label2
-;LABEL label3
+;JUMP label3
+;LABEL label4
 ;WRITEI $L1
 ;STOREI 0 $T8
 ;STOREI $T8 $T9
@@ -70,10 +77,28 @@ move r1 r2
 muli r0 r2
 move $-1 r0
 move r2 r0
+move $-4 r2
+move 5 r2
+cmpi r1 r2
+move r0 $-1
+move r1 $6
+move r2 $-4
+jge label1
+move $-5 r0
+move 100 r0
+move $6 r1
+move $-6 r2
+move r1 r2
+muli r0 r2
+move $-1 r0
+move r2 r0
+move r0 $-1
+label label1 
 sys writes yeye
+move $-1 r0
 sys writei r0
 sys writes eol
-move $-4 r1
+move $-7 r1
 move r0 r1
 move r1 $7
 unlnk
@@ -87,7 +112,7 @@ move 10 r1
 cmpi r0 r1
 move r0 $-1
 move r1 $-3
-jlt label1
+jlt label2
 sys writes terminat
 sys writes eol
 move $-4 r0
@@ -97,21 +122,22 @@ move r0 r1
 move r1 $6
 unlnk
 ret
-label label1 
 label label2 
+label label3 
 move $-6 r0
 move 10 r0
 move $-1 r1
 cmpi r1 r0
 move r0 $-6
 move r1 $-1
-jge label3
-move $-7 r0
-move 1 r0
-move $-1 r1
+jge label4
+move $-1 r0
+sys writei r0
+move $-7 r1
+move 1 r1
 move $-8 r2
-move r1 r2
-addi r0 r2
+move r0 r2
+addi r1 r2
 move $-1 r0
 move r2 r0
 sys writes tvc
@@ -137,8 +163,8 @@ sys writes jsd
 sys writei r2
 sys writes eol
 move r0 $-1
-jmp label2 
-label label3 
+jmp label3 
+label label4 
 move $-1 r0
 sys writei r0
 move $-10 r0

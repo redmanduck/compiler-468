@@ -1,966 +1,150 @@
-step6*/duckfact.out not found
-++++ step6_tests/duckfma.micro
-===================================================================
-32
-32
-===================================================================
-++++ step6_tests/factorial2.micro
-===================================================================
-Please enter an integer number: error on line 136 : illegal int stack reference error on line 142 : illegal int stack reference 0
-Please enter an integer number: 24
-===================================================================
-++++ step6_tests/fma.micro
-===================================================================
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-===================================================================
-++++ step6_tests/duckfact.micro
-===================================================================
-16
-16
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-32
-32
-===================================================================
-++++ step6_tests/factorial2.micro
-===================================================================
-Please enter an integer number: error on line 136 : illegal int stack reference error on line 142 : illegal int stack reference 0
-Please enter an integer number: 24
-===================================================================
-++++ step6_tests/fma.micro
-===================================================================
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-===================================================================
-++++ step6_tests/duckfact.micro
-===================================================================
-16
-16
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-32
-32
-===================================================================
-++++ step6_tests/factorial2.micro
-===================================================================
-Please enter an integer number: 24
-Please enter an integer number: 24
-===================================================================
-++++ step6_tests/fma.micro
-===================================================================
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-===================================================================
-++++ step6_tests/duckfact.micro
-===================================================================
-16
-16
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-32
-32
-===================================================================
-++++ step6_tests/factorial2.micro
-===================================================================
-Please enter an integer number: 24
-Please enter an integer number: 24
-===================================================================
-++++ step6_tests/fma.micro
-===================================================================
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-===================================================================
-++++ step6_tests/duckfact.micro
-===================================================================
-16
-16
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-32
-32
-===================================================================
-++++ step6_tests/factorial2.micro
-===================================================================
-Please enter an integer number: 24
-Please enter an integer number: 24
-===================================================================
-++++ step6_tests/fma.micro
-===================================================================
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-===================================================================
-++++ step5_tests/duckadv.micro
-===================================================================
-432.8751.1252.654890.2201092.645770.009124042.645751.57356e-05
-432.8751.1252.654890.2201092.645770.009124042.645751.57356e-05
-===================================================================
 ++++ step5_tests/duckif.micro
 ===================================================================
-49
-49
+Output  49
+Solution  49
 ===================================================================
 ++++ step5_tests/duckwhile.micro
 ===================================================================
-98765432100
-98765432100
+Output  98765432100
+Solution  98765432100
 ===================================================================
 ++++ step5_tests/step4_testcase2.micro
 ===================================================================
-1 4 42 84 123 244
-1 4 42 84 123 244
-===================================================================
-++++ step5_tests/test_adv.micro
-===================================================================
-2.645755
-2.645755
+Output  1 4 48 192
+Solution  1 4 42 84 123 244
 ===================================================================
 ++++ step5_tests/test_if.micro
 ===================================================================
-91
-91
+Output  98
+Solution  91
 ===================================================================
 ++++ step5_tests/test_while.micro
 ===================================================================
-2.64575
-2.64575
-===================================================================
-++++ step6_tests/duckfact.micro
-===================================================================
-16
-16
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-32
-32
-===================================================================
-++++ step6_tests/factorial2.micro
-===================================================================
-Please enter an integer number: 24
-Please enter an integer number: 24
-===================================================================
-++++ step6_tests/fma.micro
-===================================================================
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-===================================================================
-++++ step6_tests/duckfact.micro
-===================================================================
-16
-16
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-32
-32
-===================================================================
-++++ step6_tests/factorial2.micro
-===================================================================
-Please enter an integer number: 24
-Please enter an integer number: 24
-===================================================================
-++++ step6_tests/fibonacci2.micro
-===================================================================
-Please input an integer number: 0 0 1 1 2 1 3 2
-Please input an integer number: 0 0 1 1 2 1 3 2
-===================================================================
-++++ step6_tests/fma.micro
-===================================================================
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-===================================================================
-output/duckadv.T not found
-++++ step5_tests/duckif.micro
-===================================================================
-49
-49
-===================================================================
-++++ step5_tests/duckwhile.micro
-===================================================================
-10
-98765432100
-===================================================================
-output/duckadv.T not found
-++++ step5_tests/duckif.micro
-===================================================================
-49
-49
-===================================================================
-++++ step5_tests/duckwhile.micro
-===================================================================
-10
-98765432100
-===================================================================
-++++ step5_tests/duckadv.micro
-===================================================================
-432.8751.1252.654890.2201092.645770.009124042.645751.57356e-05
-432.8751.1252.654890.2201092.645770.009124042.645751.57356e-05
+Output  51.25
+Solution  10.25
 ===================================================================
 ++++ step5_tests/duckif.micro
 ===================================================================
-49
-49
+Output  49
+Solution  49
 ===================================================================
 ++++ step5_tests/duckwhile.micro
 ===================================================================
-98765432100
-98765432100
+Output  98765432100
+Solution  98765432100
 ===================================================================
 ++++ step5_tests/step4_testcase2.micro
 ===================================================================
-1 4 42 84 123 244
-1 4 42 84 123 244
-===================================================================
-++++ step5_tests/test_adv.micro
-===================================================================
-2.645755
-2.645755
+Output  1 4 48 192
+Solution  1 4 42 84 123 244
 ===================================================================
 ++++ step5_tests/test_if.micro
 ===================================================================
-91
-91
+Output  98
+Solution  91
 ===================================================================
 ++++ step5_tests/test_while.micro
 ===================================================================
-2.64575
-2.64575
-===================================================================
-++++ step6_tests/duckfact.micro
-===================================================================
-16
-16
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-32
-32
-===================================================================
-++++ step6_tests/factorial2.micro
-===================================================================
-Please enter an integer number: 24
-Please enter an integer number: 24
-===================================================================
-++++ step6_tests/fibonacci2.micro
-===================================================================
-Please input an integer number: 0 0 1 1 2 1 3 2
-Please input an integer number: 0 0 1 1 2 1 3 2
-===================================================================
-++++ step6_tests/fma.micro
-===================================================================
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-===================================================================
-++++ step7_tests/test_while.micro
-===================================================================
-2.64575
-2.64575
-===================================================================
-++++ step5_tests/duckadv.micro
-===================================================================
-432.8751.1252.654890.2201092.645770.009124042.645751.57356e-05
-432.8751.1252.654890.2201092.645770.009124042.645751.57356e-05
+Output  51.25
+Solution  10.25
 ===================================================================
 ++++ step5_tests/duckif.micro
 ===================================================================
-49
-49
+Output  49
+Solution  49
 ===================================================================
 ++++ step5_tests/duckwhile.micro
 ===================================================================
-98765432100
-98765432100
+Output  98765432100
+Solution  98765432100
 ===================================================================
 ++++ step5_tests/step4_testcase2.micro
 ===================================================================
-1 4 42 84 123 244
-1 4 42 84 123 244
-===================================================================
-++++ step5_tests/test_adv.micro
-===================================================================
-2.645755
-2.645755
+Output  1 4 48 192
+Solution  1 4 42 84 123 244
 ===================================================================
 ++++ step5_tests/test_if.micro
 ===================================================================
-91
-91
+Output  98
+Solution  91
 ===================================================================
 ++++ step5_tests/test_while.micro
 ===================================================================
-2.64575
-2.64575
-===================================================================
-++++ step6_tests/duckfact.micro
-===================================================================
-error on line 52 : illegal int stack reference error on line 52 : illegal float stack reference 0
-16
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-error on line 50 : illegal int stack reference error on line 50 : illegal float stack reference 02
-32
-===================================================================
-++++ step5_tests/duckadv.micro
-===================================================================
-432.8751.1252.654890.2201092.645770.009124042.645751.57356e-05
-432.8751.1252.654890.2201092.645770.009124042.645751.57356e-05
+Output  10.25
+Solution  10.25
 ===================================================================
 ++++ step5_tests/duckif.micro
 ===================================================================
-49
-49
+Output  49
+Solution  49
 ===================================================================
 ++++ step5_tests/duckwhile.micro
 ===================================================================
-98765432100
-98765432100
+Output  98765432100
+Solution  98765432100
 ===================================================================
 ++++ step5_tests/step4_testcase2.micro
 ===================================================================
-1 4 42 84 123 244
-1 4 42 84 123 244
-===================================================================
-++++ step5_tests/test_adv.micro
-===================================================================
-2.645755
-2.645755
+Output  1 4 42 84 123 244
+Solution  1 4 42 84 123 244
 ===================================================================
 ++++ step5_tests/test_if.micro
 ===================================================================
-91
-91
+Output  91
+Solution  91
 ===================================================================
 ++++ step5_tests/test_while.micro
 ===================================================================
-2.64575
-2.64575
+Output  10.25
+Solution  10.25
 ===================================================================
 ++++ step6_tests/duckfact.micro
 ===================================================================
-
-16
+Output  16
+Solution  16
 ===================================================================
 ++++ step6_tests/duckfma.micro
 ===================================================================
-
-32
+Output  32
+Solution  32
 ===================================================================
 ++++ step6_tests/factorial2.micro
 ===================================================================
-
-Please enter an integer number: 24
+Output  Please enter an integer number: 24
+Solution  Please enter an integer number: 24
 ===================================================================
 ++++ step6_tests/fibonacci2.micro
 ===================================================================
-
-Please input an integer number: 0 0 1 1 2 1 3 2
+Output  Please input an integer number: 0 0 1 1 2 1 3 2
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2
 ===================================================================
 ++++ step6_tests/fma.micro
 ===================================================================
-
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+Output  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+Solution  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
 ===================================================================
-++++ step7_tests/test_while.micro
+++++ step7_tests/microfib.micro
 ===================================================================
-
-2.64575
+Output  F(n): 21
+Solution  F(n): 21
 ===================================================================
-++++ step6_tests/duckfact.micro
+++++ step7_tests/microloop.micro
 ===================================================================
-
-16
+Output  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+Solution  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
 ===================================================================
-++++ step6_tests/duckfma.micro
+++++ step7_tests/microyu.micro
 ===================================================================
-
-32
+Output  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+Solution  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
 ===================================================================
-++++ step6_tests/factorial2.micro
+++++ step7_tests/subaddtest.micro
 ===================================================================
-
-Please enter an integer number: 24
+Output  12
+Solution  12
 ===================================================================
-++++ step6_tests/fibonacci2.micro
+++++ step7_tests/yufib2.micro
 ===================================================================
-
-Please input an integer number: 0 0 1 1 2 1 3 2
-===================================================================
-++++ step6_tests/fma.micro
-===================================================================
-
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-error on line 50 : illegal int stack reference error on line 50 : illegal float stack reference 4.59163e-412
-32
-===================================================================
-++++ step6_tests/duckfact.micro
-===================================================================
-error on line 52 : illegal int stack reference error on line 52 : illegal float stack reference 0
-16
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-error on line 50 : illegal int stack reference error on line 50 : illegal float stack reference 4.59163e-412
-32
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-20
-32
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-30
-32
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-30
-32
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-30
-32
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-20
-32
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-22
-32
-===================================================================
-++++ step6_tests/fibonacci2.micro
-===================================================================
-Please input an integer number: 0 0 1 0 2 0 3 0
-Please input an integer number: 0 0 1 1 2 1 3 2
-===================================================================
-++++ step6_tests/fma.micro
-===================================================================
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=3.1
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-===================================================================
-++++ step6_tests/duckfact.micro
-===================================================================
-0
-16
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-02
-32
-===================================================================
-++++ step6_tests/factorial2.micro
-===================================================================
-Please enter an integer number: 0
-Please enter an integer number: 24
-===================================================================
-++++ step6_tests/fibonacci2.micro
-===================================================================
-Please input an integer number: 0 0 1 0 2 0 3 0
-Please input an integer number: 0 0 1 1 2 1 3 2
-===================================================================
-++++ step6_tests/fma.micro
-===================================================================
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=0
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-===================================================================
-++++ step6_tests/duckfact.micro
-===================================================================
-0
-16
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-02
-32
-===================================================================
-++++ step6_tests/factorial2.micro
-===================================================================
-Please enter an integer number: 0
-Please enter an integer number: 24
-===================================================================
-++++ step6_tests/fibonacci2.micro
-===================================================================
-Please input an integer number: 0 0 1 0 2 0 3 0
-Please input an integer number: 0 0 1 1 2 1 3 2
-===================================================================
-++++ step6_tests/fma.micro
-===================================================================
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=0
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-===================================================================
-++++ step6_tests/duckfact.micro
-===================================================================
-0
-16
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-02
-32
-===================================================================
-++++ step6_tests/duckfact.micro
-===================================================================
-16
-16
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-32
-32
-===================================================================
-++++ step6_tests/factorial2.micro
-===================================================================
-Please enter an integer number: 24
-Please enter an integer number: 24
-===================================================================
-++++ step6_tests/fibonacci2.micro
-===================================================================
-Please input an integer number: 0 0 1 1 2 1 3 2
-Please input an integer number: 0 0 1 1 2 1 3 2
-===================================================================
-++++ step6_tests/fma.micro
-===================================================================
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-===================================================================
-++++ step5_tests/duckadv.micro
-===================================================================
-432.8751.1252.654890.2201092.645770.009124042.645751.57356e-05
-432.8751.1252.654890.2201092.645770.009124042.645751.57356e-05
-===================================================================
-++++ step5_tests/duckif.micro
-===================================================================
-49
-49
-===================================================================
-++++ step5_tests/duckwhile.micro
-===================================================================
-98765432100
-98765432100
-===================================================================
-++++ step5_tests/step4_testcase2.micro
-===================================================================
-1 4 42 84 123 244
-1 4 42 84 123 244
-===================================================================
-++++ step5_tests/test_adv.micro
-===================================================================
-2.645755
-2.645755
-===================================================================
-++++ step5_tests/test_if.micro
-===================================================================
-91
-91
-===================================================================
-++++ step5_tests/test_while.micro
-===================================================================
-2.64575
-2.64575
-===================================================================
-++++ step6_tests/duckfact.micro
-===================================================================
-16
-16
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-32
-32
-===================================================================
-++++ step6_tests/factorial2.micro
-===================================================================
-Please enter an integer number: 24
-Please enter an integer number: 24
-===================================================================
-++++ step6_tests/fibonacci2.micro
-===================================================================
-Please input an integer number: 0 0 1 1 2 1 3 2
-Please input an integer number: 0 0 1 1 2 1 3 2
-===================================================================
-++++ step6_tests/fma.micro
-===================================================================
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-===================================================================
-++++ step7_tests/test_while.micro
-===================================================================
-2.64575
-2.64575
-===================================================================
-++++ step6_tests/duckfact.micro
-===================================================================
-16
-16
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-32
-32
-===================================================================
-++++ step6_tests/factorial2.micro
-===================================================================
-Please enter an integer number: 24
-Please enter an integer number: 24
-===================================================================
-++++ step6_tests/fibonacci2.micro
-===================================================================
-Please input an integer number: 0 0 1 1 2 1 3 2
-Please input an integer number: 0 0 1 1 2 1 3 2
-===================================================================
-++++ step6_tests/fma.micro
-===================================================================
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-===================================================================
-step7*/microfib.out not found
-++++ step5_tests/duckadv.micro
-===================================================================
-432.8751.1252.654890.2201092.645770.009124042.645751.57356e-05
-432.8751.1252.654890.2201092.645770.009124042.645751.57356e-05
-===================================================================
-++++ step5_tests/duckif.micro
-===================================================================
-49
-49
-===================================================================
-++++ step5_tests/duckwhile.micro
-===================================================================
-98765432100
-98765432100
-===================================================================
-++++ step5_tests/step4_testcase2.micro
-===================================================================
-1 4 42 84 123 244
-1 4 42 84 123 244
-===================================================================
-++++ step5_tests/test_adv.micro
-===================================================================
-2.645755
-2.645755
-===================================================================
-++++ step5_tests/test_if.micro
-===================================================================
-91
-91
-===================================================================
-++++ step5_tests/test_while.micro
-===================================================================
-2.64575
-2.64575
-===================================================================
-++++ step6_tests/duckfact.micro
-===================================================================
-16
-16
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-32
-32
-===================================================================
-++++ step6_tests/factorial2.micro
-===================================================================
-Please enter an integer number: 24
-Please enter an integer number: 24
-===================================================================
-++++ step6_tests/fibonacci2.micro
-===================================================================
-Please input an integer number: 0 0 1 1 2 1 3 2
-Please input an integer number: 0 0 1 1 2 1 3 2
-===================================================================
-++++ step6_tests/fma.micro
-===================================================================
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-===================================================================
-step*/microfib.out not found
-++++ step7_tests/test_while.micro
-===================================================================
-2.64575
-2.64575
-===================================================================
-++++ step5_tests/duckadv.micro
-===================================================================
-432.8751.1252.654890.2201092.645770.009124042.645751.57356e-05
-432.8751.1252.654890.2201092.645770.009124042.645751.57356e-05
-===================================================================
-++++ step5_tests/duckif.micro
-===================================================================
-49
-49
-===================================================================
-++++ step5_tests/duckwhile.micro
-===================================================================
-98765432100
-98765432100
-===================================================================
-++++ step5_tests/step4_testcase2.micro
-===================================================================
-1 4 42 84 123 244
-1 4 42 84 123 244
-===================================================================
-++++ step5_tests/test_adv.micro
-===================================================================
-2.645755
-2.645755
-===================================================================
-++++ step5_tests/test_if.micro
-===================================================================
-91
-91
-===================================================================
-++++ step5_tests/test_while.micro
-===================================================================
-2.64575
-2.64575
-===================================================================
-++++ step6_tests/duckfact.micro
-===================================================================
-16
-16
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-32
-32
-===================================================================
-++++ step6_tests/factorial2.micro
-===================================================================
-Please enter an integer number: 24
-Please enter an integer number: 24
-===================================================================
-++++ step6_tests/fibonacci2.micro
-===================================================================
-Please input an integer number: 0 0 1 1 2 1 3 2
-Please input an integer number: 0 0 1 1 2 1 3 2
-===================================================================
-++++ step6_tests/fma.micro
-===================================================================
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-===================================================================
-*/microfib.out not found
-++++ step7_tests/test_while.micro
-===================================================================
-2.64575
-2.64575
-===================================================================
-++++ step6_tests/duckfact.micro
-===================================================================
-16
-16
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-32
-32
-===================================================================
-++++ step6_tests/factorial2.micro
-===================================================================
-Please enter an integer number: 24
-Please enter an integer number: 24
-===================================================================
-++++ step6_tests/fibonacci2.micro
-===================================================================
-Please input an integer number: 0 0 1 1 2 1 3 2
-Please input an integer number: 0 0 1 1 2 1 3 2
-===================================================================
-++++ step6_tests/fma.micro
-===================================================================
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-===================================================================
-++++ step5_tests/duckadv.micro
-===================================================================
-432.8751.1252.654890.2201092.645770.009124042.645751.57356e-05
-432.8751.1252.654890.2201092.645770.009124042.645751.57356e-05
-===================================================================
-++++ step5_tests/duckif.micro
-===================================================================
-49
-49
-===================================================================
-++++ step5_tests/duckwhile.micro
-===================================================================
-98765432100
-98765432100
-===================================================================
-++++ step5_tests/step4_testcase2.micro
-===================================================================
-1 4 42 84 123 244
-1 4 42 84 123 244
-===================================================================
-++++ step5_tests/test_adv.micro
-===================================================================
-2.645755
-2.645755
-===================================================================
-++++ step5_tests/test_if.micro
-===================================================================
-91
-91
-===================================================================
-++++ step5_tests/test_while.micro
-===================================================================
-2.64575
-2.64575
-===================================================================
-++++ step5_tests/duckadv.micro
-===================================================================
-432.8751.1252.654890.2201092.645770.009124042.645751.57356e-05
-432.8751.1252.654890.2201092.645770.009124042.645751.57356e-05
-===================================================================
-++++ step5_tests/duckif.micro
-===================================================================
-49
-49
-===================================================================
-++++ step5_tests/duckwhile.micro
-===================================================================
-98765432100
-98765432100
-===================================================================
-++++ step5_tests/step4_testcase2.micro
-===================================================================
-1 4 42 84 123 244
-1 4 42 84 123 244
-===================================================================
-++++ step5_tests/test_adv.micro
-===================================================================
-2.645755
-2.645755
-===================================================================
-++++ step5_tests/test_if.micro
-===================================================================
-91
-91
-===================================================================
-++++ step5_tests/test_while.micro
-===================================================================
-2.64575
-2.64575
-===================================================================
-++++ step6_tests/duckfact.micro
-===================================================================
-16
-16
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-32
-32
-===================================================================
-++++ step6_tests/factorial2.micro
-===================================================================
-Please enter an integer number: 24
-Please enter an integer number: 24
-===================================================================
-++++ step6_tests/fibonacci2.micro
-===================================================================
-Please input an integer number: 0 0 1 1 2 1 3 2
-Please input an integer number: 0 0 1 1 2 1 3 2
-===================================================================
-++++ step6_tests/fma.micro
-===================================================================
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-===================================================================
-++++ step6_tests/duckfact.micro
-===================================================================
-16
-16
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-32
-32
-===================================================================
-++++ step6_tests/factorial2.micro
-===================================================================
-Please enter an integer number: 24
-Please enter an integer number: 24
-===================================================================
-++++ step6_tests/fibonacci2.micro
-===================================================================
-Please input an integer number: 0 0 1 1 2 1 3 2
-Please input an integer number: 0 0 1 1 2 1 3 2
-===================================================================
-++++ step6_tests/fma.micro
-===================================================================
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-===================================================================
-++++ step5_tests/duckadv.micro
-===================================================================
-432.8751.1252.654890.2201092.645770.009124042.645751.57356e-05
-432.8751.1252.654890.2201092.645770.009124042.645751.57356e-05
-===================================================================
-++++ step5_tests/duckif.micro
-===================================================================
-49
-49
-===================================================================
-++++ step5_tests/duckwhile.micro
-===================================================================
-98765432100
-98765432100
-===================================================================
-++++ step5_tests/step4_testcase2.micro
-===================================================================
-1 4 42 84 123 244
-1 4 42 84 123 244
-===================================================================
-++++ step5_tests/test_adv.micro
-===================================================================
-2.645755
-2.645755
-===================================================================
-++++ step5_tests/test_if.micro
-===================================================================
-91
-91
-===================================================================
-++++ step5_tests/test_while.micro
-===================================================================
-2.64575
-2.64575
-===================================================================
-++++ step6_tests/duckfact.micro
-===================================================================
-16
-16
-===================================================================
-++++ step6_tests/duckfma.micro
-===================================================================
-32
-32
-===================================================================
-++++ step6_tests/factorial2.micro
-===================================================================
-Please enter an integer number: 24
-Please enter an integer number: 24
-===================================================================
-++++ step6_tests/fibonacci2.micro
-===================================================================
-Please input an integer number: 0 0 1 1 2 1 3 2
-Please input an integer number: 0 0 1 1 2 1 3 2
-===================================================================
-++++ step6_tests/fma.micro
-===================================================================
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
-You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+Output  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
 ===================================================================

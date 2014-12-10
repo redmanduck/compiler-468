@@ -22,24 +22,41 @@
 var i
 var a
 var num
+push
+push r0
+push r1
+push r2
+push r3
+jsr main
+sys halt
 label main 
+link 6
+move $-1 r0
 move 7 r0
 move r0 num
-move 2 r1
-move r1 i
-move 42 r2
-move r2 a
-move 5 r3
-cmpi i r3
+move $-2 r0
+move 2 r0
+move r0 i
+move $-3 r0
+move 42 r0
+move r0 a
+move $-4 r0
+move 5 r0
+cmpi i r0
+move r0 $-4
 jge label1
-move num r4
-addi a r4
-move r4 num
+move $-5 r0
+move num r0
+addi a r0
+move r0 num
 jmp label2 
 label label1 
-move num r5
-subi a r5
-move r5 num
+move $-6 r0
+move num r0
+subi a r0
+move r0 num
 label label2 
-sys writei num 
-sys halt
+sys writei num
+unlnk
+ret
+end

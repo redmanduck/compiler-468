@@ -316,7 +316,7 @@ public class TinyGenerator {
 					+ C.toTiny());
 
 			if(!irn.LIVE_OUT.contains(B)){
-				free(C, irn.LIVE_OUT, CodeBuffer);
+				free(B, irn.LIVE_OUT, CodeBuffer);
 			}
 			if(!irn.LIVE_OUT.contains(A)){
 				free(A, irn.LIVE_OUT, CodeBuffer);
@@ -342,7 +342,7 @@ public class TinyGenerator {
 					+ C.toTiny());
 
 			if(!irn.LIVE_OUT.contains(B)){
-				free(C, irn.LIVE_OUT, CodeBuffer);
+				free(B, irn.LIVE_OUT, CodeBuffer);
 			}
 			if(!irn.LIVE_OUT.contains(A)){
 				free(A, irn.LIVE_OUT, CodeBuffer);
@@ -367,7 +367,7 @@ public class TinyGenerator {
 					+ C.toTiny());
 
 			if(!irn.LIVE_OUT.contains(B)){
-				free(C, irn.LIVE_OUT, CodeBuffer);
+				free(B, irn.LIVE_OUT, CodeBuffer);
 			}
 			if(!irn.LIVE_OUT.contains(A)){
 				free(A, irn.LIVE_OUT, CodeBuffer);
@@ -397,7 +397,7 @@ public class TinyGenerator {
 
 
 			if(!irn.LIVE_OUT.contains(B)){
-				free(C, irn.LIVE_OUT, CodeBuffer);
+				free(B, irn.LIVE_OUT, CodeBuffer);
 			}
 			if(!irn.LIVE_OUT.contains(A)){
 				free(A, irn.LIVE_OUT, CodeBuffer);

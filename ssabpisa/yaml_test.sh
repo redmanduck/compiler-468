@@ -24,7 +24,7 @@ TINY='tiny'
  if [[ $* == *-c* ]]
 then
 rm $TINY
-make tiny
+make tiny4
 fi
 tc="${@: -1}*"
 if [[ $* == *-c* ]]
@@ -68,8 +68,8 @@ do
   gold=$(echo $g | sed s/ST/\\\|/g | cut -d'|' -f1)    
   echo "++++ $n"  >> transcript
   echo "===================================================================" >> transcript
-  echo $test >> transcript  
-  echo $gold >> transcript
+  echo "Output " $test >> transcript  
+  echo "Solution " $gold >> transcript
   echo "===================================================================" >> transcript
   df=$(diff -b -B <(echo $test) <(echo $gold))
   if [ "$df" = "" ]
