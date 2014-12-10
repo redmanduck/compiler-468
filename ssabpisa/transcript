@@ -8,80 +8,10 @@ Solution  49
 Output  98765432100
 Solution  98765432100
 ===================================================================
-++++ step5_tests/step4_testcase2.micro
+++++ step5_tests/step4_testcase.micro
 ===================================================================
-Output  1 4 48 192
-Solution  1 4 42 84 123 244
-===================================================================
-++++ step5_tests/test_if.micro
-===================================================================
-Output  98
-Solution  91
-===================================================================
-++++ step5_tests/test_while.micro
-===================================================================
-Output  51.25
-Solution  10.25
-===================================================================
-++++ step5_tests/duckif.micro
-===================================================================
-Output  49
-Solution  49
-===================================================================
-++++ step5_tests/duckwhile.micro
-===================================================================
-Output  98765432100
-Solution  98765432100
-===================================================================
-++++ step5_tests/step4_testcase2.micro
-===================================================================
-Output  1 4 48 192
-Solution  1 4 42 84 123 244
-===================================================================
-++++ step5_tests/test_if.micro
-===================================================================
-Output  98
-Solution  91
-===================================================================
-++++ step5_tests/test_while.micro
-===================================================================
-Output  51.25
-Solution  10.25
-===================================================================
-++++ step5_tests/duckif.micro
-===================================================================
-Output  49
-Solution  49
-===================================================================
-++++ step5_tests/duckwhile.micro
-===================================================================
-Output  98765432100
-Solution  98765432100
-===================================================================
-++++ step5_tests/step4_testcase2.micro
-===================================================================
-Output  1 4 48 192
-Solution  1 4 42 84 123 244
-===================================================================
-++++ step5_tests/test_if.micro
-===================================================================
-Output  98
-Solution  91
-===================================================================
-++++ step5_tests/test_while.micro
-===================================================================
-Output  10.25
-Solution  10.25
-===================================================================
-++++ step5_tests/duckif.micro
-===================================================================
-Output  49
-Solution  49
-===================================================================
-++++ step5_tests/duckwhile.micro
-===================================================================
-Output  98765432100
-Solution  98765432100
+Output  0 10
+Solution  0 10
 ===================================================================
 ++++ step5_tests/step4_testcase2.micro
 ===================================================================
@@ -95,8 +25,1488 @@ Solution  91
 ===================================================================
 ++++ step5_tests/test_while.micro
 ===================================================================
-Output  10.25
-Solution  10.25
+Output  3.47771e-24
+Solution  2.64575
+===================================================================
+++++ step6_tests/duckfact.micro
+===================================================================
+Output  16
+Solution  16
+===================================================================
+++++ step6_tests/duckfma.micro
+===================================================================
+Output  32
+Solution  32
+===================================================================
+++++ step6_tests/factorial2.micro
+===================================================================
+Output  Please enter an integer number: 24
+Solution  Please enter an integer number: 24
+===================================================================
+++++ step6_tests/fibonacci2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2
+===================================================================
+++++ step6_tests/fma.micro
+===================================================================
+Output  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+Solution  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+===================================================================
+++++ step7_tests/microfib.micro
+===================================================================
+Output  F(n): 21
+Solution  F(n): 21
+===================================================================
+++++ step7_tests/microloop.micro
+===================================================================
+Output  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+Solution  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+===================================================================
+++++ step7_tests/microyu.micro
+===================================================================
+Output  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+Solution  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+===================================================================
+++++ step7_tests/subaddtest.micro
+===================================================================
+Output  12
+Solution  12
+===================================================================
+++++ step7_tests/yufib2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+===================================================================
+++++ step5_tests/duckif.micro
+===================================================================
+Output  49
+Solution  49
+===================================================================
+++++ step5_tests/duckwhile.micro
+===================================================================
+Output  98765432100
+Solution  98765432100
+===================================================================
+++++ step5_tests/step4_testcase.micro
+===================================================================
+Output  0 10
+Solution  0 10
+===================================================================
+++++ step5_tests/step4_testcase2.micro
+===================================================================
+Output  1 4 42 84 123 244
+Solution  1 4 42 84 123 244
+===================================================================
+++++ step5_tests/test_if.micro
+===================================================================
+Output  91
+Solution  91
+===================================================================
+++++ step5_tests/test_while.micro
+===================================================================
+Output  3.47771e-24
+Solution  2.64575
+===================================================================
+++++ step6_tests/duckfact.micro
+===================================================================
+Output  16
+Solution  16
+===================================================================
+++++ step6_tests/duckfma.micro
+===================================================================
+Output  32
+Solution  32
+===================================================================
+++++ step6_tests/factorial2.micro
+===================================================================
+Output  Please enter an integer number: 24
+Solution  Please enter an integer number: 24
+===================================================================
+++++ step6_tests/fibonacci2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2
+===================================================================
+++++ step6_tests/fma.micro
+===================================================================
+Output  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+Solution  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+===================================================================
+++++ step7_tests/microfib.micro
+===================================================================
+Output  F(n): 21
+Solution  F(n): 21
+===================================================================
+++++ step7_tests/microloop.micro
+===================================================================
+Output  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+Solution  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+===================================================================
+++++ step7_tests/microyu.micro
+===================================================================
+Output  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+Solution  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+===================================================================
+++++ step7_tests/subaddtest.micro
+===================================================================
+Output  12
+Solution  12
+===================================================================
+++++ step7_tests/yufib2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+===================================================================
+++++ step5_tests/duckif.micro
+===================================================================
+Output  49
+Solution  49
+===================================================================
+++++ step5_tests/duckwhile.micro
+===================================================================
+Output  98765432100
+Solution  98765432100
+===================================================================
+++++ step5_tests/step4_testcase.micro
+===================================================================
+Output  0 10
+Solution  0 10
+===================================================================
+++++ step5_tests/step4_testcase2.micro
+===================================================================
+Output  1 4 42 84 123 244
+Solution  1 4 42 84 123 244
+===================================================================
+++++ step5_tests/test_if.micro
+===================================================================
+Output  91
+Solution  91
+===================================================================
+++++ step5_tests/test_while.micro
+===================================================================
+Output  100 499 2.2857198 1.3061297 0.74635696 0.42648995 0.24370894 0.13926293 0.079578192 0.045473291 0.025984790 0.014848489 0.008484888 0.0048484687 0.0027705586 0.0015831785 0.00090466884 0.00051695383 0.00029540282 0.00016880181 9.64577e-0580 5.51187e-0579 3.14964e-0578 1.79979e-0577 1.02845e-0576 5.87688e-0675 3.35822e-0674 1.91898e-0673 1.09656e-0672 6.26606e-0771 3.58061e-0770 2.04606e-0769 1.16918e-0768 6.68101e-0867 3.81772e-0866 2.18156e-0865 1.2466e-0864 7.12345e-0963 4.07054e-0962 2.32602e-0961 1.32916e-0960 7.59518e-1059 4.3401e-1058 2.48006e-1057 1.41718e-1056 8.09815e-1155 4.62751e-1154 2.64429e-1153 1.51102e-1152 8.63443e-1251 4.93396e-1250 2.81941e-1249 1.61109e-1248 9.20622e-1347 5.2607e-1346 3.00611e-1345 1.71778e-1344 9.81588e-1443 5.60907e-1442 3.20518e-1441 1.83153e-1440 1.04659e-1439 5.98052e-1538 3.41744e-1537 1.95282e-1536 1.1159e-1535 6.37657e-1634 3.64375e-1633 2.08214e-1632 1.1898e-1631 6.79884e-1730 3.88505e-1729 2.22003e-1728 1.26859e-1727 7.24907e-1826 4.14233e-1825 2.36704e-1824 1.3526e-1823 7.72912e-1922 4.41664e-1921 2.52379e-1920 1.44217e-1919 8.24096e-2018 4.70912e-2017 2.69093e-2016 1.53767e-2015 8.7867e-2114 5.02097e-2113 2.86913e-2112 1.6395e-2111 9.36858e-2210 5.35347e-229 3.05913e-228 1.74807e-227 9.98898e-236 5.70799e-235 3.26171e-234 1.86383e-233 1.06505e-232 6.08599e-241 3.47771e-24
+Solution  2.64575
+===================================================================
+++++ step6_tests/duckfact.micro
+===================================================================
+Output  16
+Solution  16
+===================================================================
+++++ step6_tests/duckfma.micro
+===================================================================
+Output  32
+Solution  32
+===================================================================
+++++ step6_tests/factorial2.micro
+===================================================================
+Output  Please enter an integer number: 24
+Solution  Please enter an integer number: 24
+===================================================================
+++++ step6_tests/fibonacci2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2
+===================================================================
+++++ step6_tests/fma.micro
+===================================================================
+Output  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+Solution  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+===================================================================
+++++ step7_tests/microfib.micro
+===================================================================
+Output  F(n): 21
+Solution  F(n): 21
+===================================================================
+++++ step7_tests/microloop.micro
+===================================================================
+Output  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+Solution  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+===================================================================
+++++ step7_tests/microyu.micro
+===================================================================
+Output  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+Solution  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+===================================================================
+++++ step7_tests/subaddtest.micro
+===================================================================
+Output  12
+Solution  12
+===================================================================
+++++ step7_tests/yufib2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+===================================================================
+++++ step5_tests/duckif.micro
+===================================================================
+Output  49
+Solution  49
+===================================================================
+++++ step5_tests/duckwhile.micro
+===================================================================
+Output  98765432100
+Solution  98765432100
+===================================================================
+++++ step5_tests/step4_testcase.micro
+===================================================================
+Output  0 10
+Solution  0 10
+===================================================================
+++++ step5_tests/step4_testcase2.micro
+===================================================================
+Output  1 4 48 192
+Solution  1 4 42 84 123 244
+===================================================================
+++++ step5_tests/test_if.micro
+===================================================================
+Output  98
+Solution  91
+===================================================================
+++++ step5_tests/test_while.micro
+===================================================================
+Output  100 199 0.14285798 0.020408297 0.0029154596 0.00041649395 5.9499e-0594 8.49986e-0693 1.21427e-0692 1.73467e-0791 2.47809e-0890 3.54013e-0989 5.05733e-1088 7.22476e-1187 1.03211e-1186 1.47444e-1285 2.10634e-1384 3.00906e-1483 4.29866e-1582 6.14095e-1681 8.77278e-1780 1.25325e-1779 1.79036e-1878 2.55766e-1977 3.6538e-2076 5.21972e-2175 7.45674e-2274 1.06525e-2273 1.52178e-2372 2.17398e-2471 3.10568e-2570 4.43669e-2669 6.33812e-2768 9.05446e-2867 1.29349e-2866 1.84785e-2965 2.63978e-3064 3.77112e-3163 5.38732e-3262 7.69617e-3361 1.09945e-3360 1.57065e-3459 2.24378e-3558 3.2054e-3657 4.57914e-3756 6.54163e-3855 9.34519e-3954 1.33503e-3953 1.90718e-4052 2.72454e-4151 3.89281e-4250 5.56315e-4349 7.9874e-4448 1.12104e-4447 1.4013e-4546 045 044 043 042 041 040 039 038 037 036 035 034 033 032 031 030 029 028 027 026 025 024 023 022 021 020 019 018 017 016 015 014 013 012 011 010 09 08 07 06 05 04 03 02 01 0
+Solution  2.64575
+===================================================================
+++++ step6_tests/duckfact.micro
+===================================================================
+Output  16
+Solution  16
+===================================================================
+++++ step6_tests/duckfma.micro
+===================================================================
+Output  32
+Solution  32
+===================================================================
+++++ step6_tests/factorial2.micro
+===================================================================
+Output  Please enter an integer number: 6
+Solution  Please enter an integer number: 24
+===================================================================
+++++ step6_tests/fibonacci2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 1
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2
+===================================================================
+++++ step6_tests/fma.micro
+===================================================================
+Output  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+Solution  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+===================================================================
+++++ step7_tests/microfib.micro
+===================================================================
+Output  F(n): 9
+Solution  F(n): 21
+===================================================================
+++++ step7_tests/microloop.micro
+===================================================================
+Output  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 6 JSD saw duck flying at speed = 6 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 8 JSD saw duck flying at speed = 8 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+Solution  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+===================================================================
+++++ step7_tests/microyu.micro
+===================================================================
+Output  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+Solution  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+===================================================================
+++++ step7_tests/subaddtest.micro
+===================================================================
+Output  12
+Solution  12
+===================================================================
+++++ step7_tests/yufib2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 1 4 2 5 3 6 4 7 6 8 9 9 13 10 19 11 28 12 41 13 60 14 88 15 129 16 189 17 277 18 406 19 595 20 872 21 1278 22 1873 23 2745 24 4023
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+===================================================================
+++++ step5_tests/duckif.micro
+===================================================================
+Output  49
+Solution  49
+===================================================================
+++++ step5_tests/duckwhile.micro
+===================================================================
+Output  98765432100
+Solution  98765432100
+===================================================================
+++++ step5_tests/step4_testcase.micro
+===================================================================
+Output  0 10
+Solution  0 10
+===================================================================
+++++ step5_tests/step4_testcase2.micro
+===================================================================
+Output  1 4 42 84 123 244
+Solution  1 4 42 84 123 244
+===================================================================
+++++ step5_tests/test_if.micro
+===================================================================
+Output  91
+Solution  91
+===================================================================
+++++ step5_tests/test_while.micro
+===================================================================
+Output  100 499 2.2857198 1.3061297 0.74635696 0.42648995 0.24370894 0.13926293 0.079578192 0.045473291 0.025984790 0.014848489 0.008484888 0.0048484687 0.0027705586 0.0015831785 0.00090466884 0.00051695383 0.00029540282 0.00016880181 9.64577e-0580 5.51187e-0579 3.14964e-0578 1.79979e-0577 1.02845e-0576 5.87688e-0675 3.35822e-0674 1.91898e-0673 1.09656e-0672 6.26606e-0771 3.58061e-0770 2.04606e-0769 1.16918e-0768 6.68101e-0867 3.81772e-0866 2.18156e-0865 1.2466e-0864 7.12345e-0963 4.07054e-0962 2.32602e-0961 1.32916e-0960 7.59518e-1059 4.3401e-1058 2.48006e-1057 1.41718e-1056 8.09815e-1155 4.62751e-1154 2.64429e-1153 1.51102e-1152 8.63443e-1251 4.93396e-1250 2.81941e-1249 1.61109e-1248 9.20622e-1347 5.2607e-1346 3.00611e-1345 1.71778e-1344 9.81588e-1443 5.60907e-1442 3.20518e-1441 1.83153e-1440 1.04659e-1439 5.98052e-1538 3.41744e-1537 1.95282e-1536 1.1159e-1535 6.37657e-1634 3.64375e-1633 2.08214e-1632 1.1898e-1631 6.79884e-1730 3.88505e-1729 2.22003e-1728 1.26859e-1727 7.24907e-1826 4.14233e-1825 2.36704e-1824 1.3526e-1823 7.72912e-1922 4.41664e-1921 2.52379e-1920 1.44217e-1919 8.24096e-2018 4.70912e-2017 2.69093e-2016 1.53767e-2015 8.7867e-2114 5.02097e-2113 2.86913e-2112 1.6395e-2111 9.36858e-2210 5.35347e-229 3.05913e-228 1.74807e-227 9.98898e-236 5.70799e-235 3.26171e-234 1.86383e-233 1.06505e-232 6.08599e-241 3.47771e-24
+Solution  2.64575
+===================================================================
+++++ step6_tests/duckfact.micro
+===================================================================
+Output  16
+Solution  16
+===================================================================
+++++ step6_tests/duckfma.micro
+===================================================================
+Output  32
+Solution  32
+===================================================================
+++++ step6_tests/factorial2.micro
+===================================================================
+Output  Please enter an integer number: 24
+Solution  Please enter an integer number: 24
+===================================================================
+++++ step6_tests/fibonacci2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2
+===================================================================
+++++ step6_tests/fma.micro
+===================================================================
+Output  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+Solution  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+===================================================================
+++++ step7_tests/microfib.micro
+===================================================================
+Output  F(n): 21
+Solution  F(n): 21
+===================================================================
+++++ step7_tests/microloop.micro
+===================================================================
+Output  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+Solution  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+===================================================================
+++++ step7_tests/microyu.micro
+===================================================================
+Output  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+Solution  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+===================================================================
+++++ step7_tests/subaddtest.micro
+===================================================================
+Output  12
+Solution  12
+===================================================================
+++++ step7_tests/yufib2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+===================================================================
+++++ step5_tests/duckif.micro
+===================================================================
+Output  49
+Solution  49
+===================================================================
+++++ step5_tests/duckwhile.micro
+===================================================================
+Output  98765432100
+Solution  98765432100
+===================================================================
+++++ step5_tests/step4_testcase.micro
+===================================================================
+Output  0 10
+Solution  0 10
+===================================================================
+++++ step5_tests/step4_testcase2.micro
+===================================================================
+Output  1 4 42 84 123 244
+Solution  1 4 42 84 123 244
+===================================================================
+++++ step5_tests/test_if.micro
+===================================================================
+Output  91
+Solution  91
+===================================================================
+++++ step5_tests/test_while.micro
+===================================================================
+Output  100 499 2.2857198 1.3061297 0.74635696 0.42648995 0.24370894 0.13926293 0.079578192 0.045473291 0.025984790 0.014848489 0.008484888 0.0048484687 0.0027705586 0.0015831785 0.00090466884 0.00051695383 0.00029540282 0.00016880181 9.64577e-0580 5.51187e-0579 3.14964e-0578 1.79979e-0577 1.02845e-0576 5.87688e-0675 3.35822e-0674 1.91898e-0673 1.09656e-0672 6.26606e-0771 3.58061e-0770 2.04606e-0769 1.16918e-0768 6.68101e-0867 3.81772e-0866 2.18156e-0865 1.2466e-0864 7.12345e-0963 4.07054e-0962 2.32602e-0961 1.32916e-0960 7.59518e-1059 4.3401e-1058 2.48006e-1057 1.41718e-1056 8.09815e-1155 4.62751e-1154 2.64429e-1153 1.51102e-1152 8.63443e-1251 4.93396e-1250 2.81941e-1249 1.61109e-1248 9.20622e-1347 5.2607e-1346 3.00611e-1345 1.71778e-1344 9.81588e-1443 5.60907e-1442 3.20518e-1441 1.83153e-1440 1.04659e-1439 5.98052e-1538 3.41744e-1537 1.95282e-1536 1.1159e-1535 6.37657e-1634 3.64375e-1633 2.08214e-1632 1.1898e-1631 6.79884e-1730 3.88505e-1729 2.22003e-1728 1.26859e-1727 7.24907e-1826 4.14233e-1825 2.36704e-1824 1.3526e-1823 7.72912e-1922 4.41664e-1921 2.52379e-1920 1.44217e-1919 8.24096e-2018 4.70912e-2017 2.69093e-2016 1.53767e-2015 8.7867e-2114 5.02097e-2113 2.86913e-2112 1.6395e-2111 9.36858e-2210 5.35347e-229 3.05913e-228 1.74807e-227 9.98898e-236 5.70799e-235 3.26171e-234 1.86383e-233 1.06505e-232 6.08599e-241 3.47771e-24
+Solution  2.64575
+===================================================================
+++++ step6_tests/duckfact.micro
+===================================================================
+Output  16
+Solution  16
+===================================================================
+++++ step6_tests/duckfma.micro
+===================================================================
+Output  32
+Solution  32
+===================================================================
+++++ step6_tests/factorial2.micro
+===================================================================
+Output  Please enter an integer number: 24
+Solution  Please enter an integer number: 24
+===================================================================
+++++ step6_tests/fibonacci2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2
+===================================================================
+++++ step6_tests/fma.micro
+===================================================================
+Output  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+Solution  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+===================================================================
+++++ step7_tests/microfib.micro
+===================================================================
+Output  F(n): 21
+Solution  F(n): 21
+===================================================================
+++++ step7_tests/microloop.micro
+===================================================================
+Output  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+Solution  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+===================================================================
+++++ step7_tests/microyu.micro
+===================================================================
+Output  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+Solution  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+===================================================================
+++++ step7_tests/subaddtest.micro
+===================================================================
+Output  12
+Solution  12
+===================================================================
+++++ step7_tests/yufib2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+===================================================================
+++++ step5_tests/duckif.micro
+===================================================================
+Output  49
+Solution  49
+===================================================================
+++++ step5_tests/duckwhile.micro
+===================================================================
+Output  98765432100
+Solution  98765432100
+===================================================================
+++++ step5_tests/step4_testcase.micro
+===================================================================
+Output  0 10
+Solution  0 10
+===================================================================
+++++ step5_tests/step4_testcase2.micro
+===================================================================
+Output  1 4 42 84 123 244
+Solution  1 4 42 84 123 244
+===================================================================
+++++ step5_tests/test_if.micro
+===================================================================
+Output  91
+Solution  91
+===================================================================
+++++ step5_tests/test_while.micro
+===================================================================
+Output  100 499 2.2857198 1.3061297 0.74635696 0.42648995 0.24370894 0.13926293 0.079578192 0.045473291 0.025984790 0.014848489 0.008484888 0.0048484687 0.0027705586 0.0015831785 0.00090466884 0.00051695383 0.00029540282 0.00016880181 9.64577e-0580 5.51187e-0579 3.14964e-0578 1.79979e-0577 1.02845e-0576 5.87688e-0675 3.35822e-0674 1.91898e-0673 1.09656e-0672 6.26606e-0771 3.58061e-0770 2.04606e-0769 1.16918e-0768 6.68101e-0867 3.81772e-0866 2.18156e-0865 1.2466e-0864 7.12345e-0963 4.07054e-0962 2.32602e-0961 1.32916e-0960 7.59518e-1059 4.3401e-1058 2.48006e-1057 1.41718e-1056 8.09815e-1155 4.62751e-1154 2.64429e-1153 1.51102e-1152 8.63443e-1251 4.93396e-1250 2.81941e-1249 1.61109e-1248 9.20622e-1347 5.2607e-1346 3.00611e-1345 1.71778e-1344 9.81588e-1443 5.60907e-1442 3.20518e-1441 1.83153e-1440 1.04659e-1439 5.98052e-1538 3.41744e-1537 1.95282e-1536 1.1159e-1535 6.37657e-1634 3.64375e-1633 2.08214e-1632 1.1898e-1631 6.79884e-1730 3.88505e-1729 2.22003e-1728 1.26859e-1727 7.24907e-1826 4.14233e-1825 2.36704e-1824 1.3526e-1823 7.72912e-1922 4.41664e-1921 2.52379e-1920 1.44217e-1919 8.24096e-2018 4.70912e-2017 2.69093e-2016 1.53767e-2015 8.7867e-2114 5.02097e-2113 2.86913e-2112 1.6395e-2111 9.36858e-2210 5.35347e-229 3.05913e-228 1.74807e-227 9.98898e-236 5.70799e-235 3.26171e-234 1.86383e-233 1.06505e-232 6.08599e-241 3.47771e-24
+Solution  2.64575
+===================================================================
+++++ step6_tests/duckfact.micro
+===================================================================
+Output  16
+Solution  16
+===================================================================
+++++ step6_tests/duckfma.micro
+===================================================================
+Output  32
+Solution  32
+===================================================================
+++++ step6_tests/factorial2.micro
+===================================================================
+Output  Please enter an integer number: 24
+Solution  Please enter an integer number: 24
+===================================================================
+++++ step6_tests/fibonacci2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2
+===================================================================
+++++ step6_tests/fma.micro
+===================================================================
+Output  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+Solution  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+===================================================================
+++++ step7_tests/microfib.micro
+===================================================================
+Output  F(n): 21
+Solution  F(n): 21
+===================================================================
+++++ step7_tests/microloop.micro
+===================================================================
+Output  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+Solution  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+===================================================================
+++++ step7_tests/microyu.micro
+===================================================================
+Output  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+Solution  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+===================================================================
+++++ step7_tests/subaddtest.micro
+===================================================================
+Output  12
+Solution  12
+===================================================================
+++++ step7_tests/yufib2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+===================================================================
+++++ step5_tests/duckif.micro
+===================================================================
+Output  49
+Solution  49
+===================================================================
+++++ step5_tests/duckwhile.micro
+===================================================================
+Output  98765432100
+Solution  98765432100
+===================================================================
+++++ step5_tests/step4_testcase.micro
+===================================================================
+Output  0 10
+Solution  0 10
+===================================================================
+++++ step5_tests/step4_testcase2.micro
+===================================================================
+Output  1 4 42 84 123 244
+Solution  1 4 42 84 123 244
+===================================================================
+++++ step5_tests/test_if.micro
+===================================================================
+Output  91
+Solution  91
+===================================================================
+++++ step5_tests/test_while.micro
+===================================================================
+Output  5 44 2.285713 1.306122 0.7463561 0.426489
+Solution  2.64575
+===================================================================
+++++ step6_tests/duckfact.micro
+===================================================================
+Output  16
+Solution  16
+===================================================================
+++++ step6_tests/duckfma.micro
+===================================================================
+Output  32
+Solution  32
+===================================================================
+++++ step6_tests/factorial2.micro
+===================================================================
+Output  Please enter an integer number: 24
+Solution  Please enter an integer number: 24
+===================================================================
+++++ step6_tests/fibonacci2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2
+===================================================================
+++++ step6_tests/fma.micro
+===================================================================
+Output  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+Solution  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+===================================================================
+++++ step7_tests/microfib.micro
+===================================================================
+Output  F(n): 21
+Solution  F(n): 21
+===================================================================
+++++ step7_tests/microloop.micro
+===================================================================
+Output  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+Solution  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+===================================================================
+++++ step7_tests/microyu.micro
+===================================================================
+Output  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+Solution  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+===================================================================
+++++ step7_tests/subaddtest.micro
+===================================================================
+Output  12
+Solution  12
+===================================================================
+++++ step5_tests/duckif.micro
+===================================================================
+Output  49
+Solution  49
+===================================================================
+++++ step5_tests/duckwhile.micro
+===================================================================
+Output  98765432100
+Solution  98765432100
+===================================================================
+++++ step5_tests/step4_testcase.micro
+===================================================================
+Output  0 10
+Solution  0 10
+===================================================================
+++++ step5_tests/step4_testcase2.micro
+===================================================================
+Output  1 4 42 84 123 244
+Solution  1 4 42 84 123 244
+===================================================================
+++++ step5_tests/test_if.micro
+===================================================================
+Output  91
+Solution  91
+===================================================================
+++++ step5_tests/test_while.micro
+===================================================================
+Output  5 44 2.285713 1.306122 0.7463561 0.426489
+Solution  5 44 2.8753 2.654892 2.645771 2.64575
+===================================================================
+++++ step6_tests/duckfact.micro
+===================================================================
+Output  16
+Solution  16
+===================================================================
+++++ step6_tests/duckfma.micro
+===================================================================
+Output  32
+Solution  32
+===================================================================
+++++ step6_tests/factorial2.micro
+===================================================================
+Output  Please enter an integer number: 24
+Solution  Please enter an integer number: 24
+===================================================================
+++++ step6_tests/fibonacci2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2
+===================================================================
+++++ step6_tests/fma.micro
+===================================================================
+Output  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+Solution  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+===================================================================
+++++ step7_tests/microfib.micro
+===================================================================
+Output  F(n): 21
+Solution  F(n): 21
+===================================================================
+++++ step7_tests/microloop.micro
+===================================================================
+Output  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+Solution  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+===================================================================
+++++ step7_tests/microyu.micro
+===================================================================
+Output  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+Solution  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+===================================================================
+++++ step7_tests/subaddtest.micro
+===================================================================
+Output  12
+Solution  12
+===================================================================
+++++ step5_tests/duckif.micro
+===================================================================
+Output  49
+Solution  49
+===================================================================
+++++ step5_tests/duckwhile.micro
+===================================================================
+Output  98765432100
+Solution  98765432100
+===================================================================
+++++ step5_tests/step4_testcase.micro
+===================================================================
+Output  0 10
+Solution  0 10
+===================================================================
+++++ step5_tests/step4_testcase2.micro
+===================================================================
+Output  1 4 42 84 123 244
+Solution  1 4 42 84 123 244
+===================================================================
+++++ step5_tests/test_if.micro
+===================================================================
+Output  91
+Solution  91
+===================================================================
+++++ step5_tests/test_while.micro
+===================================================================
+Output  5 44 2.8753 2.654892 2.645771 2.64575
+Solution  5 44 2.8753 2.654892 2.645771 2.64575
+===================================================================
+++++ step6_tests/duckfact.micro
+===================================================================
+Output  16
+Solution  16
+===================================================================
+++++ step6_tests/duckfma.micro
+===================================================================
+Output  32
+Solution  32
+===================================================================
+++++ step6_tests/factorial2.micro
+===================================================================
+Output  Please enter an integer number: 24
+Solution  Please enter an integer number: 24
+===================================================================
+++++ step6_tests/fibonacci2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2
+===================================================================
+++++ step6_tests/fma.micro
+===================================================================
+Output  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+Solution  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+===================================================================
+++++ step7_tests/microfib.micro
+===================================================================
+Output  F(n): 21
+Solution  F(n): 21
+===================================================================
+++++ step7_tests/microloop.micro
+===================================================================
+Output  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+Solution  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+===================================================================
+++++ step7_tests/microyu.micro
+===================================================================
+Output  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+Solution  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+===================================================================
+++++ step7_tests/subaddtest.micro
+===================================================================
+Output  12
+Solution  12
+===================================================================
+++++ step7_tests/yufib2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+===================================================================
+++++ step5_tests/division.micro
+===================================================================
+Output  5
+Solution  5
+===================================================================
+++++ step5_tests/duckif.micro
+===================================================================
+Output  49
+Solution  49
+===================================================================
+++++ step5_tests/duckwhile.micro
+===================================================================
+Output  98765432100
+Solution  98765432100
+===================================================================
+++++ step5_tests/step4_testcase.micro
+===================================================================
+Output  0 10
+Solution  0 10
+===================================================================
+++++ step5_tests/step4_testcase2.micro
+===================================================================
+Output  1 4 42 84 123 244
+Solution  1 4 42 84 123 244
+===================================================================
+++++ step5_tests/test_if.micro
+===================================================================
+Output  91
+Solution  91
+===================================================================
+++++ step5_tests/test_while.micro
+===================================================================
+Output  5 44 2.8753 2.654892 2.645771 2.64575
+Solution  5 44 2.8753 2.654892 2.645771 2.64575
+===================================================================
+++++ step6_tests/duckfact.micro
+===================================================================
+Output  16
+Solution  16
+===================================================================
+++++ step6_tests/duckfma.micro
+===================================================================
+Output  32
+Solution  32
+===================================================================
+++++ step6_tests/factorial2.micro
+===================================================================
+Output  Please enter an integer number: 24
+Solution  Please enter an integer number: 24
+===================================================================
+++++ step6_tests/fibonacci2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2
+===================================================================
+++++ step6_tests/fma.micro
+===================================================================
+Output  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+Solution  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+===================================================================
+++++ step7_tests/microfib.micro
+===================================================================
+Output  F(n): 21
+Solution  F(n): 21
+===================================================================
+++++ step7_tests/microloop.micro
+===================================================================
+Output  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+Solution  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+===================================================================
+++++ step7_tests/microyu.micro
+===================================================================
+Output  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+Solution  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+===================================================================
+++++ step7_tests/subaddtest.micro
+===================================================================
+Output  12
+Solution  12
+===================================================================
+++++ step7_tests/yufib2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+===================================================================
+++++ step5_tests/division.micro
+===================================================================
+Output  5
+Solution  5
+===================================================================
+++++ step5_tests/duckif.micro
+===================================================================
+Output  49
+Solution  49
+===================================================================
+++++ step5_tests/duckwhile.micro
+===================================================================
+Output  98765432100
+Solution  98765432100
+===================================================================
+++++ step5_tests/step4_testcase.micro
+===================================================================
+Output  0 10
+Solution  0 10
+===================================================================
+++++ step5_tests/step4_testcase2.micro
+===================================================================
+Output  1 4 42 84 123 244
+Solution  1 4 42 84 123 244
+===================================================================
+++++ step5_tests/test_adv.micro
+===================================================================
+Output  2.645755
+Solution  2.645755
+===================================================================
+++++ step5_tests/test_if.micro
+===================================================================
+Output  91
+Solution  91
+===================================================================
+++++ step5_tests/test_while.micro
+===================================================================
+Output  5 44 2.8753 2.654892 2.645771 2.64575
+Solution  5 44 2.8753 2.654892 2.645771 2.64575
+===================================================================
+++++ step5_tests/division.micro
+===================================================================
+Output  5
+Solution  5
+===================================================================
+++++ step5_tests/duckif.micro
+===================================================================
+Output  49
+Solution  49
+===================================================================
+++++ step5_tests/duckwhile.micro
+===================================================================
+Output  98765432100
+Solution  98765432100
+===================================================================
+++++ step5_tests/step4_testcase.micro
+===================================================================
+Output  0 10
+Solution  0 10
+===================================================================
+++++ step5_tests/step4_testcase2.micro
+===================================================================
+Output  1 4 42 84 123 244
+Solution  1 4 42 84 123 244
+===================================================================
+++++ step5_tests/test_adv.micro
+===================================================================
+Output  2.645755
+Solution  2.645755
+===================================================================
+++++ step5_tests/test_if.micro
+===================================================================
+Output  91
+Solution  91
+===================================================================
+++++ step5_tests/test_while.micro
+===================================================================
+Output  5 44 2.8753 2.654892 2.645771 2.64575
+Solution  5 44 2.8753 2.654892 2.645771 2.64575
+===================================================================
+++++ step6_tests/duckfact.micro
+===================================================================
+Output  16
+Solution  16
+===================================================================
+++++ step6_tests/duckfma.micro
+===================================================================
+Output  32
+Solution  32
+===================================================================
+++++ step6_tests/factorial2.micro
+===================================================================
+Output  Please enter an integer number: 24
+Solution  Please enter an integer number: 24
+===================================================================
+++++ step6_tests/fibonacci2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2
+===================================================================
+++++ step6_tests/fma.micro
+===================================================================
+Output  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+Solution  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+===================================================================
+++++ step7_tests/microfib.micro
+===================================================================
+Output  F(n): 21
+Solution  F(n): 21
+===================================================================
+++++ step7_tests/microloop.micro
+===================================================================
+Output  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+Solution  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+===================================================================
+++++ step7_tests/microyu.micro
+===================================================================
+Output  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+Solution  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+===================================================================
+++++ step7_tests/subaddtest.micro
+===================================================================
+Output  12
+Solution  12
+===================================================================
+++++ step7_tests/yufib2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+===================================================================
+++++ step5_tests/division.micro
+===================================================================
+Output  5
+Solution  5
+===================================================================
+++++ step5_tests/duckif.micro
+===================================================================
+Output  49
+Solution  49
+===================================================================
+++++ step5_tests/duckwhile.micro
+===================================================================
+Output  98765432100
+Solution  98765432100
+===================================================================
+++++ step5_tests/step4_testcase.micro
+===================================================================
+Output  0 10
+Solution  0 10
+===================================================================
+++++ step5_tests/step4_testcase2.micro
+===================================================================
+Output  1 4 42 84 123 244
+Solution  1 4 42 84 123 244
+===================================================================
+++++ step5_tests/test_adv.micro
+===================================================================
+Output  2.645755
+Solution  2.645755
+===================================================================
+++++ step5_tests/test_if.micro
+===================================================================
+Output  91
+Solution  91
+===================================================================
+++++ step5_tests/test_while.micro
+===================================================================
+Output  5 44 2.8753 2.654892 2.645771 2.645752.64575
+Solution  5 44 2.8753 2.654892 2.645771 2.64575
+===================================================================
+++++ step6_tests/duckfact.micro
+===================================================================
+Output  16
+Solution  16
+===================================================================
+++++ step6_tests/duckfma.micro
+===================================================================
+Output  32
+Solution  32
+===================================================================
+++++ step6_tests/factorial2.micro
+===================================================================
+Output  Please enter an integer number: 24
+Solution  Please enter an integer number: 24
+===================================================================
+++++ step6_tests/fibonacci2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2
+===================================================================
+++++ step6_tests/fma.micro
+===================================================================
+Output  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+Solution  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+===================================================================
+++++ step7_tests/microfib.micro
+===================================================================
+Output  F(n): 21
+Solution  F(n): 21
+===================================================================
+++++ step7_tests/microloop.micro
+===================================================================
+Output  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+Solution  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+===================================================================
+++++ step7_tests/microyu.micro
+===================================================================
+Output  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+Solution  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+===================================================================
+++++ step7_tests/subaddtest.micro
+===================================================================
+Output  12
+Solution  12
+===================================================================
+++++ step7_tests/yufib2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2 4 3 5 5 6 8 7 13 8 21 9 34 10 55 11 89 12 144 13 233 14 377 15 610 16 987 17 1597 18 2584 19 4181 20 6765 21 10946 22 17711 23 28657 24 46368
+===================================================================
+++++ step5_tests/division.micro
+===================================================================
+Output  5
+Solution  5
+===================================================================
+++++ step5_tests/duckif.micro
+===================================================================
+Output  49
+Solution  49
+===================================================================
+++++ step5_tests/duckwhile.micro
+===================================================================
+Output  98765432100
+Solution  98765432100
+===================================================================
+++++ step5_tests/step4_testcase.micro
+===================================================================
+Output  0 10
+Solution  0 10
+===================================================================
+++++ step5_tests/step4_testcase2.micro
+===================================================================
+Output  1 4 42 84 123 244
+Solution  1 4 42 84 123 244
+===================================================================
+++++ step5_tests/test_adv.micro
+===================================================================
+Output  2.645755
+Solution  2.645755
+===================================================================
+++++ step5_tests/test_if.micro
+===================================================================
+Output  91
+Solution  91
+===================================================================
+++++ step5_tests/test_while.micro
+===================================================================
+Output  5 44 2.8753 2.654892 2.645771 2.645752.64575
+Solution  5 44 2.8753 2.654892 2.645771 2.64575
+===================================================================
+++++ step6_tests/duckfact.micro
+===================================================================
+Output  16
+Solution  16
+===================================================================
+++++ step6_tests/duckfma.micro
+===================================================================
+Output  32
+Solution  32
+===================================================================
+++++ step6_tests/factorial2.micro
+===================================================================
+Output  Please enter an integer number: 24
+Solution  Please enter an integer number: 24
+===================================================================
+++++ step6_tests/fibonacci2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2
+===================================================================
+++++ step6_tests/fma.micro
+===================================================================
+Output  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+Solution  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+===================================================================
+++++ step7_tests/microfib.micro
+===================================================================
+Output  F(n): 21
+Solution  F(n): 21
+===================================================================
+++++ step7_tests/microloop.micro
+===================================================================
+Output  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+Solution  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+===================================================================
+++++ step7_tests/microyu.micro
+===================================================================
+Output  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+Solution  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+===================================================================
+++++ step7_tests/subaddtest.micro
+===================================================================
+Output  12
+Solution  12
+===================================================================
+++++ step5_tests/division.micro
+===================================================================
+Output  5
+Solution  5
+===================================================================
+++++ step5_tests/duckif.micro
+===================================================================
+Output  49
+Solution  49
+===================================================================
+++++ step5_tests/duckwhile.micro
+===================================================================
+Output  98765432100
+Solution  98765432100
+===================================================================
+++++ step5_tests/step4_testcase.micro
+===================================================================
+Output  0 10
+Solution  0 10
+===================================================================
+++++ step5_tests/step4_testcase2.micro
+===================================================================
+Output  1 4 42 84 123 244
+Solution  1 4 42 84 123 244
+===================================================================
+++++ step5_tests/test_adv.micro
+===================================================================
+Output  2.645755
+Solution  2.645755
+===================================================================
+++++ step5_tests/test_if.micro
+===================================================================
+Output  91
+Solution  91
+===================================================================
+++++ step5_tests/test_while.micro
+===================================================================
+Output  5 44 2.8753 2.654892 2.645771 2.64575
+Solution  5 44 2.8753 2.654892 2.645771 2.64575
+===================================================================
+++++ step5_tests/division.micro
+===================================================================
+Output  5
+Solution  5
+===================================================================
+++++ step5_tests/duckif.micro
+===================================================================
+Output  49
+Solution  49
+===================================================================
+++++ step5_tests/duckwhile.micro
+===================================================================
+Output  98765432100
+Solution  98765432100
+===================================================================
+++++ step5_tests/step4_testcase.micro
+===================================================================
+Output  0 10
+Solution  0 10
+===================================================================
+++++ step5_tests/step4_testcase2.micro
+===================================================================
+Output  1 4 42 84 123 244
+Solution  1 4 42 84 123 244
+===================================================================
+++++ step5_tests/test_adv.micro
+===================================================================
+Output  2.645755
+Solution  2.645755
+===================================================================
+++++ step5_tests/test_if.micro
+===================================================================
+Output  91
+Solution  91
+===================================================================
+++++ step5_tests/test_while.micro
+===================================================================
+Output  5 44 2.8753 2.654892 2.645771 2.645752.64575
+Solution  5 44 2.8753 2.654892 2.645771 2.64575
+===================================================================
+++++ step5_tests/division.micro
+===================================================================
+Output  5
+Solution  5
+===================================================================
+++++ step5_tests/duckif.micro
+===================================================================
+Output  49
+Solution  49
+===================================================================
+++++ step5_tests/duckwhile.micro
+===================================================================
+Output  98765432100
+Solution  98765432100
+===================================================================
+++++ step5_tests/step4_testcase.micro
+===================================================================
+Output  0 10
+Solution  0 10
+===================================================================
+++++ step5_tests/step4_testcase2.micro
+===================================================================
+Output  1 4 42 84 123 244
+Solution  1 4 42 84 123 244
+===================================================================
+++++ step5_tests/test_adv.micro
+===================================================================
+Output  2.645755
+Solution  2.645755
+===================================================================
+++++ step5_tests/test_if.micro
+===================================================================
+Output  91
+Solution  91
+===================================================================
+++++ step5_tests/test_while.micro
+===================================================================
+Output  5 44 2.8753 2.654892 2.645771 2.645752.64575
+Solution  5 44 2.8753 2.654892 2.645771 2.64575
+===================================================================
+++++ step6_tests/duckfact.micro
+===================================================================
+Output  16
+Solution  16
+===================================================================
+++++ step6_tests/duckfma.micro
+===================================================================
+Output  32
+Solution  32
+===================================================================
+++++ step6_tests/factorial2.micro
+===================================================================
+Output  Please enter an integer number: 24
+Solution  Please enter an integer number: 24
+===================================================================
+++++ step6_tests/fibonacci2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2
+===================================================================
+++++ step6_tests/fma.micro
+===================================================================
+Output  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+Solution  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+===================================================================
+++++ step7_tests/microfib.micro
+===================================================================
+Output  F(n): 21
+Solution  F(n): 21
+===================================================================
+++++ step7_tests/microloop.micro
+===================================================================
+Output  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+Solution  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+===================================================================
+++++ step7_tests/microyu.micro
+===================================================================
+Output  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+Solution  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+===================================================================
+++++ step7_tests/subaddtest.micro
+===================================================================
+Output  12
+Solution  12
+===================================================================
+++++ step5_tests/division.micro
+===================================================================
+Output  5
+Solution  5
+===================================================================
+++++ step5_tests/duckif.micro
+===================================================================
+Output  49
+Solution  49
+===================================================================
+++++ step5_tests/duckwhile.micro
+===================================================================
+Output  98765432100
+Solution  98765432100
+===================================================================
+++++ step5_tests/step4_testcase.micro
+===================================================================
+Output  0 10
+Solution  0 10
+===================================================================
+++++ step5_tests/step4_testcase2.micro
+===================================================================
+Output  1 4 42 84 123 244
+Solution  1 4 42 84 123 244
+===================================================================
+++++ step5_tests/test_adv.micro
+===================================================================
+Output  2.645755
+Solution  2.645755
+===================================================================
+++++ step5_tests/test_if.micro
+===================================================================
+Output  91
+Solution  91
+===================================================================
+++++ step5_tests/test_while.micro
+===================================================================
+Output  2.64575
+Solution  2.64575
+===================================================================
+++++ step5_tests/division.micro
+===================================================================
+Output  5
+Solution  5
+===================================================================
+++++ step5_tests/duckif.micro
+===================================================================
+Output  49
+Solution  49
+===================================================================
+++++ step5_tests/duckwhile.micro
+===================================================================
+Output  98765432100
+Solution  98765432100
+===================================================================
+++++ step5_tests/step4_testcase.micro
+===================================================================
+Output  0 10
+Solution  0 10
+===================================================================
+++++ step5_tests/step4_testcase2.micro
+===================================================================
+Output  1 4 42 84 123 244
+Solution  1 4 42 84 123 244
+===================================================================
+++++ step5_tests/test_adv.micro
+===================================================================
+Output  2.645755
+Solution  2.645755
+===================================================================
+++++ step5_tests/test_if.micro
+===================================================================
+Output  91
+Solution  91
+===================================================================
+++++ step5_tests/test_while.micro
+===================================================================
+Output  2.64575
+Solution  2.64575
+===================================================================
+++++ step6_tests/duckfact.micro
+===================================================================
+Output  16
+Solution  16
+===================================================================
+++++ step6_tests/duckfma.micro
+===================================================================
+Output  32
+Solution  32
+===================================================================
+++++ step6_tests/factorial2.micro
+===================================================================
+Output  Please enter an integer number: 24
+Solution  Please enter an integer number: 24
+===================================================================
+++++ step6_tests/fibonacci2.micro
+===================================================================
+Output  Please input an integer number: 0 0 1 1 2 1 3 2
+Solution  Please input an integer number: 0 0 1 1 2 1 3 2
+===================================================================
+++++ step6_tests/fma.micro
+===================================================================
+Output  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+Solution  You will be asked for three float numbers Please enter the first float number: Please enter the second float number: Please enter the third float number: 1.1*2+3.1=5.3
+===================================================================
+++++ step7_tests/microfib.micro
+===================================================================
+Output  F(n): 21
+Solution  F(n): 21
+===================================================================
+++++ step7_tests/microloop.micro
+===================================================================
+Output  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+Solution  0------ Iteration c = 1 Peide Ye saw duck flying at speed: 100 JSD saw duck flying at speed = 100 1------ Iteration c = 2 Peide Ye saw duck flying at speed: 200 JSD saw duck flying at speed = 200 2------ Iteration c = 3 Peide Ye saw duck flying at speed: 300 JSD saw duck flying at speed = 300 3------ Iteration c = 4 Peide Ye saw duck flying at speed: 400 JSD saw duck flying at speed = 400 4------ Iteration c = 5 Peide Ye saw duck flying at speed: 10 JSD saw duck flying at speed = 10 5------ Iteration c = 6 Peide Ye saw duck flying at speed: 12 JSD saw duck flying at speed = 12 6------ Iteration c = 7 Peide Ye saw duck flying at speed: 14 JSD saw duck flying at speed = 14 7------ Iteration c = 8 Peide Ye saw duck flying at speed: 16 JSD saw duck flying at speed = 16 8------ Iteration c = 9 Peide Ye saw duck flying at speed: 18 JSD saw duck flying at speed = 18 9------ Iteration c = 10 Peide Ye saw duck flying at speed: 20 JSD saw duck flying at speed = 20 10
+===================================================================
+++++ step7_tests/microyu.micro
+===================================================================
+Output  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+Solution  Please input an integer number: 00 11 22 33 44 55 66 77 88 99 1010 1111 1212 1313 1414 1515 1616 1717 1818 1919
+===================================================================
+++++ step7_tests/subaddtest.micro
+===================================================================
+Output 
+Solution  12
+===================================================================
+++++ step5_tests/division.micro
+===================================================================
+Output  5
+Solution  5
+===================================================================
+++++ step5_tests/duckif.micro
+===================================================================
+Output  49
+Solution  49
+===================================================================
+++++ step5_tests/duckwhile.micro
+===================================================================
+Output  98765432100
+Solution  98765432100
+===================================================================
+++++ step5_tests/step4_testcase.micro
+===================================================================
+Output  0 10
+Solution  0 10
+===================================================================
+++++ step5_tests/step4_testcase2.micro
+===================================================================
+Output  1 4 42 84 123 244
+Solution  1 4 42 84 123 244
+===================================================================
+++++ step5_tests/test_adv.micro
+===================================================================
+Output  2.645755
+Solution  2.645755
+===================================================================
+++++ step5_tests/test_if.micro
+===================================================================
+Output  91
+Solution  91
+===================================================================
+++++ step5_tests/test_while.micro
+===================================================================
+Output  2.64575
+Solution  2.64575
 ===================================================================
 ++++ step6_tests/duckfact.micro
 ===================================================================

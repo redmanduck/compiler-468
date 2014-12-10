@@ -24,13 +24,13 @@ TINY='tiny'
  if [[ $* == *-c* ]]
 then
 rm $TINY
-make tiny4
+make tiny4 2> /dev/null
 fi
 tc="${@: -1}*"
 if [[ $* == *-c* ]]
 then
   #compile the compiler first
-  make clean && make
+  make clean && make 2> /dev/null
 fi
 dirs=$(ls $tc/*.micro)
 FAIL=0
@@ -55,6 +55,7 @@ do
     FAIL=1
     continue
   fi
+  
   t=$(./$TINY output/$f.T < $inkey 2>> transcript) #run my micro
   j=$?
   g=$(./$TINY $tc/$f.out < $inkey 2>> transcript)  #run given micro

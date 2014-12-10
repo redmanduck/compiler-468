@@ -5,7 +5,6 @@ public class Register {
 	public String dtype;
 	private boolean dirty;
 	private boolean free;
-	
 	public String opr; //$Lx $Tx varname
 	
 	public boolean isFree(){
@@ -21,8 +20,9 @@ public class Register {
 	public long getTimestamp(){
 		return LastAllocated;
 	}
-	
-	public void clear(){
+
+
+	public void free_invalidate(){
 		free = true;
 		dirty = false;
 		opr = "none";
@@ -31,7 +31,6 @@ public class Register {
 	public void markClean(){
 		dirty = false;
 	}
-
 
 	/*
 	 * @param fullname - Px Lx or global variable

@@ -21,13 +21,11 @@
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Hashtable;
 
 public class TinyGenerator {
 	IRList IR;
 	HashMap<Instruction, Instruction[]> map_ISA;
-	Hashtable<String, Register> reg_map_ir_tiny;
 	LinkedHashMap<String, SymbolTable> SymbolTable_Map;
 
 	private int LCSize, TmpSize;
@@ -45,13 +43,12 @@ public class TinyGenerator {
 							// TODO: fix later
 		this.SymbolTable_Map = SMap; // Symboltable as indexed by function nmame
 		map_ISA = new HashMap<Instruction, Instruction[]>();
-		reg_map_ir_tiny = new Hashtable<String, Register>();
 		loadIRMapping();
 
 		// Allocate finite registers
 		for (int i = 0; i < RegisterFile.length; i++) {
 			Register R = new Register('r', i);
-			R.clear();
+			R.free_invalidate();
 			RegisterFile[i] = R;
 		}
 	}
@@ -213,14 +210,20 @@ public class TinyGenerator {
 				R_def.markDirty();
 				CodeBuffer.add(tinyOp.getName() + " " + R_def.toTiny());
 
+
+
 			} else if (irn.getInstruction().equals(ISA.PUSH)) {
 
 				Register R_use = ensure(VAR, irn.LIVE_OUT, CodeBuffer);
 				CodeBuffer.add(tinyOp.getName() + " " + R_use.toTiny());
 
+				if(!irn.LIVE_OUT.contains(VAR)){
+					free(R_use, irn.LIVE_OUT, CodeBuffer);
+				}
+
 			} else if (irn.getInstruction().equals(ISA.POP)) {
 				Register R_pop = ensure(VAR, irn.LIVE_OUT, CodeBuffer);
-				R_pop.markDirty(); // TODO : how to automatically Mark Dirty
+				R_pop.markDirty();
 				CodeBuffer.add(tinyOp.getName() + " " + R_pop.toTiny());
 			} else {
 				// OTHER possibilites ** not sure
@@ -250,8 +253,8 @@ public class TinyGenerator {
 																		// some
 																		// r
 			Register dest = ensure(IdSRC2, irn.LIVE_OUT, CodeBuffer);
-
 			dest.markDirty();
+
 			String asms = tinyOp.getName() + " " + src.toTiny() + " "
 					+ dest.toTiny();
 
@@ -267,8 +270,6 @@ public class TinyGenerator {
 			String literal = getField(ircode, 1);
 			Register dest = ensure(RDest, irn.LIVE_OUT, CodeBuffer); // TempRegisterFactory.createTiny();
 
-			reg_map_ir_tiny.put(getField(ircode, 2), dest); // TODO: To be
-															// removed
 			dest.markDirty();
 			String Z = tinyOp.getName() + " " + literal + " " + dest.toTiny();
 			CodeBuffer.add(Z);
@@ -287,10 +288,6 @@ public class TinyGenerator {
 					+ Dest.toTiny();
 			CodeBuffer.add(Z);
 
-			// return tinyOp.getName() + " " +
-			// TempRegisterFactory.previous().toTiny() + " " +
-			// irn.getIdOperand(3).getTiny();
-
 			if(!irn.LIVE_OUT.contains(Src)){
 				free(Src, irn.LIVE_OUT, CodeBuffer);
 			}
@@ -308,16 +305,16 @@ public class TinyGenerator {
 
 			Register A = ensure(IdSrc1, irn.LIVE_OUT, CodeBuffer);
 			Register B = ensure(IdSrc2, irn.LIVE_OUT, CodeBuffer);
-			CodeBuffer.add(tinyOp.getName() + " " + A.toTiny() + " "
-					+ B.toTiny());
+			CodeBuffer.add(tinyOp.getName() + " " + B.toTiny() + " " + A.toTiny());
+
 			Register C = ensure(TDest, irn.LIVE_OUT, CodeBuffer);
 			C.markDirty();
-			CodeBuffer.add(ISA.move.getName() + " " + B.toTiny() + " "
-					+ C.toTiny());
+			CodeBuffer.add(ISA.move.getName() + " " + A.toTiny() + " " + C.toTiny());
 
 			if(!irn.LIVE_OUT.contains(B)){
 				free(B, irn.LIVE_OUT, CodeBuffer);
 			}
+
 			if(!irn.LIVE_OUT.contains(A)){
 				free(A, irn.LIVE_OUT, CodeBuffer);
 			}
@@ -334,11 +331,11 @@ public class TinyGenerator {
 
 			Register A = ensure(T1, irn.LIVE_OUT, CodeBuffer);
 			Register B = ensure(T2, irn.LIVE_OUT, CodeBuffer);
-			CodeBuffer.add(tinyOp.getName() + " " + A.toTiny() + " "
-					+ B.toTiny());
+			CodeBuffer.add(tinyOp.getName() + " " + B.toTiny() + " " + A.toTiny());
+
 			Register C = ensure(T3, irn.LIVE_OUT, CodeBuffer);
 			C.markDirty();
-			CodeBuffer.add(ISA.move.getName() + " " + B.toTiny() + " "
+			CodeBuffer.add(ISA.move.getName() + " " + A.toTiny() + " "
 					+ C.toTiny());
 
 			if(!irn.LIVE_OUT.contains(B)){
@@ -440,7 +437,6 @@ public class TinyGenerator {
 			String f2 = getField(ircode, 2);
 
 
-			//TODO: in some case its not doing ensure correctly or something
 			Register T1 = ensure(f1, irn.LIVE_OUT, CodeBuffer);
 			Register T2 = ensure(f2, irn.LIVE_OUT, CodeBuffer);
 
@@ -647,9 +643,7 @@ public class TinyGenerator {
 
 				r = Utils.getMostDistantUsedReg();
 
-				System.out
-						.println("; No free register! Choosing most distant used reg : "
-								+ r.toTiny());
+				System.out.println("; No free register! Choosing most distant used reg : " + r.toTiny());
 
 				free(r, liveness, G);
 			}
@@ -670,46 +664,31 @@ public class TinyGenerator {
 		Boolean isAlive = Utils.varIsLive(variable, liveness);
 		System.out.println("; free: " + r.isFree() + ", dirty:" + r.isDirty()
 				+ ", live: " + isAlive);
-		if (r.isDirty()) {
+		if (r.isDirty() && isAlive) {
 			// generate store (spill out)
 			System.out.println("; spilling " + r.toTiny());
 			gen_cmd = String.format("%s %s %s ; spill %s\n",
 					ISA.move.getName(), r.toTiny(),
 					TinyActivationRecord.getStackRef(variable, LCSize), r.opr);
 		}
-		r.clear();
+		r.free_invalidate();
 		G.add(gen_cmd);
 	}
 
 	private void flushRegisters(TinyOutputBuffer G, HashSet<String> L) {
-		G.add("\n;Flushing registers\n");
+		G.add("\n;Spilling (flush) registers\n");
 
 		for (int j = 0; j < RegisterFile.length; j++) {
-			Boolean isAlive = Utils.varIsLive(RegisterFile[j].opr, L); // TODO:
-																		// isAlive
-																		// and
-																		// with
-																		// isDirty
-			if (!RegisterFile[j].opr.equals("none")) {
+
+			if (L.contains(RegisterFile[j].opr)) {
 				String memloc = TinyActivationRecord.getStackRef(
 						RegisterFile[j].opr, LCSize);
 				G.add(ISA.move.getName() + " r" + j + " " + memloc + "\n");
-				RegisterFile[j].clear();
+				RegisterFile[j].free_invalidate();
 			}
 
 		}
 
 		G.add(";Flush done\n");
-	}
-
-	private void  spillRegisters(TinyOutputBuffer CodeBuffer, HashSet<String> L ){
-		for(int j = 0; j < RegisterFile.length; j++){
-			if (RegisterFile[j].isDirty()) {
-				String memloc = TinyActivationRecord.getStackRef(
-						RegisterFile[j].opr, LCSize);
-				CodeBuffer.add(ISA.move.getName() + " r" + j + " " + memloc + " ; spilling \n");
-				//RegisterFile[j].markClean();
-			}
-		}
 	}
 }

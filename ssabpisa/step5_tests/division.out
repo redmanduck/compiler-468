@@ -1,0 +1,32 @@
+;IR code
+;LABEL main
+;LINK 
+;STOREI 10 $T1
+;STOREI 2 $T2
+;DIVI $T1 $T2 $T3
+;STOREI $T3 approx
+;WRITEI approx
+;RET
+;tiny code
+var approx
+push
+push r0
+push r1
+push r2
+push r3
+jsr main
+sys halt
+label main 
+link 3
+move $-1 r0
+move 10 r0
+move $-2 r1
+move 2 r1
+move $-3 r2
+move r0 r2
+divi r1 r2
+move r2 approx
+sys writei approx
+unlnk
+ret
+end

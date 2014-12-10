@@ -1,0 +1,13 @@
+PROGRAM division
+BEGIN
+	
+	INT approx;
+
+	FUNCTION VOID main()
+	BEGIN
+		approx := 10/2;
+        
+
+		WRITE(approx);
+	END
+END
