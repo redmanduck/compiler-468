@@ -290,6 +290,10 @@ public class TinyGenerator {
 			// TempRegisterFactory.previous().toTiny() + " " +
 			// irn.getIdOperand(3).getTiny();
 
+			if(!irn.LIVE_OUT.contains(Src)){
+				free(Src, irn.LIVE_OUT, CodeBuffer);
+			}
+
 		} else if (irn.getFormat() == IRNode.FORMAT_DDR) {
 
 			/*
@@ -310,6 +314,13 @@ public class TinyGenerator {
 			CodeBuffer.add(ISA.move.getName() + " " + B.toTiny() + " "
 					+ C.toTiny());
 
+			if(!irn.LIVE_OUT.contains(B)){
+				free(C, irn.LIVE_OUT, CodeBuffer);
+			}
+			if(!irn.LIVE_OUT.contains(A)){
+				free(A, irn.LIVE_OUT, CodeBuffer);
+			}
+
 		} else if (irn.getFormat() == IRNode.FORMAT_RRR) {
 
 			/*
@@ -329,6 +340,13 @@ public class TinyGenerator {
 			CodeBuffer.add(ISA.move.getName() + " " + B.toTiny() + " "
 					+ C.toTiny());
 
+			if(!irn.LIVE_OUT.contains(B)){
+				free(C, irn.LIVE_OUT, CodeBuffer);
+			}
+			if(!irn.LIVE_OUT.contains(A)){
+				free(A, irn.LIVE_OUT, CodeBuffer);
+			}
+
 		} else if (irn.getFormat() == IRNode.FORMAT_RDR) {
 			/*
 			 * OP R1 ID RZ may expands into : MOV r1 rtemp OP rtemp rZ
@@ -341,12 +359,19 @@ public class TinyGenerator {
 
 			Register A = ensure(T1, irn.LIVE_OUT, CodeBuffer);
 			Register B = ensure(T2, irn.LIVE_OUT, CodeBuffer);
-			CodeBuffer.add(tinyOp.getName() + " " + A.toTiny() + " "
-					+ B.toTiny());
+			CodeBuffer.add(tinyOp.getName() + " " + A.toTiny() + " " + B.toTiny());
 			Register C = ensure(T3, irn.LIVE_OUT, CodeBuffer);
 			C.markDirty();
 			CodeBuffer.add(ISA.move.getName() + " " + B.toTiny() + " "
 					+ C.toTiny());
+
+			if(!irn.LIVE_OUT.contains(B)){
+				free(C, irn.LIVE_OUT, CodeBuffer);
+			}
+			if(!irn.LIVE_OUT.contains(A)){
+				free(A, irn.LIVE_OUT, CodeBuffer);
+			}
+
 
 		} else if (irn.getFormat() == IRNode.FORMAT_DRR) {
 
@@ -362,14 +387,20 @@ public class TinyGenerator {
 			Register A = ensure(T1, irn.LIVE_OUT, CodeBuffer);
 			Register B = ensure(T2, irn.LIVE_OUT, CodeBuffer);
 			
-			CodeBuffer.add(tinyOp.getName() + " " + B.toTiny() + " " + A.toTiny()); //ex. SUB A B  = B = B - A
-			
-			
+			CodeBuffer.add(tinyOp.getName() + " " + B.toTiny() + " " + A.toTiny());
+
 			Register C = ensure(T3, irn.LIVE_OUT, CodeBuffer);
 			C.markDirty();
-			
-			CodeBuffer.add(ISA.move.getName() + " " + A.toTiny() + " "
-					+ C.toTiny());
+
+			CodeBuffer.add(ISA.move.getName() + " " + A.toTiny() + " " + C.toTiny());
+
+
+			if(!irn.LIVE_OUT.contains(B)){
+				free(C, irn.LIVE_OUT, CodeBuffer);
+			}
+			if(!irn.LIVE_OUT.contains(A)){
+				free(A, irn.LIVE_OUT, CodeBuffer);
+			}
 
 		} else if (irn.getFormat() == IRNode.FORMAT_O) {
 			/*
@@ -390,6 +421,8 @@ public class TinyGenerator {
 				str += possible_instructions[i].getName();
 			}
 			CodeBuffer.add(str);
+
+
 
 		} else if (irn.getFormat() == IRNode.FORMAT_S) {
 			/*
