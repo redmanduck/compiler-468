@@ -27,7 +27,12 @@ public class Register {
 		dirty = false;
 		opr = "none";
 	}
-	
+
+	public void markClean(){
+		dirty = true;
+	}
+
+
 	/*
 	 * @param fullname - Px Lx or global variable
 	 */

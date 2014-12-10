@@ -40,6 +40,7 @@ public class Instruction {
 		this.supported_type = "NONE";
 	}
 
+
 	public boolean isConditionalJump(){
 
 		String qualifies = "GTI\n" +

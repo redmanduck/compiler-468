@@ -12,7 +12,7 @@ BEGIN
 		j := 1;
 		approx := num;	
 	
-        	WHILE (i != 0)
+        WHILE (i != 0)
 			newapprox := 0.5*(approx + num/approx);
 			approx := newapprox;
 			i := i-1;

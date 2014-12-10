@@ -85,6 +85,7 @@ public class ISA{
 	public static OperationGenreCollection _STORE = new OperationGenreCollection(STOREI, STOREF);
 	public static OperationGenreCollection _READ = new OperationGenreCollection(READF, READI);			
 	public static OperationGenreCollection _WRITE = new OperationGenreCollection(WRITES, WRITEI, WRITEF);
+	public static OperationGenreCollection _NONJSRJUMP = new OperationGenreCollection(GTI,GEI,LTI, NEI,EQI, LEF,LEI,GTF,GEF,LTF,NEF,EQF,JUMP);
 
 	/* end of IR instructions */
 	

@@ -10,7 +10,7 @@ public class TinyOutputBuffer extends ArrayList<String>{
 		@Override public boolean add(String k){
 			String eol = (k.indexOf(k.length() - 1) == '\n') ? "" : "\n";
 			super.add(k + eol);
-			System.out.println("; >  " + k.replaceAll("\n",";"));
+//			System.out.println("; >  " + k.replaceAll("\n",";"));
 			return true;
 		}
 	}

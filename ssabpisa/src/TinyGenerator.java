@@ -168,7 +168,11 @@ public class TinyGenerator {
 
 		if (irn.getInstruction().equals(ISA.RET)) {
 			// generate store dirty for registers
-			this.flushRegisters(CodeBuffer, irn.LIVE_OUT);
+			flushRegisters(CodeBuffer, irn.LIVE_OUT);
+		}
+
+		if (ISA.InstructionSpecies(irn.getInstruction(), ISA._NONJSRJUMP)){
+			spillRegisters(CodeBuffer, irn.LIVE_OUT);
 		}
 		
 		if (irn.getFormat() == IRNode.FORMAT_D) {
@@ -657,5 +661,16 @@ public class TinyGenerator {
 		}
 
 		G.add(";Flush done\n");
+	}
+
+	private void  spillRegisters(TinyOutputBuffer CodeBuffer, HashSet<String> L ){
+		for(int j = 0; j < RegisterFile.length; j++){
+			if (RegisterFile[j].isDirty()) {
+				String memloc = TinyActivationRecord.getStackRef(
+						RegisterFile[j].opr, LCSize);
+				CodeBuffer.add(ISA.move.getName() + " r" + j + " " + memloc + " ; spilling \n");
+				RegisterFile[j].markClean();
+			}
+		}
 	}
 }
