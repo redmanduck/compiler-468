@@ -166,15 +166,16 @@ public class TinyGenerator {
 				+ irn.getFormat() + ")");
 		System.out.println("; reg state : " + Utils.printRegisters());
 
-		if (irn.getInstruction().equals(ISA.RET)) {
-			// generate store dirty for registers
-			flushRegisters(CodeBuffer, irn.LIVE_OUT);
-		}
+//		if (irn.getInstruction().equals(ISA.RET)) {
+//			// generate store dirty for registers
+//			flushRegisters(CodeBuffer, irn.LIVE_OUT);
+//		}
 
-		if (ISA.InstructionSpecies(irn.getInstruction(), ISA._NONJSRJUMP)){
-			spillRegisters(CodeBuffer, irn.LIVE_OUT);
-		}
-		
+//		if (ISA.InstructionSpecies(irn.getInstruction(), ISA._NONJSRJUMP)){
+//			spillRegisters(CodeBuffer, irn.LIVE_OUT);
+//		}
+
+
 		if (irn.getFormat() == IRNode.FORMAT_D) {
 			/*
 			 * Could be sys calls : WRITE (use) READ (def)
@@ -538,7 +539,12 @@ public class TinyGenerator {
 		/*
 		 * Finally print the generated code sequence
 		 */
-		
+
+//		if (irn.isEndOfBB()) {
+//			flushRegisters(CodeBuffer, irn.LIVE_OUT);
+//		}
+
+		flushRegisters(CodeBuffer, irn.LIVE_OUT);
 		CodeBuffer.add(";  " + Utils.printRegisters());
 
 		String outputc = "";
@@ -684,7 +690,7 @@ public class TinyGenerator {
 																		// and
 																		// with
 																		// isDirty
-			if (RegisterFile[j].isDirty()) {
+			if (!RegisterFile[j].opr.equals("none")) {
 				String memloc = TinyActivationRecord.getStackRef(
 						RegisterFile[j].opr, LCSize);
 				G.add(ISA.move.getName() + " r" + j + " " + memloc + "\n");
@@ -702,7 +708,7 @@ public class TinyGenerator {
 				String memloc = TinyActivationRecord.getStackRef(
 						RegisterFile[j].opr, LCSize);
 				CodeBuffer.add(ISA.move.getName() + " r" + j + " " + memloc + " ; spilling \n");
-				RegisterFile[j].markClean();
+				//RegisterFile[j].markClean();
 			}
 		}
 	}

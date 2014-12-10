@@ -7,6 +7,7 @@ BEGIN
 	FUNCTION INT F (INT n)
 	BEGIN
 		INT ret1,ret2;
+
 		IF (n > 2)
 			ret1 := F(n-1);
 			ret2 := F(n-2);

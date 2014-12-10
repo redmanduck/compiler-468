@@ -49,7 +49,10 @@ public class Utils {
 			System.out.println("; --- LIVEIN: " + a.LIVE_IN.toString() +
 					", LIVEOUT: " + a.LIVE_OUT.toString()
 					+ ", GEN " + a.GEN +  " KILL " + a.KILL);
+			if(a.isEndOfBB())
+				System.out.println(";----------------");
 		}
+
 	}
 	
 
@@ -83,7 +86,14 @@ public class Utils {
 		System.out.println("; " + var + " is dead");
 		return false;
 	}
-	
+
+	public static boolean nodeIsLeader(IRNode n){
+		if(n.successors.size() > 1 || n.predecessors.size() > 1){
+			return true;
+		}
+		return false;
+	}
+
 	/*
 	 * @param opr - $Lx or $Tx or global variable
 	 */

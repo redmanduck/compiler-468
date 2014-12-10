@@ -1,174 +1,1321 @@
 ;IR code
-;LABEL main [FRMT-8]; --- LIVEIN: [newapprox], LIVEOUT: [newapprox], GEN [] KILL []
-;LINK [FRMT-9]; --- LIVEIN: [newapprox], LIVEOUT: [newapprox], GEN [] KILL []
-;STOREF 5.125 $T1 [FRMT-1]; --- LIVEIN: [newapprox], LIVEOUT: [$T1, newapprox], GEN [] KILL [$T1]
-;STOREF $T1 num [FRMT-2]; --- LIVEIN: [$T1, newapprox], LIVEOUT: [num, newapprox], GEN [$T1] KILL [num]
-;STOREI 5 $T2 [FRMT-0]; --- LIVEIN: [num, newapprox], LIVEOUT: [$T2, num, newapprox], GEN [] KILL [$T2]
-;STOREI $T2 i [FRMT-2]; --- LIVEIN: [$T2, num, newapprox], LIVEOUT: [num, newapprox, i], GEN [$T2] KILL [i]
-;MULTF i num $T3 [FRMT-3]; --- LIVEIN: [num, newapprox, i], LIVEOUT: [$T3, num, newapprox, i], GEN [num, i] KILL [$T3]
-;STOREI $T3 j [FRMT-2]; --- LIVEIN: [$T3, num, newapprox, i], LIVEOUT: [num, newapprox, j, i], GEN [$T3] KILL [j]
-;STOREI 2 $T4 [FRMT-0]; --- LIVEIN: [num, newapprox, j, i], LIVEOUT: [num, $T4, newapprox, j, i], GEN [] KILL [$T4]
-;MULTF num $T4 $T5 [FRMT-7]; --- LIVEIN: [num, $T4, newapprox, j, i], LIVEOUT: [num, $T5, newapprox, j, i], GEN [num, $T4] KILL [$T5]
-;STOREF $T5 approx [FRMT-2]; --- LIVEIN: [num, $T5, newapprox, j, i], LIVEOUT: [num, approx, newapprox, j, i], GEN [$T5] KILL [approx]
-;WRITEF approx [FRMT-6]; --- LIVEIN: [approx, num, newapprox, j, i], LIVEOUT: [num, approx, newapprox, j, i], GEN [approx] KILL []
+;LABEL F [FRMT-8]; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, eol, space, $P1], GEN [] KILL []
+;LINK [FRMT-9]; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, eol, space, $P1], GEN [] KILL []
+;STOREI 2 $T1 [FRMT-0]; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, $T1, eol, space, $P1], GEN [] KILL [$T1]
+;----------------
+;LEI $P1 $T1 label1 [FRMT-13]; --- LIVEIN: [input, $T1, eol, space, $P1], LIVEOUT: [input, eol, space, $P1], GEN [$T1, $P1] KILL []
+;PUSH [FRMT-9]; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, eol, space, $P1], GEN [] KILL []
+;STOREI 1 $T2 [FRMT-0]; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [$T2, input, eol, space, $P1], GEN [] KILL [$T2]
+;SUBI $P1 $T2 $T3 [FRMT-7]; --- LIVEIN: [$T2, input, eol, space, $P1], LIVEOUT: [input, eol, space, $P1], GEN [$T2, $P1] KILL [$T3]
+;PUSH $T3 [FRMT-18]; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, eol, space, $P1], GEN [] KILL [$T3]
+;JSR F [FRMT-15]; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, eol, space, $P1], GEN [] KILL []
+;POP [FRMT-9]; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, eol, space, $P1], GEN [] KILL []
+;POP $T4 [FRMT-18]; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, $T4, eol, space, $P1], GEN [] KILL [$T4]
+;STOREI $T4 $L1 [FRMT-2]; --- LIVEIN: [input, $T4, eol, space, $P1], LIVEOUT: [input, eol, $L1, space, $P1], GEN [$T4] KILL [$L1]
+;PUSH [FRMT-9]; --- LIVEIN: [input, $L1, eol, space, $P1], LIVEOUT: [input, eol, $L1, space, $P1], GEN [] KILL []
+;STOREI 2 $T5 [FRMT-0]; --- LIVEIN: [input, $L1, eol, space, $P1], LIVEOUT: [input, $T5, eol, $L1, space, $P1], GEN [] KILL [$T5]
+;SUBI $P1 $T5 $T6 [FRMT-7]; --- LIVEIN: [input, $T5, $L1, eol, space, $P1], LIVEOUT: [input, eol, $L1, space, $P1], GEN [$T5, $P1] KILL [$T6]
+;PUSH $T6 [FRMT-18]; --- LIVEIN: [input, $L1, eol, space, $P1], LIVEOUT: [input, eol, $L1, space, $P1], GEN [] KILL [$T6]
+;JSR F [FRMT-15]; --- LIVEIN: [input, $L1, eol, space, $P1], LIVEOUT: [input, eol, $L1, space, $P1], GEN [] KILL []
+;POP [FRMT-9]; --- LIVEIN: [input, $L1, eol, space, $P1], LIVEOUT: [input, eol, $L1, space, $P1], GEN [] KILL []
+;POP $T7 [FRMT-18]; --- LIVEIN: [input, $L1, eol, space, $P1], LIVEOUT: [input, $T7, eol, $L1, space, $P1], GEN [] KILL [$T7]
+;STOREI $T7 $L2 [FRMT-2]; --- LIVEIN: [input, $T7, $L1, eol, space, $P1], LIVEOUT: [input, eol, $L1, $L2, space, $P1], GEN [$T7] KILL [$L2]
+;ADDI $L1 $L2 $T8 [FRMT-3]; --- LIVEIN: [input, $L1, eol, $L2, space, $P1], LIVEOUT: [input, eol, $T8, space, $P1], GEN [$L1, $L2] KILL [$T8]
+;STOREI $T8 $R [FRMT-16]; --- LIVEIN: [input, eol, $T8, space, $P1], LIVEOUT: [input, eol, space, $P1], GEN [$T8] KILL []
+;RET [FRMT-9]; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, eol, space, $P1], GEN [] KILL []
+;----------------
+;LABEL label1 [FRMT-8]; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, eol, space, $P1], GEN [] KILL []
+;STOREI 0 $T9 [FRMT-0]; --- LIVEIN: [input, eol, space, $P1], LIVEOUT: [input, eol, $T9, space, $P1], GEN [] KILL [$T9]
+;----------------
+;NEI $P1 $T9 label2 [FRMT-13]; --- LIVEIN: [input, eol, $T9, space, $P1], LIVEOUT: [input, eol, space], GEN [$T9, $P1] KILL []
+;STOREI 0 $T10 [FRMT-0]; --- LIVEIN: [input, eol, space], LIVEOUT: [input, $T10, eol, space], GEN [] KILL [$T10]
+;STOREI $T10 $R [FRMT-16]; --- LIVEIN: [input, $T10, eol, space], LIVEOUT: [input, eol, space], GEN [$T10] KILL []
+;RET [FRMT-9]; --- LIVEIN: [input, eol, space], LIVEOUT: [input, eol, space], GEN [] KILL []
+;JUMP label3 [FRMT-15]; --- LIVEIN: [input, eol, space], LIVEOUT: [input, eol, space], GEN [] KILL []
+;LABEL label2 [FRMT-8]; --- LIVEIN: [input, eol, space], LIVEOUT: [input, eol, space], GEN [] KILL []
+;STOREI 1 $T11 [FRMT-0]; --- LIVEIN: [input, eol, space], LIVEOUT: [input, eol, $T11, space], GEN [] KILL [$T11]
+;STOREI $T11 $R [FRMT-16]; --- LIVEIN: [input, eol, $T11, space], LIVEOUT: [input, eol, space], GEN [$T11] KILL []
+;RET [FRMT-9]; --- LIVEIN: [input, eol, space], LIVEOUT: [input, eol, space], GEN [] KILL []
+;----------------
+;LABEL label3 [FRMT-8]; --- LIVEIN: [input, eol, space], LIVEOUT: [input, eol, space], GEN [] KILL []
+;LABEL main [FRMT-8]; --- LIVEIN: [input, eol, space], LIVEOUT: [input, eol, space], GEN [] KILL []
+;LINK [FRMT-9]; --- LIVEIN: [input, eol, space], LIVEOUT: [input, eol, space], GEN [] KILL []
+;STOREI 0 $T1 [FRMT-0]; --- LIVEIN: [input, eol, space], LIVEOUT: [input, $T1, eol, space], GEN [] KILL [$T1]
+;STOREI $T1 $L1 [FRMT-2]; --- LIVEIN: [input, $T1, eol, space], LIVEOUT: [input, eol, $L1, space], GEN [$T1] KILL [$L1]
+;WRITES input [FRMT-6]; --- LIVEIN: [input, $L1, eol, space], LIVEOUT: [input, eol, $L1, space], GEN [input] KILL []
+;READI $L2 [FRMT-6]; --- LIVEIN: [input, $L1, eol, space], LIVEOUT: [input, eol, $L1, $L2, space], GEN [] KILL [$L2]
+;----------------
+;LABEL label4 [FRMT-8]; --- LIVEIN: [input, $L1, eol, $L2, space], LIVEOUT: [input, eol, $L1, $L2, space], GEN [] KILL []
+;----------------
+;EQI $L1 $L2 label5 [FRMT-14]; --- LIVEIN: [input, $L1, eol, $L2, space], LIVEOUT: [input, $L1, eol, $L2, space], GEN [$L1, $L2] KILL []
+;PUSH [FRMT-9]; --- LIVEIN: [input, $L1, eol, $L2, space], LIVEOUT: [input, eol, $L1, $L2, space], GEN [] KILL []
+;PUSH $L1 [FRMT-6]; --- LIVEIN: [input, $L1, eol, $L2, space], LIVEOUT: [input, eol, $L1, $L2, space], GEN [] KILL []
+;JSR F [FRMT-15]; --- LIVEIN: [input, $L1, eol, $L2, space], LIVEOUT: [input, eol, $L1, $L2, space], GEN [] KILL []
+;POP [FRMT-9]; --- LIVEIN: [input, $L1, eol, $L2, space], LIVEOUT: [input, eol, $L1, $L2, space], GEN [] KILL []
+;POP $T2 [FRMT-18]; --- LIVEIN: [input, $L1, eol, $L2, space], LIVEOUT: [$T2, input, eol, $L1, $L2, space], GEN [] KILL [$T2]
+;STOREI $T2 $L3 [FRMT-2]; --- LIVEIN: [$T2, input, $L1, eol, $L2, space], LIVEOUT: [input, eol, $L1, $L2, $L3, space], GEN [$T2] KILL [$L3]
+;WRITEI $L1 [FRMT-6]; --- LIVEIN: [input, $L1, eol, $L2, $L3, space], LIVEOUT: [input, eol, $L1, $L2, $L3, space], GEN [$L1] KILL []
+;WRITES space [FRMT-6]; --- LIVEIN: [input, $L1, eol, $L2, $L3, space], LIVEOUT: [input, eol, $L1, $L2, $L3, space], GEN [space] KILL []
+;WRITEI $L3 [FRMT-6]; --- LIVEIN: [input, $L1, eol, $L2, $L3, space], LIVEOUT: [input, eol, $L1, $L2, space], GEN [$L3] KILL []
+;WRITES eol [FRMT-6]; --- LIVEIN: [input, $L1, eol, $L2, space], LIVEOUT: [input, eol, $L1, $L2, space], GEN [eol] KILL []
+;STOREI 1 $T3 [FRMT-0]; --- LIVEIN: [input, $L1, eol, $L2, space], LIVEOUT: [$T3, input, eol, $L1, $L2, space], GEN [] KILL [$T3]
+;ADDI $L1 $T3 $T4 [FRMT-7]; --- LIVEIN: [$T3, input, $L1, eol, $L2, space], LIVEOUT: [input, $T4, eol, $L2, space], GEN [$T3, $L1] KILL [$T4]
+;STOREI $T4 $L1 [FRMT-2]; --- LIVEIN: [input, $T4, eol, $L2, space], LIVEOUT: [input, eol, $L1, $L2, space], GEN [$T4] KILL [$L1]
+;JUMP label4 [FRMT-15]; --- LIVEIN: [input, $L1, eol, $L2, space], LIVEOUT: [input, eol, $L1, $L2, space], GEN [] KILL []
+;LABEL label5 [FRMT-8]; --- LIVEIN: [input, eol, space], LIVEOUT: [input, eol, space], GEN [] KILL []
+;STOREI 0 $T5 [FRMT-0]; --- LIVEIN: [input, eol, space], LIVEOUT: [input, $T5, eol, space], GEN [] KILL [$T5]
+;STOREI $T5 $R [FRMT-16]; --- LIVEIN: [input, $T5, eol, space], LIVEOUT: [input, eol, space], GEN [$T5] KILL []
+;RET [FRMT-9]; --- LIVEIN: [input, eol, space], LIVEOUT: [input, eol, space], GEN [] KILL []
 ;----------------- tiny ------------------------
 ;-------------------------------------------------------
-; ir node ;LABEL main! (FRMT-8)
+; ir node ;LABEL F! (FRMT-8)
 ; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
 ;-------------------------------------------------------
 ; ir node ;LINK! (FRMT-9)
 ; reg state : {r0=none, r1=none, r2=none, r3=none, }
 ;-------------------------------------------------------
-; ir node ;STOREF 5.125 $T1! (FRMT-1)
+; ir node ;STOREI 2 $T1! (FRMT-0)
 ; reg state : {r0=none, r1=none, r2=none, r3=none, }
 ; attempting to ensure $T1
 ; $T1: not loaded in any register..
 ; Attempting to allocate $T1
 ; $T1: not loaded in any register..
-; allocating $T1@($-1) to r0
+; allocating $T1@($-3) to r0
+; Checking Liveness $T1
+; Live out: [input, $T1, eol, space, $P1]
+; $T1 is live
+; Checking Liveness none
+; Live out: [input, $T1, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $T1, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $T1, eol, space, $P1]
+; none is dead
 ;-------------------------------------------------------
-; ir node ;STOREF $T1 num! (FRMT-2)
-; reg state : {r0=$T1*, r1=none, r2=none, r3=none, }
+; ir node ;LEI $P1 $T1 label1! (FRMT-13)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $P1
+; $P1: not loaded in any register..
+; Attempting to allocate $P1
+; $P1: not loaded in any register..
+; allocating $P1@($6) to r0
 ; attempting to ensure $T1
-; found $T1 in r0
-; ensuring $T1 use r0
-; attempting to ensure num
-; num: not loaded in any register..
-; Attempting to allocate num
-; num: not loaded in any register..
-; allocating num@(num) to r1
+; $T1: not loaded in any register..
+; Attempting to allocate $T1
+; $T1: not loaded in any register..
+; allocating $T1@($-3) to r1
+; Checking Liveness $P1
+; Live out: [input, eol, space, $P1]
+; $P1 is live
+; Checking Liveness $T1
+; Live out: [input, eol, space, $P1]
+; $T1 is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
 ;-------------------------------------------------------
-; ir node ;STOREI 5 $T2! (FRMT-0)
-; reg state : {r0=$T1*, r1=num*, r2=none, r3=none, }
+; ir node ;PUSH! (FRMT-9)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+;-------------------------------------------------------
+; ir node ;STOREI 1 $T2! (FRMT-0)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
 ; attempting to ensure $T2
 ; $T2: not loaded in any register..
 ; Attempting to allocate $T2
 ; $T2: not loaded in any register..
-; allocating $T2@($-2) to r2
+; allocating $T2@($-4) to r0
+; Checking Liveness $T2
+; Live out: [$T2, input, eol, space, $P1]
+; $T2 is live
+; Checking Liveness none
+; Live out: [$T2, input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [$T2, input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [$T2, input, eol, space, $P1]
+; none is dead
 ;-------------------------------------------------------
-; ir node ;STOREI $T2 i! (FRMT-2)
-; reg state : {r0=$T1*, r1=num*, r2=$T2*, r3=none, }
+; ir node ;SUBI $P1 $T2 $T3! (FRMT-7)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $P1
+; $P1: not loaded in any register..
+; Attempting to allocate $P1
+; $P1: not loaded in any register..
+; allocating $P1@($6) to r0
 ; attempting to ensure $T2
-; found $T2 in r2
-; ensuring $T2 use r2
-; attempting to ensure i
-; i: not loaded in any register..
-; Attempting to allocate i
-; i: not loaded in any register..
-; allocating i@(i) to r3
-;-------------------------------------------------------
-; ir node ;MULTF i num $T3! (FRMT-3)
-; reg state : {r0=$T1*, r1=num*, r2=$T2*, r3=i*, }
-; attempting to ensure i
-; found i in r3
-; ensuring i use r3
-; attempting to ensure num
-; found num in r1
-; ensuring num use r1
+; $T2: not loaded in any register..
+; Attempting to allocate $T2
+; $T2: not loaded in any register..
+; allocating $T2@($-4) to r1
 ; attempting to ensure $T3
 ; $T3: not loaded in any register..
 ; Attempting to allocate $T3
 ; $T3: not loaded in any register..
-; No free register! Choosing most distant used reg : r0
-; evicting r0 for opr $T1
-; Checking Liveness $T1
-; Live out: [$T3, num, newapprox, i]
-; $T1 is dead
+; allocating $T3@($-5) to r2
+; evicting r2 for opr $T3
+; Checking Liveness $T3
+; Live out: [input, eol, space, $P1]
+; $T3 is dead
 ; free: false, dirty:true, live: false
-; spilling r0
-; allocating $T3@($-3) to r0
+; spilling r2
+; evicting r0 for opr $P1
+; Checking Liveness $P1
+; Live out: [input, eol, space, $P1]
+; $P1 is live
+; free: false, dirty:false, live: true
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness $T2
+; Live out: [input, eol, space, $P1]
+; $T2 is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
 ;-------------------------------------------------------
-; ir node ;STOREI $T3 j! (FRMT-2)
-; reg state : {r0=$T3*, r1=num*, r2=$T2*, r3=i*, }
+; ir node ;PUSH $T3! (FRMT-18)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
 ; attempting to ensure $T3
-; found $T3 in r0
-; ensuring $T3 use r0
-; attempting to ensure j
-; j: not loaded in any register..
-; Attempting to allocate j
-; j: not loaded in any register..
-; No free register! Choosing most distant used reg : r1
-; evicting r1 for opr num
-; Checking Liveness num
-; Live out: [num, newapprox, j, i]
-; num is live
-; free: false, dirty:true, live: true
-; spilling r1
-; allocating j@(j) to r1
+; $T3: not loaded in any register..
+; Attempting to allocate $T3
+; $T3: not loaded in any register..
+; allocating $T3@($-5) to r0
+; Checking Liveness $T3
+; Live out: [input, eol, space, $P1]
+; $T3 is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
 ;-------------------------------------------------------
-; ir node ;STOREI 2 $T4! (FRMT-0)
-; reg state : {r0=$T3*, r1=j*, r2=$T2*, r3=i*, }
+; ir node ;JSR F! (FRMT-15)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+;-------------------------------------------------------
+; ir node ;POP! (FRMT-9)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+;-------------------------------------------------------
+; ir node ;POP $T4! (FRMT-18)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
 ; attempting to ensure $T4
 ; $T4: not loaded in any register..
 ; Attempting to allocate $T4
 ; $T4: not loaded in any register..
-; No free register! Choosing most distant used reg : r2
-; evicting r2 for opr $T2
-; Checking Liveness $T2
-; Live out: [num, $T4, newapprox, j, i]
-; $T2 is dead
-; free: false, dirty:true, live: false
-; spilling r2
-; allocating $T4@($-4) to r2
+; allocating $T4@($-6) to r0
+; Checking Liveness $T4
+; Live out: [input, $T4, eol, space, $P1]
+; $T4 is live
+; Checking Liveness none
+; Live out: [input, $T4, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $T4, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $T4, eol, space, $P1]
+; none is dead
 ;-------------------------------------------------------
-; ir node ;MULTF num $T4 $T5! (FRMT-7)
-; reg state : {r0=$T3*, r1=j*, r2=$T4*, r3=i*, }
-; attempting to ensure num
-; num: not loaded in any register..
-; Attempting to allocate num
-; num: not loaded in any register..
-; No free register! Choosing most distant used reg : r3
-; evicting r3 for opr i
-; Checking Liveness i
-; Live out: [num, $T5, newapprox, j, i]
-; i is live
-; free: false, dirty:true, live: true
-; spilling r3
-; allocating num@(num) to r3
+; ir node ;STOREI $T4 $L1! (FRMT-2)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
 ; attempting to ensure $T4
-; found $T4 in r2
-; ensuring $T4 use r2
+; $T4: not loaded in any register..
+; Attempting to allocate $T4
+; $T4: not loaded in any register..
+; allocating $T4@($-6) to r0
+; attempting to ensure $L1
+; $L1: not loaded in any register..
+; Attempting to allocate $L1
+; $L1: not loaded in any register..
+; allocating $L1@($-1) to r1
+; evicting r0 for opr $T4
+; Checking Liveness $T4
+; Live out: [input, eol, $L1, space, $P1]
+; $T4 is dead
+; free: false, dirty:false, live: false
+; Checking Liveness none
+; Live out: [input, eol, $L1, space, $P1]
+; none is dead
+; Checking Liveness $L1
+; Live out: [input, eol, $L1, space, $P1]
+; $L1 is live
+; Checking Liveness none
+; Live out: [input, eol, $L1, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, space, $P1]
+; none is dead
+;-------------------------------------------------------
+; ir node ;PUSH! (FRMT-9)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, $L1, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $L1, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $L1, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $L1, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, space, $P1]
+; none is dead
+;-------------------------------------------------------
+; ir node ;STOREI 2 $T5! (FRMT-0)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
 ; attempting to ensure $T5
 ; $T5: not loaded in any register..
 ; Attempting to allocate $T5
 ; $T5: not loaded in any register..
-; No free register! Choosing most distant used reg : r0
-; evicting r0 for opr $T3
-; Checking Liveness $T3
-; Live out: [num, $T5, newapprox, j, i]
-; $T3 is dead
-; free: false, dirty:true, live: false
-; spilling r0
-; allocating $T5@($-5) to r0
+; allocating $T5@($-7) to r0
+; Checking Liveness $T5
+; Live out: [input, $T5, eol, $L1, space, $P1]
+; $T5 is live
+; Checking Liveness none
+; Live out: [input, $T5, eol, $L1, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $T5, eol, $L1, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $T5, eol, $L1, space, $P1]
+; none is dead
 ;-------------------------------------------------------
-; ir node ;STOREF $T5 approx! (FRMT-2)
-; reg state : {r0=$T5*, r1=j*, r2=$T4*, r3=num, }
+; ir node ;SUBI $P1 $T5 $T6! (FRMT-7)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $P1
+; $P1: not loaded in any register..
+; Attempting to allocate $P1
+; $P1: not loaded in any register..
+; allocating $P1@($6) to r0
 ; attempting to ensure $T5
-; found $T5 in r0
-; ensuring $T5 use r0
-; attempting to ensure approx
-; approx: not loaded in any register..
-; Attempting to allocate approx
-; approx: not loaded in any register..
-; No free register! Choosing most distant used reg : r1
-; evicting r1 for opr j
-; Checking Liveness j
-; Live out: [num, approx, newapprox, j, i]
-; j is live
-; free: false, dirty:true, live: true
-; spilling r1
-; allocating approx@(approx) to r1
+; $T5: not loaded in any register..
+; Attempting to allocate $T5
+; $T5: not loaded in any register..
+; allocating $T5@($-7) to r1
+; attempting to ensure $T6
+; $T6: not loaded in any register..
+; Attempting to allocate $T6
+; $T6: not loaded in any register..
+; allocating $T6@($-8) to r2
+; evicting r2 for opr $T6
+; Checking Liveness $T6
+; Live out: [input, eol, $L1, space, $P1]
+; $T6 is dead
+; free: false, dirty:true, live: false
+; spilling r2
+; evicting r0 for opr $P1
+; Checking Liveness $P1
+; Live out: [input, eol, $L1, space, $P1]
+; $P1 is live
+; free: false, dirty:false, live: true
+; Checking Liveness none
+; Live out: [input, eol, $L1, space, $P1]
+; none is dead
+; Checking Liveness $T5
+; Live out: [input, eol, $L1, space, $P1]
+; $T5 is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, space, $P1]
+; none is dead
 ;-------------------------------------------------------
-; ir node ;WRITEF approx! (FRMT-6)
-; reg state : {r0=$T5*, r1=approx*, r2=$T4*, r3=num, }
-; attempting to ensure approx
-; found approx in r1
-; ensuring approx use r1
-var i
-var j
-var newapprox
-var approx
-var num
+; ir node ;PUSH $T6! (FRMT-18)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $T6
+; $T6: not loaded in any register..
+; Attempting to allocate $T6
+; $T6: not loaded in any register..
+; allocating $T6@($-8) to r0
+; Checking Liveness $T6
+; Live out: [input, eol, $L1, space, $P1]
+; $T6 is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, space, $P1]
+; none is dead
+;-------------------------------------------------------
+; ir node ;JSR F! (FRMT-15)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, $L1, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, space, $P1]
+; none is dead
+;-------------------------------------------------------
+; ir node ;POP! (FRMT-9)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, $L1, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, space, $P1]
+; none is dead
+;-------------------------------------------------------
+; ir node ;POP $T7! (FRMT-18)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $T7
+; $T7: not loaded in any register..
+; Attempting to allocate $T7
+; $T7: not loaded in any register..
+; allocating $T7@($-9) to r0
+; Checking Liveness $T7
+; Live out: [input, $T7, eol, $L1, space, $P1]
+; $T7 is live
+; Checking Liveness none
+; Live out: [input, $T7, eol, $L1, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $T7, eol, $L1, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $T7, eol, $L1, space, $P1]
+; none is dead
+;-------------------------------------------------------
+; ir node ;STOREI $T7 $L2! (FRMT-2)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $T7
+; $T7: not loaded in any register..
+; Attempting to allocate $T7
+; $T7: not loaded in any register..
+; allocating $T7@($-9) to r0
+; attempting to ensure $L2
+; $L2: not loaded in any register..
+; Attempting to allocate $L2
+; $L2: not loaded in any register..
+; allocating $L2@($-2) to r1
+; evicting r0 for opr $T7
+; Checking Liveness $T7
+; Live out: [input, eol, $L1, $L2, space, $P1]
+; $T7 is dead
+; free: false, dirty:false, live: false
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space, $P1]
+; none is dead
+; Checking Liveness $L2
+; Live out: [input, eol, $L1, $L2, space, $P1]
+; $L2 is live
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space, $P1]
+; none is dead
+;-------------------------------------------------------
+; ir node ;ADDI $L1 $L2 $T8! (FRMT-3)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $L1
+; $L1: not loaded in any register..
+; Attempting to allocate $L1
+; $L1: not loaded in any register..
+; allocating $L1@($-1) to r0
+; attempting to ensure $L2
+; $L2: not loaded in any register..
+; Attempting to allocate $L2
+; $L2: not loaded in any register..
+; allocating $L2@($-2) to r1
+; attempting to ensure $T8
+; $T8: not loaded in any register..
+; Attempting to allocate $T8
+; $T8: not loaded in any register..
+; allocating $T8@($-10) to r2
+; evicting r2 for opr $T8
+; Checking Liveness $T8
+; Live out: [input, eol, $T8, space, $P1]
+; $T8 is live
+; free: false, dirty:true, live: true
+; spilling r2
+; evicting r0 for opr $L1
+; Checking Liveness $L1
+; Live out: [input, eol, $T8, space, $P1]
+; $L1 is dead
+; free: false, dirty:false, live: false
+; Checking Liveness none
+; Live out: [input, eol, $T8, space, $P1]
+; none is dead
+; Checking Liveness $L2
+; Live out: [input, eol, $T8, space, $P1]
+; $L2 is dead
+; Checking Liveness none
+; Live out: [input, eol, $T8, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $T8, space, $P1]
+; none is dead
+;-------------------------------------------------------
+; ir node ;STOREI $T8 $R! (FRMT-16)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $T8
+; $T8: not loaded in any register..
+; Attempting to allocate $T8
+; $T8: not loaded in any register..
+; allocating $T8@($-10) to r0
+; Checking Liveness $T8
+; Live out: [input, eol, space, $P1]
+; $T8 is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+;-------------------------------------------------------
+; ir node ;RET! (FRMT-9)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+;-------------------------------------------------------
+; ir node ;LABEL label1! (FRMT-8)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space, $P1]
+; none is dead
+;-------------------------------------------------------
+; ir node ;STOREI 0 $T9! (FRMT-0)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $T9
+; $T9: not loaded in any register..
+; Attempting to allocate $T9
+; $T9: not loaded in any register..
+; allocating $T9@($-11) to r0
+; Checking Liveness $T9
+; Live out: [input, eol, $T9, space, $P1]
+; $T9 is live
+; Checking Liveness none
+; Live out: [input, eol, $T9, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $T9, space, $P1]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $T9, space, $P1]
+; none is dead
+;-------------------------------------------------------
+; ir node ;NEI $P1 $T9 label2! (FRMT-13)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $P1
+; $P1: not loaded in any register..
+; Attempting to allocate $P1
+; $P1: not loaded in any register..
+; allocating $P1@($6) to r0
+; attempting to ensure $T9
+; $T9: not loaded in any register..
+; Attempting to allocate $T9
+; $T9: not loaded in any register..
+; allocating $T9@($-11) to r1
+; Checking Liveness $P1
+; Live out: [input, eol, space]
+; $P1 is dead
+; Checking Liveness $T9
+; Live out: [input, eol, space]
+; $T9 is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;STOREI 0 $T10! (FRMT-0)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $T10
+; $T10: not loaded in any register..
+; Attempting to allocate $T10
+; $T10: not loaded in any register..
+; allocating $T10@($-12) to r0
+; Checking Liveness $T10
+; Live out: [input, $T10, eol, space]
+; $T10 is live
+; Checking Liveness none
+; Live out: [input, $T10, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $T10, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $T10, eol, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;STOREI $T10 $R! (FRMT-16)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $T10
+; $T10: not loaded in any register..
+; Attempting to allocate $T10
+; $T10: not loaded in any register..
+; allocating $T10@($-12) to r0
+; Checking Liveness $T10
+; Live out: [input, eol, space]
+; $T10 is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;RET! (FRMT-9)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;JUMP label3! (FRMT-15)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;LABEL label2! (FRMT-8)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;STOREI 1 $T11! (FRMT-0)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $T11
+; $T11: not loaded in any register..
+; Attempting to allocate $T11
+; $T11: not loaded in any register..
+; allocating $T11@($-13) to r0
+; Checking Liveness $T11
+; Live out: [input, eol, $T11, space]
+; $T11 is live
+; Checking Liveness none
+; Live out: [input, eol, $T11, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $T11, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $T11, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;STOREI $T11 $R! (FRMT-16)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $T11
+; $T11: not loaded in any register..
+; Attempting to allocate $T11
+; $T11: not loaded in any register..
+; allocating $T11@($-13) to r0
+; Checking Liveness $T11
+; Live out: [input, eol, space]
+; $T11 is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;RET! (FRMT-9)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;LABEL label3! (FRMT-8)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;LABEL main! (FRMT-8)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;LINK! (FRMT-9)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+;-------------------------------------------------------
+; ir node ;STOREI 0 $T1! (FRMT-0)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $T1
+; $T1: not loaded in any register..
+; Attempting to allocate $T1
+; $T1: not loaded in any register..
+; allocating $T1@($-4) to r0
+; Checking Liveness $T1
+; Live out: [input, $T1, eol, space]
+; $T1 is live
+; Checking Liveness none
+; Live out: [input, $T1, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $T1, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $T1, eol, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;STOREI $T1 $L1! (FRMT-2)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $T1
+; $T1: not loaded in any register..
+; Attempting to allocate $T1
+; $T1: not loaded in any register..
+; allocating $T1@($-4) to r0
+; attempting to ensure $L1
+; $L1: not loaded in any register..
+; Attempting to allocate $L1
+; $L1: not loaded in any register..
+; allocating $L1@($-1) to r1
+; evicting r0 for opr $T1
+; Checking Liveness $T1
+; Live out: [input, eol, $L1, space]
+; $T1 is dead
+; free: false, dirty:false, live: false
+; Checking Liveness none
+; Live out: [input, eol, $L1, space]
+; none is dead
+; Checking Liveness $L1
+; Live out: [input, eol, $L1, space]
+; $L1 is live
+; Checking Liveness none
+; Live out: [input, eol, $L1, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;WRITES input! (FRMT-6)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, $L1, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;READI $L2! (FRMT-6)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $L2
+; $L2: not loaded in any register..
+; Attempting to allocate $L2
+; $L2: not loaded in any register..
+; allocating $L2@($-2) to r0
+; Checking Liveness $L2
+; Live out: [input, eol, $L1, $L2, space]
+; $L2 is live
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;LABEL label4! (FRMT-8)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;EQI $L1 $L2 label5! (FRMT-14)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $L1
+; $L1: not loaded in any register..
+; Attempting to allocate $L1
+; $L1: not loaded in any register..
+; allocating $L1@($-1) to r0
+; attempting to ensure $L2
+; $L2: not loaded in any register..
+; Attempting to allocate $L2
+; $L2: not loaded in any register..
+; allocating $L2@($-2) to r1
+; Checking Liveness $L1
+; Live out: [input, $L1, eol, $L2, space]
+; $L1 is live
+; Checking Liveness $L2
+; Live out: [input, $L1, eol, $L2, space]
+; $L2 is live
+; Checking Liveness none
+; Live out: [input, $L1, eol, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $L1, eol, $L2, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;PUSH! (FRMT-9)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, $L1, eol, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $L1, eol, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $L1, eol, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $L1, eol, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;PUSH $L1! (FRMT-6)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $L1
+; $L1: not loaded in any register..
+; Attempting to allocate $L1
+; $L1: not loaded in any register..
+; allocating $L1@($-1) to r0
+; Checking Liveness $L1
+; Live out: [input, eol, $L1, $L2, space]
+; $L1 is live
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;JSR F! (FRMT-15)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;POP! (FRMT-9)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;POP $T2! (FRMT-18)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $T2
+; $T2: not loaded in any register..
+; Attempting to allocate $T2
+; $T2: not loaded in any register..
+; allocating $T2@($-5) to r0
+; Checking Liveness $T2
+; Live out: [$T2, input, eol, $L1, $L2, space]
+; $T2 is live
+; Checking Liveness none
+; Live out: [$T2, input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [$T2, input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [$T2, input, eol, $L1, $L2, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;STOREI $T2 $L3! (FRMT-2)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $T2
+; $T2: not loaded in any register..
+; Attempting to allocate $T2
+; $T2: not loaded in any register..
+; allocating $T2@($-5) to r0
+; attempting to ensure $L3
+; $L3: not loaded in any register..
+; Attempting to allocate $L3
+; $L3: not loaded in any register..
+; allocating $L3@($-3) to r1
+; evicting r0 for opr $T2
+; Checking Liveness $T2
+; Live out: [input, eol, $L1, $L2, $L3, space]
+; $T2 is dead
+; free: false, dirty:false, live: false
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, $L3, space]
+; none is dead
+; Checking Liveness $L3
+; Live out: [input, eol, $L1, $L2, $L3, space]
+; $L3 is live
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, $L3, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, $L3, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;WRITEI $L1! (FRMT-6)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $L1
+; $L1: not loaded in any register..
+; Attempting to allocate $L1
+; $L1: not loaded in any register..
+; allocating $L1@($-1) to r0
+; Checking Liveness $L1
+; Live out: [input, eol, $L1, $L2, $L3, space]
+; $L1 is live
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, $L3, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, $L3, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, $L3, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;WRITES space! (FRMT-6)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, $L3, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, $L3, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, $L3, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, $L3, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;WRITEI $L3! (FRMT-6)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $L3
+; $L3: not loaded in any register..
+; Attempting to allocate $L3
+; $L3: not loaded in any register..
+; allocating $L3@($-3) to r0
+; Checking Liveness $L3
+; Live out: [input, eol, $L1, $L2, space]
+; $L3 is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;WRITES eol! (FRMT-6)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;STOREI 1 $T3! (FRMT-0)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $T3
+; $T3: not loaded in any register..
+; Attempting to allocate $T3
+; $T3: not loaded in any register..
+; allocating $T3@($-6) to r0
+; Checking Liveness $T3
+; Live out: [$T3, input, eol, $L1, $L2, space]
+; $T3 is live
+; Checking Liveness none
+; Live out: [$T3, input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [$T3, input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [$T3, input, eol, $L1, $L2, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;ADDI $L1 $T3 $T4! (FRMT-7)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $L1
+; $L1: not loaded in any register..
+; Attempting to allocate $L1
+; $L1: not loaded in any register..
+; allocating $L1@($-1) to r0
+; attempting to ensure $T3
+; $T3: not loaded in any register..
+; Attempting to allocate $T3
+; $T3: not loaded in any register..
+; allocating $T3@($-6) to r1
+; attempting to ensure $T4
+; $T4: not loaded in any register..
+; Attempting to allocate $T4
+; $T4: not loaded in any register..
+; allocating $T4@($-7) to r2
+; evicting r2 for opr $T4
+; Checking Liveness $T4
+; Live out: [input, $T4, eol, $L2, space]
+; $T4 is live
+; free: false, dirty:true, live: true
+; spilling r2
+; evicting r0 for opr $L1
+; Checking Liveness $L1
+; Live out: [input, $T4, eol, $L2, space]
+; $L1 is dead
+; free: false, dirty:false, live: false
+; Checking Liveness none
+; Live out: [input, $T4, eol, $L2, space]
+; none is dead
+; Checking Liveness $T3
+; Live out: [input, $T4, eol, $L2, space]
+; $T3 is dead
+; Checking Liveness none
+; Live out: [input, $T4, eol, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $T4, eol, $L2, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;STOREI $T4 $L1! (FRMT-2)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $T4
+; $T4: not loaded in any register..
+; Attempting to allocate $T4
+; $T4: not loaded in any register..
+; allocating $T4@($-7) to r0
+; attempting to ensure $L1
+; $L1: not loaded in any register..
+; Attempting to allocate $L1
+; $L1: not loaded in any register..
+; allocating $L1@($-1) to r1
+; evicting r0 for opr $T4
+; Checking Liveness $T4
+; Live out: [input, eol, $L1, $L2, space]
+; $T4 is dead
+; free: false, dirty:false, live: false
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness $L1
+; Live out: [input, eol, $L1, $L2, space]
+; $L1 is live
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;JUMP label4! (FRMT-15)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, $L1, $L2, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;LABEL label5! (FRMT-8)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;STOREI 0 $T5! (FRMT-0)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $T5
+; $T5: not loaded in any register..
+; Attempting to allocate $T5
+; $T5: not loaded in any register..
+; allocating $T5@($-8) to r0
+; Checking Liveness $T5
+; Live out: [input, $T5, eol, space]
+; $T5 is live
+; Checking Liveness none
+; Live out: [input, $T5, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $T5, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, $T5, eol, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;STOREI $T5 $R! (FRMT-16)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; attempting to ensure $T5
+; $T5: not loaded in any register..
+; Attempting to allocate $T5
+; $T5: not loaded in any register..
+; allocating $T5@($-8) to r0
+; Checking Liveness $T5
+; Live out: [input, eol, space]
+; $T5 is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+;-------------------------------------------------------
+; ir node ;RET! (FRMT-9)
+; reg state : {r0=none, r1=none, r2=none, r3=none, }
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+; Checking Liveness none
+; Live out: [input, eol, space]
+; none is dead
+str input "Please input an integer number: "
+str space " "
+str eol "\n"
 push
 push r0
 push r1
@@ -176,92 +1323,835 @@ push r2
 push r3
 jsr main
 sys halt
+;------------------;LABEL F ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+label F
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+link 17
+;------------------;STOREI 2 $T1 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-3 r0 ; load ensure $T1
+
+move 2 r0
+
+;Flushing registers
+
+move r0 $-3
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;LEI $P1 $T1 label1 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $6 r0 ; load ensure $P1
+
+move $-3 r1 ; load ensure $T1
+
+cmpi r0 r1
+jle label1
+
+;Flushing registers
+
+move r0 $6
+move r1 $-3
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;PUSH ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+
+;Flushing registers
+
+;Flush done
+
+push
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;STOREI 1 $T2 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-4 r0 ; load ensure $T2
+
+move 1 r0
+
+;Flushing registers
+
+move r0 $-4
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;SUBI $P1 $T2 $T3 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $6 r0 ; load ensure $P1
+
+move $-4 r1 ; load ensure $T2
+
+subi r1 r0
+move $-5 r2 ; load ensure $T3
+
+move r0 r2
+move r2 $-5 ; spill $T3
+
+
+
+;Flushing registers
+
+move r1 $-4
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;PUSH $T3 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-5 r0 ; load ensure $T3
+
+push r0
+
+;Flushing registers
+
+move r0 $-5
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;JSR F ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+push r0
+push r1
+push r2
+push r3
+jsr F
+pop r3
+pop r2
+pop r1
+pop r0
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;POP ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+pop
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;POP $T4 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-6 r0 ; load ensure $T4
+
+pop r0
+
+;Flushing registers
+
+move r0 $-6
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;STOREI $T4 $L1 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-6 r0 ; load ensure $T4
+
+move $-1 r1 ; load ensure $L1
+
+move r0 r1
+
+
+;Flushing registers
+
+move r1 $-1
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;PUSH ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+
+;Flushing registers
+
+;Flush done
+
+push
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;STOREI 2 $T5 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-7 r0 ; load ensure $T5
+
+move 2 r0
+
+;Flushing registers
+
+move r0 $-7
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;SUBI $P1 $T5 $T6 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $6 r0 ; load ensure $P1
+
+move $-7 r1 ; load ensure $T5
+
+subi r1 r0
+move $-8 r2 ; load ensure $T6
+
+move r0 r2
+move r2 $-8 ; spill $T6
+
+
+
+;Flushing registers
+
+move r1 $-7
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;PUSH $T6 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-8 r0 ; load ensure $T6
+
+push r0
+
+;Flushing registers
+
+move r0 $-8
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;JSR F ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+push r0
+push r1
+push r2
+push r3
+jsr F
+pop r3
+pop r2
+pop r1
+pop r0
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;POP ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+pop
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;POP $T7 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-9 r0 ; load ensure $T7
+
+pop r0
+
+;Flushing registers
+
+move r0 $-9
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;STOREI $T7 $L2 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-9 r0 ; load ensure $T7
+
+move $-2 r1 ; load ensure $L2
+
+move r0 r1
+
+
+;Flushing registers
+
+move r1 $-2
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;ADDI $L1 $L2 $T8 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-1 r0 ; load ensure $L1
+
+move $-2 r1 ; load ensure $L2
+
+addi r0 r1
+move $-10 r2 ; load ensure $T8
+
+move r1 r2
+move r2 $-10 ; spill $T8
+
+
+
+;Flushing registers
+
+move r1 $-2
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;STOREI $T8 $R ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-10 r0 ; load ensure $T8
+
+move r0 $7
+
+;Flushing registers
+
+move r0 $-10
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;RET ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+unlnk
+ret
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;LABEL label1 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+label label1
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;STOREI 0 $T9 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-11 r0 ; load ensure $T9
+
+move 0 r0
+
+;Flushing registers
+
+move r0 $-11
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;NEI $P1 $T9 label2 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $6 r0 ; load ensure $P1
+
+move $-11 r1 ; load ensure $T9
+
+cmpi r0 r1
+jne label2
+
+;Flushing registers
+
+move r0 $6
+move r1 $-11
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;STOREI 0 $T10 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-12 r0 ; load ensure $T10
+
+move 0 r0
+
+;Flushing registers
+
+move r0 $-12
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;STOREI $T10 $R ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-12 r0 ; load ensure $T10
+
+move r0 $7
+
+;Flushing registers
+
+move r0 $-12
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;RET ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+unlnk
+ret
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;JUMP label3 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+jmp label3
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;LABEL label2 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+label label2
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;STOREI 1 $T11 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-13 r0 ; load ensure $T11
+
+move 1 r0
+
+;Flushing registers
+
+move r0 $-13
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;STOREI $T11 $R ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-13 r0 ; load ensure $T11
+
+move r0 $7
+
+;Flushing registers
+
+move r0 $-13
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;RET ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+unlnk
+ret
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;LABEL label3 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+label label3
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
 ;------------------;LABEL main ----------------
 ;  {r0=none, r1=none, r2=none, r3=none, }
 
 label main
+
+;Flushing registers
+
+;Flush done
+
 ;  {r0=none, r1=none, r2=none, r3=none, }
-link 15
-;------------------;STOREF 5.125 $T1 ----------------
+link 18
+;------------------;STOREI 0 $T1 ----------------
 ;  {r0=none, r1=none, r2=none, r3=none, }
 
-move $-1 r0 ; load ensure $T1
+move $-4 r0 ; load ensure $T1
 
-move 5.125 r0
-;  {r0=$T1*, r1=none, r2=none, r3=none, }
-;------------------;STOREF $T1 num ----------------
-;  {r0=$T1*, r1=none, r2=none, r3=none, }
+move 0 r0
 
-move num r1 ; load ensure num
+;Flushing registers
 
-move r0 r1
-;  {r0=$T1*, r1=num*, r2=none, r3=none, }
-;------------------;STOREI 5 $T2 ----------------
-;  {r0=$T1*, r1=num*, r2=none, r3=none, }
+move r0 $-4
 
-move $-2 r2 ; load ensure $T2
+;Flush done
 
-move 5 r2
-;  {r0=$T1*, r1=num*, r2=$T2*, r3=none, }
-;------------------;STOREI $T2 i ----------------
-;  {r0=$T1*, r1=num*, r2=$T2*, r3=none, }
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;STOREI $T1 $L1 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
 
-move i r3 ; load ensure i
+move $-4 r0 ; load ensure $T1
 
-move r2 r3
-;  {r0=$T1*, r1=num*, r2=$T2*, r3=i*, }
-;------------------;MULTF i num $T3 ----------------
-;  {r0=$T1*, r1=num*, r2=$T2*, r3=i*, }
-
-mulr r3 r1
-move r0 $-1 ; spill $T1
-
-move $-3 r0 ; load ensure $T3
-
-move r1 r0
-;  {r0=$T3*, r1=num*, r2=$T2*, r3=i*, }
-;------------------;STOREI $T3 j ----------------
-;  {r0=$T3*, r1=num*, r2=$T2*, r3=i*, }
-
-move r1 num ; spill num
-
-move j r1 ; load ensure j
+move $-1 r1 ; load ensure $L1
 
 move r0 r1
-;  {r0=$T3*, r1=j*, r2=$T2*, r3=i*, }
-;------------------;STOREI 2 $T4 ----------------
-;  {r0=$T3*, r1=j*, r2=$T2*, r3=i*, }
 
-move r2 $-2 ; spill $T2
 
-move $-4 r2 ; load ensure $T4
+;Flushing registers
 
-move 2 r2
-;  {r0=$T3*, r1=j*, r2=$T4*, r3=i*, }
-;------------------;MULTF num $T4 $T5 ----------------
-;  {r0=$T3*, r1=j*, r2=$T4*, r3=i*, }
+move r1 $-1
 
-move r3 i ; spill i
+;Flush done
 
-move num r3 ; load ensure num
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;WRITES input ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
 
-mulr r2 r3
-move r0 $-3 ; spill $T3
+sys writes input
 
-move $-5 r0 ; load ensure $T5
+;Flushing registers
 
-move r3 r0
-;  {r0=$T5*, r1=j*, r2=$T4*, r3=num, }
-;------------------;STOREF $T5 approx ----------------
-;  {r0=$T5*, r1=j*, r2=$T4*, r3=num, }
+;Flush done
 
-move r1 j ; spill j
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;READI $L2 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
 
-move approx r1 ; load ensure approx
+move $-2 r0 ; load ensure $L2
+
+sys readi r0
+
+;Flushing registers
+
+move r0 $-2
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;LABEL label4 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+label label4
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;EQI $L1 $L2 label5 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-1 r0 ; load ensure $L1
+
+move $-2 r1 ; load ensure $L2
+
+cmpi r0 r1
+jeq label5
+
+;Flushing registers
+
+move r0 $-1
+
+move r1 $-2
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;PUSH ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+
+;Flushing registers
+
+;Flush done
+
+push
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;PUSH $L1 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-1 r0 ; load ensure $L1
+
+push r0
+
+;Flushing registers
+
+move r0 $-1
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;JSR F ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+push r0
+push r1
+push r2
+push r3
+jsr F
+pop r3
+pop r2
+pop r1
+pop r0
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;POP ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+pop
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;POP $T2 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-5 r0 ; load ensure $T2
+
+pop r0
+
+;Flushing registers
+
+move r0 $-5
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;STOREI $T2 $L3 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-5 r0 ; load ensure $T2
+
+move $-3 r1 ; load ensure $L3
 
 move r0 r1
-;  {r0=$T5*, r1=approx*, r2=$T4*, r3=num, };------------------;WRITEF approx ----------------
-;  {r0=$T5*, r1=approx*, r2=$T4*, r3=num, }
 
-sys writer r1
-;  {r0=$T5*, r1=approx*, r2=$T4*, r3=num, }
+
+;Flushing registers
+
+move r1 $-3
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;WRITEI $L1 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-1 r0 ; load ensure $L1
+
+sys writei r0
+
+;Flushing registers
+
+move r0 $-1
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;WRITES space ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+sys writes space
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;WRITEI $L3 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-3 r0 ; load ensure $L3
+
+sys writei r0
+
+;Flushing registers
+
+move r0 $-3
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;WRITES eol ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+sys writes eol
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;STOREI 1 $T3 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-6 r0 ; load ensure $T3
+
+move 1 r0
+
+;Flushing registers
+
+move r0 $-6
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;ADDI $L1 $T3 $T4 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-1 r0 ; load ensure $L1
+
+move $-6 r1 ; load ensure $T3
+
+addi r1 r0
+move $-7 r2 ; load ensure $T4
+
+move r0 r2
+move r2 $-7 ; spill $T4
+
+
+
+;Flushing registers
+
+move r1 $-6
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;STOREI $T4 $L1 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-7 r0 ; load ensure $T4
+
+move $-1 r1 ; load ensure $L1
+
+move r0 r1
+
+
+;Flushing registers
+
+move r1 $-1
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;JUMP label4 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+jmp label4
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;LABEL label5 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+label label5
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;STOREI 0 $T5 ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-8 r0 ; load ensure $T5
+
+move 0 r0
+
+;Flushing registers
+
+move r0 $-8
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;STOREI $T5 $R ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+move $-8 r0 ; load ensure $T5
+
+move r0 $6
+
+;Flushing registers
+
+move r0 $-8
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+;------------------;RET ----------------
+;  {r0=none, r1=none, r2=none, r3=none, }
+
+unlnk
+ret
+
+;Flushing registers
+
+;Flush done
+
+;  {r0=none, r1=none, r2=none, r3=none, }
+

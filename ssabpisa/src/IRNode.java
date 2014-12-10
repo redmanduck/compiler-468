@@ -37,6 +37,7 @@ public class IRNode {
 
 	 public HashSet<String> GEN, KILL;
 	 public HashSet<String> LIVE_IN, LIVE_OUT;
+	private boolean endOfBB;
 
 	 private int format;
      public static final int FORMAT_IR = 0; // int reg
@@ -80,6 +81,13 @@ public class IRNode {
     	 }
      }
 
+	public boolean isEndOfBB(){
+		return this.endOfBB;
+	}
+	public void markEndBB(){
+		this.endOfBB = true;
+	}
+
 	public Instruction getInstruction(){
     	 return OPCODE;
      }
@@ -108,6 +116,7 @@ public class IRNode {
 		LIVE_OUT = new HashSet<String>();
 
 		discovered = false;
+		endOfBB = false;
 	}
 
      public IRNode(String label){

@@ -11,6 +11,10 @@ BEGIN
 	BEGIN
 		INT f;
 		f := china*2;
+		IF(china < 5)
+			f := china*100;
+		ENDIF
+
 		WRITE(yeye, f,eol);
 		RETURN f;
 	END

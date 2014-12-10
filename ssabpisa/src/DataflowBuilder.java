@@ -68,6 +68,17 @@ public class DataflowBuilder {
 		}
 	}
 
+
+	public void analyzeBB(IRList original){
+		IRNode p = null;
+		for(IRNode n : original){
+			if(Utils.nodeIsLeader(n)){
+				p.markEndBB();
+			}
+			p = n;
+		}
+	}
+
 	/*
 	 * Data flow analysis Iterate over each IR node updating IN and LIVE_OUT set
 	 * until "convergence" Q: Is this across all basic blocks?
@@ -169,6 +180,8 @@ public class DataflowBuilder {
 	public IRList enforce(IRList original) {
 		buildCFG(original);
 		analyzeDataFlow(original);
+		analyzeBB(original);
+
 		return original;
 	}
 	

@@ -8,17 +8,8 @@ BEGIN
 
 	FUNCTION INT F (INT n)
 	BEGIN
-		INT ret1,ret2;
-		IF (n > 2)
-			ret1 := F(n-1);
-			ret2 := F(n-2);
-			RETURN ret1+ret2;
-		ENDIF
-		IF (n = 0)   --This is a comment
-			RETURN 0;
-		ELSE
-			RETURN 1;
-		ENDIF
+		WRITE(n);
+		RETURN 1;
 	END
 	
 	
@@ -30,9 +21,9 @@ BEGIN
 		READ(end);
 
  		WHILE (i != end)
+ 			WRITE (i);
 			result := F(i);
-			WRITE (i,space);
-			WRITE (result,eol);
+			WRITE (eol);
 			i := i + 1;
 		ENDWHILE
 

@@ -29,7 +29,7 @@ public class Register {
 	}
 
 	public void markClean(){
-		dirty = true;
+		dirty = false;
 	}
 
 
