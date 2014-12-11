@@ -1,0 +1,184 @@
+PROGRAM coverage
+BEGIN
+
+	STRING input := "Please input an integer number: ";
+	STRING space := " ";
+	STRING eol := "\n";
+	STRING tvc := "------ Iteration c = ";
+	STRING yeye := "Peide Ye saw duck flying at speed: ";
+	STRING jsd := "JSD saw duck flying at speed = ";
+	STRING terminat := "Duck is dead. Its not flying. Thanks!";
+	STRING thatsbigg := "Thats a big number";
+    INT a, b, i, p;
+    STRING newline := "\n";
+
+    FUNCTION INT step4tc(INT fta)
+    BEGIN
+
+    		i := 0;
+    		a := 0;
+    		b := 0;
+
+    		WHILE(i != 10)
+    			READ (p);
+
+    			IF (p > 10)
+    				a := a + 1;
+    			ELSE
+          			b := b + 1;
+    			ENDIF
+
+    			i := i+1;
+
+    		ENDWHILE
+
+    		WRITE (a, newline);
+    		WRITE (b, newline);
+    		RETURN 0; -- MUST RETURN
+    END
+
+    FUNCTION INT divide(INT m)
+    BEGIN
+    	    INT approx;
+
+    		approx := m/2;
+
+
+    		WRITE(approx);
+    		RETURN approx;
+    END
+	FUNCTION INT F (INT n)
+	BEGIN
+		INT ret1,ret2;
+		IF (n > 2)
+			ret1 := F(n-1);
+			ret2 := F(n-2);
+			RETURN ret1+ret2;
+		ENDIF
+		IF (n = 0)   --This is a comment
+			RETURN 0;
+		ELSE
+			RETURN 1;
+		ENDIF
+	END
+
+	FUNCTION INT addsub (INT tafix)
+    	BEGIN
+    		INT i,j;
+    		i := 15;
+    		j := i-3;
+    		WRITE(j);
+
+
+    		RETURN 0;
+    END
+
+    FUNCTION INT flyduck(INT china)
+    	BEGIN
+    		INT f;
+    		f := china*2;
+    		IF(china < 5)
+    			f := china*100;
+    		ENDIF
+
+    		WRITE(yeye, f,eol);
+    		RETURN f;
+    END
+
+    FUNCTION INT peidejsd (INT c)
+    	BEGIN
+    		INT b;
+
+    		IF(c >= 10)
+    			WRITE(terminat, eol);
+    			RETURN 1;
+    		ENDIF
+
+    		WHILE(c < 10)
+    			WRITE(c);
+    			c := c + 1;
+    			WRITE(tvc);
+    			WRITE(c);
+    			WRITE(eol);
+    			b := flyduck(c);
+    			WRITE(jsd, b, eol);
+    		ENDWHILE
+
+    		RETURN c;
+    END
+
+
+    FUNCTION VOID testadv(INT ta)
+    BEGIN
+    	    INT count,enough;
+            FLOAT newapprox,approx,num,tolerance,diff;
+
+    		tolerance := 0.0001;
+    		num	:= 7.0;
+
+    		approx	:= num;
+    		count 	:= 0;
+    		diff 	:= 0.0;
+    		enough 	:= 0;
+
+    		WHILE(enough != 1)
+
+    			count := count + 1;
+    			newapprox := 0.5*(approx + num/approx);
+
+    			diff := approx - newapprox;
+    			IF (diff > 0.0)
+    				IF (diff < tolerance)
+    					enough := 1;
+    				ENDIF
+    			ELSE
+    				IF (diff > (0.0 - tolerance))
+    					enough := 1;
+    				ENDIF
+    			ENDIF
+
+    			approx 	:= newapprox;
+
+    		ENDWHILE
+
+    		WRITE(approx);
+    		WRITE(count);
+    		RETURN approx;
+    END
+
+	FUNCTION INT main ()
+	BEGIN
+		INT i, end, result;
+		INT as1;
+		INT pjsd;
+		i := 0;
+		WRITE(input);
+		READ(end);
+
+ 		WHILE (i != end)
+			result := F(i);
+			IF(i > 10000)
+				WRITE(thatsbigg);
+			ENDIF
+			WRITE (i,space);
+			WRITE (result,eol);
+			i := i + 1;
+		ENDWHILE
+
+        as1 := addsub(0);
+        pjsd := peidejsd(1);
+        WRITE(pjsd);
+        pjsd := pjsd + F(5);
+        WRITE(pjsd);
+        pjsd := divide(10);
+        WRITE(pjsd);
+        pjsd := step4tc(0);
+        WRITE(pjsd);
+        pjsd := testadv(0);
+        WRITE(pjsd);
+
+
+		RETURN 0;
+	END
+
+END

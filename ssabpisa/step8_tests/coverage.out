@@ -1,0 +1,893 @@
+;IR code
+;LABEL step4tc
+;LINK 
+;STOREI 0 $T1
+;STOREI $T1 i
+;STOREI 0 $T2
+;STOREI $T2 a
+;STOREI 0 $T3
+;STOREI $T3 b
+;LABEL label1
+;STOREI 10 $T4
+;EQI i $T4 label2
+;READI p
+;STOREI 10 $T5
+;LEI p $T5 label3
+;STOREI 1 $T6
+;ADDI a $T6 $T7
+;STOREI $T7 a
+;JUMP label4
+;LABEL label3
+;STOREI 1 $T8
+;ADDI b $T8 $T9
+;STOREI $T9 b
+;LABEL label4
+;STOREI 1 $T10
+;ADDI i $T10 $T11
+;STOREI $T11 i
+;JUMP label1
+;LABEL label2
+;WRITEI a
+;WRITES newline
+;WRITEI b
+;WRITES newline
+;STOREI 0 $T12
+;STOREI $T12 $T13
+;STOREI $T13 $R
+;RET
+;LABEL divide
+;LINK 
+;STOREI 2 $T1
+;DIVI $P1 $T1 $T2
+;STOREI $T2 $L1
+;WRITEI $L1
+;STOREI $L1 $T3
+;STOREI $T3 $R
+;RET
+;LABEL F
+;LINK 
+;STOREI 2 $T1
+;LEI $P1 $T1 label5
+;STOREI 1 $T2
+;SUBI $P1 $T2 $T3
+;PUSH 
+;PUSH $T3
+;JSR F
+;POP 
+;POP $T4
+;STOREI $T4 $L1
+;STOREI 2 $T5
+;SUBI $P1 $T5 $T6
+;PUSH 
+;PUSH $T6
+;JSR F
+;POP 
+;POP $T7
+;STOREI $T7 $L2
+;ADDI $L1 $L2 $T8
+;STOREI $T8 $T9
+;STOREI $T9 $R
+;RET
+;LABEL label5
+;STOREI 0 $T10
+;NEI $P1 $T10 label6
+;STOREI 0 $T11
+;STOREI $T11 $T12
+;STOREI $T12 $R
+;RET
+;JUMP label7
+;LABEL label6
+;STOREI 1 $T13
+;STOREI $T13 $T14
+;STOREI $T14 $R
+;RET
+;LABEL label7
+;LABEL addsub
+;LINK 
+;STOREI 15 $T1
+;STOREI $T1 $L1
+;STOREI 3 $T2
+;SUBI $L1 $T2 $T3
+;STOREI $T3 $L2
+;WRITEI $L2
+;STOREI 0 $T4
+;STOREI $T4 $T5
+;STOREI $T5 $R
+;RET
+;LABEL flyduck
+;LINK 
+;STOREI 2 $T1
+;MULTI $P1 $T1 $T2
+;STOREI $T2 $L1
+;STOREI 5 $T3
+;GEI $P1 $T3 label8
+;STOREI 100 $T4
+;MULTI $P1 $T4 $T5
+;STOREI $T5 $L1
+;LABEL label8
+;WRITES yeye
+;WRITEI $L1
+;WRITES eol
+;STOREI $L1 $T6
+;STOREI $T6 $R
+;RET
+;LABEL peidejsd
+;LINK 
+;STOREI 10 $T1
+;LTI $P1 $T1 label9
+;WRITES terminat
+;WRITES eol
+;STOREI 1 $T2
+;STOREI $T2 $T3
+;STOREI $T3 $R
+;RET
+;LABEL label9
+;LABEL label10
+;STOREI 10 $T4
+;GEI $P1 $T4 label11
+;WRITEI $P1
+;STOREI 1 $T5
+;ADDI $P1 $T5 $T6
+;STOREI $T6 $P1
+;WRITES tvc
+;WRITEI $P1
+;WRITES eol
+;PUSH 
+;PUSH $P1
+;JSR flyduck
+;POP 
+;POP $T7
+;STOREI $T7 $L1
+;WRITES jsd
+;WRITEI $L1
+;WRITES eol
+;JUMP label10
+;LABEL label11
+;STOREI $P1 $T8
+;STOREI $T8 $R
+;RET
+;LABEL testadv
+;LINK 
+;STOREF 0.0001 $T1
+;STOREF $T1 $L6
+;STOREF 7.0 $T2
+;STOREF $T2 $L5
+;STOREF $L5 $L4
+;STOREI 0 $T3
+;STOREI $T3 $L1
+;STOREF 0.0 $T4
+;STOREF $T4 $L7
+;STOREI 0 $T5
+;STOREI $T5 $L2
+;LABEL label12
+;STOREI 1 $T6
+;EQI $L2 $T6 label13
+;STOREI 1 $T7
+;ADDI $L1 $T7 $T8
+;STOREI $T8 $L1
+;STOREF 0.5 $T9
+;DIVF $L5 $L4 $T10
+;ADDF $L4 $T10 $T11
+;MULTF $T9 $T11 $T12
+;STOREF $T12 $L3
+;SUBF $L4 $L3 $T13
+;STOREF $T13 $L7
+;STOREF 0.0 $T14
+;LEF $L7 $T14 label14
+;GEF $L7 $L6 label15
+;STOREI 1 $T15
+;STOREI $T15 $L2
+;LABEL label15
+;JUMP label16
+;LABEL label14
+;STOREF 0.0 $T16
+;SUBF $T16 $L6 $T17
+;LEF $L7 $T17 label17
+;STOREI 1 $T18
+;STOREI $T18 $L2
+;LABEL label17
+;LABEL label16
+;STOREF $L3 $L4
+;JUMP label12
+;LABEL label13
+;WRITEF $L4
+;WRITEI $L1
+;STOREF $L4 $T19
+;STOREF $T19 $R
+;RET
+;RET
+;LABEL main
+;LINK 
+;STOREI 0 $T1
+;STOREI $T1 $L1
+;WRITES input
+;READI $L2
+;LABEL label18
+;EQI $L1 $L2 label19
+;PUSH 
+;PUSH $L1
+;JSR F
+;POP 
+;POP $T2
+;STOREI $T2 $L3
+;STOREI 10000 $T3
+;LEI $L1 $T3 label20
+;WRITES thatsbigg
+;LABEL label20
+;WRITEI $L1
+;WRITES space
+;WRITEI $L3
+;WRITES eol
+;STOREI 1 $T4
+;ADDI $L1 $T4 $T5
+;STOREI $T5 $L1
+;JUMP label18
+;LABEL label19
+;STOREI 0 $T6
+;PUSH 
+;PUSH $T6
+;JSR addsub
+;POP 
+;POP $T7
+;STOREI $T7 $L4
+;STOREI 1 $T8
+;PUSH 
+;PUSH $T8
+;JSR peidejsd
+;POP 
+;POP $T9
+;STOREI $T9 $L5
+;WRITEI $L5
+;STOREI 5 $T10
+;PUSH 
+;PUSH $T10
+;JSR F
+;POP 
+;POP $T11
+;ADDI $L5 $T11 $T12
+;STOREI $T12 $L5
+;WRITEI $L5
+;STOREI 10 $T13
+;PUSH 
+;PUSH $T13
+;JSR divide
+;POP 
+;POP $T14
+;STOREI $T14 $L5
+;WRITEI $L5
+;STOREI 0 $T15
+;PUSH 
+;PUSH $T15
+;JSR step4tc
+;POP 
+;POP $T16
+;STOREI $T16 $L5
+;WRITEI $L5
+;STOREI 0 $T17
+;PUSH 
+;PUSH $T17
+;JSR testadv
+;POP 
+;POP $T18
+;STOREI $T18 $L5
+;WRITEI $L5
+;STOREI 0 $T19
+;STOREI $T19 $T20
+;STOREI $T20 $R
+;RET
+;tiny code
+str input "Please input an integer number: "
+str space " "
+str eol "\n"
+str tvc "------ Iteration c = "
+str yeye "Peide Ye saw duck flying at speed: "
+str jsd "JSD saw duck flying at speed = "
+str terminat "Duck is dead. Its not flying. Thanks!"
+str thatsbigg "Thats a big number"
+var a
+var b
+var i
+var p
+str newline "\n"
+push
+push r0
+push r1
+push r2
+push r3
+jsr main
+sys halt
+label step4tc 
+link 20
+move $-1 r0
+move 0 r0
+move r0 i
+move $-2 r0
+move 0 r0
+move r0 a
+move $-3 r0
+move 0 r0
+move r0 b
+label label1 
+move $-4 r0
+move 10 r0
+cmpi i r0
+move r0 $-4
+jeq label2
+sys readi p
+move $-5 r0
+move 10 r0
+cmpi p r0
+move r0 $-5
+jle label3
+move $-6 r0
+move 1 r0
+move $-7 r1
+move a r1
+addi r0 r1
+move r1 a
+jmp label4 
+label label3 
+move $-8 r0
+move 1 r0
+move $-9 r1
+move b r1
+addi r0 r1
+move r1 b
+label label4 
+move $-10 r0
+move 1 r0
+move $-11 r1
+move i r1
+addi r0 r1
+move r1 i
+jmp label1 
+label label2 
+sys writei a
+sys writes newline
+sys writei b
+sys writes newline
+move $-12 r0
+move 0 r0
+move $-13 r1
+move r0 r1
+move r1 $7
+unlnk
+ret
+label divide 
+link 21
+move $-2 r0
+move 2 r0
+move $6 r1
+move $-3 r2
+move r1 r2
+divi r0 r2
+move $-1 r0
+move r2 r0
+sys writei r0
+move $-4 r1
+move r0 r1
+move r1 $7
+unlnk
+ret
+label F 
+link 22
+move $-3 r0
+move 2 r0
+move $6 r1
+cmpi r1 r0
+move r0 $-3
+move r1 $6
+jle label5
+move $-4 r0
+move 1 r0
+move $6 r1
+move $-5 r2
+move r1 r2
+subi r0 r2
+push
+push r2
+push r0
+push r1
+push r2
+push r3
+jsr F
+pop r3
+pop r2
+pop r1
+pop r0
+pop
+move $-6 r0
+pop r0
+move $-1 r2
+move r0 r2
+move $-7 r0
+move 2 r0
+move $-8 r3
+move r1 r3
+subi r0 r3
+push
+push r3
+push r0
+push r1
+push r2
+push r3
+jsr F
+pop r3
+pop r2
+pop r1
+pop r0
+pop
+move $-9 r0
+pop r0
+move $-2 r3
+move r0 r3
+move $-10 r0
+move r2 r0
+addi r3 r0
+move $-11 r2
+move r0 r2
+move r2 $7
+move r1 $6
+unlnk
+ret
+label label5 
+move $-12 r0
+move 0 r0
+move $6 r1
+cmpi r1 r0
+move r0 $-12
+move r1 $6
+jne label6
+move $-13 r0
+move 0 r0
+move $-14 r1
+move r0 r1
+move r1 $7
+unlnk
+ret
+jmp label7 
+label label6 
+move $-15 r0
+move 1 r0
+move $-16 r1
+move r0 r1
+move r1 $7
+unlnk
+ret
+label label7 
+label addsub 
+link 22
+move $-3 r0
+move 15 r0
+move $-1 r1
+move r0 r1
+move $-4 r0
+move 3 r0
+move $-5 r2
+move r1 r2
+subi r0 r2
+move $-2 r0
+move r2 r0
+sys writei r0
+move $-6 r0
+move 0 r0
+move $-7 r1
+move r0 r1
+move r1 $7
+unlnk
+ret
+label flyduck 
+link 21
+move $-2 r0
+move 2 r0
+move $6 r1
+move $-3 r2
+move r1 r2
+muli r0 r2
+move $-1 r0
+move r2 r0
+move $-4 r2
+move 5 r2
+cmpi r1 r2
+move r0 $-1
+move r1 $6
+move r2 $-4
+jge label8
+move $-5 r0
+move 100 r0
+move $6 r1
+move $-6 r2
+move r1 r2
+muli r0 r2
+move $-1 r0
+move r2 r0
+move r0 $-1
+label label8 
+sys writes yeye
+move $-1 r0
+sys writei r0
+sys writes eol
+move $-7 r1
+move r0 r1
+move r1 $7
+unlnk
+ret
+label peidejsd 
+link 21
+move $-2 r0
+move 10 r0
+move $6 r1
+cmpi r1 r0
+move r0 $-2
+move r1 $6
+jlt label9
+sys writes terminat
+sys writes eol
+move $-3 r0
+move 1 r0
+move $-4 r1
+move r0 r1
+move r1 $7
+unlnk
+ret
+label label9 
+label label10 
+move $-5 r0
+move 10 r0
+move $6 r1
+cmpi r1 r0
+move r0 $-5
+move r1 $6
+jge label11
+move $6 r0
+sys writei r0
+move $-6 r1
+move 1 r1
+move $-7 r2
+move r0 r2
+addi r1 r2
+move r2 $6
+sys writes tvc
+move $6 r0
+sys writei r0
+sys writes eol
+push
+push r0
+push r0
+push r1
+push r2
+push r3
+jsr flyduck
+pop r3
+pop r2
+pop r1
+pop r0
+pop
+move $-8 r1
+pop r1
+move $-1 r2
+move r1 r2
+sys writes jsd
+sys writei r2
+sys writes eol
+move r0 $6
+jmp label10 
+label label11 
+move $6 r0
+move $-9 r1
+move r0 r1
+move r1 $7
+unlnk
+ret
+label testadv 
+link 27
+move $-8 r0
+move 0.0001 r0
+move $-6 r1
+move r0 r1
+move $-9 r0
+move 7.0 r0
+move $-5 r2
+move r0 r2
+move $-4 r0
+move r2 r0
+move $-10 r3
+move 0 r3
+move r0 $-4
+move $-1 r0
+move r3 r0
+move $-11 r3
+move 0.0 r3
+move r0 $-1
+move $-7 r0
+move r3 r0
+move $-12 r0
+move 0 r0
+move $-2 r3
+move r0 r3
+move r1 $-6
+move r2 $-5
+move r3 $-2
+label label12 
+move $-13 r0
+move 1 r0
+move $-2 r1
+cmpi r1 r0
+move r0 $-13
+move r1 $-2
+jeq label13
+move $-14 r0
+move 1 r0
+move $-1 r1
+move $-15 r2
+move r1 r2
+addi r0 r2
+move $-1 r0
+move r2 r0
+move $-16 r1
+move 0.5 r1
+move $-5 r2
+move $-17 r3
+move r2 r3
+move r0 $-1
+move $-4 r0
+divr r0 r3
+move r1 $-16
+move $-18 r1
+move r0 r1
+addr r3 r1
+move $-16 r3
+move r0 $-4
+move $-19 r0
+move r3 r0
+mulr r1 r0
+move $-3 r1
+move r0 r1
+move $-4 r0
+move $-20 r3
+move r0 r3
+subr r1 r3
+move $-7 r0
+move r3 r0
+move $-21 r3
+move 0.0 r3
+cmpr r0 r3
+move r0 $-7
+move r1 $-3
+move r2 $-5
+move r3 $-21
+jle label14
+move $-7 r0
+move $-6 r1
+cmpr r0 r1
+move r0 $-7
+move r1 $-6
+jge label15
+move $-22 r0
+move 1 r0
+move $-2 r1
+move r0 r1
+move r1 $-2
+label label15 
+jmp label16 
+label label14 
+move $-23 r0
+move 0.0 r0
+move $-24 r1
+move r0 r1
+move $-6 r2
+subr r2 r1
+move $-7 r0
+cmpr r0 r1
+move r0 $-7
+move r1 $-24
+move r2 $-6
+jle label17
+move $-25 r0
+move 1 r0
+move $-2 r1
+move r0 r1
+move r1 $-2
+label label17 
+label label16 
+move $-3 r0
+move $-4 r1
+move r0 r1
+move r1 $-4
+jmp label12 
+label label13 
+move $-4 r0
+sys writer r0 
+move $-1 r1
+sys writei r1
+move $-26 r1
+move r0 r1
+move r1 $7
+unlnk
+ret
+unlnk
+ret
+label main 
+link 25
+move $-6 r0
+move 0 r0
+move $-1 r1
+move r0 r1
+sys writes input
+move $-2 r0
+sys readi r0
+move r0 $-2
+move r1 $-1
+label label18 
+move $-1 r0
+move $-2 r1
+cmpi r0 r1
+move r0 $-1
+move r1 $-2
+jeq label19
+push
+move $-1 r0
+push r0
+push r0
+push r1
+push r2
+push r3
+jsr F
+pop r3
+pop r2
+pop r1
+pop r0
+pop
+move $-7 r1
+pop r1
+move $-3 r2
+move r1 r2
+move $-8 r1
+move 10000 r1
+cmpi r0 r1
+move r0 $-1
+move r1 $-8
+move r2 $-3
+jle label20
+sys writes thatsbigg
+label label20 
+move $-1 r0
+sys writei r0
+sys writes space
+move $-3 r1
+sys writei r1
+sys writes eol
+move $-9 r1
+move 1 r1
+move $-10 r2
+move r0 r2
+addi r1 r2
+move $-1 r0
+move r2 r0
+move r0 $-1
+jmp label18 
+label label19 
+move $-11 r0
+move 0 r0
+push
+push r0
+push r0
+push r1
+push r2
+push r3
+jsr addsub
+pop r3
+pop r2
+pop r1
+pop r0
+pop
+move $-12 r0
+pop r0
+move $-4 r1
+move r0 r1
+move $-13 r0
+move 1 r0
+push
+push r0
+push r0
+push r1
+push r2
+push r3
+jsr peidejsd
+pop r3
+pop r2
+pop r1
+pop r0
+pop
+move $-14 r0
+pop r0
+move $-5 r1
+move r0 r1
+sys writei r1
+move $-15 r0
+move 5 r0
+push
+push r0
+push r0
+push r1
+push r2
+push r3
+jsr F
+pop r3
+pop r2
+pop r1
+pop r0
+pop
+move $-16 r0
+pop r0
+move $-17 r2
+move r1 r2
+addi r0 r2
+move $-5 r0
+move r2 r0
+sys writei r0
+move $-18 r0
+move 10 r0
+push
+push r0
+push r0
+push r1
+push r2
+push r3
+jsr divide
+pop r3
+pop r2
+pop r1
+pop r0
+pop
+move $-19 r0
+pop r0
+move $-5 r1
+move r0 r1
+sys writei r1
+move $-20 r0
+move 0 r0
+push
+push r0
+push r0
+push r1
+push r2
+push r3
+jsr step4tc
+pop r3
+pop r2
+pop r1
+pop r0
+pop
+move $-21 r0
+pop r0
+move $-5 r1
+move r0 r1
+sys writei r1
+move $-22 r0
+move 0 r0
+push
+push r0
+push r0
+push r1
+push r2
+push r3
+jsr testadv
+pop r3
+pop r2
+pop r1
+pop r0
+pop
+move $-23 r0
+pop r0
+move $-5 r1
+move r0 r1
+sys writei r1
+move $-24 r0
+move 0 r0
+move $-25 r1
+move r0 r1
+move r1 $6
+unlnk
+ret
+end

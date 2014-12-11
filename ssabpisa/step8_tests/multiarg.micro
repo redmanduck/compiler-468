@@ -1,0 +1,21 @@
+PROGRAM dfloat
+BEGIN 
+    
+    FUNCTION INT multiarg(FLOAT a, FLOAT b)
+    BEGIN  
+        WRITE(a);
+        WRITE(b);
+        RETURN a + b;
+    END
+
+    FUNCTION INT main() 
+    BEGIN 
+        FLOAT x;
+        FLOAT y;
+        FLOAT z;
+        x := 1;
+        y := 2;
+        z := multiarg(x,y);
+        WRITE(z);
+    END 
+END

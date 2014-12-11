@@ -291,12 +291,14 @@ public class IRList implements Iterable<IRNode>{
 	}
 	private void PostOrderWalkExprListTail(SymbolTable scope, MicroParser.Expr_list_tailContext t){
 		if(t == null) return; //no tail
-		PostOrderWalkExprSubTree(scope, t.expr());
+
 		PostOrderWalkExprListTail(scope, t.expr_list_tail());
+		PostOrderWalkExprSubTree(scope, t.expr());
 	}
 	private void PostOrderWalkExprListTree(SymbolTable scope, MicroParser.Expr_listContext t){
-		PostOrderWalkExprSubTree(scope, t.expr());
+
 		PostOrderWalkExprListTail(scope, t.expr_list_tail());
+		PostOrderWalkExprSubTree(scope, t.expr());
 	}
 	
 	private IRDest attach_CallExpr(SymbolTable scope, MicroParser.Call_exprContext call_expr) {

@@ -85,6 +85,7 @@ public class TinyGenerator {
 		map_ISA.put(ISA.EQI, new Instruction[] { ISA.cmpi, ISA.jeq });
 
 		map_ISA.put(ISA.NEI, new Instruction[] { ISA.cmpi, ISA.jne });
+		map_ISA.put(ISA.NEF, new Instruction[] { ISA.cmpr, ISA.jne });
 
 		map_ISA.put(ISA.PUSH, new Instruction[] { ISA.push });
 		map_ISA.put(ISA.PUSH_E, new Instruction[] { ISA.push });
