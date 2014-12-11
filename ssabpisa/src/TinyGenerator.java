@@ -163,14 +163,14 @@ public class TinyGenerator {
 		System.out.println("; ir node " + ircode + "!" + " (FRMT-"
 				+ irn.getFormat() + ")");
 		System.out.println("; reg state : " + Utils.printRegisters());
-
+//
 //		if (irn.getInstruction().equals(ISA.RET)) {
 //			// generate store dirty for registers
 //			flushRegisters(CodeBuffer, irn.LIVE_OUT);
 //		}
-
+//
 //		if (ISA.InstructionSpecies(irn.getInstruction(), ISA._NONJSRJUMP)){
-//			spillRegisters(CodeBuffer, irn.LIVE_OUT);
+//			flushRegisters(CodeBuffer, irn.LIVE_OUT);
 //		}
 
 
@@ -289,9 +289,9 @@ public class TinyGenerator {
 					+ Dest.toTiny();
 			CodeBuffer.add(Z);
 
-			if(!irn.LIVE_OUT.contains(Src)){
-				free(Src, irn.LIVE_OUT, CodeBuffer);
-			}
+//			if(!irn.LIVE_OUT.contains(Src)){
+//				free(Src, irn.LIVE_OUT, CodeBuffer);
+//			}
 
 		} else if (irn.getFormat() == IRNode.FORMAT_DDR) {
 
@@ -312,13 +312,13 @@ public class TinyGenerator {
 			C.markDirty();
 			CodeBuffer.add(ISA.move.getName() + " " + A.toTiny() + " " + C.toTiny());
 
-			if(!irn.LIVE_OUT.contains(B)){
-				free(B, irn.LIVE_OUT, CodeBuffer);
-			}
-
-			if(!irn.LIVE_OUT.contains(A)){
-				free(A, irn.LIVE_OUT, CodeBuffer);
-			}
+//			if(!irn.LIVE_OUT.contains(B)){
+//				free(B, irn.LIVE_OUT, CodeBuffer);
+//			}
+//
+//			if(!irn.LIVE_OUT.contains(A)){
+//				free(A, irn.LIVE_OUT, CodeBuffer);
+//			}
 
 		} else if (irn.getFormat() == IRNode.FORMAT_RRR) {
 
@@ -339,12 +339,12 @@ public class TinyGenerator {
 			CodeBuffer.add(ISA.move.getName() + " " + A.toTiny() + " "
 					+ C.toTiny());
 
-			if(!irn.LIVE_OUT.contains(B)){
-				free(B, irn.LIVE_OUT, CodeBuffer);
-			}
-			if(!irn.LIVE_OUT.contains(A)){
-				free(A, irn.LIVE_OUT, CodeBuffer);
-			}
+//			if(!irn.LIVE_OUT.contains(B)){
+//				free(B, irn.LIVE_OUT, CodeBuffer);
+//			}
+//			if(!irn.LIVE_OUT.contains(A)){
+//				free(A, irn.LIVE_OUT, CodeBuffer);
+//			}
 
 		} else if (irn.getFormat() == IRNode.FORMAT_RDR) {
 			/*
@@ -364,12 +364,12 @@ public class TinyGenerator {
 			CodeBuffer.add(ISA.move.getName() + " " + B.toTiny() + " "
 					+ C.toTiny());
 
-			if(!irn.LIVE_OUT.contains(B)){
-				free(B, irn.LIVE_OUT, CodeBuffer);
-			}
-			if(!irn.LIVE_OUT.contains(A)){
-				free(A, irn.LIVE_OUT, CodeBuffer);
-			}
+//			if(!irn.LIVE_OUT.contains(B)){
+//				free(B, irn.LIVE_OUT, CodeBuffer);
+//			}
+//			if(!irn.LIVE_OUT.contains(A)){
+//				free(A, irn.LIVE_OUT, CodeBuffer);
+//			}
 
 
 		} else if (irn.getFormat() == IRNode.FORMAT_DRR) {
@@ -393,13 +393,13 @@ public class TinyGenerator {
 
 			CodeBuffer.add(ISA.move.getName() + " " + A.toTiny() + " " + C.toTiny());
 
-
-			if(!irn.LIVE_OUT.contains(B)){
-				free(B, irn.LIVE_OUT, CodeBuffer);
-			}
-			if(!irn.LIVE_OUT.contains(A)){
-				free(A, irn.LIVE_OUT, CodeBuffer);
-			}
+//
+//			if(!irn.LIVE_OUT.contains(B)){
+//				free(B, irn.LIVE_OUT, CodeBuffer);
+//			}
+//			if(!irn.LIVE_OUT.contains(A)){
+//				free(A, irn.LIVE_OUT, CodeBuffer);
+//			}
 
 		} else if (irn.getFormat() == IRNode.FORMAT_O) {
 			/*
@@ -408,18 +408,26 @@ public class TinyGenerator {
 
 			// handle link separately
 			if (irn.getInstruction().equals(ISA.LINK)) {
-				return doLink(tinyOp, irn) + "\n";
+				CodeBuffer.add(doLink(tinyOp, irn));
 			} else if (irn.getInstruction().equals(ISA.PUSH_E)) {
 				this.flushRegisters(CodeBuffer, irn.LIVE_IN);
+				String str = "";
+				for (int i = 0; i < possible_instructions.length; i++) {
+					if (i > 0)
+						str += "\n";
+					str += possible_instructions[i].getName();
+				}
+				CodeBuffer.add(str);
+			}else{
+				String str = "";
+				for (int i = 0; i < possible_instructions.length; i++) {
+					if (i > 0)
+						str += "\n";
+					str += possible_instructions[i].getName();
+				}
+				CodeBuffer.add(str);
 			}
 
-			String str = "";
-			for (int i = 0; i < possible_instructions.length; i++) {
-				if (i > 0)
-					str += "\n";
-				str += possible_instructions[i].getName();
-			}
-			CodeBuffer.add(str);
 
 
 
@@ -542,6 +550,7 @@ public class TinyGenerator {
 //		}
 
 		flushRegisters(CodeBuffer, irn.LIVE_OUT);
+
 		CodeBuffer.add(";  " + Utils.printRegisters());
 
 		String outputc = "";
@@ -680,14 +689,7 @@ public class TinyGenerator {
 		G.add("\n;Spilling (flush) registers\n");
 
 		for (int j = 0; j < RegisterFile.length; j++) {
-
-			if (L.contains(RegisterFile[j].opr)) {
-				String memloc = TinyActivationRecord.getStackRef(
-						RegisterFile[j].opr, LCSize);
-				G.add(ISA.move.getName() + " r" + j + " " + memloc + "\n");
-				RegisterFile[j].free_invalidate();
-			}
-
+			free(RegisterFile[j], L, G);
 		}
 
 		G.add(";Flush done\n");

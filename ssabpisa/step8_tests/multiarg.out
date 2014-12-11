@@ -1,0 +1,76 @@
+;IR code
+;LABEL multiarg
+;LINK 
+;WRITEF $P1
+;WRITEF $P2
+;ADDF $P1 $P2 $T1
+;STOREF $T1 $T2
+;STOREF $T2 $R
+;RET
+;LABEL main
+;LINK 
+;STOREI 1 $T1
+;STOREF $T1 $L1
+;STOREI 2 $T2
+;STOREF $T2 $L2
+;PUSH 
+;PUSH $L1
+;PUSH $L2
+;JSR multiarg
+;POP 
+;POP 
+;POP $T3
+;STOREF $T3 $L3
+;WRITEF $L3
+;tiny code
+push
+push r0
+push r1
+push r2
+push r3
+jsr main
+sys halt
+label multiarg 
+link 3
+move $7 r0
+sys writer r0 
+move $6 r1
+sys writer r1 
+move $-1 r2
+move r0 r2
+addr r1 r2
+move $-2 r0
+move r2 r0
+move r0 $8
+unlnk
+ret
+label main 
+link 6
+move $-4 r0
+move 1 r0
+move $-1 r1
+move r0 r1
+move $-5 r0
+move 2 r0
+move $-2 r2
+move r0 r2
+push
+push r1
+push r2
+push r0
+push r1
+push r2
+push r3
+jsr multiarg
+pop r3
+pop r2
+pop r1
+pop r0
+pop
+pop
+move $-6 r0
+pop r0
+move $-3 r1
+move r0 r1
+sys writer r1 
+end

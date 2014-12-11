@@ -1,8 +1,10 @@
 PROGRAM duckif
 BEGIN
 
+	STRING firstcond := "1stcond\n ";
+	STRING scond := "2ndcond\n ";
 	INT i,a,num;
-	
+
 	FUNCTION VOID main()
 	BEGIN
 		num := 7;
@@ -10,8 +12,10 @@ BEGIN
 		a := 42;
 	
 		IF (i<5)
+			WRITE(firstcond);
 			num := num +a;
 		ELSE
+			WRITE(scond);
 			num := num - a;
 		ENDIF
 

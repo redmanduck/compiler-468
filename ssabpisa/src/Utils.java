@@ -78,11 +78,7 @@ public class Utils {
 			System.out.println("; " + var + " is live");
 			return true;
 		}
-		if(liveness.contains(var)){
-			System.out.println("; " + var + " is live");
-			return true;
-		}
-		
+
 		System.out.println("; " + var + " is dead");
 		return false;
 	}

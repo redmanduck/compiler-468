@@ -9,16 +9,20 @@
 ;STOREI $T3 a
 ;STOREI 5 $T4
 ;GEI i $T4 label1
+;WRITES firstcond
 ;ADDI num a $T5
 ;STOREI $T5 num
 ;JUMP label2
 ;LABEL label1
+;WRITES scond
 ;SUBI num a $T6
 ;STOREI $T6 num
 ;LABEL label2
 ;WRITEI num
 ;RET
 ;tiny code
+str firstcond "1stcond\n "
+str scond "2ndcond\n "
 var i
 var a
 var num
@@ -45,12 +49,14 @@ move 5 r0
 cmpi i r0
 move r0 $-4
 jge label1
+sys writes firstcond
 move $-5 r0
 move num r0
 addi a r0
 move r0 num
 jmp label2 
 label label1 
+sys writes scond
 move $-6 r0
 move num r0
 subi a r0

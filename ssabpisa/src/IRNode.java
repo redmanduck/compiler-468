@@ -156,7 +156,14 @@ public class IRNode {
 		this.OPCODE = OPCODE;
 		this.r_dest = r_dest;
 		format = FORMAT_R;
-		if(!r_dest.toString().contains("$R")) KILL.add(r_dest.toString());
+		if(!r_dest.toString().contains("$R"))
+			if(OPCODE.equals(ISA.PUSH)){
+				GEN.add(r_dest.toString());
+			}else if(OPCODE.equals(ISA.POP)){
+				KILL.add(r_dest.toString());
+			}else{
+				System.err.println("; FORMAT_R GEN KILL ERR5");
+			}
 	}
 	
 	public IRNode(Instruction OPCODE, Register r_src, Id idd){
@@ -222,6 +229,13 @@ public class IRNode {
 		}else if(ISA.InstructionSpecies(OPCODE, ISA._WRITE)){
 			if(!id_readwrite.toString().contains("$R")) 
 				GEN.add(id_readwrite.toString());
+		}else if(OPCODE.equals(ISA.PUSH)){
+			GEN.add(id_readwrite.toString());
+
+		}else if(OPCODE.equals(ISA.POP)){
+			KILL.add(id_readwrite.toString());
+		}else{
+			System.err.println("; Unsupported GEN KILl Type " + OPCODE.getName());
 		}
 	}
 	
