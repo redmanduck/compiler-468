@@ -291,7 +291,7 @@ public class TinyGenerator {
 			C.markDirty();
 
 			CodeBuffer.add(ISA.move.getName() + " " + A.toTiny() + " " + C.toTiny());
-			
+
 		} else if (irn.getFormat() == IRNode.FORMAT_O) {
 			/*
 			 * Other ops

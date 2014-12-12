@@ -135,8 +135,13 @@ public class ExtractionListener extends MicroBaseListener {
 		current_ir.RET(return_exp);
 	}
 	
-	public void exitFunc_body(MicroParser.Func_bodyContext ctx) {
+//	public void exitFunc_body(MicroParser.Func_bodyContext ctx) {
+//		leaveScope();
+//	}
+
+	@Override public void exitFunc_decl(@NotNull MicroParser.Func_declContext ctx){
 		leaveScope();
+		current_ir.RET();
 	}
 
 	public void enterIf_stmt(MicroParser.If_stmtContext ctx) {

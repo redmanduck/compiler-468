@@ -28,70 +28,78 @@ public class Micro{
   
   public static void main(String[] args) throws Exception
   {
-	  
-     CharStream in = new ANTLRFileStream(args[0]);
-     MicroLexer lexer = new MicroLexer(in);
-     CommonTokenStream tks = new CommonTokenStream(lexer);
-     MicroParser psr = new MicroParser(tks);
-     ParseTreeWalker walker = new ParseTreeWalker();
-     ExtractionListener extractor = new ExtractionListener(psr);
-     psr.setErrorHandler(new BailErrorStrategy());
-     ParseTree t;
 
-     try{
-        t = psr.program();
-     } catch (Exception fpe) {
-    	 fpe.printStackTrace();
-	     System.out.println("Not accepted");
-        return;
-     }
+      /*
+      Loop though multiple arguments source file
+      to sample code coverage
+       */
+    boolean print_out = true;
+	for(String arg : args){
 
-     walker.walk(extractor, t);
- 
-	 System.out.println(";IR code");
+        CharStream in = new ANTLRFileStream(arg);
+        MicroLexer lexer = new MicroLexer(in);
+        CommonTokenStream tks = new CommonTokenStream(lexer);
+        MicroParser psr = new MicroParser(tks);
+        ParseTreeWalker walker = new ParseTreeWalker();
+        ExtractionListener extractor = new ExtractionListener(psr);
+        psr.setErrorHandler(new BailErrorStrategy());
+        ParseTree t = null;
 
-      DataflowBuilder cfgb = new DataflowBuilder(CONST_NUM_REG_USE);
-      cfgb.setMode(cfgb.BOTTOM_UP);
-      cfgb.setGlobalVars(extractor.root_scope);
+        try{
+            t = psr.program();
+        } catch (Exception fpe) {
+            fpe.printStackTrace();
+            System.out.println("Not accepted");
+            System.exit(1);
+        }
 
-      for(String fn : extractor.getFullIR().keySet()){
-    	  IRList block = extractor.getFullIR().get(fn);
-          Utils.printIR(cfgb.enforce(block));
-      }
+        walker.walk(extractor, t);
 
-      System.out.println(";----------------- tiny ------------------------");
+        System.out.println(";IR code");
 
-	    //Generate Tiny Code
-	    StringBuffer tiny_buffer = new StringBuffer();
-	    //Do global scope declarations
-		for(Id symbol: extractor.root_scope){
-	
-				String s =  String.format("var %s\n", symbol.getReferenceName());
-				if(symbol.getType() == "STRING"){
-					s = String.format("str %s %s\n", symbol.getReferenceName(), symbol.getStrValue());
-				}
-				tiny_buffer.append(s);
-		}
-		//Do push registers and JSR main and halt
-	    tiny_buffer.append(ISA.push.getName() + "\n");
-		for(int i = 0; i< Micro.CONST_NUM_REG_USE; i++){
-			tiny_buffer.append(String.format("%s r%d\n", ISA.push.getName(), i));
-		}
-		tiny_buffer.append(ISA.jsr.getName() + " main\n");
-		tiny_buffer.append("sys halt\n");
-		
-	
-	    //Generate the rest of the tiny
-	    for(String fn : extractor.getFullIR().keySet()){
-		   	 //Utils.printIR(extractor.getFullIR().get(fn));
-	
-		   	 TinyGenerator asmgen = new TinyGenerator(extractor.getFullIR().get(fn), extractor.getSymbolTableMap());
-		     tiny_buffer.append(asmgen.translate());
-	     }
-	
-	
-	     System.out.println(tiny_buffer);
-	    // Utils.printSymbolTable(extractor.root_scope);
+        DataflowBuilder cfgb = new DataflowBuilder(CONST_NUM_REG_USE);
+        cfgb.setMode(cfgb.BOTTOM_UP);
+        cfgb.setGlobalVars(extractor.root_scope);
+
+        for(String fn : extractor.getFullIR().keySet()){
+            IRList block = extractor.getFullIR().get(fn);
+            Utils.printIR(cfgb.enforce(block));
+        }
+
+        System.out.println(";----------------- tiny ------------------------");
+
+        //Generate Tiny Code
+        StringBuffer tiny_buffer = new StringBuffer();
+        //Do global scope declarations
+        for(Id symbol: extractor.root_scope){
+
+            String s =  String.format("var %s\n", symbol.getReferenceName());
+            if(symbol.getType() == "STRING"){
+                s = String.format("str %s %s\n", symbol.getReferenceName(), symbol.getStrValue());
+            }
+            tiny_buffer.append(s);
+        }
+        //Do push registers and JSR main and halt
+        tiny_buffer.append(ISA.push.getName() + "\n");
+        for(int i = 0; i< Micro.CONST_NUM_REG_USE; i++){
+            tiny_buffer.append(String.format("%s r%d\n", ISA.push.getName(), i));
+        }
+        tiny_buffer.append(ISA.jsr.getName() + " main\n");
+        tiny_buffer.append("sys halt\n");
+
+
+        //Generate the rest of the tiny
+        for(String fn : extractor.getFullIR().keySet()){
+            //Utils.printIR(extractor.getFullIR().get(fn));
+
+            TinyGenerator asmgen = new TinyGenerator(extractor.getFullIR().get(fn), extractor.getSymbolTableMap());
+            tiny_buffer.append(asmgen.translate());
+        }
+
+
+       if(print_out) System.out.println(tiny_buffer);
+        print_out = false;
+    }
 
 
   }
