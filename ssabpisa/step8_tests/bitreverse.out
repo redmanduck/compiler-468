@@ -33,10 +33,6 @@
 ;JUMP label1
 ;LABEL label2
 ;WRITES eol
-;STOREI 0 $T10
-;STOREI $T10 $T11
-;STOREI $T11 $R
-;RET
 ;RET
 ;LABEL IsEven
 ;LINK 
@@ -93,7 +89,7 @@ push r3
 jsr main
 sys halt
 label main 
-link 12
+link 10
 sys writes prompt
 move $-1 r0
 sys readi r0
@@ -175,17 +171,10 @@ label label4
 jmp label1 
 label label2 
 sys writes eol
-move $-11 r0
-move 0 r0
-move $-12 r1
-move r0 r1
-move r1 $6
-unlnk
-ret
 unlnk
 ret
 label IsEven 
-link 11
+link 9
 move $-1 r0
 move 0 r0
 move $6 r1
@@ -229,7 +218,7 @@ unlnk
 ret
 label label6 
 label IsOdd 
-link 11
+link 9
 move $-1 r0
 move 0 r0
 move $6 r1
