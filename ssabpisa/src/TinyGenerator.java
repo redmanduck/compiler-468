@@ -233,36 +233,8 @@ public class TinyGenerator {
 				System.exit(1);
 			}
 
-		} else if (irn.getFormat() == IRNode.FORMAT_DD) {
-
-			/*
-			 * Note we cannot do move id1, id2 , we have to do move id1, r1 move
-			 * r1, id2
-			 */
-
-			String IdSRC1 = getField(ircode, 1);
-			String IdSRC2 = getField(ircode, 2);
-	
-			Register src = ensure(IdSRC1, irn.LIVE_OUT, CodeBuffer); // this
-																		// will
-																		// do
-																		// the
-																		// first
-																		// move
-																		// (load)
-																		// into
-																		// some
-																		// r
-			Register dest = ensure(IdSRC2, irn.LIVE_OUT, CodeBuffer);
-			dest.markDirty();
-
-			String asms = tinyOp.getName() + " " + src.toTiny() + " "
-					+ dest.toTiny();
-
-			CodeBuffer.add(asms);
-
-		} else if (irn.getFormat() == IRNode.FORMAT_IR
-				|| irn.getFormat() == IRNode.FORMAT_FR) {
+		} else if (irn.getFormat() == IRNode.FORMAT_IR ||
+				irn.getFormat() == IRNode.FORMAT_FR) {
 			/*
 			 * Literals to register *move* ops
 			 */
@@ -274,7 +246,9 @@ public class TinyGenerator {
 			dest.markDirty();
 			String Z = tinyOp.getName() + " " + literal + " " + dest.toTiny();
 			CodeBuffer.add(Z);
-		} else if (irn.getFormat() == IRNode.FORMAT_RD) {
+		} else if (irn.getFormat() == IRNode.FORMAT_RD ||
+				irn.getFormat() == IRNode.FORMAT_DD ||
+				irn.getFormat() == IRNode.FORMAT_DR) {
 			/*
 			 * Single Step Movement STORE $T8 duck
 			 */
@@ -293,86 +267,11 @@ public class TinyGenerator {
 //				free(Src, irn.LIVE_OUT, CodeBuffer);
 //			}
 
-		} else if (irn.getFormat() == IRNode.FORMAT_DDR) {
 
-			/*
-			 * OP Id Id Reg may expands into: MOV a T2 --ensure MOV b T3
-			 * --ensure Add T2 T3 --OP MOV Reg R --ensure MOV T3 R --MOVE
-			 */
-
-			String IdSrc1 = getField(ircode, 1);
-			String IdSrc2 = getField(ircode, 2);
-			String TDest = getField(ircode, 3);
-
-			Register A = ensure(IdSrc1, irn.LIVE_OUT, CodeBuffer);
-			Register B = ensure(IdSrc2, irn.LIVE_OUT, CodeBuffer);
-			CodeBuffer.add(tinyOp.getName() + " " + B.toTiny() + " " + A.toTiny());
-
-			Register C = ensure(TDest, irn.LIVE_OUT, CodeBuffer);
-			C.markDirty();
-			CodeBuffer.add(ISA.move.getName() + " " + A.toTiny() + " " + C.toTiny());
-
-//			if(!irn.LIVE_OUT.contains(B)){
-//				free(B, irn.LIVE_OUT, CodeBuffer);
-//			}
-//
-//			if(!irn.LIVE_OUT.contains(A)){
-//				free(A, irn.LIVE_OUT, CodeBuffer);
-//			}
-
-		} else if (irn.getFormat() == IRNode.FORMAT_RRR) {
-
-			/*
-			 * OP R1 R2 RD may expands into: MOV r1 rtemp OP r2 rD
-			 */
-
-			String T1 = getField(ircode, 1);
-			String T2 = getField(ircode, 2);
-			String T3 = getField(ircode, 3);
-
-			Register A = ensure(T1, irn.LIVE_OUT, CodeBuffer);
-			Register B = ensure(T2, irn.LIVE_OUT, CodeBuffer);
-			CodeBuffer.add(tinyOp.getName() + " " + B.toTiny() + " " + A.toTiny());
-
-			Register C = ensure(T3, irn.LIVE_OUT, CodeBuffer);
-			C.markDirty();
-			CodeBuffer.add(ISA.move.getName() + " " + A.toTiny() + " "
-					+ C.toTiny());
-
-//			if(!irn.LIVE_OUT.contains(B)){
-//				free(B, irn.LIVE_OUT, CodeBuffer);
-//			}
-//			if(!irn.LIVE_OUT.contains(A)){
-//				free(A, irn.LIVE_OUT, CodeBuffer);
-//			}
-
-		} else if (irn.getFormat() == IRNode.FORMAT_RDR) {
-			/*
-			 * OP R1 ID RZ may expands into : MOV r1 rtemp OP rtemp rZ
-			 */
-
-
-			String T1 = getField(ircode, 1);
-			String T2 = getField(ircode, 2);
-			String T3 = getField(ircode, 3);
-
-			Register A = ensure(T1, irn.LIVE_OUT, CodeBuffer);
-			Register B = ensure(T2, irn.LIVE_OUT, CodeBuffer);
-			CodeBuffer.add(tinyOp.getName() + " " + A.toTiny() + " " + B.toTiny());
-			Register C = ensure(T3, irn.LIVE_OUT, CodeBuffer);
-			C.markDirty();
-			CodeBuffer.add(ISA.move.getName() + " " + B.toTiny() + " "
-					+ C.toTiny());
-
-//			if(!irn.LIVE_OUT.contains(B)){
-//				free(B, irn.LIVE_OUT, CodeBuffer);
-//			}
-//			if(!irn.LIVE_OUT.contains(A)){
-//				free(A, irn.LIVE_OUT, CodeBuffer);
-//			}
-
-
-		} else if (irn.getFormat() == IRNode.FORMAT_DRR) {
+		} else if (irn.getFormat() == IRNode.FORMAT_DRR ||
+				irn.getFormat() == IRNode.FORMAT_RDR ||
+				irn.getFormat() == IRNode.FORMAT_RRR ||
+				irn.getFormat() == IRNode.FORMAT_DDR) {
 
 			/*
 			 * OP ID R2 RZ may expands into: MOV ID rtemp OP r2 rZ
@@ -392,15 +291,7 @@ public class TinyGenerator {
 			C.markDirty();
 
 			CodeBuffer.add(ISA.move.getName() + " " + A.toTiny() + " " + C.toTiny());
-
-//
-//			if(!irn.LIVE_OUT.contains(B)){
-//				free(B, irn.LIVE_OUT, CodeBuffer);
-//			}
-//			if(!irn.LIVE_OUT.contains(A)){
-//				free(A, irn.LIVE_OUT, CodeBuffer);
-//			}
-
+			
 		} else if (irn.getFormat() == IRNode.FORMAT_O) {
 			/*
 			 * Other ops
@@ -428,33 +319,17 @@ public class TinyGenerator {
 				CodeBuffer.add(str);
 			}
 
-
-
-
 		} else if (irn.getFormat() == IRNode.FORMAT_S) {
 			/*
 			 * S-type ? Wtf is ths
 			 */
 			CodeBuffer.add(tinyOp.getName() + " " + getField(ircode, 1));
 
-		} else if (irn.getFormat() == IRNode.FORMAT_DRT) {
-			/*
-			 * DRT Jump target
-			 */
 
-			String f1 = getField(ircode, 1);
-			String f2 = getField(ircode, 2);
-
-
-			Register T1 = ensure(f1, irn.LIVE_OUT, CodeBuffer);
-			Register T2 = ensure(f2, irn.LIVE_OUT, CodeBuffer);
-
-			String asms = possible_instructions[0].getName() + " " + T1.toTiny() + " " + T2.toTiny() + "\n";
-			asms += possible_instructions[1].getName() + " " + getField(ircode, 3);
-
-			CodeBuffer.add(asms);
-
-		} else if (irn.getFormat() == IRNode.FORMAT_DDT) {
+		} else if (irn.getFormat() == IRNode.FORMAT_DDT ||
+				irn.getFormat() == IRNode.FORMAT_RRT ||
+				irn.getFormat() == IRNode.FORMAT_DRT ||
+				irn.getFormat() == IRNode.FORMAT_RDT ) {
 			/*
 			 * DDT Jump Target
 			 */
@@ -484,22 +359,6 @@ public class TinyGenerator {
 			}
 			CodeBuffer.add(output);
 
-		} else if (irn.getFormat() == IRNode.FORMAT_DR) {
-			/*
-			 * Single motion moving Id to register
-			 */
-
-
-			String IdSRC1 = getField(ircode, 1);
-			String IdSRC2 = getField(ircode, 2);
-
-			Register src = ensure(IdSRC1, irn.LIVE_OUT, CodeBuffer);
-			Register dest = ensure(IdSRC2, irn.LIVE_OUT, CodeBuffer);
-			dest.markDirty();
-			String asms = tinyOp.getName() + " " + src.toTiny() + " "
-					+ dest.toTiny();
-
-			CodeBuffer.add(asms);
 
 		} else if (irn.getFormat() == IRNode.FORMAT_R) {
 			/*
@@ -530,12 +389,13 @@ public class TinyGenerator {
 			String generate = tinyOp.getName() + " " + R.toTiny() + " $"
 					+ TinyActivationRecord.getReturnStackAddress();
 			CodeBuffer.add(generate);
+
 		} else {
 			/*
 			 * Unhandled cases
 			 */
 			CodeBuffer.add(";<unknown format> code: " + irn.getFormat());
-			System.err.println("Unknown Format Error");
+			System.err.println("Unknown Format Error :" + irn.getFormat() + " " + ircode);
 			System.exit(1);
 		}
 
@@ -686,12 +546,10 @@ public class TinyGenerator {
 	}
 
 	private void flushRegisters(TinyOutputBuffer G, HashSet<String> L) {
-		G.add("\n;Spilling (flush) registers\n");
 
 		for (int j = 0; j < RegisterFile.length; j++) {
 			free(RegisterFile[j], L, G);
 		}
 
-		G.add(";Flush done\n");
 	}
 }
