@@ -347,8 +347,7 @@ public class IRList implements Iterable<IRNode> {
 		String RTTYPE = "FLOAT"; //conservatively think its float
 		if(ExtractionListener.ReturnTypes.containsKey(fname)) ExtractionListener.ReturnTypes.get(fname);
 		// Pop return value
-		Register rhs = TempRegisterFactory
-				.create(RTTYPE);
+		Register rhs = TempRegisterFactory.create(RTTYPE);
 		
 		_List.add(new IRNode(ISA.POP, rhs));
 
