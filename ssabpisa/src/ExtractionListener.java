@@ -35,6 +35,8 @@ public class ExtractionListener extends MicroBaseListener {
 	
 	private int blockcount;
 	
+	public static LinkedHashMap<String, String> ReturnTypes;
+	
 	private LinkedHashMap<String, IRList> IRMap;  //indexed by Function Name -> IR list
 	private LinkedHashMap<String, SymbolTable> STMap; //indexed by Function Name -> Symbol Table root for that func
 	private Stack<String> if_else_label_stk;
@@ -49,6 +51,7 @@ public class ExtractionListener extends MicroBaseListener {
 		this.while_label_stk = new LinkedList<String>();
 		this.IRMap = new LinkedHashMap<String, IRList>();
 		this.STMap = new LinkedHashMap<String, SymbolTable>();
+		ReturnTypes = new LinkedHashMap<String, String>();
 	}
 //
 //	public SymbolTable getRootSymbolTable() {
@@ -104,7 +107,6 @@ public class ExtractionListener extends MicroBaseListener {
 				//System.out.println("DECLARATION ERROR " + name);
 //				root.error = true;
 				System.exit(1);
-
 			}
 		}
 	}
@@ -196,6 +198,7 @@ public class ExtractionListener extends MicroBaseListener {
 		}
 		//Update Current Function 
 		this.current_function = ctx.func_decl().id().getText();
+		
 		//Create new IR
 		IRList i = new IRList();
 		
@@ -204,8 +207,10 @@ public class ExtractionListener extends MicroBaseListener {
 			System.exit(1);
 		}
 		
-		IRMap.put(current_function, i);
+		String rettype = ctx.func_decl().any_type().getText();
 		
+		IRMap.put(current_function, i);
+		ReturnTypes.put(this.current_function, rettype);
 		current_ir = i;
 		enterScope(ctx.func_decl().id().getText());
 		
