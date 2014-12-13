@@ -1,0 +1,26 @@
+PROGRAM domath
+BEGIN
+
+   FUNCTION FLOAT FOUR (INT xif)
+   BEGIN
+	FLOAT f;
+	f := 4.0;
+        RETURN f;
+   END
+ 
+   FUNCTION VOID main()
+   BEGIN
+	FLOAT k;
+	INT m;	
+k := 1.0 + 1.0*1.0/FOUR(1);
+m := five(5);
+	WRITE(m);
+	WRITE(k);   
+   END
+
+   FUNCTION INT five(INT ubi)
+   BEGIN
+	RETURN 5;
+   END
+
+END
